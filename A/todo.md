@@ -53,9 +53,10 @@
   * Make tool to generate dot file from regular or pseudo-regular
     grammar.
 
-  * When stubbing out non-terminals, instead of defining them with a
+  * When stubbing out non-terminals in ixml-to-rk-subset,
+    instead of defining them with a
     reference to empty set, define them with a reference to
-    max-{$basename}, and define that with a reference to empty-set.
+    *max-`{$basename}`*, and define that with a reference to empty-set.
     This will make it easier to knit the subset and superset grammars
     together, because there will be just the one point of contact.
 
@@ -183,13 +184,13 @@
 
 ## Done
 
-  * What are the empty comments in ixml-to-rk output about? (a sub r2) 
-  (fixed) 
+* What are the empty comments in ixml-to-rk output about? (a sub r2)
+  (fixed)
 
-  * add pipeline stage for collapsing epsilon transitions (defined
-    as unit rules), optionally with restriction on where.
-    Recursive checking needed to get epsilon-closure.  Cycles
-    may exist and must be protected against.
+* add pipeline stage for collapsing epsilon transitions (defined as
+  unit rules), optionally with restriction on where.  Recursive
+  checking needed to get epsilon-closure.  Cycles may exist and must
+  be protected against.
 
-    [2020-01-02 I believe this is done as specified, in
-    eliminate-unit-rules.xsl, but it has not been well tested.]
+  [2020-01-02 I believe this is done as specified, in
+  eliminate-unit-rules.xsl, but it has not been well tested.]
