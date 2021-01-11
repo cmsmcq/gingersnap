@@ -29,14 +29,6 @@
     grammar, (2) FSA for regular language, (3) R_0 RTN for a specific
     named nonterminal in a CFL.]
 
-  * add pipeline stage for collapsing epsilon transitions (defined
-    as unit rules), optionally with restriction on where.
-    Recursive checking needed to get epsilon-closure.  Cycles
-    may exist and must be protected against.
-
-    [2020-01-02 I believe this is done as specified, but has not been
-    well tested.]
-    
   * Extend rule-substitution code to support the scenario of inlining
     all nonterminals.  Think what to do if there are recursive
     nonterminals present: produce bad output? die? leave them alone?
@@ -193,3 +185,11 @@
 
   * What are the empty comments in ixml-to-rk output about? (a sub r2) 
   (fixed) 
+
+  * add pipeline stage for collapsing epsilon transitions (defined
+    as unit rules), optionally with restriction on where.
+    Recursive checking needed to get epsilon-closure.  Cycles
+    may exist and must be protected against.
+
+    [2020-01-02 I believe this is done as specified, in
+    eliminate-unit-rules.xsl, but it has not been well tested.]
