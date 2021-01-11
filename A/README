@@ -1,0 +1,5 @@
+This directory (2021/gingersnap) contains an in-progress library of
+tools for working on grammars in ixml; the name 'Gingersnap' is
+inspired by the G and the I of 'grammar' and 'ixml'.
+
+Earlier work took place in 2020/test-case-generation
