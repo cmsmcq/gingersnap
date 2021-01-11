@@ -184,10 +184,10 @@
   * Coverage measurement (and run coverage measurement on XSTS and/or
     QT test suites)
 
-Misc
+## Misc
 
 
-Done
+## Done
 
   * What are the empty comments in ixml-to-rk output about? (a sub r2) 
   (fixed) 
