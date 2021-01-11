@@ -1,0 +1,19 @@
+<ixml>
+  <comment>Illustration of literal strings.</comment>
+
+  <rule name="S">
+    <alt>
+      <literal dstring="i"/>
+      <literal dstring="f"/>
+      <literal dstring="?"/>
+    </alt>
+    <alt>
+      <repeat1>
+	<inclusion>
+	  <range from="a" to="z"/>
+	</inclusion>
+      </repeat1>
+      <literal dstring="."/>
+      </alt>
+  </rule>
+</ixml>

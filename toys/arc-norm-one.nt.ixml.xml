@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> A very few test cases for arc normalization code in eliminate-arc-overlap.xsl. </comment>
+   <comment> Cut down from the full tests for debugging, 2020-12-28 </comment>
+   <comment> Subsets </comment>
+   <rule name="q8">
+      <alt>
+         <literal xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                  dstring="i"
+                  gt:ranges="105 105"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <literal xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                  dstring="w"
+                  gt:ranges="119 119"/>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="97 122">
+            <range from="a" to="z" gt:ranges="97 122"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+   </rule>
+   <rule name="q9">
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="103 107">
+            <range from="g" to="k" gt:ranges="103 107"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="97 122">
+            <range from="a" to="z" gt:ranges="97 122"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+   </rule>
+   <rule name="q10">
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                    gt:ranges="65 65 69 69 73 73 79 79 85 85 97 97 101 101 105 105 111 111 117 117">
+            <literal dstring="a" gt:ranges="97 97"/>
+            <literal dstring="e" gt:ranges="101 101"/>
+            <literal dstring="i" gt:ranges="105 105"/>
+            <literal dstring="o" gt:ranges="111 111"/>
+            <literal dstring="u" gt:ranges="117 117"/>
+            <literal dstring="A" gt:ranges="65 65"/>
+            <literal dstring="E" gt:ranges="69 69"/>
+            <literal dstring="I" gt:ranges="73 73"/>
+            <literal dstring="O" gt:ranges="79 79"/>
+            <literal dstring="U" gt:ranges="85 85"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                    gt:ranges="65 90 97 122">
+            <range from="a" to="z" gt:ranges="97 122"/>
+            <range from="A" to="Z" gt:ranges="65 90"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <comment> Overlaps </comment>
+   </rule>
+   <rule name="q11">
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="97 107">
+            <range from="a" to="k" gt:ranges="97 107"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="103 122">
+            <range from="g" to="z" gt:ranges="103 122"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <comment> q12: ['a' - 'z'; 'A'-'Z'; Nd], q2; [Ll; Lu; '0'-'9'], q3. </comment>
+      <comment> Mix and match </comment>
+   </rule>
+   <rule name="q13">
+      <alt>
+         <literal xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                  dstring="i"
+                  gt:ranges="105 105"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="119 119">
+            <literal dstring="w" gt:ranges="119 119"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="100 100">
+            <range from="d" to="d" gt:ranges="100 100"/>
+         </inclusion>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools" gt:ranges="97 99">
+            <range from="a" to="c" gt:ranges="97 99"/>
+         </inclusion>
+         <nonterminal name="q5"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                    gt:ranges="65 90 97 122">
+            <range from="a" to="z" gt:ranges="97 122"/>
+            <range from="A" to="Z" gt:ranges="65 90"/>
+         </inclusion>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt>
+         <inclusion xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                    gt:ranges="65 90 97 122">
+            <range from="a" to="z" gt:ranges="97 122"/>
+            <range from="A" to="Z" gt:ranges="65 90"/>
+         </inclusion>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt/>
+   </rule>
+</ixml>

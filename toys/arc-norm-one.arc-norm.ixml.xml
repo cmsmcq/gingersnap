@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2020-12-28T20:04:38.763-07:00">
+   <comment> A very few test cases for arc normalization code in eliminate-arc-overlap.xsl. </comment>
+   <comment> Cut down from the full tests for debugging, 2020-12-28 </comment>
+   <comment> Subsets </comment>
+   <rule name="q8"
+         gt:ranges="97 122"
+         gt:theta="32 96 123 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="105 105">
+         <literal dstring="i" gt:ranges="105 105"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt gt:ranges="119 119">
+         <literal dstring="w" gt:ranges="119 119"/>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt gt:ranges="105 105">
+         <literal dstring="i" gt:ranges="105 105">
+            <comment> #69 = »i« </comment>
+         </literal>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt gt:ranges="119 119">
+         <literal dstring="w" gt:ranges="119 119">
+            <comment> #77 = »w« </comment>
+         </literal>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt gt:ranges="97 104 106 118 120 122">
+         <inclusion gt:ranges="97 104 106 118 120 122">
+            <range from="a" to="h" gt:ranges="97 104">
+               <comment> #61 - #68 = »a« - »h« </comment>
+            </range>
+            <range from="j" to="v" gt:ranges="106 118">
+               <comment> #6A - #76 = »j« - »v« </comment>
+            </range>
+            <range from="x" to="z" gt:ranges="120 122">
+               <comment> #78 - #7A = »x« - »z« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+   </rule>
+   <rule name="q9"
+         gt:ranges="97 122"
+         gt:theta="32 96 123 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="103 107">
+         <inclusion gt:ranges="103 107">
+            <range from="g" to="k" gt:ranges="103 107"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt gt:ranges="103 107">
+         <inclusion gt:ranges="103 107">
+            <range from="g" to="k" gt:ranges="103 107">
+               <comment> #67 - #6B = »g« - »k« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt gt:ranges="97 102 108 122">
+         <inclusion gt:ranges="97 102 108 122">
+            <range from="a" to="f" gt:ranges="97 102">
+               <comment> #61 - #66 = »a« - »f« </comment>
+            </range>
+            <range from="l" to="z" gt:ranges="108 122">
+               <comment> #6C - #7A = »l« - »z« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+   </rule>
+   <rule name="q10"
+         gt:ranges="65 90 97 122"
+         gt:theta="32 64 91 96 123 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="65 65 69 69 73 73 79 79 85 85 97 97 101 101 105 105 111 111 117 117">
+         <inclusion gt:ranges="65 65 69 69 73 73 79 79 85 85 97 97 101 101 105 105 111 111 117 117">
+            <literal dstring="a" gt:ranges="97 97"/>
+            <literal dstring="e" gt:ranges="101 101"/>
+            <literal dstring="i" gt:ranges="105 105"/>
+            <literal dstring="o" gt:ranges="111 111"/>
+            <literal dstring="u" gt:ranges="117 117"/>
+            <literal dstring="A" gt:ranges="65 65"/>
+            <literal dstring="E" gt:ranges="69 69"/>
+            <literal dstring="I" gt:ranges="73 73"/>
+            <literal dstring="O" gt:ranges="79 79"/>
+            <literal dstring="U" gt:ranges="85 85"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt gt:ranges="65 65 69 69 73 73 79 79 85 85 97 97 101 101 105 105 111 111 117 117">
+         <inclusion gt:ranges="65 65 69 69 73 73 79 79 85 85 97 97 101 101 105 105 111 111 117 117">
+            <literal dstring="A" gt:ranges="65 65">
+               <comment> #41 = »A« </comment>
+            </literal>
+            <literal dstring="E" gt:ranges="69 69">
+               <comment> #45 = »E« </comment>
+            </literal>
+            <literal dstring="I" gt:ranges="73 73">
+               <comment> #49 = »I« </comment>
+            </literal>
+            <literal dstring="O" gt:ranges="79 79">
+               <comment> #4F = »O« </comment>
+            </literal>
+            <literal dstring="U" gt:ranges="85 85">
+               <comment> #55 = »U« </comment>
+            </literal>
+            <literal dstring="a" gt:ranges="97 97">
+               <comment> #61 = »a« </comment>
+            </literal>
+            <literal dstring="e" gt:ranges="101 101">
+               <comment> #65 = »e« </comment>
+            </literal>
+            <literal dstring="i" gt:ranges="105 105">
+               <comment> #69 = »i« </comment>
+            </literal>
+            <literal dstring="o" gt:ranges="111 111">
+               <comment> #6F = »o« </comment>
+            </literal>
+            <literal dstring="u" gt:ranges="117 117">
+               <comment> #75 = »u« </comment>
+            </literal>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt gt:ranges="66 68 70 72 74 78 80 84 86 90 98 100 102 104 106 110 112 116 118 122">
+         <inclusion gt:ranges="66 68 70 72 74 78 80 84 86 90 98 100 102 104 106 110 112 116 118 122">
+            <range from="B" to="D" gt:ranges="66 68">
+               <comment> #42 - #44 = »B« - »D« </comment>
+            </range>
+            <range from="F" to="H" gt:ranges="70 72">
+               <comment> #46 - #48 = »F« - »H« </comment>
+            </range>
+            <range from="J" to="N" gt:ranges="74 78">
+               <comment> #4A - #4E = »J« - »N« </comment>
+            </range>
+            <range from="P" to="T" gt:ranges="80 84">
+               <comment> #50 - #54 = »P« - »T« </comment>
+            </range>
+            <range from="V" to="Z" gt:ranges="86 90">
+               <comment> #56 - #5A = »V« - »Z« </comment>
+            </range>
+            <range from="b" to="d" gt:ranges="98 100">
+               <comment> #62 - #64 = »b« - »d« </comment>
+            </range>
+            <range from="f" to="h" gt:ranges="102 104">
+               <comment> #66 - #68 = »f« - »h« </comment>
+            </range>
+            <range from="j" to="n" gt:ranges="106 110">
+               <comment> #6A - #6E = »j« - »n« </comment>
+            </range>
+            <range from="p" to="t" gt:ranges="112 116">
+               <comment> #70 - #74 = »p« - »t« </comment>
+            </range>
+            <range from="v" to="z" gt:ranges="118 122">
+               <comment> #76 - #7A = »v« - »z« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <comment> Overlaps </comment>
+   </rule>
+   <rule name="q11"
+         gt:ranges="97 122"
+         gt:theta="32 96 123 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="103 107">
+         <inclusion gt:ranges="103 107">
+            <range from="g" to="k" gt:ranges="103 107">
+               <comment> #67 - #6B = »g« - »k« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt gt:ranges="97 102">
+         <inclusion gt:ranges="97 102">
+            <range from="a" to="f" gt:ranges="97 102">
+               <comment> #61 - #66 = »a« - »f« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt gt:ranges="103 107">
+         <inclusion gt:ranges="103 107">
+            <range from="g" to="k" gt:ranges="103 107">
+               <comment> #67 - #6B = »g« - »k« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt gt:ranges="108 122">
+         <inclusion gt:ranges="108 122">
+            <range from="l" to="z" gt:ranges="108 122">
+               <comment> #6C - #7A = »l« - »z« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <comment> q12: ['a' - 'z'; 'A'-'Z'; Nd], q2; [Ll; Lu; '0'-'9'], q3. </comment>
+      <comment> Mix and match </comment>
+   </rule>
+   <rule name="q13"
+         gt:ranges="65 90 97 122"
+         gt:theta="32 64 91 96 123 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="105 105">
+         <literal dstring="i" gt:ranges="105 105"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt gt:ranges="119 119">
+         <inclusion gt:ranges="119 119">
+            <literal dstring="w" gt:ranges="119 119"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt gt:ranges="100 100">
+         <inclusion gt:ranges="100 100">
+            <range from="d" to="d" gt:ranges="100 100"/>
+         </inclusion>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt gt:ranges="97 99">
+         <inclusion gt:ranges="97 99">
+            <range from="a" to="c" gt:ranges="97 99"/>
+         </inclusion>
+         <nonterminal name="q5"/>
+      </alt>
+      <alt gt:ranges="105 105">
+         <literal dstring="i" gt:ranges="105 105">
+            <comment> #69 = »i« </comment>
+         </literal>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt gt:ranges="119 119">
+         <literal dstring="w" gt:ranges="119 119">
+            <comment> #77 = »w« </comment>
+         </literal>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt gt:ranges="100 100">
+         <literal dstring="d" gt:ranges="100 100">
+            <comment> #64 = »d« </comment>
+         </literal>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt gt:ranges="97 99">
+         <inclusion gt:ranges="97 99">
+            <range from="a" to="c" gt:ranges="97 99">
+               <comment> #61 - #63 = »a« - »c« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt gt:ranges="65 90 101 104 106 118 120 122">
+         <inclusion gt:ranges="65 90 101 104 106 118 120 122">
+            <range from="A" to="Z" gt:ranges="65 90">
+               <comment> #41 - #5A = »A« - »Z« </comment>
+            </range>
+            <range from="e" to="h" gt:ranges="101 104">
+               <comment> #65 - #68 = »e« - »h« </comment>
+            </range>
+            <range from="j" to="v" gt:ranges="106 118">
+               <comment> #6A - #76 = »j« - »v« </comment>
+            </range>
+            <range from="x" to="z" gt:ranges="120 122">
+               <comment> #78 - #7A = »x« - »z« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt gt:ranges="105 105">
+         <literal dstring="i" gt:ranges="105 105">
+            <comment> #69 = »i« </comment>
+         </literal>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt gt:ranges="119 119">
+         <literal dstring="w" gt:ranges="119 119">
+            <comment> #77 = »w« </comment>
+         </literal>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt gt:ranges="100 100">
+         <literal dstring="d" gt:ranges="100 100">
+            <comment> #64 = »d« </comment>
+         </literal>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt gt:ranges="97 99">
+         <inclusion gt:ranges="97 99">
+            <range from="a" to="c" gt:ranges="97 99">
+               <comment> #61 - #63 = »a« - »c« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt gt:ranges="65 90 101 104 106 118 120 122">
+         <inclusion gt:ranges="65 90 101 104 106 118 120 122">
+            <range from="A" to="Z" gt:ranges="65 90">
+               <comment> #41 - #5A = »A« - »Z« </comment>
+            </range>
+            <range from="e" to="h" gt:ranges="101 104">
+               <comment> #65 - #68 = »e« - »h« </comment>
+            </range>
+            <range from="j" to="v" gt:ranges="106 118">
+               <comment> #6A - #76 = »j« - »v« </comment>
+            </range>
+            <range from="x" to="z" gt:ranges="120 122">
+               <comment> #78 - #7A = »x« - »z« </comment>
+            </range>
+         </inclusion>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt/>
+   </rule>
+</ixml>

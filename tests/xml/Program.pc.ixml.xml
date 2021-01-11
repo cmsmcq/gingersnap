@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-11T12:28:36.185426-07:00">
+   <comment>2021-01-11T12:28:36.185426-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/../../program/Program.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <rule name="program" gt:recursive="false" gt:referenced="false">:  <alt>
+         <nonterminal name="block"/>
+      </alt>. 
+</rule>
+   <rule name="block" gt:recursive="true">:  <alt>
+         <literal dstring="{"/>
+         <nonterminal name="S"/>
+         <repeat0>
+            <nonterminal name="statement"/>
+            <sep>
+               <alts>
+                  <alt>
+                     <literal dstring=";"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </sep>
+         </repeat0>
+         <literal dstring="}"/>
+         <nonterminal name="S"/>
+      </alt>. 
+
+</rule>
+   <rule name="statement" gt:recursive="true">:   <alt>
+         <nonterminal name="if-statement"/>
+      </alt>
+      <alt>
+         <nonterminal name="while-statement"/>
+      </alt>
+      <alt>
+         <nonterminal name="assignment"/>
+      </alt>
+      <alt>
+         <nonterminal name="call"/>
+      </alt>
+      <alt>
+         <nonterminal name="block"/>
+      </alt>. 
+
+</rule>
+   <rule name="if-statement" gt:recursive="true">:  <alt>
+         <literal dstring="if"/>
+         <nonterminal name="S"/>
+         <nonterminal name="condition"/>
+         <literal dstring="then"/>
+         <nonterminal name="S"/>
+         <nonterminal name="statement"/>
+         <option>
+            <nonterminal name="else-part"/>
+         </option>
+      </alt>. 
+</rule>
+   <rule name="else-part" gt:recursive="true">:   <alt>
+         <literal dstring="else"/>
+         <nonterminal name="S"/>
+         <nonterminal name="statement"/>
+      </alt>. 
+
+</rule>
+   <rule name="while-statement" gt:recursive="true">:  <alt>
+         <literal dstring="while"/>
+         <nonterminal name="S"/>
+         <nonterminal name="condition"/>
+         <literal dstring="do"/>
+         <nonterminal name="S"/>
+         <nonterminal name="statement"/>
+      </alt>. 
+
+</rule>
+   <rule name="assignment" gt:recursive="false">:   <alt>
+         <nonterminal name="variable"/>
+         <literal dstring="="/>
+         <nonterminal name="S"/>
+         <nonterminal name="expression"/>
+      </alt>. 
+</rule>
+   <rule name="variable" gt:recursive="false">:  <alt>
+         <nonterminal name="identifier"/>
+      </alt>. 
+
+</rule>
+   <rule name="call" gt:recursive="false">:   <alt>
+         <nonterminal name="identifier"/>
+         <literal dstring="("/>
+         <nonterminal name="S"/>
+         <repeat0>
+            <nonterminal name="parameter"/>
+            <sep>
+               <alts>
+                  <alt>
+                     <literal dstring=","/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </sep>
+         </repeat0>
+         <literal dstring=")"/>
+         <nonterminal name="S"/>
+      </alt>. 
+</rule>
+   <rule name="parameter" gt:recursive="false">:   <alt>
+         <nonterminal mark="-" name="expression"/>
+      </alt>. 
+</rule>
+   <rule name="identifier" gt:recursive="false">:   <alt>
+         <repeat1>
+            <nonterminal name="letter"/>
+         </repeat1>
+         <nonterminal name="S"/>
+      </alt>. 
+
+</rule>
+   <rule name="expression" gt:recursive="false">:   <alt>
+         <nonterminal name="identifier"/>
+      </alt>
+      <alt>
+         <nonterminal name="number"/>
+      </alt>. 
+</rule>
+   <rule name="number" gt:recursive="false">:   <alt>
+         <repeat1>
+            <nonterminal name="digit"/>
+         </repeat1>
+         <nonterminal name="S"/>
+      </alt>. 
+</rule>
+   <rule name="letter" gt:recursive="false">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="A" to="Z"/>
+         </inclusion>
+      </alt>. 
+</rule>
+   <rule name="digit" gt:recursive="false">:  <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+      </alt>. 
+</rule>
+   <rule name="condition" gt:recursive="false">:   <alt>
+         <nonterminal name="identifier"/>
+      </alt>. 
+</rule>
+   <rule name="S" mark="-" gt:recursive="false">:   <alt>
+         <repeat0>
+            <literal sstring=" "/>
+         </repeat0>
+      </alt>.</rule>
+</ixml>

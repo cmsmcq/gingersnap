@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.jenitennison.com/xslt/xspec"
+        xspec="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-to-rk-subset.xspec"
+        stylesheet="file:/Users/cmsmcq/2021/gingersnap/src/ixml-to-rk-subset.xsl"
+        date="2021-01-10T12:55:36.190311-07:00">
+   <scenario id="scenario1"
+             xspec="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-to-rk-subset.xspec">
+      <label>Test r_k subset generation</label>
+      <input-wrap xmlns="">
+         <xsp:context xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+                      xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                      xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                      href="file:/Users/cmsmcq/2021/gingersnap/tests/xml/a.pc.ixml.xml"
+                      mode="rk-subset">
+            <xsp:param name="k" tunnel="yes" select="xs:integer(2)"/>
+            <xsp:param name="config" tunnel="yes" select=" 'no-config-file' "/>
+         </xsp:context>
+      </input-wrap>
+      <result select="/self::document-node()">
+         <content-wrap xmlns=""><?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?><?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+            <ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                  gt:date="2021-01-10T12:55:36.190311-07:00"
+                  gt:dg-type="regular approximation"
+                  gt:ra-type="rk-subset"
+                  gt:k="2">
+               <comment>2021-01-10T12:55:36.190311-07:00: ixml-to-rk-subset.xsl.</comment>
+               <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/a.pc.ixml.xml</comment>
+               <comment>    This grammar accepts the r_2 subset </comment>
+               <comment>    of the language accepted by the input grammar.</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+</ws>
+               <comment> First, nonrecursive production rules </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+</ws>
+               <comment>2021-01-09T12:17:10.879789-07:00: ixml-annotate-pc.xsl.</comment>
+               <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/ab/a.ixml.xml</comment>
+               <comment>    Grammar augmented with @gt:recursive etc.</comment>
+               <comment> A really simple context-free grammar for testing
+  test-generation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made file
+</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+</ws>
+               <comment> Second, recursive production rules </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+</ws>
+               <rule name="S" gt:basename="S" gt:affix="" gt:type="stack-affixed">
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="a"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="("/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S·S·" gt:basename="S" gt:affix="S·"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring=")"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+               </rule>
+               <rule name="S·S·"
+                     gt:basename="S"
+                     gt:affix="S·"
+                     gt:type="stack-affixed">
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="a"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="("/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S·S·S·" gt:basename="S" gt:affix="S·S·"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring=")"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+               </rule>
+               <rule name="S·S·S·"
+                     gt:basename="S"
+                     gt:affix="S·S·"
+                     gt:type="stack-affixed">
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="a"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="("/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S·S·S·S·" gt:basename="S" gt:affix="S·S·S·"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring=")"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+               </rule>
+               <rule name="S·S·S·S·"
+                     gt:basename="S"
+                     gt:affix="S·S·S·"
+                     gt:type="stub">
+                  <alt>
+                     <nonterminal name="∅"/>
+                  </alt>
+               </rule>
+               <comment> bye </comment>
+            </ixml>
+         </content-wrap>
+      </result>
+      <test id="scenario1-expect1" successful="true">
+         <label>Number of rules should not shrink</label>
+         <expect-test-wrap xmlns="">
+            <xsp:expect xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                        test="count(/ixml/rule) ge 1"/>
+         </expect-test-wrap>
+         <expect select="()"/>
+      </test>
+      <test id="scenario1-expect2" successful="true">
+         <label/>
+         <expect-test-wrap xmlns="">
+            <xsp:expect xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                        test="ws:strip(ixml/rule, $strip, $keep)"/>
+         </expect-test-wrap>
+         <result select="/element()">
+            <content-wrap xmlns="">
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S"
+                     gt:basename="S"
+                     gt:affix=""
+                     gt:type="stack-affixed">
+                  <alt>
+                     <literal sstring="a"/>
+                  </alt>
+                  <alt>
+                     <literal sstring="("/>
+                     <nonterminal name="S·S·" gt:basename="S" gt:affix="S·"/>
+                     <literal sstring=")"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S·S·"
+                     gt:basename="S"
+                     gt:affix="S·"
+                     gt:type="stack-affixed">
+                  <alt>
+                     <literal sstring="a"/>
+                  </alt>
+                  <alt>
+                     <literal sstring="("/>
+                     <nonterminal name="S·S·S·" gt:basename="S" gt:affix="S·S·"/>
+                     <literal sstring=")"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S·S·S·"
+                     gt:basename="S"
+                     gt:affix="S·S·"
+                     gt:type="stack-affixed">
+                  <alt>
+                     <literal sstring="a"/>
+                  </alt>
+                  <alt>
+                     <literal sstring="("/>
+                     <nonterminal name="S·S·S·S·" gt:basename="S" gt:affix="S·S·S·"/>
+                     <literal sstring=")"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S·S·S·S·"
+                     gt:basename="S"
+                     gt:affix="S·S·S·"
+                     gt:type="stub">
+                  <alt>
+                     <nonterminal name="∅"/>
+                  </alt>
+               </rule>
+            </content-wrap>
+         </result>
+         <expect select="/element()">
+            <content-wrap xmlns="">
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S"
+                     gt:basename="S"
+                     gt:affix=""
+                     gt:type="stack-affixed">
+                  <alt>
+                     <literal sstring="a"/>
+                  </alt>
+                  <alt>
+                     <literal sstring="("/>
+                     <nonterminal name="S·S·" gt:basename="S" gt:affix="S·"/>
+                     <literal sstring=")"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S·S·"
+                     gt:basename="S"
+                     gt:affix="S·"
+                     gt:type="stack-affixed">
+                  <alt>
+                     <literal sstring="a"/>
+                  </alt>
+                  <alt>
+                     <literal sstring="("/>
+                     <nonterminal name="S·S·S·" gt:basename="S" gt:affix="S·S·"/>
+                     <literal sstring=")"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S·S·S·"
+                     gt:basename="S"
+                     gt:affix="S·S·"
+                     gt:type="stack-affixed">
+                  <alt>
+                     <literal sstring="a"/>
+                  </alt>
+                  <alt>
+                     <literal sstring="("/>
+                     <nonterminal name="S·S·S·S·" gt:basename="S" gt:affix="S·S·S·"/>
+                     <literal sstring=")"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S·S·S·S·"
+                     gt:basename="S"
+                     gt:affix="S·S·S·"
+                     gt:type="stub">
+                  <alt>
+                     <nonterminal name="∅"/>
+                  </alt>
+               </rule>
+            </content-wrap>
+         </expect>
+      </test>
+   </scenario>
+</report>

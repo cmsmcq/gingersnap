@@ -1,0 +1,26 @@
+{ expressions }
+{ 2021-01-10 : CMSMcQ : made file for testing }
+
+{ An expression is terms separated by addition operators. }
+e:  s, t+a.
+
+{ A term is factors separated by multiplication operators. }
+t:  f+m.
+
+{ A factor is a variable reference, a number, or a
+  parenthesized expression. }
+f:  v; n; '(', s, e, ')', s.
+
+{ Addition and multiplication operators are as usual. }
+a: '+', s; '-', s.
+m: '*', s; '/', s.
+
+{ Variables are lowercase only. }
+v: ['a'-'z'], ['a'-'z'; '0'-'9'; '._']*.
+n: ['0'-'9'].
+
+{ Whitespace can have nesting comments. }
+s: (ws; com)*.
+ws: #20; #9; #A; #D.
+com: '{', (cc; com)*, '}'.
+cc: ~['{}'].

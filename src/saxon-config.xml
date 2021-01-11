@@ -1,0 +1,12 @@
+<configuration xmlns="http://saxon.sf.net/ns/configuration"
+               label="Config for test-case-generation work, use with -config:filename">
+
+  <!--* This appears not to work for Saxon HE.  Sorry. *-->
+  <xsltPackages>
+    <package name="http://blackmesatech/2020/grammartools"
+	     version="0.2"
+	     sourceLocation="file:///Users/cmsmcq/2020/test-case-generation/src/ixml-grammar-tools.xsl" 
+	     />
+  </xsltPackages>  
+ 
+</configuration>

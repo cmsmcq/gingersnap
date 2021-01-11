@@ -1,0 +1,19 @@
+{ In the manual exercise of creating a regular expression for R_0 for
+block, we have:
+
+  s: (omega*, alpha, rb*, sigma?)*, 
+     ((omega*, b0)
+     |(omega*, alpha, rb*)).
+
+We would like to reduce it.  Letting 
+
+  a = omega
+  b = (alpha, rb*)
+  c = sigma
+  d = b0
+
+gives this grammar, which we are putting into a file in order to calculate
+its Gluschkov automaton automatically, since doing so by hand has led to 
+errors and frustration. }
+
+s:  (a1*, b1, c?)*, a2*, (d | b2).

@@ -1,0 +1,19 @@
+{ Simple grammar for numbers, for use in testing test-case generators.
+
+  This is a regular language.
+
+  Revisions: 
+  2020-12-30 : CMSMcQ : transcribe / copy from 
+                        2019/misc/test-case-generation/notes.xml,
+                        revise.
+}
+
+number = wholenum; decimal; scientific.
+wholenum = digit+.
+decimal = digit+, '.', digit*
+        | '.', digit+.
+scientific:  base, exponent.
+base: wholenum; decimal.
+exponent: ['Ee'], ('+' | '-')?, digit+.
+digit = ['0'-'9'].
+

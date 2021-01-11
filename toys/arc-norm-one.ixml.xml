@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> A very few test cases for arc normalization code in eliminate-arc-overlap.xsl. </comment>
+   <comment> Cut down from the full tests for debugging, 2020-12-28 </comment>
+   <comment> Subsets </comment>
+
+   <rule name="q8">:   <alt>
+         <literal sstring="i"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <literal sstring="w"/>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q9">:   <alt>
+         <inclusion>
+            <range from="g" to="k"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q10">:   <alt>
+         <inclusion>
+            <literal sstring="a"/>
+            <literal sstring="e"/>
+            <literal sstring="i"/>
+            <literal sstring="o"/>
+            <literal sstring="u"/>
+            <literal sstring="A"/>
+            <literal sstring="E"/>
+            <literal sstring="I"/>
+            <literal sstring="O"/>
+            <literal sstring="U"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Overlaps </comment>
+
+   </rule>
+   <rule name="q11">:  <alt>
+         <inclusion>
+            <range from="a" to="k"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="g" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> q12: ['a' - 'z'; 'A'-'Z'; Nd], q2; [Ll; Lu; '0'-'9'], q3. </comment>
+
+      <comment> Mix and match </comment>
+
+   </rule>
+   <rule name="q13">:  <alt>
+         <literal sstring="i"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <literal sstring="w"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="d" to="d"/>
+         </inclusion>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="c"/>
+         </inclusion>
+         <nonterminal name="q5"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt/>. 
+
+</rule>
+</ixml>

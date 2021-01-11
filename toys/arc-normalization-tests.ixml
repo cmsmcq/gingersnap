@@ -1,0 +1,91 @@
+{ Tests cases for arc normlization code in eliminate-arc-overlap.xsl. }
+
+{ There are four cases that can hold for two arcs:
+  - they are disjoint
+  - they are equal
+  - they are in a proper subset/superset relation
+  - they overlap
+
+  There are three cases of ranges that are worth exercising
+  separately, just to be sure:
+  - single range covering a single character
+  - single range covering multiple characters
+  - multiple ranges
+
+  There are several ways terminals can be expressed:  literals, inclusions,
+  exclusions.  Inclusions and exclusions can have members which are
+  literals, ranges, and classes.
+}
+
+{ Boundary cases. }
+
+q0: 'i', q2.
+q0a: ['a'-'z'], q3.
+q0b: [Nd], q4.
+q0c: {nil} q4.
+q0d: {nil}.
+
+{ Disjoint single characters. }
+
+q1: 'a', q2; 'b', q3.
+
+{ Disjoint single ranges. }
+
+q2: ['a' - 'z'], q2; ['0' - '9'], q3.
+
+{ Disjoint multiple ranges. }
+
+q3: [Zs], q2; [Lu; Ll], q3.
+
+{ Disjoint mixtures. }
+
+q4: 'a', q2; 'b', q3; ['0' - '9'], q4; [Zs], q5.
+
+
+{ Equal single characters. }
+
+q5: 'a', q2; 'a', q3.
+
+q5a: 'a', q2; ['a'], q3.
+
+q5b: 'a', q2; ['a' - 'a'], q3.
+
+{ Equal single ranges. }
+
+q6: ['a' - 'z'], q2; ['a' - 'z'], q3.
+
+q6a: ['a' - 'z'], q2; ['a' - 'f'; 'q'-'z'; 'm'; 'f' - 'x'], q3.
+
+q6b: ['a' - 'z'], q2; ['a' - 'z'], q3.
+
+{ Equal multiple ranges. }
+
+q7: [Zs; Lu; Ll], q2; [Zs; Lu; Ll], q3.
+
+q7a: [Zs], q2; [ #2000-#200A; #202F; #205F; #3000; ' '; #A0; #1680 - #1680 ], q3.
+
+
+{ Subsets }
+
+q8:  'i', q2; 'w', q4; ['a' - 'z'], q3.
+
+q9:  ['g'-'k'], q2; ['a' - 'z'], q3.
+
+q10:  ['a'; 'e'; 'i'; 'o'; 'u'; 'A'; 'E'; 'I'; 'O'; 'U'], q2; ['a' - 'z'; 'A'-'Z'], q3.
+
+{ Overlaps }
+
+q11: ['a' - 'k'], q2; ['g' - 'z'], q3.
+
+q12: ['a' - 'z'; 'A'-'Z'; Nd], q2; [Ll; Lu; '0'-'9'], q3.
+
+{ Mix and match }
+
+q13: 'i', q2;
+     ['w'], q3;
+     ["d" - 'd'], q4;
+     ['a' - 'c'], q5;
+     ['a' - 'z'; 'A' - 'Z'], q6;
+     ['a' - 'z'; 'A' - 'Z'], q7;
+     ~[Nd], q8.
+

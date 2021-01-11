@@ -1,0 +1,22 @@
+<xsp:description xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+		 xmlns:functx="http://www.functx.com"
+		 stylesheet="../src/ixml-annotate-pc.xsl"
+		 >
+
+  <xsp:variable name="results"
+		select=" 'file:///Users/cmsmcq/2021/gingersnap/tests/xml/' "/>
+
+  <xsp:scenario label="Test PC annotation">
+    <xsp:context href="../ab/a.ixml.xml" mode="annotate-pc"/>
+
+    <xsp:expect label="All rules should remain in output"
+		test="count(/ixml/rule) = 1"/>
+    <xsp:expect label="All RHS should remain in output"
+		test="count(/ixml/rule/alt) = 2"/>
+
+    <xsp:expect label="Annotation should label recursive nonterminals."
+		href="xml/a.pc.ixml.xml" select="ixml/rule"
+		test="ixml/rule"/>
+  </xsp:scenario>
+  
+</xsp:description>

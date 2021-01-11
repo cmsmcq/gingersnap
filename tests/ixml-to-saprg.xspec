@@ -1,0 +1,17 @@
+<xspec:description xmlns:xspec="http://www.jenitennison.com/xslt/xspec"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+		   stylesheet="../src/ixml-to-saprg.xsl" >
+
+  <xspec:helper stylesheet="../../../lib/xslt/strip-ws.xsl"/>
+  
+  <xspec:scenario label="When invoked without parameters">
+    <xspec:context href="xml/Program.pcgl.ixml.xml" mode="make-rtn"/>
+    <xspec:expect label="then expand all nonterminals and add linkage"
+		  href="xml/Program.r0sup.saprg.ixml.xml"
+		  select="ws:strip(ixml/rule,'*','')"
+		  test="ws:strip(ixml/rule,'*','')"
+		  />
+  </xspec:scenario>
+</xspec:description>
+  

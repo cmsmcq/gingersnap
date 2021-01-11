@@ -1,0 +1,24 @@
+{ Sample grammar adapted from Dick Grune and Ceriel J. H. Jacobs,
+Parsing techniques: A practical guide (New York: Ellis Horwood, 1990;
+second edition New York:  Springer, 2008), p. 64 (2e), Fig. 3.4
+
+"Grammar for an inherently ambiguous language"
+
+The language consists of all sequences a^m + b^n + c^n
+unioned with a^p + b^p + c^q.
+}
+
+{ Revisions:
+  2018-08-10 : CMSMcQ : made first transcription.
+}
+
+S: A, B; D, C.
+A: "a"+.
+B: "b", "c"; "b", B, "c".
+D: "a", "b"; "a", D, "b".
+C: "c"+.
+
+{ This is a recasting of grammar 59 in idiomatic EBNF.
+Grune and Jacobs repeat this grammar (p. 171) and use it
+as an example when discussing general parsing methods.
+}

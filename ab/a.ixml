@@ -1,0 +1,10 @@
+{ A really simple context-free grammar for testing
+  test-generation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made file
+}
+
+S: 'a'; '(', S, ')'.
+
+

@@ -1,0 +1,23 @@
+{ Sample grammar adapted from 5.5 from Grune/Jacobs }
+{ L is the set of strings beginning and ending with 
+  parentheses and containing an alternating series of 
+  . and | in between. 
+
+  Grune and Jacobs use a, b, and c.  I've changed to
+  parens, |, and . in order to make it easier to see
+  the pattern of sentences visually.
+
+  I've also introduced an explicit final state.
+
+  This is a regular language, though this form 
+} 
+S: lb, A;
+   lb, B.
+A: '.', B;
+   '.', C.
+B: '|', A;
+   '|', C.
+C: rb, D.
+D: .
+lb: '('.
+rb: ')'.

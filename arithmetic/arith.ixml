@@ -1,0 +1,14 @@
+{ Grammar for simple arithmetic expressions, for testing of test-case
+  generation and grammar-manipulation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made grammar
+}
+expr: s*, term+addop.
+term:  factor+mulop.
+factor:  num; var; '(', expr, ')'; '[', expr, ']'; '{', expr, '}'.
+num:  digit+, ('.', digit*)?.
+var:  ['a'-'z'].
+addop: s*, ["+-"], s*.
+mulop: s*, ["*/×÷"], s*.
+digit: ['0'-'9'].

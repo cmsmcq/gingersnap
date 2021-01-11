@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> expressions </comment>
+   <comment> 2021-01-10 : CMSMcQ : made file for testing </comment>
+   <comment> An expression is terms separated by addition operators. </comment>
+   <rule name="e">:   <alt>
+         <nonterminal name="s"/>
+         <repeat1>
+            <nonterminal name="t"/>
+            <sep>
+               <nonterminal name="a"/>
+            </sep>
+         </repeat1>
+      </alt>. 
+
+<comment> A term is factors separated by multiplication operators. </comment>
+   </rule>
+   <rule name="t">:   <alt>
+         <repeat1>
+            <nonterminal name="f"/>
+            <sep>
+               <nonterminal name="m"/>
+            </sep>
+         </repeat1>
+      </alt>. 
+
+<comment> A factor is a variable reference, a number, or a
+  parenthesized expression. </comment>
+   </rule>
+   <rule name="f">:   <alt>
+         <nonterminal name="v"/>
+      </alt>
+      <alt>
+         <nonterminal name="n"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="s"/>
+         <nonterminal name="e"/>
+         <literal sstring=")"/>
+         <nonterminal name="s"/>
+      </alt>. 
+
+<comment> Addition and multiplication operators are as usual. </comment>
+   </rule>
+   <rule name="a">:  <alt>
+         <literal sstring="+"/>
+         <nonterminal name="s"/>
+      </alt>
+      <alt>
+         <literal sstring="-"/>
+         <nonterminal name="s"/>
+      </alt>. 
+</rule>
+   <rule name="m">:  <alt>
+         <literal sstring="*"/>
+         <nonterminal name="s"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="s"/>
+      </alt>. 
+
+<comment> Variables are lowercase only. </comment>
+   </rule>
+   <rule name="v">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <repeat0>
+            <inclusion>
+               <range from="a" to="z"/>
+               <range from="0" to="9"/>
+               <literal sstring="._"/>
+            </inclusion>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="n">:  <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+      </alt>. 
+
+<comment> Whitespace can have nesting comments. </comment>
+   </rule>
+   <rule name="s">:  <alt>
+         <repeat0>
+            <alts>
+               <alt>
+                  <nonterminal name="ws"/>
+               </alt>
+               <alt>
+                  <nonterminal name="com"/>
+               </alt>
+            </alts>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="ws">:  <alt>
+         <literal hex="20"/>
+      </alt>
+      <alt>
+         <literal hex="9"/>
+      </alt>
+      <alt>
+         <literal hex="A"/>
+      </alt>
+      <alt>
+         <literal hex="D"/>
+      </alt>. 
+</rule>
+   <rule name="com">:  <alt>
+         <literal sstring="{"/>
+         <repeat0>
+            <alts>
+               <alt>
+                  <nonterminal name="cc"/>
+               </alt>
+               <alt>
+                  <nonterminal name="com"/>
+               </alt>
+            </alts>
+         </repeat0>
+         <literal sstring="}"/>
+      </alt>. 
+</rule>
+   <rule name="cc">:  <alt>
+         <exclusion>
+            <literal sstring="{}"/>
+         </exclusion>
+      </alt>.</rule>
+</ixml>

@@ -1,0 +1,701 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      gt:date="2021-01-11T12:29:16.096019-07:00"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value">
+   <comment>2021-01-11T12:29:16.096019-07:00: ixml-annotate-gluschkov.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/Program.pc.ixml.xml</comment>
+   <comment>    Grammar augmented with Gluschkov automata (@gl:*).</comment>
+   <comment>2021-01-11T12:28:36.185426-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/../../program/Program.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <rule name="program"
+         gt:recursive="false"
+         gt:referenced="false"
+         gl:nullable="false"
+         gl:first="program_1"
+         gl:last="program_1"
+         follow:program_1="">:  <alt gl:nullable="false"
+           gl:first="program_1"
+           gl:last="program_1"
+           follow:program_1="">
+         <nonterminal name="block"
+                      id="program_1"
+                      gl:nullable="false"
+                      gl:first="program_1"
+                      gl:last="program_1"
+                      follow:program_1=""/>
+      </alt>. 
+</rule>
+   <rule name="block"
+         gt:recursive="true"
+         gl:nullable="false"
+         gl:first="block_1"
+         gl:last="block_7"
+         follow:block_1="block_2"
+         follow:block_2="block_3 block_6"
+         follow:block_3="block_4 block_6"
+         follow:block_4="block_5"
+         follow:block_5="block_3"
+         follow:block_6="block_7"
+         follow:block_7="">:  <alt gl:nullable="false"
+           gl:first="block_1"
+           gl:last="block_7"
+           follow:block_1="block_2"
+           follow:block_2="block_3 block_6"
+           follow:block_3="block_4 block_6"
+           follow:block_4="block_5"
+           follow:block_5="block_3"
+           follow:block_6="block_7"
+           follow:block_7="">
+         <literal dstring="{"
+                  id="block_1"
+                  gl:nullable="false"
+                  gl:first="block_1"
+                  gl:last="block_1"
+                  follow:block_1=""/>
+         <nonterminal name="S"
+                      id="block_2"
+                      gl:nullable="false"
+                      gl:first="block_2"
+                      gl:last="block_2"
+                      follow:block_2=""/>
+         <repeat0 gl:nullable="true"
+                  gl:first="block_3"
+                  gl:last="block_3"
+                  follow:block_3="block_4"
+                  follow:block_4="block_5"
+                  follow:block_5="block_3">
+            <nonterminal name="statement"
+                         id="block_3"
+                         gl:nullable="false"
+                         gl:first="block_3"
+                         gl:last="block_3"
+                         follow:block_3=""/>
+            <sep gl:nullable="false"
+                 gl:first="block_4"
+                 gl:last="block_5"
+                 follow:block_4="block_5"
+                 follow:block_5="">
+               <alts gl:nullable="false"
+                     gl:first="block_4"
+                     gl:last="block_5"
+                     follow:block_4="block_5"
+                     follow:block_5="">
+                  <alt gl:nullable="false"
+                       gl:first="block_4"
+                       gl:last="block_5"
+                       follow:block_4="block_5"
+                       follow:block_5="">
+                     <literal dstring=";"
+                              id="block_4"
+                              gl:nullable="false"
+                              gl:first="block_4"
+                              gl:last="block_4"
+                              follow:block_4=""/>
+                     <nonterminal name="S"
+                                  id="block_5"
+                                  gl:nullable="false"
+                                  gl:first="block_5"
+                                  gl:last="block_5"
+                                  follow:block_5=""/>
+                  </alt>
+               </alts>
+            </sep>
+         </repeat0>
+         <literal dstring="}"
+                  id="block_6"
+                  gl:nullable="false"
+                  gl:first="block_6"
+                  gl:last="block_6"
+                  follow:block_6=""/>
+         <nonterminal name="S"
+                      id="block_7"
+                      gl:nullable="false"
+                      gl:first="block_7"
+                      gl:last="block_7"
+                      follow:block_7=""/>
+      </alt>. 
+
+</rule>
+   <rule name="statement"
+         gt:recursive="true"
+         gl:nullable="false"
+         gl:first="statement_1 statement_2 statement_3 statement_4 statement_5"
+         gl:last="statement_1 statement_2 statement_3 statement_4 statement_5"
+         follow:statement_1=""
+         follow:statement_2=""
+         follow:statement_3=""
+         follow:statement_4=""
+         follow:statement_5="">:   <alt gl:nullable="false"
+           gl:first="statement_1"
+           gl:last="statement_1"
+           follow:statement_1="">
+         <nonterminal name="if-statement"
+                      id="statement_1"
+                      gl:nullable="false"
+                      gl:first="statement_1"
+                      gl:last="statement_1"
+                      follow:statement_1=""/>
+      </alt>
+      <alt gl:nullable="false"
+           gl:first="statement_2"
+           gl:last="statement_2"
+           follow:statement_2="">
+         <nonterminal name="while-statement"
+                      id="statement_2"
+                      gl:nullable="false"
+                      gl:first="statement_2"
+                      gl:last="statement_2"
+                      follow:statement_2=""/>
+      </alt>
+      <alt gl:nullable="false"
+           gl:first="statement_3"
+           gl:last="statement_3"
+           follow:statement_3="">
+         <nonterminal name="assignment"
+                      id="statement_3"
+                      gl:nullable="false"
+                      gl:first="statement_3"
+                      gl:last="statement_3"
+                      follow:statement_3=""/>
+      </alt>
+      <alt gl:nullable="false"
+           gl:first="statement_4"
+           gl:last="statement_4"
+           follow:statement_4="">
+         <nonterminal name="call"
+                      id="statement_4"
+                      gl:nullable="false"
+                      gl:first="statement_4"
+                      gl:last="statement_4"
+                      follow:statement_4=""/>
+      </alt>
+      <alt gl:nullable="false"
+           gl:first="statement_5"
+           gl:last="statement_5"
+           follow:statement_5="">
+         <nonterminal name="block"
+                      id="statement_5"
+                      gl:nullable="false"
+                      gl:first="statement_5"
+                      gl:last="statement_5"
+                      follow:statement_5=""/>
+      </alt>. 
+
+</rule>
+   <rule name="if-statement"
+         gt:recursive="true"
+         gl:nullable="false"
+         gl:first="if-statement_1"
+         gl:last="if-statement_7 if-statement_6"
+         follow:if-statement_1="if-statement_2"
+         follow:if-statement_2="if-statement_3"
+         follow:if-statement_3="if-statement_4"
+         follow:if-statement_4="if-statement_5"
+         follow:if-statement_5="if-statement_6"
+         follow:if-statement_6="if-statement_7"
+         follow:if-statement_7="">:  <alt gl:nullable="false"
+           gl:first="if-statement_1"
+           gl:last="if-statement_7 if-statement_6"
+           follow:if-statement_1="if-statement_2"
+           follow:if-statement_2="if-statement_3"
+           follow:if-statement_3="if-statement_4"
+           follow:if-statement_4="if-statement_5"
+           follow:if-statement_5="if-statement_6"
+           follow:if-statement_6="if-statement_7"
+           follow:if-statement_7="">
+         <literal dstring="if"
+                  id="if-statement_1"
+                  gl:nullable="false"
+                  gl:first="if-statement_1"
+                  gl:last="if-statement_1"
+                  follow:if-statement_1=""/>
+         <nonterminal name="S"
+                      id="if-statement_2"
+                      gl:nullable="false"
+                      gl:first="if-statement_2"
+                      gl:last="if-statement_2"
+                      follow:if-statement_2=""/>
+         <nonterminal name="condition"
+                      id="if-statement_3"
+                      gl:nullable="false"
+                      gl:first="if-statement_3"
+                      gl:last="if-statement_3"
+                      follow:if-statement_3=""/>
+         <literal dstring="then"
+                  id="if-statement_4"
+                  gl:nullable="false"
+                  gl:first="if-statement_4"
+                  gl:last="if-statement_4"
+                  follow:if-statement_4=""/>
+         <nonterminal name="S"
+                      id="if-statement_5"
+                      gl:nullable="false"
+                      gl:first="if-statement_5"
+                      gl:last="if-statement_5"
+                      follow:if-statement_5=""/>
+         <nonterminal name="statement"
+                      id="if-statement_6"
+                      gl:nullable="false"
+                      gl:first="if-statement_6"
+                      gl:last="if-statement_6"
+                      follow:if-statement_6=""/>
+         <option gl:nullable="true"
+                 gl:first="if-statement_7"
+                 gl:last="if-statement_7"
+                 follow:if-statement_7="">
+            <nonterminal name="else-part"
+                         id="if-statement_7"
+                         gl:nullable="false"
+                         gl:first="if-statement_7"
+                         gl:last="if-statement_7"
+                         follow:if-statement_7=""/>
+         </option>
+      </alt>. 
+</rule>
+   <rule name="else-part"
+         gt:recursive="true"
+         gl:nullable="false"
+         gl:first="else-part_1"
+         gl:last="else-part_3"
+         follow:else-part_1="else-part_2"
+         follow:else-part_2="else-part_3"
+         follow:else-part_3="">:   <alt gl:nullable="false"
+           gl:first="else-part_1"
+           gl:last="else-part_3"
+           follow:else-part_1="else-part_2"
+           follow:else-part_2="else-part_3"
+           follow:else-part_3="">
+         <literal dstring="else"
+                  id="else-part_1"
+                  gl:nullable="false"
+                  gl:first="else-part_1"
+                  gl:last="else-part_1"
+                  follow:else-part_1=""/>
+         <nonterminal name="S"
+                      id="else-part_2"
+                      gl:nullable="false"
+                      gl:first="else-part_2"
+                      gl:last="else-part_2"
+                      follow:else-part_2=""/>
+         <nonterminal name="statement"
+                      id="else-part_3"
+                      gl:nullable="false"
+                      gl:first="else-part_3"
+                      gl:last="else-part_3"
+                      follow:else-part_3=""/>
+      </alt>. 
+
+</rule>
+   <rule name="while-statement"
+         gt:recursive="true"
+         gl:nullable="false"
+         gl:first="while-statement_1"
+         gl:last="while-statement_6"
+         follow:while-statement_1="while-statement_2"
+         follow:while-statement_2="while-statement_3"
+         follow:while-statement_3="while-statement_4"
+         follow:while-statement_4="while-statement_5"
+         follow:while-statement_5="while-statement_6"
+         follow:while-statement_6="">:  <alt gl:nullable="false"
+           gl:first="while-statement_1"
+           gl:last="while-statement_6"
+           follow:while-statement_1="while-statement_2"
+           follow:while-statement_2="while-statement_3"
+           follow:while-statement_3="while-statement_4"
+           follow:while-statement_4="while-statement_5"
+           follow:while-statement_5="while-statement_6"
+           follow:while-statement_6="">
+         <literal dstring="while"
+                  id="while-statement_1"
+                  gl:nullable="false"
+                  gl:first="while-statement_1"
+                  gl:last="while-statement_1"
+                  follow:while-statement_1=""/>
+         <nonterminal name="S"
+                      id="while-statement_2"
+                      gl:nullable="false"
+                      gl:first="while-statement_2"
+                      gl:last="while-statement_2"
+                      follow:while-statement_2=""/>
+         <nonterminal name="condition"
+                      id="while-statement_3"
+                      gl:nullable="false"
+                      gl:first="while-statement_3"
+                      gl:last="while-statement_3"
+                      follow:while-statement_3=""/>
+         <literal dstring="do"
+                  id="while-statement_4"
+                  gl:nullable="false"
+                  gl:first="while-statement_4"
+                  gl:last="while-statement_4"
+                  follow:while-statement_4=""/>
+         <nonterminal name="S"
+                      id="while-statement_5"
+                      gl:nullable="false"
+                      gl:first="while-statement_5"
+                      gl:last="while-statement_5"
+                      follow:while-statement_5=""/>
+         <nonterminal name="statement"
+                      id="while-statement_6"
+                      gl:nullable="false"
+                      gl:first="while-statement_6"
+                      gl:last="while-statement_6"
+                      follow:while-statement_6=""/>
+      </alt>. 
+
+</rule>
+   <rule name="assignment"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="assignment_1"
+         gl:last="assignment_4"
+         follow:assignment_1="assignment_2"
+         follow:assignment_2="assignment_3"
+         follow:assignment_3="assignment_4"
+         follow:assignment_4="">:   <alt gl:nullable="false"
+           gl:first="assignment_1"
+           gl:last="assignment_4"
+           follow:assignment_1="assignment_2"
+           follow:assignment_2="assignment_3"
+           follow:assignment_3="assignment_4"
+           follow:assignment_4="">
+         <nonterminal name="variable"
+                      id="assignment_1"
+                      gl:nullable="false"
+                      gl:first="assignment_1"
+                      gl:last="assignment_1"
+                      follow:assignment_1=""/>
+         <literal dstring="="
+                  id="assignment_2"
+                  gl:nullable="false"
+                  gl:first="assignment_2"
+                  gl:last="assignment_2"
+                  follow:assignment_2=""/>
+         <nonterminal name="S"
+                      id="assignment_3"
+                      gl:nullable="false"
+                      gl:first="assignment_3"
+                      gl:last="assignment_3"
+                      follow:assignment_3=""/>
+         <nonterminal name="expression"
+                      id="assignment_4"
+                      gl:nullable="false"
+                      gl:first="assignment_4"
+                      gl:last="assignment_4"
+                      follow:assignment_4=""/>
+      </alt>. 
+</rule>
+   <rule name="variable"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="variable_1"
+         gl:last="variable_1"
+         follow:variable_1="">:  <alt gl:nullable="false"
+           gl:first="variable_1"
+           gl:last="variable_1"
+           follow:variable_1="">
+         <nonterminal name="identifier"
+                      id="variable_1"
+                      gl:nullable="false"
+                      gl:first="variable_1"
+                      gl:last="variable_1"
+                      follow:variable_1=""/>
+      </alt>. 
+
+</rule>
+   <rule name="call"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="call_1"
+         gl:last="call_8"
+         follow:call_1="call_2"
+         follow:call_2="call_3"
+         follow:call_3="call_4 call_7"
+         follow:call_4="call_5 call_7"
+         follow:call_5="call_6"
+         follow:call_6="call_4"
+         follow:call_7="call_8"
+         follow:call_8="">:   <alt gl:nullable="false"
+           gl:first="call_1"
+           gl:last="call_8"
+           follow:call_1="call_2"
+           follow:call_2="call_3"
+           follow:call_3="call_4 call_7"
+           follow:call_4="call_5 call_7"
+           follow:call_5="call_6"
+           follow:call_6="call_4"
+           follow:call_7="call_8"
+           follow:call_8="">
+         <nonterminal name="identifier"
+                      id="call_1"
+                      gl:nullable="false"
+                      gl:first="call_1"
+                      gl:last="call_1"
+                      follow:call_1=""/>
+         <literal dstring="("
+                  id="call_2"
+                  gl:nullable="false"
+                  gl:first="call_2"
+                  gl:last="call_2"
+                  follow:call_2=""/>
+         <nonterminal name="S"
+                      id="call_3"
+                      gl:nullable="false"
+                      gl:first="call_3"
+                      gl:last="call_3"
+                      follow:call_3=""/>
+         <repeat0 gl:nullable="true"
+                  gl:first="call_4"
+                  gl:last="call_4"
+                  follow:call_4="call_5"
+                  follow:call_5="call_6"
+                  follow:call_6="call_4">
+            <nonterminal name="parameter"
+                         id="call_4"
+                         gl:nullable="false"
+                         gl:first="call_4"
+                         gl:last="call_4"
+                         follow:call_4=""/>
+            <sep gl:nullable="false"
+                 gl:first="call_5"
+                 gl:last="call_6"
+                 follow:call_5="call_6"
+                 follow:call_6="">
+               <alts gl:nullable="false"
+                     gl:first="call_5"
+                     gl:last="call_6"
+                     follow:call_5="call_6"
+                     follow:call_6="">
+                  <alt gl:nullable="false"
+                       gl:first="call_5"
+                       gl:last="call_6"
+                       follow:call_5="call_6"
+                       follow:call_6="">
+                     <literal dstring=","
+                              id="call_5"
+                              gl:nullable="false"
+                              gl:first="call_5"
+                              gl:last="call_5"
+                              follow:call_5=""/>
+                     <nonterminal name="S"
+                                  id="call_6"
+                                  gl:nullable="false"
+                                  gl:first="call_6"
+                                  gl:last="call_6"
+                                  follow:call_6=""/>
+                  </alt>
+               </alts>
+            </sep>
+         </repeat0>
+         <literal dstring=")"
+                  id="call_7"
+                  gl:nullable="false"
+                  gl:first="call_7"
+                  gl:last="call_7"
+                  follow:call_7=""/>
+         <nonterminal name="S"
+                      id="call_8"
+                      gl:nullable="false"
+                      gl:first="call_8"
+                      gl:last="call_8"
+                      follow:call_8=""/>
+      </alt>. 
+</rule>
+   <rule name="parameter"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="parameter_1"
+         gl:last="parameter_1"
+         follow:parameter_1="">:   <alt gl:nullable="false"
+           gl:first="parameter_1"
+           gl:last="parameter_1"
+           follow:parameter_1="">
+         <nonterminal mark="-"
+                      name="expression"
+                      id="parameter_1"
+                      gl:nullable="false"
+                      gl:first="parameter_1"
+                      gl:last="parameter_1"
+                      follow:parameter_1=""/>
+      </alt>. 
+</rule>
+   <rule name="identifier"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="identifier_1"
+         gl:last="identifier_2"
+         follow:identifier_1="identifier_1 identifier_2"
+         follow:identifier_2="">:   <alt gl:nullable="false"
+           gl:first="identifier_1"
+           gl:last="identifier_2"
+           follow:identifier_1="identifier_1 identifier_2"
+           follow:identifier_2="">
+         <repeat1 gl:first="identifier_1"
+                  gl:last="identifier_1"
+                  follow:identifier_1="identifier_1">
+            <nonterminal name="letter"
+                         id="identifier_1"
+                         gl:nullable="false"
+                         gl:first="identifier_1"
+                         gl:last="identifier_1"
+                         follow:identifier_1=""/>
+         </repeat1>
+         <nonterminal name="S"
+                      id="identifier_2"
+                      gl:nullable="false"
+                      gl:first="identifier_2"
+                      gl:last="identifier_2"
+                      follow:identifier_2=""/>
+      </alt>. 
+
+</rule>
+   <rule name="expression"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="expression_1 expression_2"
+         gl:last="expression_1 expression_2"
+         follow:expression_1=""
+         follow:expression_2="">:   <alt gl:nullable="false"
+           gl:first="expression_1"
+           gl:last="expression_1"
+           follow:expression_1="">
+         <nonterminal name="identifier"
+                      id="expression_1"
+                      gl:nullable="false"
+                      gl:first="expression_1"
+                      gl:last="expression_1"
+                      follow:expression_1=""/>
+      </alt>
+      <alt gl:nullable="false"
+           gl:first="expression_2"
+           gl:last="expression_2"
+           follow:expression_2="">
+         <nonterminal name="number"
+                      id="expression_2"
+                      gl:nullable="false"
+                      gl:first="expression_2"
+                      gl:last="expression_2"
+                      follow:expression_2=""/>
+      </alt>. 
+</rule>
+   <rule name="number"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="number_1"
+         gl:last="number_2"
+         follow:number_1="number_1 number_2"
+         follow:number_2="">:   <alt gl:nullable="false"
+           gl:first="number_1"
+           gl:last="number_2"
+           follow:number_1="number_1 number_2"
+           follow:number_2="">
+         <repeat1 gl:first="number_1" gl:last="number_1" follow:number_1="number_1">
+            <nonterminal name="digit"
+                         id="number_1"
+                         gl:nullable="false"
+                         gl:first="number_1"
+                         gl:last="number_1"
+                         follow:number_1=""/>
+         </repeat1>
+         <nonterminal name="S"
+                      id="number_2"
+                      gl:nullable="false"
+                      gl:first="number_2"
+                      gl:last="number_2"
+                      follow:number_2=""/>
+      </alt>. 
+</rule>
+   <rule name="letter"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="letter_1 letter_2"
+         gl:last="letter_1 letter_2"
+         follow:letter_1=""
+         follow:letter_2="">:  <alt gl:nullable="false"
+           gl:first="letter_1"
+           gl:last="letter_1"
+           follow:letter_1="">
+         <inclusion id="letter_1"
+                    gl:nullable="false"
+                    gl:first="letter_1"
+                    gl:last="letter_1"
+                    follow:letter_1="">
+            <range from="a" to="z"/>
+         </inclusion>
+      </alt>
+      <alt gl:nullable="false"
+           gl:first="letter_2"
+           gl:last="letter_2"
+           follow:letter_2="">
+         <inclusion id="letter_2"
+                    gl:nullable="false"
+                    gl:first="letter_2"
+                    gl:last="letter_2"
+                    follow:letter_2="">
+            <range from="A" to="Z"/>
+         </inclusion>
+      </alt>. 
+</rule>
+   <rule name="digit"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="digit_1"
+         gl:last="digit_1"
+         follow:digit_1="">:  <alt gl:nullable="false"
+           gl:first="digit_1"
+           gl:last="digit_1"
+           follow:digit_1="">
+         <inclusion id="digit_1"
+                    gl:nullable="false"
+                    gl:first="digit_1"
+                    gl:last="digit_1"
+                    follow:digit_1="">
+            <range from="0" to="9"/>
+         </inclusion>
+      </alt>. 
+</rule>
+   <rule name="condition"
+         gt:recursive="false"
+         gl:nullable="false"
+         gl:first="condition_1"
+         gl:last="condition_1"
+         follow:condition_1="">:   <alt gl:nullable="false"
+           gl:first="condition_1"
+           gl:last="condition_1"
+           follow:condition_1="">
+         <nonterminal name="identifier"
+                      id="condition_1"
+                      gl:nullable="false"
+                      gl:first="condition_1"
+                      gl:last="condition_1"
+                      follow:condition_1=""/>
+      </alt>. 
+</rule>
+   <rule name="S"
+         mark="-"
+         gt:recursive="false"
+         gl:nullable="true"
+         gl:first="S_1"
+         gl:last="S_1"
+         follow:S_1="S_1">:   <alt gl:nullable="true"
+           gl:first="S_1"
+           gl:last="S_1"
+           follow:S_1="S_1">
+         <repeat0 gl:nullable="true"
+                  gl:first="S_1"
+                  gl:last="S_1"
+                  follow:S_1="S_1">
+            <literal sstring=" "
+                     id="S_1"
+                     gl:nullable="false"
+                     gl:first="S_1"
+                     gl:last="S_1"
+                     follow:S_1=""/>
+         </repeat0>
+      </alt>.</rule>
+</ixml>

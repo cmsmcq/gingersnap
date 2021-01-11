@@ -1,0 +1,83 @@
+{ Manually constructed ixml grammar for Relax NG compact syntax.
+  Begun, not finished; got bored.
+  
+  2020-12-19 : CMSMcQ : began conversion from EBNF
+}
+
+{ To do:  
+  - reformulate rules for quoted strings, since ixml does not have
+    string subtraction
+  - include whitespace
+}
+
+topLevel: decl*, (pattern; grammarContent*).
+
+decl: "namespace", identifierOrKeyword, "=", namespaceURILiteral
+     ; "default", "namespace", identifierOrKeyword?, "=", namespaceURILiteral
+     ; "datatypes", identifierOrKeyword, "=", literal.
+
+pattern: "element", nameClass, "{", pattern, "}"
+| "attribute", nameClass, "{", pattern, "}"
+| pattern, (",", pattern)+
+| pattern, ("&", pattern)+
+| pattern, ("|", pattern)+
+| pattern, "?"
+| pattern, "*"
+| pattern, "+"
+| "list", "{", pattern, "}"
+| "mixed", "{", pattern, "}"
+| identifier
+| "parent", identifier
+| "empty"
+| "text"
+| datatypeName?, datatypeValue
+| datatypeName, ("{", param*, "}")? exceptPattern?
+| "notAllowed"
+| "external", anyURILiteral, inherit?
+| "grammar", "{", grammarContent*, "}"
+| "(", pattern, ")".
+
+param: identifierOrKeyword, "=", literal.
+
+exceptPattern: pattern.
+
+grammarContent: start
+| define
+| "div", "{", grammarContent*, "}"
+| "include", anyURILiteral, inherit?, ("{", includeContent*, "}")?.
+
+includeContent: define; start; "div", "{", includeContent*, "}".
+
+start: "start", assignMethod, pattern.
+define: identifier, assignMethod, pattern.
+assignMethod: "="; "|="; "&=".
+nameClass: name; nsName, exceptNameClass?; anyName, exceptNameClass?; nameClass, "|", nameClass; "(", nameClass, ")".
+name: identifierOrKeyword; CName.
+exceptNameClass: "-", nameClass.
+datatypeName: CName; "string"; "token".
+datatypeValue: literal.
+anyURILiteral: literal.
+namespaceURILiteral: literal; "inherit".
+inherit	= "inherit", "=", identifierOrKeyword.
+identifierOrKeyword: identifier; keyword.
+identifier: (NCName - keyword); quotedIdentifier.
+quotedIdentifier: #5C, NCName. { 5C = reverse solidus }
+CName: NCName ":", NCName.
+nsName: NCName ":*".
+anyName: "*".
+literal: literalSegment, ("~", literalSegment)+.
+
+literalSegment: dq (Char - (dq; newline))* dq
+| sq, (Char - (sq; newline))*, sq
+| dq3, (dq2, (Char - dq))*, dq3
+| sq3, (sq3, (Char - sq))*, sq3.
+
+dq: '"'.
+sq: "'".
+dq2: '""'.
+sq2: "''".
+dq3: '"""'.
+sq3: "'''".
+
+keyword: "attribute"; "default"; "datatypes"; "div"; "element"; "empty"; "external"; "grammar"; "include"; "inherit"; "list"; "mixed"; "namespace"; "notAllowed"; "parent"; "start"; "string"; "text"; "token".
+

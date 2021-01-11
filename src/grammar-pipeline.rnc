@@ -1,0 +1,215 @@
+grammar {
+
+	# simple RNC grammar for grammar pipelines.
+	# Maintenance notes below.
+	#
+	# Revisions:
+	# 2021-01-01 : CMSMcQ : add eliminate-unit-rules
+	# 2020-12-29 : CMSMcQ : Add attributes to tclego-to-tcrecipes
+	# 2020-12-28 : CMSMcQ : Add fsa-to-tclego etc.
+	# 2020-12-25 : CMSMcQ : Add eliminate-arc-overlap
+	# 2020-12-23 : CMSMcQ : Rename split-literals as normalize-terminals.
+	#                       Make starters optional on rk-subset.
+	# 2020-12-21 : CMSMcQ : More step types.
+	# 2020-12-20 : CMSMcQ : Keep adding new element types.
+	#                       Restructure steps into groups,
+	#                       trying for better clarity.
+	# 2020-12-19 : CMSMcQ : made as part of implementation
+        #                       of grammar processing pipeline
+	# To do:
+	# require @save values to be unique?
+	# supply types for tokenized attributes?
+
+	start = grammar-pipeline
+
+	grammar-pipeline = element grammar-pipeline { (desc | step)* }
+
+	step = annotation | algebra | modification | deletion
+	       | derivation | miscellaneous
+
+# Let's group the steps
+# 1 Annotation
+
+	annotation = annotate-pc
+		   | annotate-gl
+
+     	annotate-pc = element annotate-pc {desc}	
+     	annotate-gl = element annotate-gl {desc}
+	
+
+# 2 Algebraic manipulation
+
+	algebra = expand-references
+	        | eliminate-unit-rules
+		| right-factor
+		| distribute-sequence-over-disjunction
+		| ardens-lemma
+		| simplify-epsilon-expressions
+		| simplify-expressions
+		| simplify-nested-sequences
+		| normalize-terminals
+		| eliminate-arc-overlap
+		| determinize
+		# make-rule-from-pattern
+
+	expand-references = element expand-references {
+	     attribute nonterminals { text },
+	     attribute keep { text }?,
+	     desc
+	}
+	
+	eliminate-unit-rules = element eliminate-unit-rules {
+	     desc
+	}
+	
+     	right-factor = element right-factor {
+	     attribute rule { text },
+	     attribute follow-state { text },
+	     attribute where { "bottom" | "top" },
+	     desc
+	}
+	
+     	distribute-sequence-over-disjunction = element distribute-sequence-over-disjunction {
+	     attribute which { text }?, 
+	     desc
+	}
+
+     	ardens-lemma = element ardens-lemma {
+	     attribute rule { text },
+	     desc
+	}
+
+     	simplify-epsilon-expressions = element simplify-epsilon-expressions {
+	     desc
+	}
+	
+     	simplify-expressions = element simplify-expressions {desc}
+
+    	simplify-nested-sequences = element simplify-nested-sequences {
+	     desc
+	}
+
+     	normalize-terminals = element normalize-terminals {desc}
+
+     	eliminate-arc-overlap = element eliminate-arc-overlap {desc}
+
+     	determinize = element determinize {desc}
+
+	
+#	make-rule-from-pattern = element make-rule-from-pattern {
+#	     element pattern { any },
+#	     element rule { any },
+#	     desc
+#	}
+ 
+
+
+# 3 Changes to the grammar
+
+	modification = add-final-flag
+
+    	add-final-flag = element add-final-flag {
+	     attribute final { text },
+	     desc
+	}
+	
+
+# 4 Deletion of things, usually cruft
+
+	deletion = linkage-removal
+		 | rule-removal
+		 | remove-unreachables
+		 | empty-selfloop-removal
+		 | strip-rtn-attributes
+
+	linkage-removal = element linkage-removal {
+	     desc
+	}
+
+     	rule-removal = element rule-removal {
+	     attribute delenda { text },
+	     desc
+	}
+
+	remove-unreachables = element remove-unreachables {
+	     desc
+	}
+
+    	empty-selfloop-removal = element empty-selfloop-removal {
+	     desc
+	}
+	
+ 	strip-rtn-attributes = element strip-rtn-attributes {
+	     desc
+	}
+
+
+		 
+# 5 Creation of derived grammars
+ 
+        derivation = rk-subset
+		   | make-rtn
+		   | fsa-to-tclego
+		   | tclego-to-tcrecipes
+		   | tcrecipes-to-testcases
+
+ 	rk-subset = element rk-subset {
+	     attribute k { text },
+	     attribute config { text }?,
+	     attribute starters { text }?,
+	     desc
+	}
+	
+ 	make-rtn = element make-rtn {
+	     attribute fissile { text }?,
+	     attribute non-fissile { text }?,
+	     desc
+	}
+
+        fsa-to-tclego = element fsa-to-tclego { desc }
+	
+        tclego-to-tcrecipes = element tclego-to-tcrecipes {
+	     attribute coverage {
+	          "state" | "state-final"
+		  | "arc" | "arc-final"
+		  | "all"
+             },
+	     attribute polarity {
+	          "positive" | "negative" | "all"
+             },
+	     desc
+	}
+	
+        tcrecipes-to-testcases = element tcrecipes-to-testcases { desc }
+
+
+# 6 Miscellaneous
+
+	miscellaneous = relabel | sort-nonterminals
+	
+  	relabel = element relabel {
+	     attribute newdesc { text }, 
+	     desc
+	}
+
+	sort-nonterminals = element sort-nonterminals {
+	    desc
+	}
+	
+	
+	
+
+
+	# 'desc' also handles the save attribute
+	desc = attribute save { text}?, element desc { p+ }?
+	
+	p = element p { phrases }
+	emph = element emph { phrases }
+
+	phrases = (text | emph)*
+	
+# Maintenance:
+# To add a new kind of step, first add the name to 'step', then define an element with
+# the appropriate parameters.
+
+}

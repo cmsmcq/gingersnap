@@ -1,0 +1,24 @@
+<grammar-pipeline>
+
+  <desc>
+    <p>This pipeline takes an ixml grammar and produces an r_2
+    subset grammar.</p>
+    <p>It's a bit unfortunate that the k value has to be
+    hard-coded here.  Improvement should be possible.</p>
+    
+    <p>Revisions:
+    2020-12-30 : CMSMcQ : began pipeline.
+    </p>
+  </desc>
+
+  <annotate-pc>
+    <desc>
+      <p>Parent/child annotation is a prerequisite for
+      r_k subset generation.</p>
+    </desc>
+  </annotate-pc>
+
+  <rk-subset k="5"/>
+
+</grammar-pipeline>
+

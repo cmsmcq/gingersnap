@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      gt:date="2020-12-04T20:24:25.277-07:00"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value">
+   <comment>2020-12-04T20:24:25.277-07:00: grammar augmented with Gluschkov annotations.</comment>
+   <comment> In the manual exercise of creating a regular expression for R_0 for
+block, we have:
+
+  s: (omega*, alpha, rb*, sigma?)*, 
+     ((omega*, b0)
+     |(omega*, alpha, rb*)).
+
+We would like to reduce it.  Letting 
+
+  a = omega
+  b = (alpha, rb*)
+  c = sigma
+  d = b0
+
+gives this grammar, which we are putting into a file in order to calculate
+its Gluschkov automaton automatically, since doing so by hand has led to 
+errors and frustration. </comment>
+
+   <rule name="s"
+         gl:nullable="false"
+         gl:first="a1 b1 a2 d b2"
+         gl:last="d b2"
+         follow:a1="a1 b1"
+         follow:b1="c a1 b1 a2 d b2"
+         follow:c="a1 b1 a2 d b2"
+         follow:a2="a2 d b2"
+         follow:d=""
+         follow:b2="">:
+   <alt gl:nullable="false"
+           gl:first="a1 b1 a2 d b2"
+           gl:last="d b2"
+           follow:a1="a1 b1"
+           follow:b1="c a1 b1 a2 d b2"
+           follow:c="a1 b1 a2 d b2"
+           follow:a2="a2 d b2"
+           follow:d=""
+           follow:b2="">
+         <repeat0 gl:nullable="true"
+                  gl:first="a1 b1"
+                  gl:last="c b1"
+                  follow:a1="a1 b1"
+                  follow:b1="c a1 b1"
+                  follow:c="a1 b1">
+            <alts gl:nullable="false"
+                  gl:first="a1 b1"
+                  gl:last="c b1"
+                  follow:a1="a1 b1"
+                  follow:b1="c"
+                  follow:c="">
+               <alt gl:nullable="false"
+                    gl:first="a1 b1"
+                    gl:last="c b1"
+                    follow:a1="a1 b1"
+                    follow:b1="c"
+                    follow:c="">
+                  <repeat0 gl:nullable="true"
+                           gl:first="a1"
+                           gl:last="a1"
+                           follow:a1="a1">
+                     <nonterminal name="a1"
+                                  id="a1"
+                                  gl:nullable="false"
+                                  gl:first="a1"
+                                  gl:last="a1"
+                                  follow:a1=""/>
+                  </repeat0>
+                  <nonterminal name="b1"
+                               id="b1"
+                               gl:nullable="false"
+                               gl:first="b1"
+                               gl:last="b1"
+                               follow:b1=""/>
+                  <option gl:nullable="true" gl:first="c" gl:last="c" follow:c="">
+                     <nonterminal name="c"
+                                  id="c"
+                                  gl:nullable="false"
+                                  gl:first="c"
+                                  gl:last="c"
+                                  follow:c=""/>
+                  </option>
+               </alt>
+            </alts>
+         </repeat0>
+         <repeat0 gl:nullable="true"
+                  gl:first="a2"
+                  gl:last="a2"
+                  follow:a2="a2">
+            <nonterminal name="a2"
+                         id="a2"
+                         gl:nullable="false"
+                         gl:first="a2"
+                         gl:last="a2"
+                         follow:a2=""/>
+         </repeat0>
+         <alts gl:nullable="false"
+               gl:first="d b2"
+               gl:last="d b2"
+               follow:d=""
+               follow:b2="">
+            <alt gl:nullable="false" gl:first="d" gl:last="d" follow:d="">
+               <nonterminal name="d"
+                            id="d"
+                            gl:nullable="false"
+                            gl:first="d"
+                            gl:last="d"
+                            follow:d=""/>
+            </alt>
+            <alt gl:nullable="false" gl:first="b2" gl:last="b2" follow:b2="">
+               <nonterminal name="b2"
+                            id="b2"
+                            gl:nullable="false"
+                            gl:first="b2"
+                            gl:last="b2"
+                            follow:b2=""/>
+            </alt>
+         </alts>
+      </alt>. 
+</rule>
+</ixml>

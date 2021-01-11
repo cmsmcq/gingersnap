@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> A really simple context-free grammar for testing
+  test-generation tools.
+
+  S is an A and a B separated by a hyphen.
+  An A is an 'a' or an S surrounded by parentheses.
+  A B is a 'b' or an S surrounded by brackets.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made file
+</comment>
+
+   <rule name="S">:  <alt>
+         <nonterminal name="A"/>
+         <literal sstring="-"/>
+         <nonterminal name="B"/>
+      </alt>. 
+</rule>
+   <rule name="A">:  <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S"/>
+         <literal sstring=")"/>
+      </alt>. 
+</rule>
+   <rule name="B">:  <alt>
+         <literal sstring="b"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="S"/>
+         <literal sstring="]"/>
+      </alt>. 
+
+</rule>
+</ixml>

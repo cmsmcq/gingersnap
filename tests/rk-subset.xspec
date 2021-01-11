@@ -1,0 +1,27 @@
+<xsp:description xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+		 xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		 xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+		 stylesheet="../src/rk-subset.xsl">
+
+  <xsp:param name="k" select="xs:integer(2)"/>
+  
+  <xsp:helper stylesheet="../../../lib/xslt/strip-ws.xsl"/>
+
+  <xsp:variable name="strip" as="xs:string" select=" '*' "/>
+  <xsp:variable name="keep"  as="xs:string" select=" 'comment' "/>
+
+  <xsp:scenario label="Test one-step r_k subset generation">
+    <xsp:context href="../ab/a.ixml.xml"/>
+    
+    <xsp:expect label="Number of rules should not shrink"
+		test="count(/ixml/rule) ge 1"/>
+
+    <xsp:expect label=""
+		href="xml/a.sub.r2.ixml.xml"
+		select="ws:strip(ixml/rule, $strip, $keep)"
+		test="ws:strip(ixml/rule, $strip, $keep)"/>
+   
+  </xsp:scenario>
+
+  
+</xsp:description>

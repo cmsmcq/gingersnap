@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> Tests cases for arc normlization code in eliminate-arc-overlap.xsl. </comment>
+
+   <comment> There are four cases that can hold for two arcs:
+  - they are disjoint
+  - they are equal
+  - they are in a proper subset/superset relation
+  - they overlap
+
+  There are three cases of ranges that are worth exercising
+  separately, just to be sure:
+  - single range covering a single character
+  - single range covering multiple characters
+  - multiple ranges
+
+  There are several ways terminals can be expressed:  literals, inclusions,
+  exclusions.  Inclusions and exclusions can have members which are
+  literals, ranges, and classes.
+</comment>
+
+   <comment> Boundary cases. </comment>
+
+   <rule name="q0">:  <alt>
+         <literal sstring="i"/>
+         <nonterminal name="q2"/>
+      </alt>. 
+</rule>
+   <rule name="q0a">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+</rule>
+   <rule name="q0b">:  <alt>
+         <inclusion>
+            <class code="Nd"/>
+         </inclusion>
+         <nonterminal name="q4"/>
+      </alt>. 
+</rule>
+   <rule name="q0c">:  <comment>nil</comment> 
+      <alt>
+         <nonterminal name="q4"/>
+      </alt>. 
+</rule>
+   <rule name="q0d">:  <comment>nil</comment>
+      <alt/>. 
+
+<comment> Disjoint single characters. </comment>
+
+   </rule>
+   <rule name="q1">:  <alt>
+         <literal sstring="a"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <literal sstring="b"/>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Disjoint single ranges. </comment>
+
+   </rule>
+   <rule name="q2">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Disjoint multiple ranges. </comment>
+
+   </rule>
+   <rule name="q3">:  <alt>
+         <inclusion>
+            <class code="Zs"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <class code="Lu"/>
+            <class code="Ll"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Disjoint mixtures. </comment>
+
+   </rule>
+   <rule name="q4">:  <alt>
+         <literal sstring="a"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <literal sstring="b"/>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <class code="Zs"/>
+         </inclusion>
+         <nonterminal name="q5"/>
+      </alt>. 
+
+
+<comment> Equal single characters. </comment>
+
+   </rule>
+   <rule name="q5">:  <alt>
+         <literal sstring="a"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <literal sstring="a"/>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q5a">:  <alt>
+         <literal sstring="a"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <literal sstring="a"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q5b">:  <alt>
+         <literal sstring="a"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="a"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Equal single ranges. </comment>
+
+   </rule>
+   <rule name="q6">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q6a">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="f"/>
+            <range from="q" to="z"/>
+            <literal sstring="m"/>
+            <range from="f" to="x"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q6b">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Equal multiple ranges. </comment>
+
+   </rule>
+   <rule name="q7">:  <alt>
+         <inclusion>
+            <class code="Zs"/>
+            <class code="Lu"/>
+            <class code="Ll"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <class code="Zs"/>
+            <class code="Lu"/>
+            <class code="Ll"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q7a">:  <alt>
+         <inclusion>
+            <class code="Zs"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="#2000" to="#200A"/>
+            <literal hex="202F"/>
+            <literal hex="205F"/>
+            <literal hex="3000"/>
+            <literal sstring=" "/>
+            <literal hex="A0"/>
+            <range from="#1680" to="#1680"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+
+<comment> Subsets </comment>
+
+   </rule>
+   <rule name="q8">:   <alt>
+         <literal sstring="i"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <literal sstring="w"/>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q9">:   <alt>
+         <inclusion>
+            <range from="g" to="k"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q10">:   <alt>
+         <inclusion>
+            <literal sstring="a"/>
+            <literal sstring="e"/>
+            <literal sstring="i"/>
+            <literal sstring="o"/>
+            <literal sstring="u"/>
+            <literal sstring="A"/>
+            <literal sstring="E"/>
+            <literal sstring="I"/>
+            <literal sstring="O"/>
+            <literal sstring="U"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Overlaps </comment>
+
+   </rule>
+   <rule name="q11">:  <alt>
+         <inclusion>
+            <range from="a" to="k"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="g" to="z"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+</rule>
+   <rule name="q12">:  <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+            <class code="Nd"/>
+         </inclusion>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <class code="Ll"/>
+            <class code="Lu"/>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>. 
+
+<comment> Mix and match </comment>
+
+   </rule>
+   <rule name="q13">:  <alt>
+         <literal sstring="i"/>
+         <nonterminal name="q2"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <literal sstring="w"/>
+         </inclusion>
+         <nonterminal name="q3"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="d" to="d"/>
+         </inclusion>
+         <nonterminal name="q4"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="c"/>
+         </inclusion>
+         <nonterminal name="q5"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal name="q6"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal name="q7"/>
+      </alt>
+      <alt>
+         <exclusion>
+            <class code="Nd"/>
+         </exclusion>
+         <nonterminal name="q8"/>
+      </alt>. 
+
+</rule>
+</ixml>

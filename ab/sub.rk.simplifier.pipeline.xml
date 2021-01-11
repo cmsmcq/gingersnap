@@ -1,0 +1,71 @@
+<grammar-pipeline>
+  <desc>
+    <p>Generic pipeline for simplifying rk subsets by
+    clearing away their undefined nonterminals.</p>
+  </desc>
+
+  <annotate-pc>
+    <desc>
+      <p>Re-annotate parent-child relations, since we are
+      starting from an r_k subset and many things have changed.</p>
+      <p>The annotation is needed for the simplification steps
+      that follow.</p>
+    </desc>
+  </annotate-pc>
+  
+  <simplify-expressions>
+    <desc><p>Filter out the unwanted unsatisfiable expressions.
+    This takes several passes; it would be nice just to repeat
+    until a fixed point is reached.</p>
+    <p>After round 1, references to undefined nonterminals
+    have been replaced by empty-set elements.</p></desc>
+  </simplify-expressions>
+
+  <simplify-expressions>
+    <desc><p>After round 2, RHS containing just an empty-set
+    element have been replaced by empty-set elements.</p></desc>
+  </simplify-expressions>
+  
+  <simplify-expressions>
+    <desc><p>After round 3, rules at which the subset bottomed
+    out have been marked as unsatisfiable.</p></desc>
+  </simplify-expressions>
+
+  <simplify-expressions>
+    <desc><p>After round 4, references to those unsatisfiable
+    rules have been replaced by empty-set markers.
+    </p></desc>
+  </simplify-expressions>
+
+  <simplify-expressions>  
+    <desc><p>After round 5, sequences containing empty-set
+    markers have been marked unsatisfiable.
+    </p></desc>
+  </simplify-expressions>
+
+  <simplify-expressions>  
+    <desc><p>After round 6, unsatisfiable RHS have been
+    dropped.  I hope that if they were the only RHS
+    the rule has been marked, but I don't remember,
+    and there are no such rules in the grammar I'm
+    working on at the moment.</p></desc>
+  </simplify-expressions>
+  
+  <annotate-pc>
+    <desc>
+      <p>It's now safe to remove the unreachable rules,
+      which reduces visual clutter a lot.
+      (Actually it was safe after round 4.)</p>
+      <p>PC annotation is a pre-requisite.</p>
+    </desc>
+    </annotate-pc>
+    
+  <remove-unreachables/>
+
+  
+  <!--* what do these do? *-->
+  <!--
+  <simplify-expressions/>
+  -->
+  
+</grammar-pipeline>

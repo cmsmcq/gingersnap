@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> A really simple context-free grammar for testing
+  test-generation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made file
+</comment>
+
+   <rule name="S">:  <alt>
+         <nonterminal name="A"/>
+         <nonterminal name="B"/>
+      </alt>. 
+</rule>
+   <rule name="A">:  <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="A"/>
+         <literal sstring=")"/>
+      </alt>. 
+</rule>
+   <rule name="B">:  <alt>
+         <literal sstring="b"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="B"/>
+         <literal sstring="]"/>
+      </alt>. 
+
+</rule>
+</ixml>

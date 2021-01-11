@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.jenitennison.com/xslt/xspec"
+        xspec="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-annotate-pc.xspec"
+        stylesheet="file:/Users/cmsmcq/2021/gingersnap/src/ixml-annotate-pc.xsl"
+        date="2021-01-09T18:30:54.736416-07:00">
+   <scenario id="scenario1"
+             xspec="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-annotate-pc.xspec">
+      <label>Test PC annotation</label>
+      <input-wrap xmlns="">
+         <xsp:context xmlns:functx="http://www.functx.com"
+                      xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                      href="file:/Users/cmsmcq/2021/gingersnap/ab/a.ixml.xml"
+                      mode="annotate-pc"/>
+      </input-wrap>
+      <result select="/self::document-node()">
+         <content-wrap xmlns=""><?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+            <ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                  gt:date="2021-01-09T18:30:54.736416-07:00">
+               <comment>2021-01-09T18:30:54.736416-07:00: ixml-annotate-pc.xsl.</comment>
+               <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/ab/a.ixml.xml</comment>
+               <comment>    Grammar augmented with @gt:recursive etc.</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment> A really simple context-free grammar for testing
+  test-generation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made file
+</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <rule name="S" gt:recursive="true">:  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="a"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="("/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring=")"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+
+
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+</ws>
+            </ixml>
+         </content-wrap>
+      </result>
+      <test id="scenario1-expect1" successful="true">
+         <label>All rules should remain in output</label>
+         <expect-test-wrap xmlns="">
+            <xsp:expect xmlns:functx="http://www.functx.com"
+                        xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                        test="count(/ixml/rule) = 1"/>
+         </expect-test-wrap>
+         <expect select="()"/>
+      </test>
+      <test id="scenario1-expect2" successful="true">
+         <label>All RHS should remain in output</label>
+         <expect-test-wrap xmlns="">
+            <xsp:expect xmlns:functx="http://www.functx.com"
+                        xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                        test="count(/ixml/rule/alt) = 2"/>
+         </expect-test-wrap>
+         <expect select="()"/>
+      </test>
+      <test id="scenario1-expect3" successful="true">
+         <label>Annotation should label recursive nonterminals.</label>
+         <expect-test-wrap xmlns="">
+            <xsp:expect xmlns:functx="http://www.functx.com"
+                        xmlns:xsp="http://www.jenitennison.com/xslt/xspec"
+                        test="ixml/rule"/>
+         </expect-test-wrap>
+         <result select="/element()">
+            <content-wrap xmlns="">
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S"
+                     gt:recursive="true">:  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="a"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="("/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring=")"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+
+
+</rule>
+            </content-wrap>
+         </result>
+         <expect select="/element()">
+            <content-wrap xmlns="">
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     name="S"
+                     gt:recursive="true">:  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="a"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  <alt>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring="("/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal sstring=")"/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+
+
+</rule>
+            </content-wrap>
+         </expect>
+      </test>
+   </scenario>
+</report>

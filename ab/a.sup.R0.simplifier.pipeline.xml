@@ -1,0 +1,72 @@
+<grammar-pipeline>
+
+  <desc>
+    <p>This pipeline takes the ixml grammar a.ixml,
+    produces an R_0 superset grammar, and then simplifies
+    that grammar.  The first part of the pipeline is
+    the same as the generic sup.R0 generation pipeline,
+    but the simplifications are grammar-specific.</p>
+    <p>I've commented out the common part.</p>
+    
+    <p>Revisions:
+    2020-12-30 : CMSMcQ : began pipeline.
+    </p>
+  </desc>
+
+  <!--
+  <annotate-pc>
+    <desc>
+      <p>Parent/child annotation is a prerequisite for
+      Gluschkov annoation.</p>
+    </desc>
+  </annotate-pc>
+
+  <annotate-gl save="temp.gl.xml">
+    <desc>
+      <p>Gluschkov annotation is a prerequisite for
+      making the RTN.</p>
+    </desc>
+  </annotate-gl>
+
+  <make-rtn save="temp.rtn.xml">
+    <desc>
+      <p>Build the RTN, using all recursive nonterminals.</p>
+    </desc>
+  </make-rtn>    
+  -->
+
+  <expand-references nonterminals="S_1 S_2 S_4 S_3">
+    <desc><p>Factor out states with one arc in and one out.</p></desc>
+  </expand-references>
+
+  <simplify-epsilon-expressions>
+    <desc><p>Now we have unnecessary nils cluttering up the rules.
+    Clean them out.</p></desc>
+  </simplify-epsilon-expressions>
+
+  <ardens-lemma rule="S_f">
+    <desc><p>Now we are down to S_0 and S_f.  I think we can
+    apply Arden's lemma to first one and then the other.
+    Start with S_f.</p></desc>
+  </ardens-lemma>
+
+  <ardens-lemma rule="S_0">
+    <desc><p>I think we want to apply Arden to S_0 and
+    then substitute S_f into S_0.</p>
+    <p>But maybe it needs to be the other way round.</p></desc>
+  </ardens-lemma>
+
+  <expand-references nonterminals="S_f">
+    <desc><p>Now eliminate S_f and we are down to the
+    obvious regex.</p></desc>
+  </expand-references>
+
+  <!--
+  <simplify-epsilon-expressions>
+    <desc><p>Q. Does this step do anything useful?</p>
+    <p>A. No.</p></desc>
+  </simplify-epsilon-expressions>
+  -->
+
+</grammar-pipeline>
+

@@ -1,0 +1,11 @@
+<grammar-pipeline>
+  <desc>
+    <p>Illustration of literal handling.  All I want to do is
+    make an FSA.</p>
+  </desc>
+
+  <annotate-pc/>
+  <annotate-gl/>
+  <make-rtn fissile="S"/>
+
+</grammar-pipeline>

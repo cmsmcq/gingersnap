@@ -1,0 +1,27 @@
+{ A very few test cases for arc normalization code in eliminate-arc-overlap.xsl. }
+{ Cut down from the full tests for debugging, 2020-12-28 }
+{ Subsets }
+
+q8:  'i', q2; 'w', q4; ['a' - 'z'], q3.
+
+q9:  ['g'-'k'], q2; ['a' - 'z'], q3.
+
+q10:  ['a'; 'e'; 'i'; 'o'; 'u'; 'A'; 'E'; 'I'; 'O'; 'U'], q2; ['a' - 'z'; 'A'-'Z'], q3.
+
+{ Overlaps }
+
+q11: ['a' - 'k'], q2; ['g' - 'z'], q3.
+
+{ q12: ['a' - 'z'; 'A'-'Z'; Nd], q2; [Ll; Lu; '0'-'9'], q3. }
+
+{ Mix and match }
+
+q13: 'i', q2;
+     ['w'], q3;
+     ["d" - 'd'], q4;
+     ['a' - 'c'], q5;
+     ['a' - 'z'; 'A' - 'Z'], q6;
+     ['a' - 'z'; 'A' - 'Z'], q7;
+     { ~[Nd], q8 }
+     .
+

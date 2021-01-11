@@ -1,0 +1,81 @@
+<grammar-pipeline>
+  <desc>
+    <p>Generic pipeline for converting a regular approximation
+    (whether an r_k subset or an R_k superset) to a
+    deterministic FSA from which test cases can be generated.</p>
+    <p>At least, it's mostly generic.</p>
+    <p>The make-rtn/@fissile attribute is grammar-specific.</p>
+    <p>The expand-references/@nonterminals attribute is currently
+    grammar-specific. If we add a way to tell make-rtn not to add
+    linkage rules, this could be dispensed with.</p>
+  </desc>
+  <desc>
+    <p>Revisions:</p>
+    <p>2020-12-31 : CMSMcQ : made file</p>
+  </desc>
+
+  <!--
+  <annotate-pc>
+    <desc><p>Is this necessary?</p></desc>
+  </annotate-pc>
+  -->
+  
+  <normalize-terminals>
+    <desc><p>Before building the r_0 FSA, we split all the literal
+    strings into sequences and calculate information about which
+    characters will match which terminals. That's a necessary
+    preparation for detecting overlap among arcs and making the FSA
+    deterministic.</p></desc>
+  </normalize-terminals>
+
+  <annotate-gl>
+    <desc><p>Gluschkov annotation is the direct pre-requisite for the
+    FSA creation.</p></desc>
+  </annotate-gl>
+  
+  <make-rtn non-fissile="#none">
+    <desc>
+      <p>We make an RTN from the grammar.  None of the rules are
+      recursive, but we want them all broken out, so we need
+      to specify non-fissile='#none'.</p>
+    </desc>
+  </make-rtn>
+
+  <!--  
+  <eliminate-unit-rules>
+    <desc>
+      <p>We don't want to do much hand work to make these pretty.
+      But we do need empty transitions gone before we try to
+      determinize the FSA.</p>
+    </desc>
+  </eliminate-unit-rules>
+
+  <annotate-pc/>
+  <remove-unreachables/>
+    
+
+<simplify-epsilon-expressions/>
+
+
+  <expand-references nonterminals="S_0">
+    <desc><p>Eliminate empty linkage rules.</p></desc>
+  </expand-references>
+
+  <determinize>
+    <desc>
+      <p>Now make the FSA deterministic.</p>
+    </desc>
+  </determinize>
+  
+
+  <simplify-epsilon-expressions/>
+
+  
+  <fsa-to-tclego save="temp.r0.tclego.xml"/>
+  
+  <tclego-to-tcrecipes coverage="state-final"
+		       polarity="positive"/>  
+  -->
+</grammar-pipeline>
+
+  

@@ -1,0 +1,2850 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report xmlns="http://www.jenitennison.com/xslt/xspec"
+        xspec="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-to-saprg.xspec"
+        stylesheet="file:/Users/cmsmcq/2021/gingersnap/src/ixml-to-saprg.xsl"
+        date="2021-01-11T13:00:34.746922-07:00">
+   <scenario id="scenario1"
+             xspec="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-to-saprg.xspec">
+      <label>When invoked without parameters</label>
+      <input-wrap xmlns="">
+         <xspec:context xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+                        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                        xmlns:xspec="http://www.jenitennison.com/xslt/xspec"
+                        href="file:/Users/cmsmcq/2021/gingersnap/tests/xml/Program.pcgl.ixml.xml"
+                        mode="make-rtn"/>
+      </input-wrap>
+      <result select="/self::document-node()">
+         <content-wrap xmlns=""><?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+            <ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                  xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                  xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                  xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                  gt:date="2021-01-11T13:00:34.746922-07:00"
+                  gl:gluschkov="dummy value"
+                  follow:followsets="dummy value"
+                  rtn:rtn="Recursive transition network">
+               <comment> 2021-01-11T13:00:34.746922-07:00 creation of stack-augmented pseudo-regular grammar (SAPRG) by ixml-to-saprg.xsl. </comment>
+               <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/tests/xml/Program.pcgl.ixml.xml </comment>
+               <comment> Output grammar G′:  this grammar.</comment>
+               <comment> A stack automaton guided by grammar G′and the rtn:stack attributes should recognize L(G), the same language recognized by G.  If the rtn:stack attributes are ignored, this is a (pseudo-)regular grammar which recognizes the R_0 superset of L(G). </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <comment>2021-01-11T12:29:16.096019-07:00: ixml-annotate-gluschkov.xsl.</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/Program.pc.ixml.xml</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment>    Grammar augmented with Gluschkov automata (@gl:*).</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment>2021-01-11T12:28:36.185426-07:00: ixml-annotate-pc.xsl.</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/../../program/Program.ixml.xml</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment>    Grammar augmented with @gt:recursive etc.</comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="program"
+                     gt:recursive="false"
+                     gt:referenced="false"
+                     gl:nullable="false"
+                     gl:first="program_1"
+                     gl:last="program_1"
+                     follow:program_1="">:  <alt gl:nullable="false"
+                       gl:first="program_1"
+                       gl:last="program_1"
+                       follow:program_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="block"
+                                  id="program_1"
+                                  gl:nullable="false"
+                                  gl:first="program_1"
+                                  gl:last="program_1"
+                                  follow:program_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <comment> Expansion for block. </comment>
+               <comment> block: "{", S, statement*(";", S), "}", S. </comment>
+               <rule name="block" rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="block_0" rtn:stack="push extcall_block"/>
+                  </alt>
+               </rule>
+               <rule name="block_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="{"/>
+                     <nonterminal rtn:nttype="state" name="block_1"/>
+                  </alt>
+               </rule>
+               <rule name="block_1" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_2"/>
+                  </alt>
+               </rule>
+               <rule name="block_2" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+                  </alt>
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="}"/>
+                     <nonterminal rtn:nttype="state" name="block_6"/>
+                  </alt>
+               </rule>
+               <rule name="block_3" rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring=";"/>
+                     <nonterminal rtn:nttype="state" name="block_4"/>
+                  </alt>
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="}"/>
+                     <nonterminal rtn:nttype="state" name="block_6"/>
+                  </alt>
+               </rule>
+               <rule name="block_4" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_5"/>
+                  </alt>
+               </rule>
+               <rule name="block_5" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+                  </alt>
+               </rule>
+               <rule name="block_6" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_7"/>
+                  </alt>
+               </rule>
+               <rule name="block_7" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="block_f"/>
+                  </alt>
+               </rule>
+               <rule name="block_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="program_1" rtn:stack="pop program_1"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_5" rtn:stack="pop statement_5"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_block">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <comment> End of expansion for block. </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <comment> Expansion for statement. </comment>
+               <comment> statement: if-statement; while-statement; assignment; call; block. </comment>
+               <rule name="statement" rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_0" rtn:stack="push extcall_statement"/>
+                  </alt>
+               </rule>
+               <rule name="statement_0">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="if-statement_0"
+                                  rtn:stack="push statement_1"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="while-statement_0"
+                                  rtn:stack="push statement_2"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="assignment_0" rtn:stack="push statement_3"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="call_0" rtn:stack="push statement_4"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="block_0" rtn:stack="push statement_5"/>
+                  </alt>
+               </rule>
+               <rule name="statement_1" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="statement_2" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="statement_3" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="statement_4" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="statement_5" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="block_3" rtn:stack="pop block_3"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_6" rtn:stack="pop if-statement_6"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_3" rtn:stack="pop else-part_3"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_6" rtn:stack="pop while-statement_6"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <comment> End of expansion for statement. </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <comment> Expansion for if-statement. </comment>
+               <comment> if-statement: "if", S, condition, "then", S, statement, else-part?. </comment>
+               <rule name="if-statement" rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_0" rtn:stack="push extcall_if-statement"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="if"/>
+                     <nonterminal rtn:nttype="state" name="if-statement_1"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_1" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_2"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_2" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="condition_0"
+                                  rtn:stack="push if-statement_3"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_3" rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="then"/>
+                     <nonterminal rtn:nttype="state" name="if-statement_4"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_4" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_5"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_5" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="statement_0"
+                                  rtn:stack="push if-statement_6"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_6" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="else-part_0"
+                                  rtn:stack="push if-statement_7"/>
+                  </alt>
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_7" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="if-statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_1" rtn:stack="pop statement_1"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_if-statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <comment> End of expansion for if-statement. </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <comment> Expansion for else-part. </comment>
+               <comment> else-part: "else", S, statement. </comment>
+               <rule name="else-part" rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_0" rtn:stack="push extcall_else-part"/>
+                  </alt>
+               </rule>
+               <rule name="else-part_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="else"/>
+                     <nonterminal rtn:nttype="state" name="else-part_1"/>
+                  </alt>
+               </rule>
+               <rule name="else-part_1" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push else-part_2"/>
+                  </alt>
+               </rule>
+               <rule name="else-part_2" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push else-part_3"/>
+                  </alt>
+               </rule>
+               <rule name="else-part_3" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_f"/>
+                  </alt>
+               </rule>
+               <rule name="else-part_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_7" rtn:stack="pop if-statement_7"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_else-part">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <comment> End of expansion for else-part. </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <comment> Expansion for while-statement. </comment>
+               <comment> while-statement: "while", S, condition, "do", S, statement. </comment>
+               <rule name="while-statement" rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_0" rtn:stack="push extcall_while-statement"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="while"/>
+                     <nonterminal rtn:nttype="state" name="while-statement_1"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_1" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_2"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_2" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="condition_0"
+                                  rtn:stack="push while-statement_3"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_3" rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="do"/>
+                     <nonterminal rtn:nttype="state" name="while-statement_4"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_4" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_5"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_5" rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="statement_0"
+                                  rtn:stack="push while-statement_6"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_6" rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_f"/>
+                  </alt>
+               </rule>
+               <rule name="while-statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_2" rtn:stack="pop statement_2"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_while-statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <comment> End of expansion for while-statement. </comment>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+
+   </ws>
+               <rule name="assignment"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="assignment_1"
+                     gl:last="assignment_4"
+                     follow:assignment_1="assignment_2"
+                     follow:assignment_2="assignment_3"
+                     follow:assignment_3="assignment_4"
+                     follow:assignment_4="">:   <alt gl:nullable="false"
+                       gl:first="assignment_1"
+                       gl:last="assignment_4"
+                       follow:assignment_1="assignment_2"
+                       follow:assignment_2="assignment_3"
+                       follow:assignment_3="assignment_4"
+                       follow:assignment_4="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="variable"
+                                  id="assignment_1"
+                                  gl:nullable="false"
+                                  gl:first="assignment_1"
+                                  gl:last="assignment_1"
+                                  follow:assignment_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal dstring="="
+                              id="assignment_2"
+                              gl:nullable="false"
+                              gl:first="assignment_2"
+                              gl:last="assignment_2"
+                              follow:assignment_2=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"
+                                  id="assignment_3"
+                                  gl:nullable="false"
+                                  gl:first="assignment_3"
+                                  gl:last="assignment_3"
+                                  follow:assignment_3=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="expression"
+                                  id="assignment_4"
+                                  gl:nullable="false"
+                                  gl:first="assignment_4"
+                                  gl:last="assignment_4"
+                                  follow:assignment_4=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="variable"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="variable_1"
+                     gl:last="variable_1"
+                     follow:variable_1="">:  <alt gl:nullable="false"
+                       gl:first="variable_1"
+                       gl:last="variable_1"
+                       follow:variable_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="identifier"
+                                  id="variable_1"
+                                  gl:nullable="false"
+                                  gl:first="variable_1"
+                                  gl:last="variable_1"
+                                  follow:variable_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="call"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="call_1"
+                     gl:last="call_8"
+                     follow:call_1="call_2"
+                     follow:call_2="call_3"
+                     follow:call_3="call_4 call_7"
+                     follow:call_4="call_5 call_7"
+                     follow:call_5="call_6"
+                     follow:call_6="call_4"
+                     follow:call_7="call_8"
+                     follow:call_8="">:   <alt gl:nullable="false"
+                       gl:first="call_1"
+                       gl:last="call_8"
+                       follow:call_1="call_2"
+                       follow:call_2="call_3"
+                       follow:call_3="call_4 call_7"
+                       follow:call_4="call_5 call_7"
+                       follow:call_5="call_6"
+                       follow:call_6="call_4"
+                       follow:call_7="call_8"
+                       follow:call_8="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="identifier"
+                                  id="call_1"
+                                  gl:nullable="false"
+                                  gl:first="call_1"
+                                  gl:last="call_1"
+                                  follow:call_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal dstring="("
+                              id="call_2"
+                              gl:nullable="false"
+                              gl:first="call_2"
+                              gl:last="call_2"
+                              follow:call_2=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"
+                                  id="call_3"
+                                  gl:nullable="false"
+                                  gl:first="call_3"
+                                  gl:last="call_3"
+                                  follow:call_3=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <repeat0 gl:nullable="true"
+                              gl:first="call_4"
+                              gl:last="call_4"
+                              follow:call_4="call_5"
+                              follow:call_5="call_6"
+                              follow:call_6="call_4">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <nonterminal name="parameter"
+                                     id="call_4"
+                                     gl:nullable="false"
+                                     gl:first="call_4"
+                                     gl:last="call_4"
+                                     follow:call_4=""/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <sep gl:nullable="false"
+                             gl:first="call_5"
+                             gl:last="call_6"
+                             follow:call_5="call_6"
+                             follow:call_6="">
+                           <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+               </ws>
+                           <alts gl:nullable="false"
+                                 gl:first="call_5"
+                                 gl:last="call_6"
+                                 follow:call_5="call_6"
+                                 follow:call_6="">
+                              <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+                  </ws>
+                              <alt gl:nullable="false"
+                                   gl:first="call_5"
+                                   gl:last="call_6"
+                                   follow:call_5="call_6"
+                                   follow:call_6="">
+                                 <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+                     </ws>
+                                 <literal dstring=","
+                                          id="call_5"
+                                          gl:nullable="false"
+                                          gl:first="call_5"
+                                          gl:last="call_5"
+                                          follow:call_5=""/>
+                                 <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+                     </ws>
+                                 <nonterminal name="S"
+                                              id="call_6"
+                                              gl:nullable="false"
+                                              gl:first="call_6"
+                                              gl:last="call_6"
+                                              follow:call_6=""/>
+                                 <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+                  </ws>
+                              </alt>
+                              <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+               </ws>
+                           </alts>
+                           <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        </sep>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </repeat0>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <literal dstring=")"
+                              id="call_7"
+                              gl:nullable="false"
+                              gl:first="call_7"
+                              gl:last="call_7"
+                              follow:call_7=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"
+                                  id="call_8"
+                                  gl:nullable="false"
+                                  gl:first="call_8"
+                                  gl:last="call_8"
+                                  follow:call_8=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="parameter"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="parameter_1"
+                     gl:last="parameter_1"
+                     follow:parameter_1="">:   <alt gl:nullable="false"
+                       gl:first="parameter_1"
+                       gl:last="parameter_1"
+                       follow:parameter_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal mark="-"
+                                  name="expression"
+                                  id="parameter_1"
+                                  gl:nullable="false"
+                                  gl:first="parameter_1"
+                                  gl:last="parameter_1"
+                                  follow:parameter_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="identifier"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="identifier_1"
+                     gl:last="identifier_2"
+                     follow:identifier_1="identifier_1 identifier_2"
+                     follow:identifier_2="">:   <alt gl:nullable="false"
+                       gl:first="identifier_1"
+                       gl:last="identifier_2"
+                       follow:identifier_1="identifier_1 identifier_2"
+                       follow:identifier_2="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <repeat1 gl:first="identifier_1"
+                              gl:last="identifier_1"
+                              follow:identifier_1="identifier_1">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <nonterminal name="letter"
+                                     id="identifier_1"
+                                     gl:nullable="false"
+                                     gl:first="identifier_1"
+                                     gl:last="identifier_1"
+                                     follow:identifier_1=""/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </repeat1>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"
+                                  id="identifier_2"
+                                  gl:nullable="false"
+                                  gl:first="identifier_2"
+                                  gl:last="identifier_2"
+                                  follow:identifier_2=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="expression"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="expression_1 expression_2"
+                     gl:last="expression_1 expression_2"
+                     follow:expression_1=""
+                     follow:expression_2="">:   <alt gl:nullable="false"
+                       gl:first="expression_1"
+                       gl:last="expression_1"
+                       follow:expression_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="identifier"
+                                  id="expression_1"
+                                  gl:nullable="false"
+                                  gl:first="expression_1"
+                                  gl:last="expression_1"
+                                  follow:expression_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  <alt gl:nullable="false"
+                       gl:first="expression_2"
+                       gl:last="expression_2"
+                       follow:expression_2="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="number"
+                                  id="expression_2"
+                                  gl:nullable="false"
+                                  gl:first="expression_2"
+                                  gl:last="expression_2"
+                                  follow:expression_2=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="number"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="number_1"
+                     gl:last="number_2"
+                     follow:number_1="number_1 number_2"
+                     follow:number_2="">:   <alt gl:nullable="false"
+                       gl:first="number_1"
+                       gl:last="number_2"
+                       follow:number_1="number_1 number_2"
+                       follow:number_2="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <repeat1 gl:first="number_1" gl:last="number_1" follow:number_1="number_1">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <nonterminal name="digit"
+                                     id="number_1"
+                                     gl:nullable="false"
+                                     gl:first="number_1"
+                                     gl:last="number_1"
+                                     follow:number_1=""/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </repeat1>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="S"
+                                  id="number_2"
+                                  gl:nullable="false"
+                                  gl:first="number_2"
+                                  gl:last="number_2"
+                                  follow:number_2=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="letter"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="letter_1 letter_2"
+                     gl:last="letter_1 letter_2"
+                     follow:letter_1=""
+                     follow:letter_2="">:  <alt gl:nullable="false"
+                       gl:first="letter_1"
+                       gl:last="letter_1"
+                       follow:letter_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <inclusion id="letter_1"
+                                gl:nullable="false"
+                                gl:first="letter_1"
+                                gl:last="letter_1"
+                                follow:letter_1="">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <range from="a" to="z"/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </inclusion>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>
+                  <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  <alt gl:nullable="false"
+                       gl:first="letter_2"
+                       gl:last="letter_2"
+                       follow:letter_2="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <inclusion id="letter_2"
+                                gl:nullable="false"
+                                gl:first="letter_2"
+                                gl:last="letter_2"
+                                follow:letter_2="">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <range from="A" to="Z"/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </inclusion>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="digit"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="digit_1"
+                     gl:last="digit_1"
+                     follow:digit_1="">:  <alt gl:nullable="false"
+                       gl:first="digit_1"
+                       gl:last="digit_1"
+                       follow:digit_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <inclusion id="digit_1"
+                                gl:nullable="false"
+                                gl:first="digit_1"
+                                gl:last="digit_1"
+                                follow:digit_1="">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <range from="0" to="9"/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </inclusion>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="condition"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="condition_1"
+                     gl:last="condition_1"
+                     follow:condition_1="">:   <alt gl:nullable="false"
+                       gl:first="condition_1"
+                       gl:last="condition_1"
+                       follow:condition_1="">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <nonterminal name="identifier"
+                                  id="condition_1"
+                                  gl:nullable="false"
+                                  gl:first="condition_1"
+                                  gl:last="condition_1"
+                                  follow:condition_1=""/>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>. 
+</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+   </ws>
+               <rule name="S"
+                     mark="-"
+                     gt:recursive="false"
+                     gl:nullable="true"
+                     gl:first="S_1"
+                     gl:last="S_1"
+                     follow:S_1="S_1">:   <alt gl:nullable="true"
+                       gl:first="S_1"
+                       gl:last="S_1"
+                       follow:S_1="S_1">
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     <repeat0 gl:nullable="true"
+                              gl:first="S_1"
+                              gl:last="S_1"
+                              follow:S_1="S_1">
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+            </ws>
+                        <literal sstring=" "
+                                 id="S_1"
+                                 gl:nullable="false"
+                                 gl:first="S_1"
+                                 gl:last="S_1"
+                                 follow:S_1=""/>
+                        <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+         </ws>
+                     </repeat0>
+                     <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+      </ws>
+                  </alt>.</rule>
+               <ws xmlns="http://www.jenitennison.com/xslt/xspec">
+</ws>
+            </ixml>
+         </content-wrap>
+      </result>
+      <test id="scenario1-expect1" successful="true">
+         <label>then expand all nonterminals and add linkage</label>
+         <expect-test-wrap xmlns="">
+            <xspec:expect xmlns:ws="http://www.blackmesatech.com/2021/nss/ws"
+                          xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                          xmlns:xspec="http://www.jenitennison.com/xslt/xspec"
+                          test="ws:strip(ixml/rule,'*','')"/>
+         </expect-test-wrap>
+         <result select="/element()">
+            <content-wrap xmlns="">
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="program"
+                     gt:recursive="false"
+                     gt:referenced="false"
+                     gl:nullable="false"
+                     gl:first="program_1"
+                     gl:last="program_1"
+                     follow:program_1="">:  <alt gl:nullable="false"
+                       gl:first="program_1"
+                       gl:last="program_1"
+                       follow:program_1="">
+                     <nonterminal name="block"
+                                  id="program_1"
+                                  gl:nullable="false"
+                                  gl:first="program_1"
+                                  gl:last="program_1"
+                                  follow:program_1=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="block_0" rtn:stack="push extcall_block"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="{"/>
+                     <nonterminal rtn:nttype="state" name="block_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+                  </alt>
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="}"/>
+                     <nonterminal rtn:nttype="state" name="block_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_3"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring=";"/>
+                     <nonterminal rtn:nttype="state" name="block_4"/>
+                  </alt>
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="}"/>
+                     <nonterminal rtn:nttype="state" name="block_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_4"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_5"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_6"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_7"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_7"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="block_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="program_1" rtn:stack="pop program_1"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_5" rtn:stack="pop statement_5"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_block">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_0" rtn:stack="push extcall_statement"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_0">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="if-statement_0"
+                                  rtn:stack="push statement_1"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="while-statement_0"
+                                  rtn:stack="push statement_2"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="assignment_0" rtn:stack="push statement_3"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="call_0" rtn:stack="push statement_4"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="block_0" rtn:stack="push statement_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_1"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_2"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_3"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_4"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_5"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="block_3" rtn:stack="pop block_3"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_6" rtn:stack="pop if-statement_6"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_3" rtn:stack="pop else-part_3"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_6" rtn:stack="pop while-statement_6"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_0" rtn:stack="push extcall_if-statement"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="if"/>
+                     <nonterminal rtn:nttype="state" name="if-statement_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="condition_0"
+                                  rtn:stack="push if-statement_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_3"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="then"/>
+                     <nonterminal rtn:nttype="state" name="if-statement_4"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_4"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_5"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="statement_0"
+                                  rtn:stack="push if-statement_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_6"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="else-part_0"
+                                  rtn:stack="push if-statement_7"/>
+                  </alt>
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_7"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_1" rtn:stack="pop statement_1"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_if-statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_0" rtn:stack="push extcall_else-part"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="else"/>
+                     <nonterminal rtn:nttype="state" name="else-part_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push else-part_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push else-part_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_3"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_7" rtn:stack="pop if-statement_7"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_else-part">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_0" rtn:stack="push extcall_while-statement"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="while"/>
+                     <nonterminal rtn:nttype="state" name="while-statement_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="condition_0"
+                                  rtn:stack="push while-statement_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_3"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="do"/>
+                     <nonterminal rtn:nttype="state" name="while-statement_4"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_4"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_5"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="statement_0"
+                                  rtn:stack="push while-statement_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_6"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_2" rtn:stack="pop statement_2"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_while-statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="assignment"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="assignment_1"
+                     gl:last="assignment_4"
+                     follow:assignment_1="assignment_2"
+                     follow:assignment_2="assignment_3"
+                     follow:assignment_3="assignment_4"
+                     follow:assignment_4="">:   <alt gl:nullable="false"
+                       gl:first="assignment_1"
+                       gl:last="assignment_4"
+                       follow:assignment_1="assignment_2"
+                       follow:assignment_2="assignment_3"
+                       follow:assignment_3="assignment_4"
+                       follow:assignment_4="">
+                     <nonterminal name="variable"
+                                  id="assignment_1"
+                                  gl:nullable="false"
+                                  gl:first="assignment_1"
+                                  gl:last="assignment_1"
+                                  follow:assignment_1=""/>
+                     <literal dstring="="
+                              id="assignment_2"
+                              gl:nullable="false"
+                              gl:first="assignment_2"
+                              gl:last="assignment_2"
+                              follow:assignment_2=""/>
+                     <nonterminal name="S"
+                                  id="assignment_3"
+                                  gl:nullable="false"
+                                  gl:first="assignment_3"
+                                  gl:last="assignment_3"
+                                  follow:assignment_3=""/>
+                     <nonterminal name="expression"
+                                  id="assignment_4"
+                                  gl:nullable="false"
+                                  gl:first="assignment_4"
+                                  gl:last="assignment_4"
+                                  follow:assignment_4=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="variable"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="variable_1"
+                     gl:last="variable_1"
+                     follow:variable_1="">:  <alt gl:nullable="false"
+                       gl:first="variable_1"
+                       gl:last="variable_1"
+                       follow:variable_1="">
+                     <nonterminal name="identifier"
+                                  id="variable_1"
+                                  gl:nullable="false"
+                                  gl:first="variable_1"
+                                  gl:last="variable_1"
+                                  follow:variable_1=""/>
+                  </alt>. 
+
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="call"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="call_1"
+                     gl:last="call_8"
+                     follow:call_1="call_2"
+                     follow:call_2="call_3"
+                     follow:call_3="call_4 call_7"
+                     follow:call_4="call_5 call_7"
+                     follow:call_5="call_6"
+                     follow:call_6="call_4"
+                     follow:call_7="call_8"
+                     follow:call_8="">:   <alt gl:nullable="false"
+                       gl:first="call_1"
+                       gl:last="call_8"
+                       follow:call_1="call_2"
+                       follow:call_2="call_3"
+                       follow:call_3="call_4 call_7"
+                       follow:call_4="call_5 call_7"
+                       follow:call_5="call_6"
+                       follow:call_6="call_4"
+                       follow:call_7="call_8"
+                       follow:call_8="">
+                     <nonterminal name="identifier"
+                                  id="call_1"
+                                  gl:nullable="false"
+                                  gl:first="call_1"
+                                  gl:last="call_1"
+                                  follow:call_1=""/>
+                     <literal dstring="("
+                              id="call_2"
+                              gl:nullable="false"
+                              gl:first="call_2"
+                              gl:last="call_2"
+                              follow:call_2=""/>
+                     <nonterminal name="S"
+                                  id="call_3"
+                                  gl:nullable="false"
+                                  gl:first="call_3"
+                                  gl:last="call_3"
+                                  follow:call_3=""/>
+                     <repeat0 gl:nullable="true"
+                              gl:first="call_4"
+                              gl:last="call_4"
+                              follow:call_4="call_5"
+                              follow:call_5="call_6"
+                              follow:call_6="call_4">
+                        <nonterminal name="parameter"
+                                     id="call_4"
+                                     gl:nullable="false"
+                                     gl:first="call_4"
+                                     gl:last="call_4"
+                                     follow:call_4=""/>
+                        <sep gl:nullable="false"
+                             gl:first="call_5"
+                             gl:last="call_6"
+                             follow:call_5="call_6"
+                             follow:call_6="">
+                           <alts gl:nullable="false"
+                                 gl:first="call_5"
+                                 gl:last="call_6"
+                                 follow:call_5="call_6"
+                                 follow:call_6="">
+                              <alt gl:nullable="false"
+                                   gl:first="call_5"
+                                   gl:last="call_6"
+                                   follow:call_5="call_6"
+                                   follow:call_6="">
+                                 <literal dstring=","
+                                          id="call_5"
+                                          gl:nullable="false"
+                                          gl:first="call_5"
+                                          gl:last="call_5"
+                                          follow:call_5=""/>
+                                 <nonterminal name="S"
+                                              id="call_6"
+                                              gl:nullable="false"
+                                              gl:first="call_6"
+                                              gl:last="call_6"
+                                              follow:call_6=""/>
+                              </alt>
+                           </alts>
+                        </sep>
+                     </repeat0>
+                     <literal dstring=")"
+                              id="call_7"
+                              gl:nullable="false"
+                              gl:first="call_7"
+                              gl:last="call_7"
+                              follow:call_7=""/>
+                     <nonterminal name="S"
+                                  id="call_8"
+                                  gl:nullable="false"
+                                  gl:first="call_8"
+                                  gl:last="call_8"
+                                  follow:call_8=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="parameter"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="parameter_1"
+                     gl:last="parameter_1"
+                     follow:parameter_1="">:   <alt gl:nullable="false"
+                       gl:first="parameter_1"
+                       gl:last="parameter_1"
+                       follow:parameter_1="">
+                     <nonterminal mark="-"
+                                  name="expression"
+                                  id="parameter_1"
+                                  gl:nullable="false"
+                                  gl:first="parameter_1"
+                                  gl:last="parameter_1"
+                                  follow:parameter_1=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="identifier"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="identifier_1"
+                     gl:last="identifier_2"
+                     follow:identifier_1="identifier_1 identifier_2"
+                     follow:identifier_2="">:   <alt gl:nullable="false"
+                       gl:first="identifier_1"
+                       gl:last="identifier_2"
+                       follow:identifier_1="identifier_1 identifier_2"
+                       follow:identifier_2="">
+                     <repeat1 gl:first="identifier_1"
+                              gl:last="identifier_1"
+                              follow:identifier_1="identifier_1">
+                        <nonterminal name="letter"
+                                     id="identifier_1"
+                                     gl:nullable="false"
+                                     gl:first="identifier_1"
+                                     gl:last="identifier_1"
+                                     follow:identifier_1=""/>
+                     </repeat1>
+                     <nonterminal name="S"
+                                  id="identifier_2"
+                                  gl:nullable="false"
+                                  gl:first="identifier_2"
+                                  gl:last="identifier_2"
+                                  follow:identifier_2=""/>
+                  </alt>. 
+
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="expression"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="expression_1 expression_2"
+                     gl:last="expression_1 expression_2"
+                     follow:expression_1=""
+                     follow:expression_2="">:   <alt gl:nullable="false"
+                       gl:first="expression_1"
+                       gl:last="expression_1"
+                       follow:expression_1="">
+                     <nonterminal name="identifier"
+                                  id="expression_1"
+                                  gl:nullable="false"
+                                  gl:first="expression_1"
+                                  gl:last="expression_1"
+                                  follow:expression_1=""/>
+                  </alt>
+                  <alt gl:nullable="false"
+                       gl:first="expression_2"
+                       gl:last="expression_2"
+                       follow:expression_2="">
+                     <nonterminal name="number"
+                                  id="expression_2"
+                                  gl:nullable="false"
+                                  gl:first="expression_2"
+                                  gl:last="expression_2"
+                                  follow:expression_2=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="number"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="number_1"
+                     gl:last="number_2"
+                     follow:number_1="number_1 number_2"
+                     follow:number_2="">:   <alt gl:nullable="false"
+                       gl:first="number_1"
+                       gl:last="number_2"
+                       follow:number_1="number_1 number_2"
+                       follow:number_2="">
+                     <repeat1 gl:first="number_1" gl:last="number_1" follow:number_1="number_1">
+                        <nonterminal name="digit"
+                                     id="number_1"
+                                     gl:nullable="false"
+                                     gl:first="number_1"
+                                     gl:last="number_1"
+                                     follow:number_1=""/>
+                     </repeat1>
+                     <nonterminal name="S"
+                                  id="number_2"
+                                  gl:nullable="false"
+                                  gl:first="number_2"
+                                  gl:last="number_2"
+                                  follow:number_2=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="letter"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="letter_1 letter_2"
+                     gl:last="letter_1 letter_2"
+                     follow:letter_1=""
+                     follow:letter_2="">:  <alt gl:nullable="false"
+                       gl:first="letter_1"
+                       gl:last="letter_1"
+                       follow:letter_1="">
+                     <inclusion id="letter_1"
+                                gl:nullable="false"
+                                gl:first="letter_1"
+                                gl:last="letter_1"
+                                follow:letter_1="">
+                        <range from="a" to="z"/>
+                     </inclusion>
+                  </alt>
+                  <alt gl:nullable="false"
+                       gl:first="letter_2"
+                       gl:last="letter_2"
+                       follow:letter_2="">
+                     <inclusion id="letter_2"
+                                gl:nullable="false"
+                                gl:first="letter_2"
+                                gl:last="letter_2"
+                                follow:letter_2="">
+                        <range from="A" to="Z"/>
+                     </inclusion>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="digit"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="digit_1"
+                     gl:last="digit_1"
+                     follow:digit_1="">:  <alt gl:nullable="false"
+                       gl:first="digit_1"
+                       gl:last="digit_1"
+                       follow:digit_1="">
+                     <inclusion id="digit_1"
+                                gl:nullable="false"
+                                gl:first="digit_1"
+                                gl:last="digit_1"
+                                follow:digit_1="">
+                        <range from="0" to="9"/>
+                     </inclusion>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="condition"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="condition_1"
+                     gl:last="condition_1"
+                     follow:condition_1="">:   <alt gl:nullable="false"
+                       gl:first="condition_1"
+                       gl:last="condition_1"
+                       follow:condition_1="">
+                     <nonterminal name="identifier"
+                                  id="condition_1"
+                                  gl:nullable="false"
+                                  gl:first="condition_1"
+                                  gl:last="condition_1"
+                                  follow:condition_1=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="S"
+                     mark="-"
+                     gt:recursive="false"
+                     gl:nullable="true"
+                     gl:first="S_1"
+                     gl:last="S_1"
+                     follow:S_1="S_1">:   <alt gl:nullable="true"
+                       gl:first="S_1"
+                       gl:last="S_1"
+                       follow:S_1="S_1">
+                     <repeat0 gl:nullable="true"
+                              gl:first="S_1"
+                              gl:last="S_1"
+                              follow:S_1="S_1">
+                        <literal sstring=" "
+                                 id="S_1"
+                                 gl:nullable="false"
+                                 gl:first="S_1"
+                                 gl:last="S_1"
+                                 follow:S_1=""/>
+                     </repeat0>
+                  </alt>.</rule>
+            </content-wrap>
+         </result>
+         <expect select="/element()">
+            <content-wrap xmlns="">
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="program"
+                     gt:recursive="false"
+                     gt:referenced="false"
+                     gl:nullable="false"
+                     gl:first="program_1"
+                     gl:last="program_1"
+                     follow:program_1="">:  <alt gl:nullable="false"
+                       gl:first="program_1"
+                       gl:last="program_1"
+                       follow:program_1="">
+                     <nonterminal name="block"
+                                  id="program_1"
+                                  gl:nullable="false"
+                                  gl:first="program_1"
+                                  gl:last="program_1"
+                                  follow:program_1=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="block_0" rtn:stack="push extcall_block"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="{"/>
+                     <nonterminal rtn:nttype="state" name="block_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+                  </alt>
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="}"/>
+                     <nonterminal rtn:nttype="state" name="block_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_3"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring=";"/>
+                     <nonterminal rtn:nttype="state" name="block_4"/>
+                  </alt>
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="}"/>
+                     <nonterminal rtn:nttype="state" name="block_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_4"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_5"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_6"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_7"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_7"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="block_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="block_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="program_1" rtn:stack="pop program_1"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_5" rtn:stack="pop statement_5"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_block">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_0" rtn:stack="push extcall_statement"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_0">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="if-statement_0"
+                                  rtn:stack="push statement_1"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="while-statement_0"
+                                  rtn:stack="push statement_2"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="assignment_0" rtn:stack="push statement_3"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="call_0" rtn:stack="push statement_4"/>
+                  </alt>
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="block_0" rtn:stack="push statement_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_1"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_2"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_3"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_4"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_5"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="block_3" rtn:stack="pop block_3"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_6" rtn:stack="pop if-statement_6"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_3" rtn:stack="pop else-part_3"/>
+                  </alt>
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_6" rtn:stack="pop while-statement_6"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_0" rtn:stack="push extcall_if-statement"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="if"/>
+                     <nonterminal rtn:nttype="state" name="if-statement_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="condition_0"
+                                  rtn:stack="push if-statement_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_3"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="then"/>
+                     <nonterminal rtn:nttype="state" name="if-statement_4"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_4"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_5"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="statement_0"
+                                  rtn:stack="push if-statement_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_6"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="else-part_0"
+                                  rtn:stack="push if-statement_7"/>
+                  </alt>
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_7"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="if-statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_1" rtn:stack="pop statement_1"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_if-statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_0" rtn:stack="push extcall_else-part"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="else"/>
+                     <nonterminal rtn:nttype="state" name="else-part_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push else-part_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push else-part_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_3"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="else-part_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="else-part_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="if-statement_7" rtn:stack="pop if-statement_7"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_else-part">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement"
+                     rtn:ruletype="linkage-stub">
+                  <alt rtn:ruletype="linkage">
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_0" rtn:stack="push extcall_while-statement"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_0">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="while"/>
+                     <nonterminal rtn:nttype="state" name="while-statement_1"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_1"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_2"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_2"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="condition_0"
+                                  rtn:stack="push while-statement_3"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_3"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="terminal">
+                     <literal dstring="do"/>
+                     <nonterminal rtn:nttype="state" name="while-statement_4"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_4"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_5"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_5"
+                     rtn:nttype="state">
+                  <alt rtn:ruletype="recursion">
+                     <comment>nil</comment>
+                     <nonterminal rtn:nttype="call"
+                                  name="statement_0"
+                                  rtn:stack="push while-statement_6"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_6"
+                     rtn:nttype="state">
+                  <alt>
+                     <comment>nil</comment>
+                     <nonterminal name="while-statement_f"/>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="while-statement_f">
+                  <alt rtn:ruletype="return">
+                     <comment>nil</comment>
+                     <nonterminal name="statement_2" rtn:stack="pop statement_2"/>
+                  </alt>
+                  <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_while-statement">
+                     <comment>nil</comment>
+                  </alt>
+               </rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="assignment"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="assignment_1"
+                     gl:last="assignment_4"
+                     follow:assignment_1="assignment_2"
+                     follow:assignment_2="assignment_3"
+                     follow:assignment_3="assignment_4"
+                     follow:assignment_4="">:   <alt gl:nullable="false"
+                       gl:first="assignment_1"
+                       gl:last="assignment_4"
+                       follow:assignment_1="assignment_2"
+                       follow:assignment_2="assignment_3"
+                       follow:assignment_3="assignment_4"
+                       follow:assignment_4="">
+                     <nonterminal name="variable"
+                                  id="assignment_1"
+                                  gl:nullable="false"
+                                  gl:first="assignment_1"
+                                  gl:last="assignment_1"
+                                  follow:assignment_1=""/>
+                     <literal dstring="="
+                              id="assignment_2"
+                              gl:nullable="false"
+                              gl:first="assignment_2"
+                              gl:last="assignment_2"
+                              follow:assignment_2=""/>
+                     <nonterminal name="S"
+                                  id="assignment_3"
+                                  gl:nullable="false"
+                                  gl:first="assignment_3"
+                                  gl:last="assignment_3"
+                                  follow:assignment_3=""/>
+                     <nonterminal name="expression"
+                                  id="assignment_4"
+                                  gl:nullable="false"
+                                  gl:first="assignment_4"
+                                  gl:last="assignment_4"
+                                  follow:assignment_4=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="variable"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="variable_1"
+                     gl:last="variable_1"
+                     follow:variable_1="">:  <alt gl:nullable="false"
+                       gl:first="variable_1"
+                       gl:last="variable_1"
+                       follow:variable_1="">
+                     <nonterminal name="identifier"
+                                  id="variable_1"
+                                  gl:nullable="false"
+                                  gl:first="variable_1"
+                                  gl:last="variable_1"
+                                  follow:variable_1=""/>
+                  </alt>. 
+
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="call"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="call_1"
+                     gl:last="call_8"
+                     follow:call_1="call_2"
+                     follow:call_2="call_3"
+                     follow:call_3="call_4 call_7"
+                     follow:call_4="call_5 call_7"
+                     follow:call_5="call_6"
+                     follow:call_6="call_4"
+                     follow:call_7="call_8"
+                     follow:call_8="">:   <alt gl:nullable="false"
+                       gl:first="call_1"
+                       gl:last="call_8"
+                       follow:call_1="call_2"
+                       follow:call_2="call_3"
+                       follow:call_3="call_4 call_7"
+                       follow:call_4="call_5 call_7"
+                       follow:call_5="call_6"
+                       follow:call_6="call_4"
+                       follow:call_7="call_8"
+                       follow:call_8="">
+                     <nonterminal name="identifier"
+                                  id="call_1"
+                                  gl:nullable="false"
+                                  gl:first="call_1"
+                                  gl:last="call_1"
+                                  follow:call_1=""/>
+                     <literal dstring="("
+                              id="call_2"
+                              gl:nullable="false"
+                              gl:first="call_2"
+                              gl:last="call_2"
+                              follow:call_2=""/>
+                     <nonterminal name="S"
+                                  id="call_3"
+                                  gl:nullable="false"
+                                  gl:first="call_3"
+                                  gl:last="call_3"
+                                  follow:call_3=""/>
+                     <repeat0 gl:nullable="true"
+                              gl:first="call_4"
+                              gl:last="call_4"
+                              follow:call_4="call_5"
+                              follow:call_5="call_6"
+                              follow:call_6="call_4">
+                        <nonterminal name="parameter"
+                                     id="call_4"
+                                     gl:nullable="false"
+                                     gl:first="call_4"
+                                     gl:last="call_4"
+                                     follow:call_4=""/>
+                        <sep gl:nullable="false"
+                             gl:first="call_5"
+                             gl:last="call_6"
+                             follow:call_5="call_6"
+                             follow:call_6="">
+                           <alts gl:nullable="false"
+                                 gl:first="call_5"
+                                 gl:last="call_6"
+                                 follow:call_5="call_6"
+                                 follow:call_6="">
+                              <alt gl:nullable="false"
+                                   gl:first="call_5"
+                                   gl:last="call_6"
+                                   follow:call_5="call_6"
+                                   follow:call_6="">
+                                 <literal dstring=","
+                                          id="call_5"
+                                          gl:nullable="false"
+                                          gl:first="call_5"
+                                          gl:last="call_5"
+                                          follow:call_5=""/>
+                                 <nonterminal name="S"
+                                              id="call_6"
+                                              gl:nullable="false"
+                                              gl:first="call_6"
+                                              gl:last="call_6"
+                                              follow:call_6=""/>
+                              </alt>
+                           </alts>
+                        </sep>
+                     </repeat0>
+                     <literal dstring=")"
+                              id="call_7"
+                              gl:nullable="false"
+                              gl:first="call_7"
+                              gl:last="call_7"
+                              follow:call_7=""/>
+                     <nonterminal name="S"
+                                  id="call_8"
+                                  gl:nullable="false"
+                                  gl:first="call_8"
+                                  gl:last="call_8"
+                                  follow:call_8=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="parameter"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="parameter_1"
+                     gl:last="parameter_1"
+                     follow:parameter_1="">:   <alt gl:nullable="false"
+                       gl:first="parameter_1"
+                       gl:last="parameter_1"
+                       follow:parameter_1="">
+                     <nonterminal mark="-"
+                                  name="expression"
+                                  id="parameter_1"
+                                  gl:nullable="false"
+                                  gl:first="parameter_1"
+                                  gl:last="parameter_1"
+                                  follow:parameter_1=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="identifier"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="identifier_1"
+                     gl:last="identifier_2"
+                     follow:identifier_1="identifier_1 identifier_2"
+                     follow:identifier_2="">:   <alt gl:nullable="false"
+                       gl:first="identifier_1"
+                       gl:last="identifier_2"
+                       follow:identifier_1="identifier_1 identifier_2"
+                       follow:identifier_2="">
+                     <repeat1 gl:first="identifier_1"
+                              gl:last="identifier_1"
+                              follow:identifier_1="identifier_1">
+                        <nonterminal name="letter"
+                                     id="identifier_1"
+                                     gl:nullable="false"
+                                     gl:first="identifier_1"
+                                     gl:last="identifier_1"
+                                     follow:identifier_1=""/>
+                     </repeat1>
+                     <nonterminal name="S"
+                                  id="identifier_2"
+                                  gl:nullable="false"
+                                  gl:first="identifier_2"
+                                  gl:last="identifier_2"
+                                  follow:identifier_2=""/>
+                  </alt>. 
+
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="expression"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="expression_1 expression_2"
+                     gl:last="expression_1 expression_2"
+                     follow:expression_1=""
+                     follow:expression_2="">:   <alt gl:nullable="false"
+                       gl:first="expression_1"
+                       gl:last="expression_1"
+                       follow:expression_1="">
+                     <nonterminal name="identifier"
+                                  id="expression_1"
+                                  gl:nullable="false"
+                                  gl:first="expression_1"
+                                  gl:last="expression_1"
+                                  follow:expression_1=""/>
+                  </alt>
+                  <alt gl:nullable="false"
+                       gl:first="expression_2"
+                       gl:last="expression_2"
+                       follow:expression_2="">
+                     <nonterminal name="number"
+                                  id="expression_2"
+                                  gl:nullable="false"
+                                  gl:first="expression_2"
+                                  gl:last="expression_2"
+                                  follow:expression_2=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="number"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="number_1"
+                     gl:last="number_2"
+                     follow:number_1="number_1 number_2"
+                     follow:number_2="">:   <alt gl:nullable="false"
+                       gl:first="number_1"
+                       gl:last="number_2"
+                       follow:number_1="number_1 number_2"
+                       follow:number_2="">
+                     <repeat1 gl:first="number_1" gl:last="number_1" follow:number_1="number_1">
+                        <nonterminal name="digit"
+                                     id="number_1"
+                                     gl:nullable="false"
+                                     gl:first="number_1"
+                                     gl:last="number_1"
+                                     follow:number_1=""/>
+                     </repeat1>
+                     <nonterminal name="S"
+                                  id="number_2"
+                                  gl:nullable="false"
+                                  gl:first="number_2"
+                                  gl:last="number_2"
+                                  follow:number_2=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="letter"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="letter_1 letter_2"
+                     gl:last="letter_1 letter_2"
+                     follow:letter_1=""
+                     follow:letter_2="">:  <alt gl:nullable="false"
+                       gl:first="letter_1"
+                       gl:last="letter_1"
+                       follow:letter_1="">
+                     <inclusion id="letter_1"
+                                gl:nullable="false"
+                                gl:first="letter_1"
+                                gl:last="letter_1"
+                                follow:letter_1="">
+                        <range from="a" to="z"/>
+                     </inclusion>
+                  </alt>
+                  <alt gl:nullable="false"
+                       gl:first="letter_2"
+                       gl:last="letter_2"
+                       follow:letter_2="">
+                     <inclusion id="letter_2"
+                                gl:nullable="false"
+                                gl:first="letter_2"
+                                gl:last="letter_2"
+                                follow:letter_2="">
+                        <range from="A" to="Z"/>
+                     </inclusion>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="digit"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="digit_1"
+                     gl:last="digit_1"
+                     follow:digit_1="">:  <alt gl:nullable="false"
+                       gl:first="digit_1"
+                       gl:last="digit_1"
+                       follow:digit_1="">
+                     <inclusion id="digit_1"
+                                gl:nullable="false"
+                                gl:first="digit_1"
+                                gl:last="digit_1"
+                                follow:digit_1="">
+                        <range from="0" to="9"/>
+                     </inclusion>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="condition"
+                     gt:recursive="false"
+                     gl:nullable="false"
+                     gl:first="condition_1"
+                     gl:last="condition_1"
+                     follow:condition_1="">:   <alt gl:nullable="false"
+                       gl:first="condition_1"
+                       gl:last="condition_1"
+                       follow:condition_1="">
+                     <nonterminal name="identifier"
+                                  id="condition_1"
+                                  gl:nullable="false"
+                                  gl:first="condition_1"
+                                  gl:last="condition_1"
+                                  follow:condition_1=""/>
+                  </alt>. 
+</rule>
+               <rule xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+                     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+                     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+                     name="S"
+                     mark="-"
+                     gt:recursive="false"
+                     gl:nullable="true"
+                     gl:first="S_1"
+                     gl:last="S_1"
+                     follow:S_1="S_1">:   <alt gl:nullable="true"
+                       gl:first="S_1"
+                       gl:last="S_1"
+                       follow:S_1="S_1">
+                     <repeat0 gl:nullable="true"
+                              gl:first="S_1"
+                              gl:last="S_1"
+                              follow:S_1="S_1">
+                        <literal sstring=" "
+                                 id="S_1"
+                                 gl:nullable="false"
+                                 gl:first="S_1"
+                                 gl:last="S_1"
+                                 follow:S_1=""/>
+                     </repeat0>
+                  </alt>.</rule>
+            </content-wrap>
+         </expect>
+      </test>
+   </scenario>
+</report>

@@ -1,0 +1,10 @@
+### git ignore patterns
+
+*~
+.\#*
+
+.gitconfig
+temp.*
+tmp.*
+zz*
+
