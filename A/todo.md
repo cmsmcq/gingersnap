@@ -12,14 +12,16 @@
     markers.
 
   * (not so quick) make ixml-to-saprg take two parameters:
-    $fissile = '#all' (default)
+
+    * `$fissile` = '`#all`' (default)
       | list of names
-    $non-fissile = '#non-recursive' (default)
-      | '#none'
+    * `$non-fissile` = '`#non-recursive`' (default)
+      | '`#none`'
       | list of names
-    When $fissile has names, $non-fissile is ignored.
-    $fissile='#all' means all nonterminals except those recognized
-      as pseudo-terminals (by default, non-recursive ones).
+		  
+    When `$fissile` has names, `$non-fissile` is ignored.
+    `$fissile`='`#all`' means all nonterminals except those recognized
+     as pseudo-terminals (by default, non-recursive ones).
 
     [2020-01-02 I believe this is done as specified, but the results
     are not what was hoped.  Three scenarios must be supported; see
