@@ -19,7 +19,9 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-01 : CMSMcQ : make file, for dealing with FSAs made
+      * 2021-01-12 : CMSMcQ : change value-of to sequence to make
+      *                       Saxon stop complaining
+      * 2021-01-01 : CMSMcQ : make file, for dealing with FSAs made 
       *                       directly from regular approximations,
       *                       without manual simplification.
       *-->
@@ -120,7 +122,7 @@
       *-->
   <xsl:function name="gt:is-unit-rule" as="xs:boolean">
     <xsl:param name="e" as="element(alt)"/>
-    <xsl:value-of select="exists($e/nonterminal)
+    <xsl:sequence select="exists($e/nonterminal)
 			  and (count($e/* except $e/comment) eq 1)"/>
   </xsl:function>
   
