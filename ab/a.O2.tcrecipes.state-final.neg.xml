@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network"
+      gt:date="2021-01-13T07:58:32.453826-07:00"
+      gt:dg-type="testcase grammar"
+      gt:test-polarity="negative"
+      gt:test-selection="state-final">
+   <comment> 2021-01-13T07:58:32.453826-07:00 tclego-to-tcrecipes.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/ab/a.O2.tclego.xml </comment>
+   <comment> Output grammar G′:  Test case recipes (negative, state-final) for L(G).</comment>
+   <rule name="testcases-">
+      <alt>
+         <nonterminal name="negative"/>
+      </alt>
+   </rule>
+   <rule name="negative">
+      <alt>
+         <nonterminal name="negative-state-final"/>
+      </alt>
+   </rule>
+   <rule name="negative-state-final">
+      <alt>
+         <nonterminal name="state-final-S_0"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-max-S_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-max-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_4˅max-S_3"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_4˅S·S·_4˅max-S_3"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S_2" gt:polarity="negative">
+      <alt gt:from="S_0" gt:to="m-S_2" gt:trace="S_0 . 2 / m-S_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·_1" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_1"
+           gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·_2" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_1" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_1"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_2" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·_4" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_4"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-max-S_1" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-max-S_1"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-max-S_2" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-max-S_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_4˅S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+</ixml>

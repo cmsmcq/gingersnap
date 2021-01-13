@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network"
+      gt:date="2021-01-13T07:45:07.457411-07:00"
+      gt:dg-type="testcase grammar"
+      gt:test-polarity="positive"
+      gt:test-selection="state state-final arc arc-final">
+   <comment> 2021-01-13T07:45:07.457411-07:00 tclego-to-tcrecipes.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/ab/a.u5.tclego.xml </comment>
+   <comment> Output grammar G′:  Test case recipes (positive, all) for L(G).</comment>
+   <rule name="testcases-">
+      <alt>
+         <nonterminal name="positive"/>
+      </alt>
+   </rule>
+   <rule name="positive">
+      <alt>
+         <nonterminal name="positive-state"/>
+      </alt>
+      <alt>
+         <nonterminal name="positive-state-final"/>
+      </alt>
+      <alt>
+         <nonterminal name="positive-arc"/>
+      </alt>
+      <alt>
+         <nonterminal name="positive-arc-final"/>
+      </alt>
+   </rule>
+   <rule name="positive-state-final">
+      <alt>
+         <nonterminal name="state-final-m-S_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S_4"/>
+      </alt>
+   </rule>
+   <rule name="positive-state">
+      <alt>
+         <nonterminal name="state-pos-S_0"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-pos-m-S·S·S·S·S·_4"/>
+      </alt>
+   </rule>
+   <rule name="positive-arc-final">
+      <alt>
+         <nonterminal name="arc-final-S_0˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·_4˃1"/>
+      </alt>
+   </rule>
+   <rule name="positive-arc">
+      <alt>
+         <nonterminal name="arc-pos-S_0˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-S_0˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·_4˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·_4˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·_4˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-pos-m-S·S·S·S·S·_4˃1"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S_1" gt:polarity="positive">
+      <alt gt:from="S_0" gt:to="m-S_1" gt:trace="S_0 . 1 / m-S_1">
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S_2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2 . 1 / m-S·S·_1 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S_2˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃1 + m-S·S·_1 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S_2˃2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃2 + m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·_1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 + m-S·S·_1 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·_1˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 + m-S·S·_1˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·_2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·_2˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃1 + m-S·S·S·_1 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·_2˃2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃2 + m-S·S·S·_2 . 1 / m-S·S·S·S·_1 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S_4" gt:polarity="positive">
+      <alt gt:from="S_0"
+           gt:to="m-S_4"
+           gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·_1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + m-S·S·S·_1 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·_1˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + m-S·S·S·_1˃1 + m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·_2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2 . 1 / m-S·S·S·S·_1 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·_2˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃1 + m-S·S·S·S·_1 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·_2˃2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃2 + m-S·S·S·S·_2 . 1 / m-S·S·S·S·S·_1 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·_4" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 + m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·_4˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 + m-S·S·_4˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·_1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-S·S·S·S·_1 + m-S·S·S·S·_1 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·_1˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-S·S·S·S·_1 + m-S·S·S·S·_1˃1 + m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·_2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 + m-S·S·S·S·_2 . 1 / m-S·S·S·S·S·_1 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·_2˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 + m-S·S·S·S·_2˃1 + m-S·S·S·S·S·_1 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·_2˃2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 + m-S·S·S·S·_2˃2 + m-S·S·S·S·S·_2 . 1 / m-S·S·S·S·S·S·_1 . 1 / m-S·S·S·S·S·_4 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·_4" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-S·S·S·S·_1 . 1 / m-S·S·S·_4 + m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·_4˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-S·S·S·S·_1 . 1 / m-S·S·S·_4 + m-S·S·S·_4˃1 + m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·S·_1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 1 / m-S·S·S·S·S·_1 + m-S·S·S·S·S·_1 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·S·_1˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 1 / m-S·S·S·S·S·_1 + m-S·S·S·S·S·_1˃1 + m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·S·_2" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 2 / m-S·S·S·S·S·_2 + m-S·S·S·S·S·_2 . 1 / m-S·S·S·S·S·S·_1 . 1 / m-S·S·S·S·S·_4 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·S·_2˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 2 / m-S·S·S·S·S·_2 + m-S·S·S·S·S·_2˃1 + m-S·S·S·S·S·S·_1 . 1 / m-S·S·S·S·S·_4 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·_4" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 1 / m-S·S·S·S·S·_1 . 1 / m-S·S·S·S·_4 + m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·_4˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 1 / m-S·S·S·S·S·_1 . 1 / m-S·S·S·S·_4 + m-S·S·S·S·_4˃1 + m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·S·S·_1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 2 / m-S·S·S·S·S·_2 . 1 / m-S·S·S·S·S·S·_1 + m-S·S·S·S·S·S·_1 . 1 / m-S·S·S·S·S·_4 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·S·S·_1˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 2 / m-S·S·S·S·S·_2 . 1 / m-S·S·S·S·S·S·_1 + m-S·S·S·S·S·S·_1˃1 + m-S·S·S·S·S·_4 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-pos-m-S·S·S·S·S·_4" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 2 / m-S·S·S·S·S·_2 . 1 / m-S·S·S·S·S·S·_1 . 1 / m-S·S·S·S·S·_4 + m-S·S·S·S·S·_4 . 1 / m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-pos-m-S·S·S·S·S·_4˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-S·S·S·S·_2 . 2 / m-S·S·S·S·S·_2 . 1 / m-S·S·S·S·S·S·_1 . 1 / m-S·S·S·S·S·_4 + m-S·S·S·S·S·_4˃1 + m-S·S·S·S·_4 . 1 / m-S·S·S·_4 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+</ixml>

@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network"
+      gt:date="2021-01-13T08:29:06.211304-07:00">
+   <comment> 2021-01-13T08:29:06.211304-07:00 fsa-to-tclego.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/ab/../src/grammar-pipeline-handler.xsl </comment>
+   <comment> Output grammar G′:  this grammar.  G plus pieces for test suite.</comment>
+   <comment>2021-01-13T08:29:06.211304-07:00: determinize.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/ab/a.O2.fsa.xml</comment>
+   <comment>    Output:  deterministic regular grammar for the same language. </comment>
+   <rule name="S_0"
+         gt:old-states="S_0"
+         gt:ranges="40 40 97 97"
+         gt:theta="32 39 41 96 98 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="97 97">
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <nonterminal name="m-S_1" gt:old-states="S_1"/>
+      </alt>
+      <alt gt:ranges="40 40">
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <nonterminal name="m-S_2" gt:old-states="S_2"/>
+      </alt>
+   </rule>
+   <rule name="m-S_1"
+         gt:old-states="S_1"
+         gt:ranges=""
+         gt:theta="32 55295 57344 65533 65537 1114111">
+      <alt><!-- final state --></alt>
+   </rule>
+   <rule name="m-S_2"
+         gt:old-states="S_2"
+         gt:ranges="40 40 97 97"
+         gt:theta="32 39 41 96 98 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="97 97">
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <nonterminal name="m-S·S·_1" gt:old-states="S·S·_1"/>
+      </alt>
+      <alt gt:ranges="40 40">
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <nonterminal name="m-S·S·_2" gt:old-states="S·S·_2"/>
+      </alt>
+   </rule>
+   <rule name="m-S·S·_1"
+         gt:old-states="S·S·_1"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S_4" gt:old-states="S_4"/>
+      </alt>
+   </rule>
+   <rule name="m-S·S·_2"
+         gt:old-states="S·S·_2"
+         gt:ranges="40 40 97 97"
+         gt:theta="32 39 41 96 98 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="97 97">
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <nonterminal name="m-S·S·S·_1" gt:old-states="S·S·S·_1"/>
+      </alt>
+      <alt gt:ranges="40 40">
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <nonterminal name="m-S·S·S·_2" gt:old-states="S·S·S·_2"/>
+      </alt>
+   </rule>
+   <rule name="m-S_4"
+         gt:old-states="S_4"
+         gt:ranges=""
+         gt:theta="32 55295 57344 65533 65537 1114111">
+      <alt><!-- final state --></alt>
+   </rule>
+   <rule name="m-S·S·S·_1"
+         gt:old-states="S·S·S·_1"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S·S·_4" gt:old-states="S·S·_4"/>
+      </alt>
+   </rule>
+   <rule name="m-S·S·S·_2"
+         gt:old-states="S·S·S·_2"
+         gt:ranges="40 40 97 97"
+         gt:theta="32 39 41 96 98 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="40 40">
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <nonterminal name="m-max-S_1" gt:old-states="max-S_1"/>
+      </alt>
+      <alt gt:ranges="97 97">
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <nonterminal name="m-max-S_2" gt:old-states="max-S_2"/>
+      </alt>
+   </rule>
+   <rule name="m-S·S·_4"
+         gt:old-states="S·S·_4"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S_4" gt:old-states="S_4"/>
+      </alt>
+   </rule>
+   <rule name="m-max-S_1"
+         gt:old-states="max-S_1"
+         gt:ranges="40 40 97 97"
+         gt:theta="32 39 41 96 98 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="40 40">
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+         <nonterminal name="m-max-S_1" gt:old-states="max-S_1"/>
+      </alt>
+      <alt gt:ranges="97 97">
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+         <nonterminal name="m-max-S_2" gt:old-states="max-S_2"/>
+      </alt>
+   </rule>
+   <rule name="m-max-S_2"
+         gt:old-states="max-S_2"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S·S·S·_4˅max-S_3" gt:old-states="S·S·S·_4 max-S_3"/>
+      </alt>
+   </rule>
+   <rule name="m-S·S·S·_4˅max-S_3"
+         gt:old-states="S·S·S·_4 max-S_3"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S·S·S·_4˅S·S·_4˅max-S_3"
+                      gt:old-states="S·S·S·_4 S·S·_4 max-S_3"/>
+      </alt>
+   </rule>
+   <rule name="m-S·S·S·_4˅S·S·_4˅max-S_3"
+         gt:old-states="S·S·S·_4 S·S·_4 max-S_3"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+                      gt:old-states="S_4 S·S·S·_4 S·S·_4 max-S_3"/>
+      </alt>
+   </rule>
+   <rule name="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+         gt:old-states="S_4 S·S·S·_4 S·S·_4 max-S_3"
+         gt:ranges="41 41"
+         gt:theta="32 40 42 55295 57344 65533 65537 1114111">
+      <alt gt:ranges="41 41">
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+         <nonterminal name="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+                      gt:old-states="S_4 S·S·S·_4 S·S·_4 max-S_3"/>
+      </alt>
+      <alt><!-- final state --></alt>
+   </rule>
+   <comment> bye </comment>
+   <comment> Alpha rules:  path(s) from q0 to q </comment>
+   <rule name="alpha-m-S_1">
+      <alt gt:from="S_0" gt:to="m-S_1" gt:trace="S_0 . 1 / m-S_1">
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S_2">
+      <alt gt:from="S_0" gt:to="m-S_2" gt:trace="S_0 . 2 / m-S_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·_1">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_1"
+           gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·_2">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S_4">
+      <alt gt:from="S_0"
+           gt:to="m-S_4"
+           gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 . 1 / m-S_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·S·_1">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_1"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·S·_2">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·_4">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_4"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-max-S_1">
+      <alt gt:from="S_0"
+           gt:to="m-max-S_1"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-max-S_2">
+      <alt gt:from="S_0"
+           gt:to="m-max-S_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·S·_4˅max-S_3">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S·S·S·_4˅S·S·_4˅max-S_3">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="alpha-m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+      <alt gt:from="S_0"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <comment> Omega rules:  path(s) from q to a final state </comment>
+   <rule name="omega-S_0">
+      <alt gt:from="S_0" gt:to="m-S_1" gt:trace="S_0 . 1 / m-S_1">
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·_1">
+      <alt gt:from="m-S·S·_1" gt:to="m-S_4" gt:trace="m-S·S·_1 . 1 / m-S_4">
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·_4">
+      <alt gt:from="m-S·S·_4" gt:to="m-S_4" gt:trace="m-S·S·_4 . 1 / m-S_4">
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·S·_4˅S·S·_4˅max-S_3">
+      <alt gt:from="m-S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+      <alt gt:from="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S_2">
+      <alt gt:from="m-S_2"
+           gt:to="m-S_4"
+           gt:trace="m-S_2 . 1 / m-S·S·_1 . 1 / m-S_4">
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·S·_1">
+      <alt gt:from="m-S·S·S·_1"
+           gt:to="m-S_4"
+           gt:trace="m-S·S·S·_1 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·S·_4˅max-S_3">
+      <alt gt:from="m-S·S·S·_4˅max-S_3"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·_2">
+      <alt gt:from="m-S·S·_2"
+           gt:to="m-S_4"
+           gt:trace="m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 . 1 / m-S_4">
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-max-S_2">
+      <alt gt:from="m-max-S_2"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-S·S·S·_2">
+      <alt gt:from="m-S·S·S·_2"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="omega-m-max-S_1">
+      <alt gt:from="m-max-S_1"
+           gt:to="m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="m-max-S_1 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <comment> Theta rules:  poison terminal for q </comment>
+   <comment> These are implicit in the gt:theta attributes on rules </comment>
+</ixml>

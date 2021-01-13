@@ -11,11 +11,23 @@
   </desc>
   <desc>
     <p>Revisions:</p>
-    <p>2021-01-12 : CMSMcQ : revise for a.ixml u5 and O2
+    <p>2021-01-13 : CMSMcQ : normalize-terminals is required,
+    not optional, even for a.ixml.</p>
+    <p>2021-01-12 : CMSMcQ : revise for a.ixml u5 and O2 
     approximations.</p>
     <p>2020-12-31 : CMSMcQ : made file (but apparently did not
     get it to a working state)</p>
   </desc>
+
+  <normalize-terminals>
+    <desc>
+      <p>Normalization of terminals is required for
+      the determinization step to work, even when
+      the grammar appears not to need it: the
+      annotations are used in checking determinism.
+      </p>
+    </desc>
+  </normalize-terminals>
 
   <eliminate-unit-rules>
     <desc>
@@ -25,7 +37,6 @@
       </p>
     </desc>
   </eliminate-unit-rules>
-
 
   <annotate-pc>
     <desc>
@@ -39,9 +50,9 @@
     </desc>
   </remove-unreachables>
   
-  <simplify-epsilon-expressions save="temp.ndfsa.xml">
+  <simplify-epsilon-expressions save="temp.nfsa.xml">
     <desc><p>Not always needed, but not harmful.</p></desc>
-  </simplify-epsilon-expressions>
+  </simplify-epsilon-expressions>  
 
   <determinize>
     <desc>
@@ -49,16 +60,17 @@
     </desc>
   </determinize>
   
-  <!--
   
-  <simplify-epsilon-expressions/>
+  <simplify-epsilon-expressions save="temp.dfsa.xml"/>
 
   
-  <fsa-to-tclego save="temp.r0.tclego.xml"/>
+  <fsa-to-tclego save="temp.tclego.xml"/>
   
+  <!--
   <tclego-to-tcrecipes coverage="state-final"
 		       polarity="positive"/>  
   -->
+  
 </grammar-pipeline>
 
   

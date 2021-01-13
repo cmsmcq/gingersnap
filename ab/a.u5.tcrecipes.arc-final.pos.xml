@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network"
+      gt:date="2021-01-13T07:55:06.940652-07:00"
+      gt:dg-type="testcase grammar"
+      gt:test-polarity="positive"
+      gt:test-selection="arc-final">
+   <comment> 2021-01-13T07:55:06.940652-07:00 tclego-to-tcrecipes.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/ab/a.u5.tclego.xml </comment>
+   <comment> Output grammar G′:  Test case recipes (positive, arc-final) for L(G).</comment>
+   <rule name="testcases-">
+      <alt>
+         <nonterminal name="positive"/>
+      </alt>
+   </rule>
+   <rule name="positive">
+      <alt>
+         <nonterminal name="positive-arc-final"/>
+      </alt>
+   </rule>
+   <rule name="positive-arc-final">
+      <alt>
+         <nonterminal name="arc-final-S_0˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·_4˃1"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·_1˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 + m-S·S·_1˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·_4˃1" gt:polarity="positive">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 + m-S·S·_4˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+</ixml>

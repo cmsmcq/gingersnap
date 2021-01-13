@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network"
+      gt:date="2021-01-13T07:44:33.690671-07:00"
+      gt:dg-type="testcase grammar"
+      gt:test-polarity="negative"
+      gt:test-selection="state state-final arc arc-final">
+   <comment> 2021-01-13T07:44:33.690671-07:00 tclego-to-tcrecipes.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/ab/a.O2.tclego.xml </comment>
+   <comment> Output grammar G′:  Test case recipes (negative, all) for L(G).</comment>
+   <rule name="testcases-">
+      <alt>
+         <nonterminal name="negative"/>
+      </alt>
+   </rule>
+   <rule name="negative">
+      <alt>
+         <nonterminal name="negative-state"/>
+      </alt>
+      <alt>
+         <nonterminal name="negative-state-final"/>
+      </alt>
+      <alt>
+         <nonterminal name="negative-arc"/>
+      </alt>
+      <alt>
+         <nonterminal name="negative-arc-final"/>
+      </alt>
+   </rule>
+   <rule name="negative-state-final">
+      <alt>
+         <nonterminal name="state-final-S_0"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-max-S_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-max-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_4˅max-S_3"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-final-m-S·S·S·_4˅S·S·_4˅max-S_3"/>
+      </alt>
+   </rule>
+   <rule name="negative-state">
+      <alt>
+         <nonterminal name="state-neg-S_0"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·S·_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·S·_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·_4"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-max-S_1"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-max-S_2"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·S·_4˅max-S_3"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S·S·S·_4˅S·S·_4˅max-S_3"/>
+      </alt>
+      <alt>
+         <nonterminal name="state-neg-m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3"/>
+      </alt>
+   </rule>
+   <rule name="negative-arc-final">
+      <alt>
+         <nonterminal name="arc-final-S_0˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-max-S_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-max-S_1˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-max-S_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-final-m-S·S·S·_4˅max-S_3˃1"/>
+      </alt>
+   </rule>
+   <rule name="negative-arc">
+      <alt>
+         <nonterminal name="arc-neg-S_0˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-S_0˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·S·_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·S·_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·S·_2˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·_4˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-max-S_1˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-max-S_1˃2"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-max-S_2˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·S·_4˅max-S_3˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S·S·S·_4˅S·S·_4˅max-S_3˃1"/>
+      </alt>
+      <alt>
+         <nonterminal name="arc-neg-m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3˃1"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S_2" gt:polarity="negative">
+      <alt gt:from="S_0" gt:to="m-S_2" gt:trace="S_0 . 2 / m-S_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S_2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S_2˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S_2˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 + m-S_2˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·_1" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_1"
+           gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·_1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 1 / m-S·S·_1 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·_2" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·_2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·_2˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·_2˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 + m-S·S·_2˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_1" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_1"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·S·_1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·S·_1˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + m-S·S·S·_1˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·S·_1˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + m-S·S·S·_1˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 + m-S·S·S·_1˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_2" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·S·_2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·S·_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·S·_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·S·_2˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·S·_2˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 + m-S·S·S·_2˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·_4" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·_4"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·_4" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 1 / m-S·S·S·_1 . 1 / m-S·S·_4 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="state-final-m-max-S_1" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-max-S_1"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-max-S_1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-max-S_1˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + m-max-S_1˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40">
+            <comment> #28 = »(« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-max-S_1˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + m-max-S_1˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + m-max-S_1˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 39 41 96 98 55295 57344 65533 65537 1114111">
+            <range from=" " to="#27" gt:ranges="32 39">
+               <comment> #20 - #27 = » « - »'« </comment>
+            </range>
+            <range from=")" to="`" gt:ranges="41 96">
+               <comment> #29 - #60 = »)« - »`« </comment>
+            </range>
+            <range from="b" to="#D7FF" gt:ranges="98 55295">
+               <comment> #62 - #D7FF = »b« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-max-S_1˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + m-max-S_1˃2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97">
+            <comment> #61 = »a« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-max-S_1˃2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + m-max-S_1˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 1 / m-max-S_1 + m-max-S_1˃2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-max-S_2" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-max-S_2"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-max-S_2" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-max-S_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 + m-max-S_2˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-max-S_2˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 + m-max-S_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 + m-max-S_2˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="arc-final-m-S·S·S·_4˅max-S_3˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 + m-S·S·S·_4˅max-S_3˃1">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41">
+            <comment> #29 = »)« </comment>
+         </literal>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·S·_4˅max-S_3˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 + m-S·S·S·_4˅max-S_3˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 + m-S·S·S·_4˅max-S_3˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="state-final-m-S·S·S·_4˅S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:from="S_0"
+           gt:to="m-S·S·S·_4˅S·S·_4˅max-S_3"
+           gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S·S·S·_4˅S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S·S·S·_4˅S·S·_4˅max-S_3˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 + m-S·S·S·_4˅S·S·_4˅max-S_3˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 + m-S·S·S·_4˅S·S·_4˅max-S_3˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="state-neg-m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3 + error ">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="arc-neg-m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3˃1" gt:polarity="negative">
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3 + m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+         <literal dstring=")" gt:ranges="41 41"/>
+      </alt>
+      <alt gt:trace="S_0 . 2 / m-S_2 . 2 / m-S·S·_2 . 2 / m-S·S·S·_2 . 2 / m-max-S_2 . 1 / m-S·S·S·_4˅max-S_3 . 1 / m-S·S·S·_4˅S·S·_4˅max-S_3 . 1 / m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3 + m-S_4˅S·S·S·_4˅S·S·_4˅max-S_3˃1 + error">
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="(" gt:ranges="40 40"/>
+         <literal dstring="a" gt:ranges="97 97"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <literal dstring=")" gt:ranges="41 41"/>
+         <inclusion gt:ranges="32 40 42 55295 57344 65533 65537 1114111">
+            <range from=" " to="(" gt:ranges="32 40">
+               <comment> #20 - #28 = » « - »(« </comment>
+            </range>
+            <range from="*" to="#D7FF" gt:ranges="42 55295">
+               <comment> #2A - #D7FF = »*« - »퟿« </comment>
+            </range>
+            <range from="#E000" to="�" gt:ranges="57344 65533">
+               <comment> #E000 - #FFFD = »« - »�« </comment>
+            </range>
+            <range from="𐀁" to="#10FFFF" gt:ranges="65537 1114111">
+               <comment> #10001 - #10FFFF = »𐀁« - »􏿿« </comment>
+            </range>
+         </inclusion>
+      </alt>
+   </rule>
+</ixml>
