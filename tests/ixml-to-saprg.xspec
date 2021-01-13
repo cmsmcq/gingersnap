@@ -5,10 +5,86 @@
 
   <xspec:helper stylesheet="../../../lib/xslt/strip-ws.xsl"/>
   
-  <xspec:scenario label="When invoked without parameters">
+  <xspec:scenario label="When invoked without parameters ... ">
     <xspec:context href="xml/Program.pcgl.ixml.xml" mode="make-rtn"/>
-    <xspec:expect label="then expand all nonterminals and add linkage"
+    <xspec:expect label="then expand recursive nonterminals and add linkage"
 		  href="xml/Program.r0sup.saprg.ixml.xml"
+		  select="ws:strip(ixml/rule,'*','')"
+		  test="ws:strip(ixml/rule,'*','')"
+		  />
+  </xspec:scenario>
+
+  <xspec:scenario label="When ixml template invoked with non-fissile = #none">
+    <xspec:context href="xml/Program.pcgl.ixml.xml"
+		   select="ixml"
+		   mode="make-rtn">
+      <xspec:param name="non-fissile" tunnel="yes"
+		   select=" '#none' "/>
+    </xspec:context>
+    <xspec:expect label="then result should be an ixml element"
+		  test="name($xspec:result) eq 'ixml'"/>
+    <xspec:expect label="then result should be an ixml element"
+		  test="name(./*) eq 'ixml'"/>
+    
+    <xspec:expect label="then expand ALL nonterminals and add linkage"
+		  href="xml/Program.r0sup.saprg.bigfsa.ixml.xml"
+		  select="ws:strip(ixml/rule,'*','')"
+		  test="ws:strip(ixml/rule,'*','')"
+		  />
+  </xspec:scenario>
+
+  <xspec:scenario label="When ixml template invoked with start symbol (etc.)">
+    <xspec:context href="xml/Program.pcgl.ixml.xml"
+		   select="ixml"
+		   mode="make-rtn">
+      <xspec:param name="keep-non-fissiles" tunnel="yes"
+		   select=" '#no' "/>
+      <xspec:param name="linkage" tunnel="yes"
+		   select=" '#none' "/>
+      <xspec:param name="start" tunnel="yes"
+		   select=" 'block' "/>
+    </xspec:context>
+    
+    <xspec:expect label="then produce an O0 grammar for THAT nonterminal with no linkage"
+		  href="xml/Program.O0.block.ixml.xml"
+		  select="ws:strip(ixml/rule,'*','')"
+		  test="ws:strip(ixml/rule,'*','')"
+		  />
+  </xspec:scenario>
+
+  <xspec:scenario label="When ixml template invoked with start symbol (etc.)">
+    <xspec:context href="xml/Program.pcgl.ixml.xml"
+		   select="ixml"
+		   mode="make-rtn">
+      <xspec:param name="keep-non-fissiles" tunnel="yes"
+		   select=" '#no' "/>
+      <xspec:param name="linkage" tunnel="yes"
+		   select=" '#none' "/>
+      <xspec:param name="start" tunnel="yes"
+		   select=" 'statement' "/>
+    </xspec:context>
+    
+    <xspec:expect label="then produce an O0 grammar for THAT nonterminals with no linkage"
+		  href="xml/Program.O0.statement.ixml.xml"
+		  select="ws:strip(ixml/rule,'*','')"
+		  test="ws:strip(ixml/rule,'*','')"
+		  />
+  </xspec:scenario>
+  
+
+  <xspec:scenario label="When ixml template invoked with
+			 non-fissile = '#none' and linkage='#none'">
+    <xspec:context href="xml/a.pcgl.ixml.xml"
+		   select="ixml"
+		   mode="make-rtn">
+      <xspec:param name="non-fissile" tunnel="yes"
+		   select=" '#none' "/>
+      <xspec:param name="linkage" tunnel="yes"
+		   select=" '#none' "/>
+    </xspec:context>
+    
+    <xspec:expect label="then expand ALL nonterminals and add no extcall linkage"
+		  href="xml/a.O0.ixml.xml"
 		  select="ws:strip(ixml/rule,'*','')"
 		  test="ws:strip(ixml/rule,'*','')"
 		  />
