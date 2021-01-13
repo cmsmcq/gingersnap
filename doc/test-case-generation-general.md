@@ -130,7 +130,7 @@ Related documents:
 * [Generating infinite series of regular subset and superset
 approximations for context-free languages](regular-approximations.md)
 2021-01-11. Describes regular approximations as implemented in
-Gingersnap
+Gingersnap.
 
 Separate documents needed on: 
 
