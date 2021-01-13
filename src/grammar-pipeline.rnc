@@ -4,6 +4,7 @@ grammar {
 	# Maintenance notes below.
 	#
 	# Revisions:
+	# 2021-01-12 : CMSMcQ : add new parameters to make-rtn
 	# 2021-01-01 : CMSMcQ : add eliminate-unit-rules
 	# 2020-12-29 : CMSMcQ : Add attributes to tclego-to-tcrecipes
 	# 2020-12-28 : CMSMcQ : Add fsa-to-tclego etc.
@@ -161,8 +162,11 @@ grammar {
 	}
 	
  	make-rtn = element make-rtn {
-	     attribute fissile { text }?,
+	     attribute fissile { text }?, # which nonterminals to break out
 	     attribute non-fissile { text }?,
+	     attribute linkage { text }?, # #none or #all or name+
+	     attribute start { text }?,   # #inherit or () or a name
+	     attribute keep-non-fissiles { text }?, # #yes or #no or name+
 	     desc
 	}
 
