@@ -1,0 +1,916 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gt:date="2021-01-12T18:49:29.140058-07:00"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network">
+   <comment> 2021-01-12T18:49:29.140058-07:00 creation of stack-augmented pseudo-regular grammar (SAPRG) by ixml-to-saprg.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/tests/xml/Program.pcgl.ixml.xml </comment>
+   <comment> Output grammar G′:  this grammar.</comment>
+   <comment> A stack automaton guided by grammar G′and the rtn:stack attributes should recognize L(G), the same language recognized by G.  If the rtn:stack attributes are ignored, this is a (pseudo-)regular grammar which recognizes the R_0 superset of L(G). </comment>
+   <comment>2021-01-11T12:29:16.096019-07:00: ixml-annotate-gluschkov.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/Program.pc.ixml.xml</comment>
+   <comment>    Grammar augmented with Gluschkov automata (@gl:*).</comment>
+   <comment>2021-01-11T12:28:36.185426-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/tests/xml/../../program/Program.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> Expansion for program. </comment>
+   <comment> program: block. </comment>
+   <rule name="program" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="program_0" rtn:stack="push extcall_program"/>
+      </alt>
+   </rule>
+   <rule name="program_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="block_0" rtn:stack="push program_1"/>
+      </alt>
+   </rule>
+   <rule name="program_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="program_f"/>
+      </alt>
+   </rule>
+   <rule name="program_f">
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_program">
+         <comment>nil</comment>
+      </alt>
+      <alt rtn:RHStype="grammar-final" rtn:stack="if-stack-empty">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for program. </comment>
+   <comment> Expansion for block. </comment>
+   <comment> block: "{", S, statement*(";", S), "}", S. </comment>
+   <rule name="block" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="block_0" rtn:stack="push extcall_block"/>
+      </alt>
+   </rule>
+   <rule name="block_0">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="{"/>
+         <nonterminal rtn:nttype="state" name="block_1"/>
+      </alt>
+   </rule>
+   <rule name="block_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_2"/>
+      </alt>
+   </rule>
+   <rule name="block_2" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+      </alt>
+      <alt rtn:ruletype="terminal">
+         <literal dstring="}"/>
+         <nonterminal rtn:nttype="state" name="block_6"/>
+      </alt>
+   </rule>
+   <rule name="block_3" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal dstring=";"/>
+         <nonterminal rtn:nttype="state" name="block_4"/>
+      </alt>
+      <alt rtn:ruletype="terminal">
+         <literal dstring="}"/>
+         <nonterminal rtn:nttype="state" name="block_6"/>
+      </alt>
+   </rule>
+   <rule name="block_4" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_5"/>
+      </alt>
+   </rule>
+   <rule name="block_5" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push block_3"/>
+      </alt>
+   </rule>
+   <rule name="block_6" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push block_7"/>
+      </alt>
+   </rule>
+   <rule name="block_7" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="block_f"/>
+      </alt>
+   </rule>
+   <rule name="block_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="program_1" rtn:stack="pop program_1"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="statement_5" rtn:stack="pop statement_5"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_block">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for block. </comment>
+   <comment> Expansion for statement. </comment>
+   <comment> statement: if-statement; while-statement; assignment; call; block. </comment>
+   <rule name="statement" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="statement_0" rtn:stack="push extcall_statement"/>
+      </alt>
+   </rule>
+   <rule name="statement_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="if-statement_0"
+                      rtn:stack="push statement_1"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="while-statement_0"
+                      rtn:stack="push statement_2"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="assignment_0" rtn:stack="push statement_3"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="call_0" rtn:stack="push statement_4"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="block_0" rtn:stack="push statement_5"/>
+      </alt>
+   </rule>
+   <rule name="statement_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="statement_f"/>
+      </alt>
+   </rule>
+   <rule name="statement_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="statement_f"/>
+      </alt>
+   </rule>
+   <rule name="statement_3" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="statement_f"/>
+      </alt>
+   </rule>
+   <rule name="statement_4" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="statement_f"/>
+      </alt>
+   </rule>
+   <rule name="statement_5" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="statement_f"/>
+      </alt>
+   </rule>
+   <rule name="statement_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="block_3" rtn:stack="pop block_3"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="if-statement_6" rtn:stack="pop if-statement_6"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="else-part_3" rtn:stack="pop else-part_3"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="while-statement_6" rtn:stack="pop while-statement_6"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_statement">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for statement. </comment>
+   <comment> Expansion for if-statement. </comment>
+   <comment> if-statement: "if", S, condition, "then", S, statement, else-part?. </comment>
+   <rule name="if-statement" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="if-statement_0" rtn:stack="push extcall_if-statement"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_0">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="if"/>
+         <nonterminal rtn:nttype="state" name="if-statement_1"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_2"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_2" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="condition_0"
+                      rtn:stack="push if-statement_3"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_3" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="then"/>
+         <nonterminal rtn:nttype="state" name="if-statement_4"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_4" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push if-statement_5"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_5" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="statement_0"
+                      rtn:stack="push if-statement_6"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_6" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="else-part_0"
+                      rtn:stack="push if-statement_7"/>
+      </alt>
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="if-statement_f"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_7" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="if-statement_f"/>
+      </alt>
+   </rule>
+   <rule name="if-statement_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="statement_1" rtn:stack="pop statement_1"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_if-statement">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for if-statement. </comment>
+   <comment> Expansion for else-part. </comment>
+   <comment> else-part: "else", S, statement. </comment>
+   <rule name="else-part" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="else-part_0" rtn:stack="push extcall_else-part"/>
+      </alt>
+   </rule>
+   <rule name="else-part_0">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="else"/>
+         <nonterminal rtn:nttype="state" name="else-part_1"/>
+      </alt>
+   </rule>
+   <rule name="else-part_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push else-part_2"/>
+      </alt>
+   </rule>
+   <rule name="else-part_2" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="statement_0" rtn:stack="push else-part_3"/>
+      </alt>
+   </rule>
+   <rule name="else-part_3" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="else-part_f"/>
+      </alt>
+   </rule>
+   <rule name="else-part_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="if-statement_7" rtn:stack="pop if-statement_7"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_else-part">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for else-part. </comment>
+   <comment> Expansion for while-statement. </comment>
+   <comment> while-statement: "while", S, condition, "do", S, statement. </comment>
+   <rule name="while-statement" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="while-statement_0" rtn:stack="push extcall_while-statement"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_0">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="while"/>
+         <nonterminal rtn:nttype="state" name="while-statement_1"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_2"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_2" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="condition_0"
+                      rtn:stack="push while-statement_3"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_3" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="do"/>
+         <nonterminal rtn:nttype="state" name="while-statement_4"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_4" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push while-statement_5"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_5" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call"
+                      name="statement_0"
+                      rtn:stack="push while-statement_6"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_6" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="while-statement_f"/>
+      </alt>
+   </rule>
+   <rule name="while-statement_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="statement_2" rtn:stack="pop statement_2"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_while-statement">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for while-statement. </comment>
+   <comment> Expansion for assignment. </comment>
+   <comment> assignment: variable, "=", S, expression. </comment>
+   <rule name="assignment" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="assignment_0" rtn:stack="push extcall_assignment"/>
+      </alt>
+   </rule>
+   <rule name="assignment_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="variable_0" rtn:stack="push assignment_1"/>
+      </alt>
+   </rule>
+   <rule name="assignment_1" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="="/>
+         <nonterminal rtn:nttype="state" name="assignment_2"/>
+      </alt>
+   </rule>
+   <rule name="assignment_2" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push assignment_3"/>
+      </alt>
+   </rule>
+   <rule name="assignment_3" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="expression_0" rtn:stack="push assignment_4"/>
+      </alt>
+   </rule>
+   <rule name="assignment_4" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="assignment_f"/>
+      </alt>
+   </rule>
+   <rule name="assignment_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="statement_3" rtn:stack="pop statement_3"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_assignment">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for assignment. </comment>
+   <comment> Expansion for variable. </comment>
+   <comment> variable: identifier. </comment>
+   <rule name="variable" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="variable_0" rtn:stack="push extcall_variable"/>
+      </alt>
+   </rule>
+   <rule name="variable_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="identifier_0" rtn:stack="push variable_1"/>
+      </alt>
+   </rule>
+   <rule name="variable_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="variable_f"/>
+      </alt>
+   </rule>
+   <rule name="variable_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="assignment_1" rtn:stack="pop assignment_1"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_variable">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for variable. </comment>
+   <comment> Expansion for call. </comment>
+   <comment> call: identifier, "(", S, parameter*(",", S), ")", S. </comment>
+   <rule name="call" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="call_0" rtn:stack="push extcall_call"/>
+      </alt>
+   </rule>
+   <rule name="call_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="identifier_0" rtn:stack="push call_1"/>
+      </alt>
+   </rule>
+   <rule name="call_1" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal dstring="("/>
+         <nonterminal rtn:nttype="state" name="call_2"/>
+      </alt>
+   </rule>
+   <rule name="call_2" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push call_3"/>
+      </alt>
+   </rule>
+   <rule name="call_3" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="parameter_0" rtn:stack="push call_4"/>
+      </alt>
+      <alt rtn:ruletype="terminal">
+         <literal dstring=")"/>
+         <nonterminal rtn:nttype="state" name="call_7"/>
+      </alt>
+   </rule>
+   <rule name="call_4" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal dstring=","/>
+         <nonterminal rtn:nttype="state" name="call_5"/>
+      </alt>
+      <alt rtn:ruletype="terminal">
+         <literal dstring=")"/>
+         <nonterminal rtn:nttype="state" name="call_7"/>
+      </alt>
+   </rule>
+   <rule name="call_5" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push call_6"/>
+      </alt>
+   </rule>
+   <rule name="call_6" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="parameter_0" rtn:stack="push call_4"/>
+      </alt>
+   </rule>
+   <rule name="call_7" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push call_8"/>
+      </alt>
+   </rule>
+   <rule name="call_8" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="call_f"/>
+      </alt>
+   </rule>
+   <rule name="call_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="statement_4" rtn:stack="pop statement_4"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_call">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for call. </comment>
+   <comment> Expansion for parameter. </comment>
+   <comment> parameter: -expression. </comment>
+   <rule name="parameter" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="parameter_0" rtn:stack="push extcall_parameter"/>
+      </alt>
+   </rule>
+   <rule name="parameter_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="expression_0" rtn:stack="push parameter_1"/>
+      </alt>
+   </rule>
+   <rule name="parameter_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="parameter_f"/>
+      </alt>
+   </rule>
+   <rule name="parameter_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="call_4" rtn:stack="pop call_4"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_parameter">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for parameter. </comment>
+   <comment> Expansion for identifier. </comment>
+   <comment> identifier: letter+, S. </comment>
+   <rule name="identifier" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="identifier_0" rtn:stack="push extcall_identifier"/>
+      </alt>
+   </rule>
+   <rule name="identifier_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="letter_0" rtn:stack="push identifier_1"/>
+      </alt>
+   </rule>
+   <rule name="identifier_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="letter_0" rtn:stack="push identifier_1"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push identifier_2"/>
+      </alt>
+   </rule>
+   <rule name="identifier_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="identifier_f"/>
+      </alt>
+   </rule>
+   <rule name="identifier_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="variable_1" rtn:stack="pop variable_1"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="call_1" rtn:stack="pop call_1"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="expression_1" rtn:stack="pop expression_1"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="condition_1" rtn:stack="pop condition_1"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_identifier">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for identifier. </comment>
+   <comment> Expansion for expression. </comment>
+   <comment> expression: identifier; number. </comment>
+   <rule name="expression" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="expression_0" rtn:stack="push extcall_expression"/>
+      </alt>
+   </rule>
+   <rule name="expression_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="identifier_0" rtn:stack="push expression_1"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="number_0" rtn:stack="push expression_2"/>
+      </alt>
+   </rule>
+   <rule name="expression_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="expression_f"/>
+      </alt>
+   </rule>
+   <rule name="expression_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="expression_f"/>
+      </alt>
+   </rule>
+   <rule name="expression_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="assignment_4" rtn:stack="pop assignment_4"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="parameter_1" rtn:stack="pop parameter_1"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_expression">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for expression. </comment>
+   <comment> Expansion for number. </comment>
+   <comment> number: digit+, S. </comment>
+   <rule name="number" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="number_0" rtn:stack="push extcall_number"/>
+      </alt>
+   </rule>
+   <rule name="number_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="digit_0" rtn:stack="push number_1"/>
+      </alt>
+   </rule>
+   <rule name="number_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="digit_0" rtn:stack="push number_1"/>
+      </alt>
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="S_0" rtn:stack="push number_2"/>
+      </alt>
+   </rule>
+   <rule name="number_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="number_f"/>
+      </alt>
+   </rule>
+   <rule name="number_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="expression_2" rtn:stack="pop expression_2"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_number">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for number. </comment>
+   <comment> Expansion for letter. </comment>
+   <comment> letter: ["a"-"z"]; ["A"-"Z"]. </comment>
+   <rule name="letter" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="letter_0" rtn:stack="push extcall_letter"/>
+      </alt>
+   </rule>
+   <rule name="letter_0">
+      <alt rtn:ruletype="terminal">
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal rtn:nttype="state" name="letter_1"/>
+      </alt>
+      <alt rtn:ruletype="terminal">
+         <inclusion>
+            <range from="A" to="Z"/>
+         </inclusion>
+         <nonterminal rtn:nttype="state" name="letter_2"/>
+      </alt>
+   </rule>
+   <rule name="letter_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="letter_f"/>
+      </alt>
+   </rule>
+   <rule name="letter_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="letter_f"/>
+      </alt>
+   </rule>
+   <rule name="letter_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="identifier_1" rtn:stack="pop identifier_1"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_letter">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for letter. </comment>
+   <comment> Expansion for digit. </comment>
+   <comment> digit: ["0"-"9"]. </comment>
+   <rule name="digit" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="digit_0" rtn:stack="push extcall_digit"/>
+      </alt>
+   </rule>
+   <rule name="digit_0">
+      <alt rtn:ruletype="terminal">
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal rtn:nttype="state" name="digit_1"/>
+      </alt>
+   </rule>
+   <rule name="digit_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="digit_f"/>
+      </alt>
+   </rule>
+   <rule name="digit_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="number_1" rtn:stack="pop number_1"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_digit">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for digit. </comment>
+   <comment> Expansion for condition. </comment>
+   <comment> condition: identifier. </comment>
+   <rule name="condition" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="condition_0" rtn:stack="push extcall_condition"/>
+      </alt>
+   </rule>
+   <rule name="condition_0">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="identifier_0" rtn:stack="push condition_1"/>
+      </alt>
+   </rule>
+   <rule name="condition_1" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="condition_f"/>
+      </alt>
+   </rule>
+   <rule name="condition_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="if-statement_3" rtn:stack="pop if-statement_3"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="while-statement_3" rtn:stack="pop while-statement_3"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_condition">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for condition. </comment>
+   <comment> Expansion for S. </comment>
+   <comment> -S: ' '*. </comment>
+   <rule mark="-" name="S" rtn:ruletype="linkage-stub">
+      <alt rtn:ruletype="linkage">
+         <comment>nil</comment>
+         <nonterminal name="S_0" rtn:stack="push extcall_S"/>
+      </alt>
+   </rule>
+   <rule name="S_0">
+      <alt rtn:ruletype="terminal">
+         <literal sstring=" "/>
+         <nonterminal rtn:nttype="state" name="S_1"/>
+      </alt>
+   </rule>
+   <rule name="S_1" rtn:nttype="state">
+      <alt rtn:ruletype="terminal">
+         <literal sstring=" "/>
+         <nonterminal rtn:nttype="state" name="S_1"/>
+      </alt>
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="S_f"/>
+      </alt>
+   </rule>
+   <rule name="S_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="block_2" rtn:stack="pop block_2"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="block_5" rtn:stack="pop block_5"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="block_7" rtn:stack="pop block_7"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="if-statement_2" rtn:stack="pop if-statement_2"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="if-statement_5" rtn:stack="pop if-statement_5"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="else-part_2" rtn:stack="pop else-part_2"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="while-statement_2" rtn:stack="pop while-statement_2"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="while-statement_5" rtn:stack="pop while-statement_5"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="assignment_3" rtn:stack="pop assignment_3"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="call_3" rtn:stack="pop call_3"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="call_6" rtn:stack="pop call_6"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="call_8" rtn:stack="pop call_8"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="identifier_2" rtn:stack="pop identifier_2"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="number_2" rtn:stack="pop number_2"/>
+      </alt>
+      <alt rtn:ruletype="linkage-return" rtn:stack="pop extcall_S">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for S. </comment>
+</ixml>

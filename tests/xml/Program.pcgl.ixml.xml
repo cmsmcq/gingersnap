@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../../src/ixml-html.xsl"?>
 <ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
       xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
       xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
