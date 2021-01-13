@@ -100,8 +100,18 @@
 * Bettter control of when to eliminate attributes as no longer
     relevant.
 
-* Single import of function libraries (involves splitting the
-    calling modules into runnable and non-runnable modules).
+* Make RNG, RNC schemas for current ixml. 
+
+* Make RNG, RNC schemas, and ixml grammars for variant forms of ixml:
+
+    * ixml extended with notations for empty string, empty set,
+      universal set of characters
+    * ixml extended with wildcards
+    * ixml with Gingersnap-specific extensions 
+    * ixml restricted to regular grammars and pseudo-regular grammars
+	  (if you want to allow pseudo-terminals, you will need a way to
+	  recognize them)
+    * regular grammars extended with stack management
 
 
 ### Software engineering, good practice
@@ -167,13 +177,24 @@
 * Coverage measurement (and run coverage measurement on XSTS and/or QT
   test suites)
 
+* Specify ixml grammar and schemas for ixml extended with annotations
+  in the style of xsd:annotation and/or XQuery annotations.
+
+* Specify ixml grammar and schemas for ixml extended with inherited 
+  and synthetic attributes. Assignment syntax is an extension point, 
+  but perhaps start with XPath 3.1? 
+
 ## Misc
 
 
 ## Done
 
 * What are the empty comments in ixml-to-rk output about? (a sub r2)
-  (fixed)
+(fixed)
+
+* Single import of function libraries (involves splitting the 
+calling modules into runnable and non-runnable modules). 
+[Done 28 Dec 2020.]
 
 * add pipeline stage for collapsing epsilon transitions (defined as
   unit rules), optionally with restriction on where.  Recursive
@@ -209,5 +230,6 @@
   there. [Done 2021-01-12.]
   
 * make ixml-to-rk do comments first before injecting its own
-  navigation markers.
+  navigation markers. [Done 2021-01-12.]
+
 
