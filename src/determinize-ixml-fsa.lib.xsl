@@ -211,7 +211,7 @@
     <xsl:param name="lsDone" as="xs:string*" select="()"/>
     <xsl:param name="input-grammar" as="element(ixml)" tunnel="yes"/>
     
-    <xsl:if test="false()">
+    <xsl:if test="true()">
       <xsl:message>
 	<xsl:text>queue manager:  </xsl:text>
 	<xsl:value-of select="concat(
@@ -231,7 +231,7 @@
     <xsl:choose>
       <!--* base case: empty queue, done *-->
       <xsl:when test="empty($queue)">
-	<xsl:if test="false()">
+	<xsl:if test="true()">
 	  <xsl:message>
 	    <xsl:text>Deterministic FSA has ca. </xsl:text>
 	    <xsl:value-of select="count($lsDone)"/>
@@ -325,7 +325,7 @@
       </xsl:element>
     </xsl:variable>
         
-    <!--* Second, modify the state to satisfy eliminate partial 
+    <!--* Second, modify the state to eliminate partial 
 	* overlap of states:  any two arc labels should be either 
 	* equal or disjoint. *-->
     <xsl:variable name="ruleGen2" as="element(rule)">
