@@ -6,33 +6,13 @@
 
 ### Quick things to fix
 
-* make ixml-to-rk not inject stylesheet PI if one is already there.
-  
-* make ixml-to-rk do comments first before inject its own navigation
-  markers.
-
-* (not so quick) make ixml-to-saprg take two parameters:
-
-    * `$fissile` = '`#all`' (default)
-      | list of names
-    * `$non-fissile` = '`#non-recursive`' (default)
-      | '`#none`'
-      | list of names
-		  
-    When `$fissile` has names, `$non-fissile` is ignored.
-    `$fissile`='`#all`' means all nonterminals except those recognized
-     as pseudo-terminals (by default, non-recursive ones).
-
-    [2020-01-02 I believe this is done as specified, but the results
-    are not what was hoped.  Three scenarios must be supported; see
-    making-rtns.asc document of today.  (1) exhibition of mixed
-    grammar, (2) FSA for regular language, (3) R_0 RTN for a specific
-    named nonterminal in a CFL.]
-
 * Extend rule-substitution code to support the scenario of inlining
     all nonterminals.  Think what to do if there are recursive
     nonterminals present: produce bad output? die? leave them alone?
     [2020-01-02]
+
+* Absolutize the reference to ixml-html.xsl, based on stylesheet
+  location (?).
 
 ### User conveniences, release engineering
 
@@ -51,7 +31,7 @@
     superset and knitting of R_k supersets as manual labor.
 
 * Make tool to generate dot file from regular or pseudo-regular
-    grammar.
+  grammar, to visualize the FSA.
 
 * When stubbing out non-terminals in ixml-to-rk-subset,
     instead of defining them with a
@@ -204,4 +184,30 @@
   eliminate-unit-rules.xsl, but it has not been well tested.]
 
 * Pipeline step to eliminate epsilon transitions.  (Duplicate.)
+
+* (not so quick) make ixml-to-saprg take two parameters:
+
+    * `$fissile` = '`#all`' (default)
+      | list of names
+    * `$non-fissile` = '`#non-recursive`' (default)
+      | '`#none`'
+      | list of names
+		  
+    When `$fissile` has names, `$non-fissile` is ignored.
+    `$fissile`='`#all`' means all nonterminals except those recognized
+     as pseudo-terminals (by default, non-recursive ones).
+
+    [2020-01-02 I believe this is done as specified, but the results
+    are not what was hoped.  Three scenarios must be supported; see
+    making-rtns.asc document of today.  (1) exhibition of mixed
+    grammar, (2) FSA for regular language, (3) R_0 RTN for a specific
+    named nonterminal in a CFL.]
+
+    [2020-01-12 Reworked again.  It seems to work.]
+
+* make ixml-to-rk not inject stylesheet PI if one is already
+  there. [Done 2021-01-12.]
+  
+* make ixml-to-rk do comments first before injecting its own
+  navigation markers.
 
