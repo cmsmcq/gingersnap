@@ -13,6 +13,8 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-12 : CMSMcQ : add new parameters to make-rtn;
+      *                       re-import eliminate-arc-overlap
       * 2020-12-28 : CMSMcQ : Split several stylesheets into main
       *                       and library modules, to make Saxon stop
       *                       complaining about multiple imports.
@@ -54,7 +56,7 @@
   <xsl:import href="simplify-nested-sequences.xsl"/>
   <xsl:import href="simplify-expressions.xsl"/>
   <xsl:import href="normalize-terminals.lib.xsl"/>
-  <!-- <xsl:import href="eliminate-arc-overlap.lib.xsl"/> *-->
+  <xsl:import href="eliminate-arc-overlap.lib.xsl"/>
   <xsl:import href="determinize-ixml-fsa.lib.xsl"/>
   
   <!--* modification *-->
@@ -341,6 +343,22 @@
 					then '#non-recursive'
 					else tokenize(
 					$step/@non-fissile,
+					'\s+')"/>
+		<xsl:with-param name="linkage" tunnel="yes"
+				select="if (string($step/@linkage) eq '')
+					then '#all'
+					else tokenize(
+					$step/@linkage,
+					'\s+')"/>
+		<xsl:with-param name="start" tunnel="yes"
+				select="if (string($step/@start) eq '')
+					then '#inherit'
+					else $step/@start/string()"/>
+		<xsl:with-param name="keep-non-fissiles" tunnel="yes"
+				select="if (string($step/@keep-non-fissiles) eq '')
+					then '#yes'
+					else tokenize(
+					$step/@keep-non-fissiles,
 					'\s+')"/>
 	      </xsl:apply-templates>
 	    </xsl:when>
