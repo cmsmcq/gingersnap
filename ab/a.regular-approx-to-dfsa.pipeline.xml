@@ -11,55 +11,37 @@
   </desc>
   <desc>
     <p>Revisions:</p>
-    <p>2020-12-31 : CMSMcQ : made file</p>
+    <p>2021-01-12 : CMSMcQ : revise for a.ixml u5 and O2
+    approximations.</p>
+    <p>2020-12-31 : CMSMcQ : made file (but apparently did not
+    get it to a working state)</p>
   </desc>
 
-  <!--
-  <annotate-pc>
-    <desc><p>Is this necessary?</p></desc>
-  </annotate-pc>
-  -->
-  
-  <normalize-terminals>
-    <desc><p>Before building the r_0 FSA, we split all the literal
-    strings into sequences and calculate information about which
-    characters will match which terminals. That's a necessary
-    preparation for detecting overlap among arcs and making the FSA
-    deterministic.</p></desc>
-  </normalize-terminals>
-
-  <annotate-gl>
-    <desc><p>Gluschkov annotation is the direct pre-requisite for the
-    FSA creation.</p></desc>
-  </annotate-gl>
-  
-  <make-rtn non-fissile="#none">
-    <desc>
-      <p>We make an RTN from the grammar.  None of the rules are
-      recursive, but we want them all broken out, so we need
-      to specify non-fissile='#none'.</p>
-    </desc>
-  </make-rtn>
-
-  <!--  
   <eliminate-unit-rules>
     <desc>
-      <p>We don't want to do much hand work to make these pretty.
-      But we do need empty transitions gone before we try to
-      determinize the FSA.</p>
+      <p>The FSAs I'm working with have epsilon transitions,
+      which of course take the form of unit rules.
+      We need to lose them before determinizing.
+      </p>
     </desc>
   </eliminate-unit-rules>
 
-  <annotate-pc/>
-  <remove-unreachables/>
-    
 
-<simplify-epsilon-expressions/>
-
-
-  <expand-references nonterminals="S_0">
-    <desc><p>Eliminate empty linkage rules.</p></desc>
-  </expand-references>
+  <annotate-pc>
+    <desc>
+      <p>Epsilon elimination does make some states unreachable,
+      so let's clear them out.  First re-annotate.</p>
+    </desc>
+  </annotate-pc>
+  <remove-unreachables>
+    <desc>
+      <p>Then do the deed.</p>
+    </desc>
+  </remove-unreachables>
+  
+  <simplify-epsilon-expressions save="temp.ndfsa.xml">
+    <desc><p>Not always needed, but not harmful.</p></desc>
+  </simplify-epsilon-expressions>
 
   <determinize>
     <desc>
@@ -67,7 +49,8 @@
     </desc>
   </determinize>
   
-
+  <!--
+  
   <simplify-epsilon-expressions/>
 
   

@@ -1,0 +1,46 @@
+<grammar-pipeline>
+  <desc>
+    <p>Grammar-specific pipeline for simplifying a.S.O0
+    (that is, the O(0) approximation of nonterminal S
+    in grammar a.ixml).</p>
+  </desc>
+
+  <strip-rtn-attributes>
+    <desc><p>To start with, let's reduce clutter by stripping some
+    attributes we don't currently need.</p></desc>
+  </strip-rtn-attributes>
+
+  <relabel newdesc="O0 version of S in a.ixml">
+    <desc><p>Also cosmetically, let's replace the comments
+    at the top with a simpler description.</p></desc>
+  </relabel>
+
+  <expand-references nonterminals="S_1 S_2 S_4 S_3">
+    <desc><p>Inline the simple nonterminals in this FSA.</p></desc>
+  </expand-references>
+
+  <simplify-epsilon-expressions>
+    <desc><p>Again, simplify cosmetically.</p></desc>
+  </simplify-epsilon-expressions>
+
+  <ardens-lemma rule="S_f">
+    <desc><p>Apply Arden's lemma to the final state.</p></desc>
+  </ardens-lemma>
+
+  <ardens-lemma rule="S_0">
+    <desc><p>Apply Arden's lemma to the start state.</p></desc>
+  </ardens-lemma>
+
+  <expand-references nonterminals="S_f">
+    <desc><p>Fold S_f into S_0.</p></desc>
+  </expand-references>
+
+  <desc>
+    <p>That's it.  The grammar has now been reduced to a
+    single regular expression.  That expression is a little
+    gnarlier than it needs to be, because it has unnecessary
+    uses of alts and alt.  But it's enough for our purposes.
+    </p>
+  </desc>
+  
+</grammar-pipeline>

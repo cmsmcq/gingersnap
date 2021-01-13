@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-12T20:15:21.014814-07:00"
+      gt:dg-type="regular approximation"
+      gt:ra-type="rk-subset"
+      gt:k="5">
+   <comment>2021-01-12T20:15:21.014814-07:00: ixml-to-rk-subset.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/ab/a.ixml.xml</comment>
+   <comment>    This grammar accepts the r_5 subset </comment>
+   <comment>    of the language accepted by the input grammar.</comment>
+   <comment> First, nonrecursive production rules </comment>
+   <comment>2021-01-12T20:15:21.014814-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/ab/a.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> A really simple context-free grammar for testing
+  test-generation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made file
+</comment>
+   <comment> Second, recursive production rules </comment>
+   <rule name="S" gt:basename="S" gt:affix="" gt:type="stack-affixed">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S·S·" gt:basename="S" gt:affix="S·"/>
+         <literal sstring=")"/>
+      </alt>
+   </rule>
+   <rule name="S·S·"
+         gt:basename="S"
+         gt:affix="S·"
+         gt:type="stack-affixed">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S·S·S·" gt:basename="S" gt:affix="S·S·"/>
+         <literal sstring=")"/>
+      </alt>
+   </rule>
+   <rule name="S·S·S·"
+         gt:basename="S"
+         gt:affix="S·S·"
+         gt:type="stack-affixed">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S·S·S·S·" gt:basename="S" gt:affix="S·S·S·"/>
+         <literal sstring=")"/>
+      </alt>
+   </rule>
+   <rule name="S·S·S·S·"
+         gt:basename="S"
+         gt:affix="S·S·S·"
+         gt:type="stack-affixed">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S·S·S·S·S·" gt:basename="S" gt:affix="S·S·S·S·"/>
+         <literal sstring=")"/>
+      </alt>
+   </rule>
+   <rule name="S·S·S·S·S·"
+         gt:basename="S"
+         gt:affix="S·S·S·S·"
+         gt:type="stack-affixed">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S·S·S·S·S·S·" gt:basename="S" gt:affix="S·S·S·S·S·"/>
+         <literal sstring=")"/>
+      </alt>
+   </rule>
+   <rule name="S·S·S·S·S·S·"
+         gt:basename="S"
+         gt:affix="S·S·S·S·S·"
+         gt:type="stack-affixed">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="S·S·S·S·S·S·S·" gt:basename="S" gt:affix="S·S·S·S·S·S·"/>
+         <literal sstring=")"/>
+      </alt>
+   </rule>
+   <rule name="S·S·S·S·S·S·S·"
+         gt:basename="S"
+         gt:affix="S·S·S·S·S·S·"
+         gt:type="stub">
+      <alt>
+         <nonterminal name="∅"/>
+      </alt>
+   </rule>
+   <comment> bye </comment>
+</ixml>

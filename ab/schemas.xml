@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <uri resource="a.regular-approx-to-dfsa.pipeline.xml" uri="../src/grammar-pipeline.rnc"/>
+  <uri resource="a.S.O0.simplification.pipeline.xml" uri="../src/grammar-pipeline.rnc"/>
+</locatingRules>
