@@ -36,7 +36,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-01 : CMSMcQ : revise parameters
+      * 2021-01-12 : CMSMcQ : revise parameters again
+      * 2021-01-01 : CMSMcQ : revise parameters 
       * 2020-12-28 : CMSMcQ : split into main and module to make Saxon 
       *                       stop complaining about multiple import 
       * 2020-12-27 : CMSMcQ : suppress hi-mom message, becoming tedious 
@@ -73,6 +74,49 @@
   <xsl:param name="non-fissile" as="xs:string*"
 	     select=" '#non-recursive' "/>
 
+  <!--* linkage: What external linkage rules should be injected?
+      * In a mixed grammar, every fissile nonterminal N needs linkage
+      * rules to make N accept any sequence beginning with N_0 and
+      * ending with N_f.  But these linkage rules get in the way in
+      * other scenarios, so for pure FSAs no linkage rules are issued.
+      * In some cases, the user may wish to specify exactly which
+      * nonterminals get linkage rules.
+      * 
+      * The possible values are:
+      * '#none' (meaning no linkage rules at all)
+      * list of names (meaning linkage rules for those names only;
+      * typically there will just be one
+      * '#all' (meaning all fissile nonterminals get linkage)
+      *
+      * Default is (for backward compatibility):  #all.
+      *-->
+  <xsl:param name="linkage" as="xs:string*"
+	     select=" '#all' "/>
+
+  <!--* start: what is the start symbol of the new grammar?
+      *
+      * The expected values are:
+      * nothing or '#inherit':  do nothing special.  (In mixed
+      *     grammars, that means the old start symbol remains.
+      *     In pure FSAs (linkage='#none'), that means its N_0
+      *     state becomes the start symbol.
+      * a name N:  make the N_0 start state of nonterminal N the
+      *     start symbol of the output grammar.
+      *-->
+  <xsl:param name="start" as="xs:string?"
+	     select=" '#inherit' "/>
+
+  <!--* keep-non-fissiles: should non-fissile nonterminals be kept
+      * or dropped?
+      *
+      * The expected values are:
+      * '#yes' means yes, keep all non-fissile nonterminals
+      * '#no' means drop them all
+      * a list of names means keep the ones named, drop others.
+      *-->
+  <xsl:param name="keep-non-fissiles" as="xs:string*"
+	     select=" '#yes' "/>
+
   
   <!--****************************************************************
       * Main / starting template
@@ -87,6 +131,8 @@
 	       select="$fissile"/>
     <xsl:param name="non-fissile" as="xs:string*" tunnel="yes"
 	       select="$non-fissile"/>
+    <xsl:param name="start" as="xs:string?" tunnel="yes"
+	       select="$start"/>
     
     <xsl:variable name="G" as="element(ixml)" select="."/>
 
@@ -129,9 +175,28 @@
 	<xsl:text>recognizes the R_0 superset of L(G). </xsl:text>
       </xsl:element>
       <xsl:text>&#xA;</xsl:text>
-      <xsl:apply-templates>
-	<xsl:with-param name="G" tunnel="yes" select="$G"/>
-      </xsl:apply-templates>
+
+      <xsl:apply-templates select="comment"/>
+
+      <xsl:choose>
+	<xsl:when test="empty($start) or ($start eq '#inherit')">
+	  <!--* default case:  leave start symbol alone *-->
+	  <xsl:apply-templates select="rule">
+	    <xsl:with-param name="G" tunnel="yes" select="$G"/>
+	  </xsl:apply-templates>
+	</xsl:when>
+	<xsl:otherwise>
+	  <!--* user has specified a name *-->
+	  <xsl:variable name="start-rule" as="element(rule)?"
+			select="rule[@name eq $start]"/>
+	  <xsl:apply-templates select="$start-rule">
+	    <xsl:with-param name="G" tunnel="yes" select="$G"/>
+	  </xsl:apply-templates>
+	  <xsl:apply-templates select="rule except $start-rule">
+	    <xsl:with-param name="G" tunnel="yes" select="$G"/>
+	  </xsl:apply-templates>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
@@ -144,8 +209,10 @@
       * built for $r.  (In theory it could be any FSA built from the
       * RHS of $r; we use the Gluschkov automaton).
       * 
-      * If it's non-fissile, we leave it alone and just copy it
-      * through unchanged to the output.
+      * If it's non-fissile, and $keep-non-fissiles is '#yes' or
+      * matches the name, then we leave it alone and just copy it
+      * through unchanged to the output.  If $keep-non-fissiles is
+      * #no or lists names that don't match, then we suppress the rule.
       *
       * Normally (and by default), we treat recursive nonterminals as
       * fissile and non-recursive nonterminals as non-fissile.  
@@ -162,11 +229,19 @@
 	       select="$fissile"/>
     <xsl:param name="non-fissile" as="xs:string*" tunnel="yes"
 	       select="$non-fissile"/>
+    <xsl:param name="keep-non-fissiles" as="xs:string*" tunnel="yes"
+	       select="$keep-non-fissiles"/>
 
     <xsl:message use-when="false()">
       <xsl:text>Processing rule for </xsl:text>
       <xsl:value-of select="@name"/>
       <xsl:text> ...</xsl:text>
+      <xsl:text>&#xA;   fissile = </xsl:text>
+      <xsl:sequence select="$fissile"/>
+      <xsl:text>&#xA;   non-fissile = </xsl:text>
+      <xsl:sequence select="$non-fissile"/>
+      <xsl:text>&#xA;   keep-non-fissiles = </xsl:text>
+      <xsl:sequence select="$keep-non-fissiles"/>
     </xsl:message>
     
     <xsl:choose>
@@ -186,7 +261,9 @@
 	  </xsl:when>
 	  <!--* Case 1.2 (default case):  break out recursive
 	      * nonterminals, leave non-recursive nonterminals
-	      * alone. *-->
+	      * alone.
+	      * 1.2.a recursive:  break it out.
+	      *-->
 	  <xsl:when test="($non-fissile eq '#non-recursive')
 			  and
 			  gt:fIsRecursiverule(.)">
@@ -198,6 +275,7 @@
 	    </xsl:message>
 	    <xsl:call-template name="breakout"/>
 	  </xsl:when>
+	  <!--* 1.2.b non-recursive, so non-fissile *-->
 	  <xsl:when test="($non-fissile eq '#non-recursive')
 			  and
 			  not(gt:fIsRecursiverule(.))">
@@ -207,7 +285,14 @@
 	      <xsl:text>&#xA;    gt:fIsRecursiverule(.) is false</xsl:text>
 	      <xsl:text>&#xA;    Falling back (pseudo-terminal)</xsl:text>
 	    </xsl:message>
-	    <xsl:next-match/>
+	    <!--* If $keep-non-fissiles is '#yes' or includes this
+		* non-terminal (i.e. self::rule/@name), then apply
+		* the next match (and, normally, copy through).
+		* Otherwise, suppress it.
+		*-->
+	    <xsl:if test="$keep-non-fissiles = ('#yes', @name)">
+	      <xsl:next-match/>
+	    </xsl:if>
 	  </xsl:when>
 	  <!--* Case 1.3, 1.4.  If we reach this point, the user has
 	      * specified a list of pseudo-terminals.  If this rule
@@ -219,7 +304,9 @@
 	      <xsl:text>&#xA;    $non-fissile matches @name</xsl:text>
 	      <xsl:text>&#xA;    This is a pseudo-terminal, falling back</xsl:text>
 	    </xsl:message>
-	    <xsl:next-match/>
+	    <xsl:if test="$keep-non-fissiles = ('#yes', @name)">
+	      <xsl:next-match/>
+	    </xsl:if>
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <!--* Case 1.4. This is NOT a pseudo-terminal. *-->
@@ -245,14 +332,18 @@
       </xsl:when>
 
       <!--* Case 3.  $fissile ne '#all', so it is a list of names.  
-	  * But this rule's name isn't on the list.  Leave it alone.
+	  * But this rule's name isn't on the list.  So it's
+	  * non-fissile.  Go to next match if we are keeping
+	  * non-fissile nonterminals, otherwise suppress it.
 	  *-->
       <xsl:otherwise> 
 	<xsl:message use-when="false()">
 	  <xsl:text>    $fissile does not match @name</xsl:text>
 	  <xsl:text>&#xA;    Falling back, confused</xsl:text>
 	</xsl:message>   
-	<xsl:next-match/>
+	<xsl:if test="$keep-non-fissiles = ('#yes', @name)">
+	  <xsl:next-match/>
+	</xsl:if>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -265,6 +356,24 @@
 	       select="$fissile"/>
     <xsl:param name="non-fissile" as="xs:string*" tunnel="yes"
 	       select="$non-fissile"/>
+    <xsl:param name="linkage" as="xs:string*" tunnel="yes"
+	       select="$linkage"/>
+    <xsl:param name="start" as="xs:string?" tunnel="yes"
+	       select="$start"/>
+    
+    <xsl:message use-when="false()">
+      <xsl:text>Breaking out fissile rule </xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text> ...</xsl:text>
+      <xsl:text>&#xA;   fissile = </xsl:text>
+      <xsl:sequence select="$fissile"/>
+      <xsl:text>&#xA;   non-fissile = </xsl:text>
+      <xsl:sequence select="$non-fissile"/>
+      <xsl:text>&#xA;   linkage = </xsl:text>
+      <xsl:sequence select="$linkage"/>
+      <xsl:text>&#xA;   start = </xsl:text>
+      <xsl:sequence select="$start"/>
+    </xsl:message>
 
     <xsl:variable name="n" as="xs:string" select="string(@name)"/>
 
@@ -272,13 +381,16 @@
 	* more than one place, it is likely to have been a
 	* mistake to invoke this process on the grammar.  Don't
 	* stop, but do warn the user.
+	*
+	* Turn this off for now:  if all the references are from
+	* fissile non-terminals, the warning is misleading.
 	*-->
-    <xsl:if test="count(//nonterminal[@name = $n]) gt 1">
+    <xsl:if test="false() and count(//nonterminal[@name = $n]) gt 1">
       <xsl:message>
 	<xsl:text>    ixml-to-saprg:  There is more</xsl:text>
-	<xsl:text> than one reference to non-terminal </xsl:text>
+	<xsl:text> than one reference to nonterminal </xsl:text>
 	<xsl:value-of select="$n"/>
-	<xsl:text>.  Inlining the rule may be advisable.</xsl:text>
+	<xsl:text>.&#xA;    Inlining the rule may be advisable.</xsl:text>
       </xsl:message>
     </xsl:if>
 
@@ -291,22 +403,26 @@
       <xsl:text> </xsl:text>
     </xsl:element>
 
-    <!--* 1b. Write out a linkage rule to connect the original
-	* nonterminal to state N_0. *-->
-    <xsl:element name="rule">
-      <xsl:sequence select="@mark, @name"/>
-      <xsl:attribute name="rtn:ruletype" select=" 'linkage-stub' "/>      
-      <xsl:element name="alt">
-      	<xsl:attribute name="rtn:ruletype" select=" 'linkage' "/>
-      	<xsl:element name="comment">nil</xsl:element>
-      	<xsl:element name="nonterminal">
-      	  <xsl:attribute name="name" select="concat(@name, '_0')"/>
-      	  <xsl:attribute name="rtn:stack"
-			 select=" concat('push ', 'extcall_', $n) "/>
-      	</xsl:element>
+    <!--* 1b. If appropriate, write out a linkage rule to connect 
+	* the original nonterminal to state N_0.  It's appropriate if
+	* $linkage names this nonterminal or $linkage is '#all'.
+	*-->
+    <xsl:if test="$linkage = ('#all', @name)">
+      <xsl:element name="rule">
+	<xsl:sequence select="@mark, @name"/>
+	<xsl:attribute name="rtn:ruletype" select=" 'linkage-stub' "/>      
+	<xsl:element name="alt">
+      	  <xsl:attribute name="rtn:ruletype" select=" 'linkage' "/>
+      	  <xsl:element name="comment">nil</xsl:element>
+      	  <xsl:element name="nonterminal">
+      	    <xsl:attribute name="name" select="concat(@name, '_0')"/>
+      	    <xsl:attribute name="rtn:stack"
+			   select=" concat('push ', 'extcall_', $n) "/>
+      	  </xsl:element>
+	</xsl:element>
+	
       </xsl:element>
-      
-    </xsl:element>    
+    </xsl:if>
     
     <!--* 2. Create rule for initial state N_0. *-->
     <xsl:variable name="lidFirst"
@@ -361,18 +477,39 @@
 	</xsl:choose>
       </xsl:for-each>
 
-      <!--* 4b add a linkage rule to return to external caller. *-->
-      <xsl:element name="alt">
-      	<xsl:attribute name="rtn:ruletype" select=" 'linkage-return' "/>
-      	<xsl:attribute name="rtn:stack" select=" concat('pop ', 'extcall_', $n) "/>
-      	<xsl:element name="comment">nil</xsl:element>
-      </xsl:element>      
+      <!--* 4b If appropriate, add a linkage RHS to return to external
+	  * caller.  It's appropriate or not depending on $linkage.
+	  *-->
+      <xsl:if test="$linkage = ('#all', @name)">
+	<xsl:element name="alt">
+      	  <xsl:attribute name="rtn:ruletype" select=" 'linkage-return' "/>
+      	  <xsl:attribute name="rtn:stack" select=" concat('pop ', 'extcall_', $n) "/>
+      	  <xsl:element name="comment">nil</xsl:element>
+	</xsl:element>
+      </xsl:if>
+
+      <!--* 4c If we are in the FSA for the start symbol, then add an
+	  * unconditional empty RHS.
+	  *-->
+      <xsl:if test="not(preceding-sibling::rule) 
+		    and (empty($start) or ($start eq '#inherit'))
+		    or
+		    ($start eq @name)">
+	<xsl:element name="alt">
+      	  <xsl:attribute name="rtn:RHStype" select=" 'grammar-final' "/>
+      	  <xsl:attribute name="rtn:stack" select=" 'if-stack-empty' "/>
+      	  <xsl:element name="comment">nil</xsl:element>
+	</xsl:element>
+      </xsl:if>
       
     </xsl:element>
     
-    <!--* 4. Write out a comment to mark end of expansion. *-->
-    <xsl:element name="comment"> End of expansion for <xsl:value-of
-    select="$n"/>. </xsl:element>
+    <!--* 5. Write out a comment to mark end of expansion. *-->
+    <xsl:element name="comment">
+      <xsl:text> End of expansion for </xsl:text>
+      <xsl:value-of select="$n"/>
+      <xsl:text>. </xsl:text>
+    </xsl:element>
     
     <xsl:text>&#xA;</xsl:text>
     
@@ -513,7 +650,7 @@
     
     <!--* if rule has gt:recursive=true, then yes, else no.
 	*-->
-    <xsl:value-of select="if (empty($e))
+    <xsl:sequence select="if (empty($e))
 			  then false()
 			  else xs:boolean($e/@gt:recursive)"/>
     
@@ -532,37 +669,37 @@
       <xsl:when test="($fissile = '#all')
 		      and ($non-fissile eq '#non-recurive')">
 	<!--* default case:  pseudo-terminal iff not recursive *-->
-	<xsl:value-of select="not(gt:fIsRecursiverule($e))"/>
+	<xsl:sequence select="not(gt:fIsRecursiverule($e))"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
 		      and ($non-fissile eq '#none')">
 	<!--* if there are no pseudo-terminals, then this cannot
 	    * be one. *-->
-	<xsl:value-of select="false()"/>
+	<xsl:sequence select="false()"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
 		      and ($non-fissile = $e/@name)">
 	<!--* if this is named as a pseudo-terminal, then it 
 	    * is one (but only if $fissile = '#all') *-->
-	<xsl:value-of select="true()"/>
+	<xsl:sequence select="true()"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
 		      and not($non-fissile = $e/@name)">
 	<!--* if we are listing all pseudo-terminals and this is not
 	    * in the list, then it is not one *-->
-	<xsl:value-of select="false()"/>
+	<xsl:sequence select="false()"/>
       </xsl:when>
       <xsl:when test="($fissile = $e/@name)">
 	<!--* If we said this one was fissile, then it is not
 	    * a pseudo-terminal, now is it?  Keep up! *-->
-	<xsl:value-of select="false()"/>
+	<xsl:sequence select="false()"/>
       </xsl:when>
       <xsl:when test="not($fissile = '#all')
 		      and not($fissile = $e/@name)">
 	<!--* We are naming fissile nonterminals (because
 	    * $fissile ne '#all') but this one is not listed.
 	    * So it's by fiat a pseudo-terminal. *-->
-	<xsl:value-of select="true()"/>
+	<xsl:sequence select="true()"/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:message terminate="yes">
@@ -597,12 +734,12 @@
     <!--* Kick the can to the rule.  If the rule is a
 	* pseudo-terminal rule, then yes, else no.
 	*-->
-    <xsl:value-of select="gt:fIsPTrule($rule, $fissile, $non-fissile)"/>
+    <xsl:sequence select="gt:fIsPTrule($rule, $fissile, $non-fissile)"/>
 
     <!--
-    <xsl:message>gt:fIsPseudoterminal(<xsl:value-of
-    select="$n"/>, $G) => <xsl:value-of
-    select="gt:fIsPTrule($rule)"/> (count($rule) = <xsl:value-of
+    <xsl:message>gt:fIsPseudoterminal(<xsl:sequence
+    select="$n"/>, $G) => <xsl:sequence
+    select="gt:fIsPTrule($rule)"/> (count($rule) = <xsl:sequence
     select="count($rule)"/>.</xsl:message>
     -->
     
@@ -613,7 +750,7 @@
     <xsl:param name="s" as="xs:string"/>
     <xsl:variable name="sq" as="xs:string" select=" &quot;'&quot;"/>
     <xsl:variable name="dq" as="xs:string" select=' &apos;"&apos;'/>
-    <xsl:value-of select="if ($s eq $dq)
+    <xsl:sequence select="if ($s eq $dq)
 			  then concat($sq, $s, $sq)
 			  else concat($dq, $s, $dq)"/>
   </xsl:function>
@@ -635,7 +772,7 @@
 	<xsl:variable name="sRHS"
 		      as="xs:string"
 		      select="string-join($lsAlt, '; ')"/>
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      string($e/@mark),
 			      string($e/@name),
 			      ': ',
@@ -648,7 +785,7 @@
 		      as="xs:string*"
 		      select="for $a in $e/alt
 			      return gt:string($a)"/>
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      '(',
 			      string-join($lsAlt, '; '),
 			      ')'
@@ -659,7 +796,7 @@
 		      as="xs:string*"
 		      select="for $t in $e/*[gt:fIsexpression(.)]
 			      return gt:string($t)"/>
-	<xsl:value-of select="string-join($lsTerm, ', ')"/>
+	<xsl:sequence select="string-join($lsTerm, ', ')"/>
       </xsl:when>
       <xsl:when test="$e/self::repeat0 or $e/self::repeat1">
 	<xsl:variable name="eFactor"
@@ -668,7 +805,7 @@
 	<xsl:variable name="eSep"
 		      as="element(sep)?"
 		      select="$e/sep"/>
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      gt:string($eFactor),
 			      if ($e/self::repeat0)
 			      then '*'
@@ -680,25 +817,25 @@
 	<xsl:variable name="eFactor"
 		      as="element()"
 		      select="$e/*[gt:fIsexpression(.)][1]"/>
-	<xsl:value-of select="gt:string($eFactor)"/>
+	<xsl:sequence select="gt:string($eFactor)"/>
       </xsl:when>
       <xsl:when test="$e/self::option">
 	<xsl:variable name="eFactor"
 		      as="element()"
 		      select="$e/*[gt:fIsexpression(.)][1]"/>
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      gt:string($eFactor),
 			      '?'
 			      )"/>
       </xsl:when>
       <xsl:when test="$e/self::nonterminal">
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      string($e/@mark), 
 			      string($e/@name)
 			      )"/>
       </xsl:when>
       <xsl:when test="$e/self::literal">
-	<xsl:value-of select="if ($e/@dstring) then
+	<xsl:sequence select="if ($e/@dstring) then
 			      concat(
 			      string($e/@tmark),
 			      &apos;&quot;&apos; ,
@@ -721,7 +858,7 @@
 			      "/>
       </xsl:when>
       <xsl:when test="$e/self::inclusion or $e/self::exclusion">
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      string($e/@tmark),
 			      if ($e/self::exclusion) then '~' else '',
 			      '[',
@@ -733,27 +870,30 @@
 			      )"/>
       </xsl:when>
       <xsl:when test="$e/self::range">
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      gt:quote-char($e/@from), 
 			      '-',
 			      gt:quote-char($e/@to)
 			      )"/>
       </xsl:when>
       <xsl:when test="$e/self::class">
-	<xsl:value-of select="concat(
+	<xsl:sequence select="concat(
 			      '\p{',
 			      string($e/@code),
 			      '}'
 			      )"/>
       </xsl:when>
       <xsl:when test="empty($e)">
-	<xsl:value-of select=" '' "/>
+	<xsl:sequence select=" '' "/>
       </xsl:when>
       <xsl:otherwise>
 	<xsl:message>Unexpected argument to gt:string(): </xsl:message>
 	<xsl:message><xsl:copy-of select="$e"/></xsl:message>
+	<!--* U+1F061 = domino tile horizontal-06-06 (boxcars)
+	    * U+1F616 = confounded face
+	    *-->
 	<!-- <xsl:value-of select=" '&#x1F061;' "/> *-->
-	<xsl:value-of select=" '&#x1F616;' "/>
+	<xsl:sequence select=" '&#x1F616;' "/>
       </xsl:otherwise>
       
     </xsl:choose>
