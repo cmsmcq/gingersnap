@@ -33,6 +33,10 @@
       * We assume the input is a regular grammar.  We should probably
       * check.
       *
+      * We also assume the input is decorated with @gt:ranges.  We
+      * should definitely check.  (Failing to check just cost me an
+      * hour or two.)
+      *
       * We start with a queue, which may be user-specified or (in the
       * usual case) just be the starting rule of the grammar.  We
       * also start with a list of completed states.
@@ -169,6 +173,15 @@
       <xsl:text>&#xA;</xsl:text>
       
       <!--* Prepare Get ready *-->
+      <xsl:if test="descendant::literal[not(@gt:ranges)]
+		    or descendant::inclusion[not(@gt:ranges)]
+		    or descendant::exclusion[not(@gt:ranges)]">
+	<xsl:message terminate="yes">
+	  <xsl:text>Determinize-ixml-fsa:  </xsl:text>
+	  <xsl:text>input lacks gt:ranges annotation.</xsl:text>
+	  <xsl:text>&#xA;     Determinizer cannot run.</xsl:text>
+	</xsl:message>
+      </xsl:if>
       <xsl:variable name="starting-names"
 		    as="xs:string*"
 		    select="if ($starters)
@@ -211,33 +224,30 @@
     <xsl:param name="lsDone" as="xs:string*" select="()"/>
     <xsl:param name="input-grammar" as="element(ixml)" tunnel="yes"/>
     
-    <xsl:if test="true()">
-      <xsl:message>
-	<xsl:text>queue manager:  </xsl:text>
-	<xsl:value-of select="concat(
-			      count($queue),
-			      ' items in queue, ',
-			      count($lsDone),
-			      ' items done.')"/>
-      </xsl:message>
-    </xsl:if>   
-    <xsl:if test="false()">
-      <xsl:message>
-	<xsl:text>queue manager:  queue is:&#xA;</xsl:text>
-	<xsl:sequence select="for $e in $queue return string($e/@name)"/>
-      </xsl:message>
-    </xsl:if>
+    <xsl:message use-when="false()">
+      <xsl:text>queue manager:  </xsl:text>
+      <xsl:value-of select="concat(
+			    count($queue),
+			    ' items in queue, ',
+			    count($lsDone),
+			    ' items done.')"/>
+    </xsl:message>
+
+    <xsl:message use-when="false()">
+      <xsl:text>queue manager:  queue is:&#xA;</xsl:text>
+      <xsl:sequence select="for $e in $queue return string($e/@name)"/>
+    </xsl:message>
     
     <xsl:choose>
       <!--* base case: empty queue, done *-->
       <xsl:when test="empty($queue)">
-	<xsl:if test="true()">
-	  <xsl:message>
-	    <xsl:text>Deterministic FSA has ca. </xsl:text>
-	    <xsl:value-of select="count($lsDone)"/>
-	    <xsl:text> states.</xsl:text>
-	  </xsl:message>
-	</xsl:if>
+
+	<xsl:message use-when="false()">
+	  <xsl:text>Deterministic FSA has ca. </xsl:text>
+	  <xsl:value-of select="count($lsDone)"/>
+	  <xsl:text> states.</xsl:text>
+	</xsl:message>
+	  
 	<xsl:element name="comment">
 	  <xsl:text> bye </xsl:text>
 	</xsl:element>
@@ -250,6 +260,11 @@
 	<xsl:variable name="this-task"
 		      as="element(gt:new-state)"
 		      select="head($queue)"/>
+	
+	<xsl:message use-when="false()">
+	  <xsl:text>Current task is </xsl:text>
+	  <xsl:sequence select="$this-task"/>
+	</xsl:message>
 
 	<!--* (1) Make new rule / new state. *-->
 	<xsl:variable name="new-rule" as="element(rule)">
@@ -260,6 +275,11 @@
 	  </xsl:call-template>
 	</xsl:variable>
 
+	<xsl:message use-when="false()">
+	  <xsl:text>New rule is </xsl:text>
+	  <xsl:sequence select="$new-rule"/>
+	</xsl:message>
+
 	<!--* (2) Extract non-terminal references from it,
 	    * so we can add them to the queue if they are new.
 	    *-->
@@ -267,6 +287,12 @@
 		      as="element(nonterminal)*"
 		      select="$new-rule/descendant::nonterminal
 			      [not(@name = ($lsDone, $queue/@name))]"/>
+
+	<xsl:message use-when="false()">
+	  <xsl:text>States found in new rule are </xsl:text>
+	  <xsl:sequence select="$leCandidates/@name/string()"/>
+	</xsl:message>
+	
 	<xsl:variable name="leNewtasks"
 		      as="element(gt:new-state)*">
 	  <xsl:for-each
@@ -281,6 +307,11 @@
 	    </xsl:element>
 	  </xsl:for-each>
 	</xsl:variable>
+	
+	<xsl:message use-when="false()">
+	  <xsl:text>New tasks found in new rule are </xsl:text>
+	  <xsl:sequence select="$leNewtasks/@name/string()"/>
+	</xsl:message>
 
 	<!--* (3) Write out the new rule, recur with new queue. *-->
 	<xsl:sequence select="$new-rule"/>
@@ -307,6 +338,11 @@
     <xsl:variable name="lsOld-states" as="xs:string*"
 		  select="tokenize($task/@old-states, '\s+')
 			  [normalize-space()]"/>
+    
+    <xsl:message use-when="false()">
+      <xsl:text>Template state-definer called.  Old states are:</xsl:text>
+      <xsl:sequence select="$lsOld-states"/>
+    </xsl:message>
 
     <!--* First, make the first-generation state: name from the
 	* task, arcs / RHS from the old states listed in the task. *-->
@@ -324,6 +360,11 @@
 			      /alt"/>
       </xsl:element>
     </xsl:variable>
+    
+    <xsl:message use-when="false()">
+      <xsl:text>Rule (generation 1) is:</xsl:text>
+      <xsl:sequence select="$ruleGen1"/>
+    </xsl:message>
         
     <!--* Second, modify the state to eliminate partial 
 	* overlap of states:  any two arc labels should be either 
@@ -331,6 +372,11 @@
     <xsl:variable name="ruleGen2" as="element(rule)">
       <xsl:apply-templates select="$ruleGen1" mode="arc-overlap"/>
     </xsl:variable>
+    
+    <xsl:message use-when="false()">
+      <xsl:text>Rule (generation 2) is:</xsl:text>
+      <xsl:sequence select="$ruleGen2"/>
+    </xsl:message>
     
     <!--* Third, make a deterministic state out of it. *-->
     <xsl:variable name="ruleGen3" as="element(rule)">
@@ -343,12 +389,10 @@
 	<xsl:sequence select="$ruleGen2/@gt:ranges"/>
 	<xsl:sequence select="$ruleGen2/@gt:theta"/>
 
-	<xsl:if test="false()">
-	  <xsl:message>
-	    <xsl:text>Gen 3: rule = </xsl:text>
-	    <xsl:sequence select="$ruleGen2"/>
-	  </xsl:message>
-	</xsl:if>
+	<xsl:message use-when="false()">
+	  <xsl:text>Making gen 3: input rule = </xsl:text>
+	  <xsl:sequence select="$ruleGen2"/>
+	</xsl:message>
 
 	<!--* arcs from ruleGen2, but merged *-->
 	<xsl:for-each
@@ -366,14 +410,13 @@
 				)
 				)"/>
 	  
-	  <xsl:if test="false()">
-	    <xsl:message>
-	      <xsl:text>Gen 3: ranges value = </xsl:text>
-	      <xsl:sequence select="$sRanges"/>
-	      <xsl:text>&#xA; lsFS = </xsl:text>
-	      <xsl:sequence select="$lsFS"/>
-	    </xsl:message>
-	  </xsl:if>
+	  <xsl:message use-when="false()">
+	    <xsl:text>Gen 3: ranges value = </xsl:text>
+	    <xsl:sequence select="$sRanges"/>
+	    <xsl:text>&#xA; lsFS = </xsl:text>
+	    <xsl:sequence select="$lsFS"/>
+	  </xsl:message>
+
 	  <xsl:element name="alt">
 	    <xsl:attribute name="gt:ranges"
 			   select="$sRanges"/>
@@ -472,6 +515,11 @@
 
       </xsl:element>
     </xsl:variable>
+    
+    <xsl:message use-when="false()">
+      <xsl:text>Rule (generation 3) is:</xsl:text>
+      <xsl:sequence select="$ruleGen3"/>
+    </xsl:message>
     
     <!--* Return the deterministic state. *-->
     <xsl:sequence select="$ruleGen3"/>

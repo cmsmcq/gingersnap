@@ -33,6 +33,7 @@
   <!--* <xsl:import href="../../../lib/xslt/d2x.xsl"/> *-->
   <xsl:import href="range-operations.lib.xsl"/>
   <xsl:import href="eliminate-arc-overlap.lib.xsl"/>
+  <xsl:include href="determinize-ixml-fsa.lib.xsl"/>
   
   <xsl:output method="xml"
 	      indent="yes"/>
