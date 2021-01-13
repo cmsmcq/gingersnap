@@ -160,15 +160,15 @@
 
 * Review, summarize, and implement the regular approximation
   algorithms of
+  * Reread Langendoen 1975; if it defines an algorithm, implement it. 
+  * Track down DTL's reference to Chomsky 1959a; implement that. 
   * Pereira/Wright (ACL '91)
-  * Yli-Jyrä (FG Vienna 2008)
+  * Evans (EACL 1997) 
+  * Nederhof (IWFSMNLP 1998?) 
   * Mohri and Nederhof 2000 
-  * Nederhof (IWFSMNLP 1998?)
   * Nederhof 2000 
   * the guys from the farm (Parameswaran and Taly 2007)
-  * Evans (EACL 1997)
-  * Reread Langendoen 1975; if it defines an algorithm, implement it.
-  * Track down DTL's reference to Chomsky 1959a; implement that.
+  * Yli-Jyrä (FG Vienna 2008) 
     
 * LALR(1) testing.
 
