@@ -125,9 +125,15 @@ negative test cases for *L*. If *R* is a sufficiently close
 approximation of *L*, negative test cases for *R* will be useful
 negative test cases for *L*.
 
-Separate documents needed on:
+Related documents:
 
-* positive test-case generation from context-free grammars
-* regular approximations as implemented in Gingersnap
-* other algorithms for regular approximations (to be implemented in Gingersnap)
+* [Generating infinite series of regular subset and superset
+approximations for context-free languages](regular-approximations.md)
+2021-01-11. Describes regular approximations as implemented in
+Gingersnap
+
+Separate documents needed on: 
+
+* positive test-case generation from context-free grammars 
+* other algorithms for regular approximations (to be implemented in Gingersnap) 
 
