@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml">
    <head>
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-      <title>Test Report for /Users/cmsmcq/2021/gingersnap/src/ixml-to-saprg.xsl (passed: 1 / pending: 0 / failed: 0 / total: 1)</title>
+      <title>Test Report for /Users/cmsmcq/2021/gingersnap/src/ixml-to-saprg.xsl (passed: 7 / pending: 0 / failed: 0 / total: 7)</title>
       <style type="text/css">/****************************************************************************/
 /*  File:       test-report.css                                             */
 /*  Author:     Jeni Tennison                                               */
@@ -587,7 +587,7 @@ span.scenario-totals {
       <h1>Test Report</h1>
       <p>Stylesheet: <a href="file:/Users/cmsmcq/2021/gingersnap/src/ixml-to-saprg.xsl">/Users/cmsmcq/2021/gingersnap/src/ixml-to-saprg.xsl</a></p>
       <p>XSpec: <a href="file:/Users/cmsmcq/2021/gingersnap/tests/ixml-to-saprg.xspec">/Users/cmsmcq/2021/gingersnap/tests/ixml-to-saprg.xspec</a></p>
-      <p>Tested: 11 January 2021 at 13:00</p>
+      <p>Tested: 12 January 2021 at 18:58</p>
       <h2>Contents</h2>
       <table class="xspec">
          <colgroup>
@@ -600,15 +600,43 @@ span.scenario-totals {
          <thead>
             <tr>
                <th></th>
-               <th class="totals">passed: 1</th>
+               <th class="totals">passed: 7</th>
                <th class="totals">pending: 0</th>
                <th class="totals">failed: 0</th>
-               <th class="totals">total: 1</th>
+               <th class="totals">total: 7</th>
             </tr>
          </thead>
          <tbody>
             <tr class="successful">
-               <th><a href="#top_scenario1">When invoked without parameters</a></th>
+               <th><a href="#top_scenario1">When invoked without parameters ...</a></th>
+               <th class="totals">1</th>
+               <th class="totals">0</th>
+               <th class="totals">0</th>
+               <th class="totals">1</th>
+            </tr>
+            <tr class="successful">
+               <th><a href="#top_scenario2">When ixml template invoked with non-fissile = #none</a></th>
+               <th class="totals">3</th>
+               <th class="totals">0</th>
+               <th class="totals">0</th>
+               <th class="totals">3</th>
+            </tr>
+            <tr class="successful">
+               <th><a href="#top_scenario3">When ixml template invoked with start symbol (etc.)</a></th>
+               <th class="totals">1</th>
+               <th class="totals">0</th>
+               <th class="totals">0</th>
+               <th class="totals">1</th>
+            </tr>
+            <tr class="successful">
+               <th><a href="#top_scenario4">When ixml template invoked with start symbol (etc.)</a></th>
+               <th class="totals">1</th>
+               <th class="totals">0</th>
+               <th class="totals">0</th>
+               <th class="totals">1</th>
+            </tr>
+            <tr class="successful">
+               <th><a href="#top_scenario5">When ixml template invoked with     non-fissile = '#none' and linkage='#none'</a></th>
                <th class="totals">1</th>
                <th class="totals">0</th>
                <th class="totals">0</th>
@@ -617,7 +645,7 @@ span.scenario-totals {
          </tbody>
       </table>
       <div id="top_scenario1">
-         <h2 class="successful">When invoked without parameters<span class="scenario-totals">passed: 1 / pending: 0 / failed: 0 / total: 1</span></h2>
+         <h2 class="successful">When invoked without parameters ...<span class="scenario-totals">passed: 1 / pending: 0 / failed: 0 / total: 1</span></h2>
          <table class="xspec" id="table_scenario1">
             <colgroup>
                <col style="width:75%" />
@@ -625,11 +653,95 @@ span.scenario-totals {
             </colgroup>
             <tbody>
                <tr class="successful">
-                  <th>When invoked without parameters</th>
+                  <th>When invoked without parameters ...</th>
                   <th>passed: 1 / pending: 0 / failed: 0 / total: 1</th>
                </tr>
                <tr class="successful">
-                  <td>then expand all nonterminals and add linkage</td>
+                  <td>then expand recursive nonterminals and add linkage</td>
+                  <td>Success</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div id="top_scenario2">
+         <h2 class="successful">When ixml template invoked with non-fissile = #none<span class="scenario-totals">passed: 3 / pending: 0 / failed: 0 / total: 3</span></h2>
+         <table class="xspec" id="table_scenario2">
+            <colgroup>
+               <col style="width:75%" />
+               <col style="width:25%" />
+            </colgroup>
+            <tbody>
+               <tr class="successful">
+                  <th>When ixml template invoked with non-fissile = #none</th>
+                  <th>passed: 3 / pending: 0 / failed: 0 / total: 3</th>
+               </tr>
+               <tr class="successful">
+                  <td>then result should be an ixml element</td>
+                  <td>Success</td>
+               </tr>
+               <tr class="successful">
+                  <td>then result should be an ixml element</td>
+                  <td>Success</td>
+               </tr>
+               <tr class="successful">
+                  <td>then expand ALL nonterminals and add linkage</td>
+                  <td>Success</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div id="top_scenario3">
+         <h2 class="successful">When ixml template invoked with start symbol (etc.)<span class="scenario-totals">passed: 1 / pending: 0 / failed: 0 / total: 1</span></h2>
+         <table class="xspec" id="table_scenario3">
+            <colgroup>
+               <col style="width:75%" />
+               <col style="width:25%" />
+            </colgroup>
+            <tbody>
+               <tr class="successful">
+                  <th>When ixml template invoked with start symbol (etc.)</th>
+                  <th>passed: 1 / pending: 0 / failed: 0 / total: 1</th>
+               </tr>
+               <tr class="successful">
+                  <td>then produce an O0 grammar for THAT nonterminal with no linkage</td>
+                  <td>Success</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div id="top_scenario4">
+         <h2 class="successful">When ixml template invoked with start symbol (etc.)<span class="scenario-totals">passed: 1 / pending: 0 / failed: 0 / total: 1</span></h2>
+         <table class="xspec" id="table_scenario4">
+            <colgroup>
+               <col style="width:75%" />
+               <col style="width:25%" />
+            </colgroup>
+            <tbody>
+               <tr class="successful">
+                  <th>When ixml template invoked with start symbol (etc.)</th>
+                  <th>passed: 1 / pending: 0 / failed: 0 / total: 1</th>
+               </tr>
+               <tr class="successful">
+                  <td>then produce an O0 grammar for THAT nonterminals with no linkage</td>
+                  <td>Success</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div id="top_scenario5">
+         <h2 class="successful">When ixml template invoked with     non-fissile = '#none' and linkage='#none'<span class="scenario-totals">passed: 1 / pending: 0 / failed: 0 / total: 1</span></h2>
+         <table class="xspec" id="table_scenario5">
+            <colgroup>
+               <col style="width:75%" />
+               <col style="width:25%" />
+            </colgroup>
+            <tbody>
+               <tr class="successful">
+                  <th>When ixml template invoked with     non-fissile = '#none' and linkage='#none'</th>
+                  <th>passed: 1 / pending: 0 / failed: 0 / total: 1</th>
+               </tr>
+               <tr class="successful">
+                  <td>then expand ALL nonterminals and add no extcall linkage</td>
                   <td>Success</td>
                </tr>
             </tbody>
