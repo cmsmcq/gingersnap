@@ -163,7 +163,7 @@
   * Reread Langendoen 1975; if it defines an algorithm, implement it. 
   * Track down DTL's reference to Chomsky 1959a; implement that. 
   * Pereira/Wright (ACL '91)
-  * Evans (EACL 1997) 
+  * Grimley Evans (EACL 1997) 
   * Nederhof (IWFSMNLP 1998?) 
   * Mohri and Nederhof 2000 
   * Nederhof 2000 
