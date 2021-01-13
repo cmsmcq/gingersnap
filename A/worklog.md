@@ -265,6 +265,12 @@ translated into recipes.
 The actual creation of test cases is not shown; it involves repeated
 invocation of tcrecipes-to-testcases.xsl.
 
+(Addendum, next day: actually, it's tclego-to-recipes that has to be
+invoked multiple times. It was parameterized to produce only recipes
+of a particular style and polarity when I was working on the program
+grammar, because otherwise the output was excessive. I don't remember
+whether it ran out of memory too or not.)
+
 #### Making the test cases
 
 Need:
@@ -297,4 +303,210 @@ an empty rule with no RHS. And no error messages. Conjecture: its
 assumptions are not being met, but they are also not being checked, so
 the problem is not being flagged.
 
+## 2021-01-13
+
+The problem with determinizer was that it relies on gt:ranges
+annotation and was not checking its input to make sure it had been
+supplied. The problem with the pipeline was that it was not running
+the normalize-term step. Since that step provides the gt:ranges
+annotation, it is not optional, even for grammars like a.ixml in which
+there are no multi-character strings and no overlapping ranges to be
+normalized.
+
+It might be nicer if when applied to such input the determinizer were
+the identity transform, but at the moment it's renaming all the
+states, unnecessarily.
+
+Produced a.u5.tclego.xml and a.O2.tclego.xml by running the pipeline
+a.regular-approx-to-dfsa.pipeline.xml on a.u5.fsa.xml and
+a.O2.fsa.xml.
+
+     ~/bin/saxon-he-wrapper.sh \
+          a.O2.fsa.xml \
+          ../src/grammar-pipeline-handler.xsl \
+          a.O2.tclego.xml \
+          stepsfile=`pwd`/a.regular-approx-to-dfsa.pipeline.xml 
+
+The pipeline appears generic and suitable for packaging in a single
+stand-alone stylesheet.
+
+From the tclego, it's possible to generate all the test cases in a
+single output, but the current state of the test-case generator makes
+that unsatisfactory. It's better to generate separate files of recipes
+for the different coverage rules (and polarity). From those recipe
+files, test cases can be generated.
+
+I used this bash command:
+
+     for cov in state arc state-final arc-final;
+          do echo "${cov} recipes";
+          ~/bin/saxon-he-wrapper.sh a.O2.tclego.xml \
+               ../src/tclego-to-tcrecipes.xsl \
+               a.O2.tcrecipes.${cov}.neg.xml \
+               coverage=${cov} polarity='negative';
+          echo "${cov} cases";
+          ~/bin/saxon-he-wrapper.sh \
+               a.O2.tcrecipes.${cov}.neg.xml \
+               ../src/tcrecipes-to-testcases.xsl
+               a.O2.testcases.${cov}.neg.xml ;
+     done
+
+And analogously for positive tests for u5.
+
+The results are a little surprising and suggest that perhaps I do need
+to take more steps to remove duplicates, at least from positive test
+cases.  Some summary information can be generated quickly with
+
+     for g in u5 O2;
+          do for p in pos neg;
+               do for cov in state arc state-final arc-final;
+                    do echo -n "$cov $g tests: " ;
+                    grep '<input-string' a.${g}.testcases.${cov}.${p}.xml | wc -l;
+                    echo -n "     unique: " ;
+                    grep '<input-string' a.${g}.testcases.${cov}.${p}.xml | sort | uniq | wc -l;
+                    grep '<input-string' a.${g}.testcases.${cov}.${p}.xml | sort | uniq;
+                    echo;
+               done;
+          done;
+     done
+
+The positive test cases for arc- and state-final coverage were, as
+expected, all unique, but I had to think for a bit to see why they
+produced so few cases.
+
+The state-final coverage produced just two tests:
+
+* <input-string>(a)</input-string>
+* <input-string>a</input-string>
+
+The arc-final coverage also produced just two tests:
+
+* <input-string>((a))</input-string>
+* <input-string>(a)</input-string>
+
+These are fine tests, but from a u5 subset grammar I was expecting at
+least one test with more than two levels of parenthesis. But
+examination of [the deterministic FSA](../ab/a.u5.dfsa.xml) clears it
+up a bit. The FSA has two final states (m-S\_1 and m-S\_4), so a
+state-final coverage approach produces two tests.
+
+There are three arcs that lead to these states, though, so the
+arc-final coverage should be producing three tests (the test for `a`
+is missing). There appears to be a bug in tclego-to-tcrecipes. Aha.
+Good.
+
+The state and arc test cases were more productive: each of them
+produced tests for all five levels of nesting.
+
+* <input-string>(((((a)))))</input-string>
+* <input-string>((((a))))</input-string>
+* <input-string>(((a)))</input-string>
+* <input-string>((a))</input-string>
+* <input-string>(a)</input-string>
+
+In both cases, `a` is again missing.  Same bug, or a different one.
+
+But the state and arc coverage generators produced 14 and 16 tests,
+respectively, so they produced each of these useful tests about three
+times, on average. And actually they should have done more. There are
+17 states and 22 arcs in the DFSA, so we appear to be missing tests
+for three states and six arcs. Unless somehow we have a state or arc
+for which there is no successful suffix?
+
+Filtering for uniqueness seems likely to be a good idea; seeing the
+same test three times is going to make a bad impression.
+
+The negative tests are also interesting. They are all unique; no
+duplicates here within any given style of coverage.
+
+O2 tests with state coverage (22 of them):
+
+* <input-string>((((X)))</input-string>
+* <input-string>((((Xa)))</input-string>
+* <input-string>(((a))$)</input-string>
+* <input-string>(((a))$</input-string>
+* <input-string>(((a)))$)</input-string>
+* <input-string>(((a)))$</input-string>
+* <input-string>(((a)*))</input-string>
+* <input-string>(((a)*)</input-string>
+* <input-string>(((a񫛜)))</input-string>
+* <input-string>(((a񫛜))</input-string>
+* <input-string>(((今)))</input-string>
+* <input-string>(((今a)))</input-string>
+* <input-string>((a#))</input-string>
+* <input-string>((a#)</input-string>
+* <input-string>((a))</input-string>
+* <input-string>((a)</input-string>
+* <input-string>((�))</input-string>
+* <input-string>((�a))</input-string>
+* <input-string>(a#)</input-string>
+* <input-string>(a#</input-string>
+* <input-string>(㷽)</input-string>
+* <input-string>(㷽a)</input-string>
+
+In the first two cases, I have replaced U+5350 from the CJK Unified
+Ideographs block with X, since 5350 resembles a political symbol now
+in disrepute.
+
+Arc coverage for (26 tests)
+
+* <input-string>((")))</input-string>
+* <input-string>(("a)))</input-string>
+* <input-string>((((#)))</input-string>
+* <input-string>((((#a)))</input-string>
+* <input-string>((((퟿)))</input-string>
+* <input-string>((((퟿))</input-string>
+* <input-string>(((a#))</input-string>
+* <input-string>(((a#)</input-string>
+* <input-string>(((a)))#)</input-string>
+* <input-string>(((a)))#</input-string>
+* <input-string>(((a))𐀁)</input-string>
+* <input-string>(((a))𐀁</input-string>
+* <input-string>(((a)񪖦)</input-string>
+* <input-string>(((a)񪖦</input-string>
+* <input-string>((()))</input-string>
+* <input-string>(((𐀁)))</input-string>
+* <input-string>((())</input-string>
+* <input-string>(((𐀁a)))</input-string>
+* <input-string>((a)</input-string>
+* <input-string>((a</input-string>
+* <input-string>((퟿))</input-string>
+* <input-string>((퟿)</input-string>
+* <input-string>())</input-string>
+* <input-string>(񙉊)</input-string>
+* <input-string>(񙉊</input-string>
+* <input-string>(a))</input-string>
+
+State-final coverage for O2 (10 tests):
+
+* <input-string>((((</input-string>
+* <input-string>(((</input-string>
+* <input-string>(((a))</input-string>
+* <input-string>(((a)</input-string>
+* <input-string>(((a</input-string>
+* <input-string>((</input-string>
+* <input-string>((a)</input-string>
+* <input-string>((a</input-string>
+* <input-string>(</input-string>
+* <input-string>(a</input-string>
+
+Arc-final O2 tests (11):
+
+* <input-string>(((((</input-string>
+* <input-string>((((</input-string>
+* <input-string>((((a</input-string>
+* <input-string>(((</input-string>
+* <input-string>(((a))</input-string>
+* <input-string>(((a)</input-string>
+* <input-string>(((a</input-string>
+* <input-string>((</input-string>
+* <input-string>((a)</input-string>
+* <input-string>((a</input-string>
+* <input-string>(a</input-string>
+
+Note that the unexpected characters are all in the arc and state
+coverage: the *-final coverages, of course, use strings that lead to
+the arc or state in question, which means they never have unexpected
+characters. In fact, they are (of course) always prefixes of sentences
+which are themselves not sentences.
 
