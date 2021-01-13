@@ -20,21 +20,50 @@
   <xsl:output method="xml"
 	      indent="yes"/>
 
+  <xsl:param name="start" as="xs:string" required="yes"/>
+
   <xsl:variable name="pipeline"
 		as="element(grammar-pipeline)">
+
     <grammar-pipeline>
 
       <desc>
-	<p>This pipeline takes an ixml grammar and produces an r_k
-	subset grammar.</p>
-	<p>Two steps are required:  first, parent/child annotation,
-	and then the generation of the subset.</p>
+	<p>This pipeline takes an ixml grammar and produces an R_0
+	superset grammar, in the form of a stack-augmented
+	pseudo-regular grammar showing the recursive transition
+	network for the input grammar.</p>
+	<p>I'm not completely sure I know what I'm doing; I know
+	I did this before, but I need a better way to remember
+	how to do it.  That's this pipeline, maybe.</p>
+	
+	<p>Revisions:
+	2021-01-10 : CMSMcQ : incorporate in a stand-alone stylesheet
+	2020-12-30 : CMSMcQ : began pipeline. 
+	</p>
       </desc>
 
-      <annotate-pc/>
-      <rk-subset k="{$k}"/>
+      <annotate-pc>
+	<desc>
+	  <p>Parent/child annotation is a prerequisite for
+	  Gluschkov annoation.</p>
+	</desc>
+      </annotate-pc>
 
-    </grammar-pipeline>
+      <annotate-gl>
+	<desc>
+	  <p>Gluschkov annotation is a prerequisite for
+	  making the RTN.</p>
+	</desc>
+      </annotate-gl>
+
+      <make-rtn non-fissile="#none" start="{$start}" linkage="#none" keep-non-fissiles="#no">
+	<desc>
+	  <p>Build the RTN, using all recursive nonterminals
+	  and providing no external linkage.</p>
+	</desc>
+      </make-rtn>    
+
+    </grammar-pipeline>    
   </xsl:variable>
   
   <xsl:template match="/">
