@@ -154,7 +154,8 @@
 
 * FSA intersection, union, difference. 
 
-* Implement testing for ambiguity (from that paper you saw once) 
+* Implement testing for ambiguity (from that paper you saw once
+[I think that means Braband / Giegerich / Møller 2010]) 
 
 * LL(1), LL(k) testing. 
 
