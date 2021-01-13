@@ -285,7 +285,9 @@ given finite maximum depth *k*.
 
 Since subsets do not generate all the sentences of the target 
 language, they can be said to 'under-generate'. We refer to a subset 
-for a given *k* as *U(k)*. 
+for a given *k* as *U(k)*.   (Note:  in some older materials and in some
+program names, the terms *r*<sub>*k*</sub> or *r_k* or *rk* may
+be used instead.)
 
 
 ### Approximation with a superset
@@ -320,7 +322,9 @@ outermost *k* brackets do match up correctly.
 
 Since supersets generate some sentences not in the target 
 language, they can be said to 'over-generate'. We refer to a subset 
-for a given *k* as *O(k)*. 
+for a given *k* as *O(k)*.   (Note:  in some older materials and in some
+program names, the terms *R*<sub>*k*</sub> or *R_k* or *Rk* may
+be used instead.)
 
 
 ## Operating on the grammar
