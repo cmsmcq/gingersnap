@@ -10,6 +10,7 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-12 : CMSMcQ : be more cautious about stylesheet PI
       * 2020-12-30 : CMSMcQ : add some simple metadata attributes
       *                       to ixml element to say that this is
       *                       the r_k subset
@@ -157,10 +158,15 @@
     </xsl:if>
 
     <!--* (b) Check ixml element, add work log item *-->
-    <xsl:processing-instruction name="xml-stylesheet">
-      <xsl:text> type="text/xsl"</xsl:text>
-      <xsl:text> href="../src/ixml-html.xsl"</xsl:text>
-    </xsl:processing-instruction>
+    <xsl:if test="not(preceding-sibling::processing-instruction
+		  [name() = 'xml-stylesheet']
+		  [contains(., 'text/xsl')])">
+      <xsl:processing-instruction name="xml-stylesheet">
+	<xsl:text> type="text/xsl"</xsl:text>
+	<xsl:text> href="../src/ixml-html.xsl"</xsl:text>
+      </xsl:processing-instruction>
+    </xsl:if>
+    
     <xsl:copy>
       <xsl:sequence select="@*"/>
       <xsl:attribute name="gt:dg-type" select="'regular approximation'"/>
@@ -185,8 +191,9 @@
 	<xsl:text>    of the language accepted by the input grammar.</xsl:text>
       </xsl:element>
       <xsl:text>&#xA;</xsl:text>
-      
 
+      <xsl:apply-templates select="comment[not(preceding-sibling::rule)]"/>
+      
       <!--* (c) Handle non-recursive nonterminals. *-->
       <xsl:text>&#xA;</xsl:text>
       <xsl:element name="comment">
@@ -194,7 +201,7 @@
       </xsl:element>
       <xsl:text>&#xA;</xsl:text>
 
-      <xsl:apply-templates/>
+      <xsl:apply-templates select="rule | comment[preceding-sibling::rule]"/>
 
       <!--* (d) Handle recursive nonterminals. *-->
       <xsl:text>&#xA;</xsl:text>
@@ -446,7 +453,11 @@
 	  <xsl:attribute name="gt:type" select=" 'stub' "/>
 	  <xsl:element name="alt">
 	    <xsl:element name="nonterminal">
-	      <xsl:attribute name="name" select="$empty-set"/>
+	      <xsl:attribute name="name"
+			     select="concat('max-', $task/@basename)"/>
+	      <!--
+		  <xsl:attribute name="name" select="$empty-set"/>
+	      -->
 	    </xsl:element>
 	  </xsl:element>
 	</xsl:element>
@@ -462,7 +473,7 @@
       * Leave non-recursive nonterminals alone.
       *-->
   <xsl:template match="nonterminal"
-		  mode="affix">
+		mode="affix">
     <xsl:param name="affix" as="xs:string" tunnel="yes"/>
 
     <xsl:variable name="name" select="string(@name)"/>
