@@ -553,6 +553,9 @@ In the last two FSAs, the existence of the transition doesn't affect
 the language recognized: since there is no final state, no strings are
 accepted and the language is {}.
 
+More tests are needed, but these definitely look to be worth doing.
+
+
 ## 2021-01-13, still later
 
 Reading Braband / Møller/ Schwartzbach 2008 on XSugar.  Nifty paper.
@@ -670,4 +673,12 @@ but until I measure and see that the abstraction is a meaningful part
 of the cost, it's probably not the best place to worry about speed.
 (Ah, but I notice that on p. 20 they report that their Earley parser
 goes directly into the UST without first producing the parse tree.)
+
+The distinction between UST (or AST) and parse tree looks as if it
+would be useful when trying to think about reading ixml grammars as
+ways to parse XML documents. But I have to keep in mind that as I have
+understood ixml, the XML is a pretty direct representation of the AST,
+whereas for B/M/S it's just another concrete syntax for their AST. It
+looks like the kind of problem that will require thinking about some
+concrete examples to start with. When the time come.
 
