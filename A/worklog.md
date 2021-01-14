@@ -642,7 +642,7 @@ they define, which is a sort of abstracted tagged-document syntax.
 	B: "x".
 
 It's easy to see that this is ambiguous, because there is only one
-sentence (<S>x</>) and it can be derived in two different ways, via A
+sentence (`<S>x</>`) and it can be derived in two different ways, via A
 and B.
 
 It may be a little trickier to read a grammar for tagged documents out
