@@ -12,21 +12,34 @@ Quick and dirty collection of citations for things found in my file drawer.
 1998:  Nederhof.
 2000: Nederhof.
 2007: Parameswaran / Taly.
-2008:  Yli-Jyrä.
+2008:  Yli-Jyrä, Braband / Møller / Schwartzbach.
 2009: Eğecioğlu, Mohri / Nederhof.
 2010:  Braband / Giegerich / Møller.
 2012:  Schobbens.
 
 
-* Braband / Giegerich / Møller 2010.  Claus Brabrand,
-Robert Giegerich, and Anders Møller.  Analyzing ambiguity of context-free grammars.
-*Science of Computer Programming* 75.3 (March 2010):  176-191.
+* Braband / Giegerich / Møller 2010.  Claus Brabrand, 
+Robert Giegerich, and Anders Møller.  Analyzing ambiguity of context-free grammars. 
+*Science of Computer Programming* 75.3 (March 2010):  176-191. 
 
     Earlier version in *Proc. 12th International Conference 
     on Implementation and Application of Automata* (CIAA) 2007,
-    Springer-Verlag LNCS vol.\ 4783.
+    Springer-Verlag LNCS vol. 4783.
 
     Very nice, thought-provoking paper.
+
+* Braband / Møller/ Schwartzbach 2008.  Claus Brabrand, 
+Anders Møller, and Michael I. Schwartzbach.  Dual syntax for XML languages.
+*Information systems* 33.4 (2008).  
+
+    Earlier version in *Proc. 10th International Workshop 
+    on Database Programming Languages* (DBPL) 2005,
+    Springer-Verlag LNCS vol. 3774.
+
+    Describes XSugar, apparently a precursor (or competitor) to
+    invisible XML.
+
+    Preprint https://cs.au.dk/~amoeller/mis/xsugar.pdf
 
 * Chomsky 1959. Noam Chomsky. On certain formal properties of
 grammars. Rpt. in *Handbook of mathematical psychology*, vol. II, ec.

@@ -176,7 +176,9 @@
 * generation of recursive-descent parser (if feasible)
 
 * Coverage measurement (and run coverage measurement on XSTS and/or QT
-  test suites)
+test suites)
+
+### Further extension
 
 * Specify ixml grammar and schemas for ixml extended with annotations
   in the style of xsd:annotation and/or XQuery annotations.
@@ -184,6 +186,16 @@
 * Specify ixml grammar and schemas for ixml extended with inherited 
   and synthetic attributes. Assignment syntax is an extension point, 
   but perhaps start with XPath 3.1? 
+
+* Try to apply the reversibility analysis of Braband / Møller /
+Schwartzbach 2010 to ixml.  I think that will involve
+
+    * Reading ixml grammars backwards / rewriting them as grammars of
+      tagged documents (not quite the same as schemas), so they can be
+      tested for ambiguity
+
+    * Writing an ixml unparser (re-serializes the output of an ixml
+      parser in the non-XML syntax)
 
 ## Misc
 
