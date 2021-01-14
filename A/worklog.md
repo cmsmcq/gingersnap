@@ -510,3 +510,164 @@ the arc or state in question, which means they never have unexpected
 characters. In fact, they are (of course) always prefixes of sentences
 which are themselves not sentences.
 
+## 2021-01-13, later
+
+Thinking about the missing tests in the state and arc coverage test
+sets: they may be due either to problems in the FSA (it looked OK, but
+I have not verified it carefully) or to problems in the test
+generation pipeline. My money is on the latter, and specifically on
+the generation of alpha and omega paths (paths leading from the start
+state to a given state or arc, and paths leading from that state or
+arc to a final state); the numbers reported by tclego have always been
+off by a little, which suggests to me now that the path generation is
+not dealing correctly with empty paths.
+
+Some test cases look to be worth writing. An FSA must have at least
+one state (otherwise it has no start state), so the smallest FSAs are
+those with a single state. They are simple enough to specify formally
+here.  I'll use U to mean 'any Unicode character'. 
+
+* ({q0}, U, {}, q0, {q0} ): one state, no transitions, state is final
+
+        q0 = {nil}.
+
+        <rule name="q0"><alt/></rule>
+
+* ({q0}, U, {}, q0, {} ): one state, no transitions, state is not final 
+
+        <rule name="q0"/> (this is probably not actually valid ixml) 
+
+* ({q0}, U, {(q0,'a',q0}, q0, {q0} ): one state, one transition (a), state is final 
+
+        q0 = 'a'. 
+
+        <rule name="q0"><alt><literal dstring="a"/></alt></rule>
+
+* ({q0}, U, {(q0,U,q0)}, q0, {q0} ): one state, one transition (U), state is final 
+
+* ({q0}, U, {(q0,'a',q0}, q0, {} ): one state, one transition (a), state is not final 
+
+* ({q0}, U, {(q0,U,q0)}, q0, {} ): one state, one transition (U), state is not final 
+
+In the last two FSAs, the existence of the transition doesn't affect
+the language recognized: since there is no final state, no strings are
+accepted and the language is {}.
+
+## 2021-01-13, still later
+
+Reading Braband / Møller/ Schwartzbach 2008 on XSugar.  Nifty paper.
+
+They focus explicitly on two-way translation, though as far as I can
+tell after reading part of the paper they are in roughly the same
+situation w.r.t. round-trippability as ixml is — it’s possible to
+throw away information on the way into or out of XML, so what can be
+round tripped is, roughly, what the particular syntax description
+implicitly declares as important.
+
+In many ways, XSugar and ixml are similar.
+
+  * Both can use both elements and attributes on the RHS.
+
+  * Both prescribe Earley parsing (though XSugar requires extensions
+    for priorities and unordered RHS).
+
+XSugar has constructs and facilities that ixml does not have:
+
+  * an ‘&’ operator that declares a RHS unordered
+  
+  * the ability to change the order of siblings in translation into or
+    from XML (each symbol has a type and an optional unique local
+    name; the local names in the non-XML and XML parts of the
+    production must match, but need not be in the same sequence)
+
+  * the ability to inject character data into the XML (the mirror image
+    of dropping literals from the non-XML)
+
+  * the ability to mark a RHS as having lower priority than other RHS
+    for the same nonterminal
+
+  * magic symbols _ and __ meaning 'optional whitespace' and 'required
+    whitespace'
+
+  * ability to declare that elements (and attributes) are in a
+    particular namespace
+
+And conversely XSugar lacks some things present in ixml:
+
+  * it’s BNF based, not EBNF based
+  
+Their static analysis to determine whether an XSugar syntax spec is
+lossless in both directions may possibly be applicable (mutatis
+mutandis) to ixml.  And their definition of round-trip information
+preservation ('reversibility') can definitely serve as a model in any
+discussions of round-tripping in ixml.
+
+The bad news is that the problem of detecting reversibility turns out
+to involve checking that both the non-XML grammar and the XML grammar
+are unambiguous, which is undecidable in general.  It took me a few
+minutes to see how to apply the ambiguity check to the XML side of
+their grammar rules, but I think I get it now.  It will take some more
+thinking to see whether and how an ixml grammar can be rewritten as a
+grammar for tagged documents, but I think it may be doable.
+
+Consider the XSugar example
+
+     S: [A z] = <S> [A z] </>
+      : [B z] = <S> [B z] </>
+     A: ["a"] "x" = "x"
+     B: ["b"] "x" = "x"
+
+This corresponds, I think, to the ixml
+
+    S: A; B.
+    -A: -"a", "x". 
+    -B: -"b", "x". 
+
+From the XSugar it's straightforward to extract the grammar for the
+non-XML data format, which in iXML I would write [pause] exactly like
+the grammar just given, except for the various marks:
+
+    S: A; B.
+    A: "a", "x". 
+    B: "b", "x". 
+
+It's equally possible to extract a grammar for the 'normalized XML'
+they define, which is a sort of abstracted tagged-document syntax.
+
+    S: "<S>", A, "</>"; "<S>", B, "</>".
+    A: "x".
+	B: "x".
+
+It's easy to see that this is ambiguous, because there is only one
+sentence (<S>x</>) and it can be derived in two different ways, via A
+and B.
+
+It may be a little trickier to read a grammar for tagged documents out
+of the ixml syntax -- at the very least it is likely to be error prone
+for me. The tentative rules for rewriting an ixml grammar as a schema
+get us part (most?) of the way there, but if I recall correctly, that
+sketch ran into trouble precisely when it started to try to deal with
+terminal symbols. On the plus side: the grammar for tagged documents
+does not need to be a legal schema in any existing schema language. So
+I can improvise as needed when it comes to PCDATA and attribute
+values.
+
+On a practical level, B/M/S divide translation into four steps:
+
+* parsing maps from data to parse tree
+* abstraction maps from parse tree to unifying syntax tree
+* concretization maps from UST to parse tree
+* unparsing maps from parse tree to data
+
+The distinction between parsing and abstraction corresponds perfectly,
+I think, to the distinction in the current version of Aparecium
+between parsing into the raw parse tree and modifying that parse tree
+in accordance with the marks in the grammar. I have been embarrassed
+by the difficulty I had trying to fold the abstraction step into the
+parsing step; maybe I should stop worrying about it. The
+implementation is simpler with separate steps. I assume it's slower,
+but until I measure and see that the abstraction is a meaningful part
+of the cost, it's probably not the best place to worry about speed.
+(Ah, but I notice that on p. 20 they report that their Earley parser
+goes directly into the UST without first producing the parse tree.)
+
