@@ -910,3 +910,80 @@ without explaining that the affix always described the complete stack.
 I'm going to have to pause here. Even understanding the lemmas well
 enough to paraphrase them is taking time, and I have to go now.
 
+But before I go, this thought: perhaps the construction should be
+recast more explicitly as the writing of a regular grammar?
+
+(Later.)
+
+Let's see. The grammar rules all have one of the following forms
+(using P for the parent, including whatever affix it may have, and A,
+B for left and right child):
+
+    P.0: 'a', P.f.
+    P.0: {nil}, A.P.0.
+	A.P.f: B.P.0.
+	B.P.f: P.f.
+
+So it is clearly a regular grammar in the post-Chomsky sense. The
+construction as described so far has no final state; that may be what
+Chomsky means when he says G' is equivalent to G "(when slightly
+modified)".
+
+Back to paraphrase.
+
+Lemma 5. (Paraphrasing very loosely.) Bn is either right-recursive,
+and the right-hand child of a right-hand child, or left-recursive and
+the left-hand child of a left-hand child. Proof is roughly as
+described above; it follows from the premise that G is not
+self-embedding.
+
+## 2021-01-15
+
+Working with pen and paper this morning I concluded that one reason
+things are so hard to understand at this point in the paper is that
+the 18 lines of prose labeled "Construction" do not tell me how to
+construct grammar G'. By modern conventions, a context-free grammar is
+a tuple (*V*<sub>*N*</sub>, *V*<sub>*T*</sub>, *P*, *S*), where
+*V*<sub>*N*</sub> is a finite vocabulary of nonterminals,
+*V*<sub>*T*</sub> is a finite vocabulary of terminals,
+*P* is a finite set of productions, and
+*S* in *V*<sub>*N*</sub> is a start symbol.
+
+The construction described by Chomsky specifies that the nonterminals
+in G' consist of a sequence of nonterminals from G plus a suffix (1 or
+2 in Chomsky's notation; I am now leaning towards pre and post, or 0
+and f). He specifies that for a given nonterminal in G', if rules of a
+certain form occur in G, then certain rules of a specified form will
+exist among the productions of G'. Unless I am missing something,
+that's it.  So the construction of G'
+
+* constrains the set of nonterminals to be sequences of nonterminals
+in G, plus an index, but does not say what the set of nonterminals is,
+
+* does not say what the set of terminals is,
+
+* constrains the set of productions to include some rules, given the
+presence of certain nonterminals in *V*<sub>*N*</sub> of G' and the
+presence of certain rules in *P* of G, but does not say what the set
+of productions is, and
+
+* does not say what the start symbol is.
+
+To be fair, we should bear in mind that Chomsky was inventing the
+field, and the conventional description of a grammar as that 4-tuple
+only came later. But Chomsky's description of grammars in section 2
+(p. 141) does say quite clearly what the moving parts of the grammar
+are:
+
+> a system *G* of the following form: *G* is a semi-group under concatenation with strings in a finite set *V* of symbos as its elements, and *I* as the identity element.  *V* is called the "vocabulary" of *G*.  *V* = *V*<sub>*T*</sub> ∪ *V*<sub>*N*</sub> (*V*<sub>*T*</sub>, *V*<sub>*N*</sub> disjoint), where *V*<sub>*T*</sub> is the "terminal vocabulary" and *V*<sub>*N*</sub> is the "nonterminal vocabulary."  *V*<sub>*T*</sub> contains *I* .... *V*<sub>*N*</sub> contains an element *S* (sentences).  A two-place relation → is defined on elements of *G, read "can be rewritten as."  ...
+
+So it's not as though he didn't realize that the four items in the
+tuple are salient.
+
+Perhaps he thought it was all obvious. In that case, I hate to be the
+one to break the spell, but no it's not obvious.
+
+Perhaps he is defining not a single grammar G' but a class of grammars
+-- any grammars that satisfy the constraints explicit or implicit in
+the description of the construction.
+
