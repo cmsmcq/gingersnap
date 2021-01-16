@@ -1,0 +1,40 @@
+{ Flat arithmetic expressions (no parens).
+  A simple example for working through Chomsky 1959.
+
+  This is Chomsky normal form, rewritten from
+  the bnf form.  Holy cow, this is ugly.
+  
+  Revisions:
+  2021-01-14 : CMSMcQ : made file
+
+}
+
+      E: ['0'-'9'];
+         num, digit;
+	 ['a'-'z'];
+	 var, letter;
+	 term, mulfac;
+	 expr, addterm.
+   expr: ['0'-'9'];
+         num, digit;
+         ['a'-'z'];
+      	 var, letter;
+      	 term, mulfac;
+      	 expr, addterm.
+addterm: add, term.
+   term: ['0'-'9'];
+         num, digit;
+	 ['a'-'z'];
+	 var, letter;
+	 term, mulfac.
+ mulfac: mul, factor.
+ factor: ['0'-'9']; num, digit; ['a'-'z']; var, letter.
+    var: ['a'-'z']; var, letter.
+    num: ['0'-'9']; num, digit.
+ letter: ['a'-'z'].
+  digit: ['0'-'9'].
+    add: '+';
+         '-'.
+    mul: '*';
+         '/'.
+

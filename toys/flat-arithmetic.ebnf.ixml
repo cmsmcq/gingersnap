@@ -1,0 +1,17 @@
+{ Flat arithmetic expressions (no parens).
+  A simple example for working through Chomsky 1959.
+
+  This is the regular-right-part / EBNF form.
+  
+  Revisions:
+  2021-01-14 : CMSMcQ : made file
+
+}
+
+expr: term+add.
+term: factor+mul.
+factor: num; var.
+var: ['a'-'z']+.
+num: ['0'-'9']+.
+add: '+'; '-'.
+mul: '*'; '/'.

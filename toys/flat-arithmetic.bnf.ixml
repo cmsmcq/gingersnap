@@ -1,0 +1,18 @@
+{ Flat arithmetic expressions (no parens).
+  A simple example for working through Chomsky 1959.
+
+  This is the straight BNF-style, left-recursive form rewritten from
+  the ebnf form.
+  
+  Revisions:
+  2021-01-14 : CMSMcQ : made file
+
+}
+
+expr: term; expr, add, term.
+term: factor; term, mul, factor.
+factor: num; var.
+var: ['a'-'z']; var, ['a'-'z'].
+num: ['0'-'9']; num, ['0'-'9'].
+add: '+'; '-'.
+mul: '*'; '/'.

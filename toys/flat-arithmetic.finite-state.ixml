@@ -1,0 +1,94 @@
+{ Flat arithmetic expressions (no parens).
+  A simple example for working through Chomsky 1959.
+
+  This is Chomsky's finite-state form, rewritten from
+  the cnf form.  
+  
+  Revisions:
+  2021-01-14 : CMSMcQ : made file
+
+}
+
+{ E: ['0'-'9']; num, digit; ['a'-'z']; var, letter; term, mulfac; expr, addterm. }
+
+E.0: [0'-'9'], E.f;
+     E.num.0;
+     ['a'-'z'], E.f;
+     E.var.0;
+     E.term.0;
+     E.expr.0.
+
+E.num.f: E.digit.0.
+E.digit.f: E.f.
+E.var.f: E.letter.0.
+E.letter.f: E.f.
+E.term.f: E.mulfac.0.
+E.mulfac.f: E.f.
+E.expr.f: E.addterm.0.
+E.addterm.f: E.f.
+  
+ { expr: ['0'-'9'];
+         num, digit;
+         ['a'-'z'];
+      	 var, letter;
+      	 term, mulfac;
+      	 expr, addterm. }
+E.expr.0: ['0'-'9'], E.expr.f.
+E.expr.0: ['a'-'z'], E.expr.f.
+
+E.expr.0: E.expr.num.0.
+E.expr.num.f: E.expr.digit.0.
+E.expr.digit.f: E.expr.f.
+
+E.expr.0: E.expr.var.0.
+E.expr.var.f: E.expr.letter.0.
+E.expr.letter.f: E.expr.f.
+
+E.expr.0: E.expr.term.0.
+E.expr.term.f: E.expr.mulfac.0.
+E.expr.mulfac.f: E.expr.f.
+
+E.expr.f: E.expr.addterm.0.
+E.expr.addterm.f: E.expr.f.
+
+	 
+{ addterm: add, term. }
+{  term: ['0'-'9'];
+         num, digit;
+	 ['a'-'z'];
+	 var, letter;
+	 term, mulfactor. }
+
+E.term.0: ['0'-'9'], E.term.f.
+E.term.0: ['a'-'z'], E.term.f.
+
+E.term.0: E.term.num.0.
+E.term.num.f: E.term.digit.0.
+E.term.digit.f: E.term.f.
+
+E.term.0: E.term.var.0.
+E.term.var.f: E.term.letter.0.
+E.term.letter.f: E.term.f.
+
+E.term.f: E.term.mulfactor.0.
+E.term.mulfactor.f: E.term.f.
+
+{ mulfac: mul, factor }
+{ factor: ['0'-'9']; num, digit; ['a'-'z']; var, letter. }
+{    var: ['a'-'z']; var, letter. }
+E.var.0: ['a'-'z'], E.var.f.
+E.var.f: E.var.letter.0.
+E.var.letter.f: E.var.f.
+
+{   num: ['0'-'9']; num, digit. }
+
+E.num.0: ['0'-'9'], E.num.f.
+E.num.f: E.num.digit.0.
+E.num.digit.0: E.num.f.
+
+{  letter: ['a'-'z']. }
+{   digit: ['0'-'9']. }
+{     add: '+';
+           '-'. }
+{     mul: '*';
+           '/'. }

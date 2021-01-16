@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+  <comment> Flat arithmetic expressions (no parens).
+  A simple example for working through Chomsky 1959.
+  
+  This is Chomsky normal form, rewritten from
+  the bnf form.  Holy cow, this is ugly.
+  
+  Revisions:
+  2021-01-14 : CMSMcQ : made file
+  
+  </comment>
+  <rule name="E">
+    <alt>
+      <inclusion>
+        <range from="0" to="9"/>
+      </inclusion>
+    </alt>
+    <alt>
+      <nonterminal name="num"/>
+      <nonterminal name="digit"/>
+    </alt>
+    <alt>
+      <inclusion>
+        <range from="a" to="z"/>
+      </inclusion>
+    </alt>
+    <alt>
+      <nonterminal name="var"/>
+      <nonterminal name="letter"/>
+    </alt>
+    <alt>
+      <nonterminal name="term"/>
+      <nonterminal name="mulfac"/>
+    </alt>
+    <alt>
+      <nonterminal name="expr"/>
+      <nonterminal name="addterm"/>
+    </alt> 
+  </rule>
+  <rule name="expr">  <alt>
+    <inclusion>
+      <range from="0" to="9"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="num"/>
+    <nonterminal name="digit"/>
+  </alt>
+  <alt>
+    <inclusion>
+      <range from="a" to="z"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="var"/>
+    <nonterminal name="letter"/>
+  </alt>
+  <alt>
+    <nonterminal name="term"/>
+    <nonterminal name="mulfac"/>
+  </alt>
+  <alt>
+    <nonterminal name="expr"/>
+    <nonterminal name="addterm"/>
+  </alt> 
+  </rule>
+  <rule name="addterm">  <alt>
+    <nonterminal name="add"/>
+    <nonterminal name="term"/>
+  </alt> 
+  </rule>
+  <rule name="term">  <alt>
+    <inclusion>
+      <range from="0" to="9"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="num"/>
+    <nonterminal name="digit"/>
+  </alt>
+  <alt>
+    <inclusion>
+      <range from="a" to="z"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="var"/>
+    <nonterminal name="letter"/>
+  </alt>
+  <alt>
+    <nonterminal name="term"/>
+    <nonterminal name="mulfac"/>
+  </alt> 
+  </rule>
+  <rule name="mulfac">  <alt>
+    <nonterminal name="mul"/>
+    <nonterminal name="factor"/>
+  </alt> 
+  </rule>
+  <rule name="factor">  <alt>
+    <inclusion>
+      <range from="0" to="9"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="num"/>
+    <nonterminal name="digit"/>
+  </alt>
+  <alt>
+    <inclusion>
+      <range from="a" to="z"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="var"/>
+    <nonterminal name="letter"/>
+  </alt> 
+  </rule>
+  <rule name="var">  <alt>
+    <inclusion>
+      <range from="a" to="z"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="var"/>
+    <nonterminal name="letter"/>
+  </alt> 
+  </rule>
+  <rule name="num">  <alt>
+    <inclusion>
+      <range from="0" to="9"/>
+    </inclusion>
+  </alt>
+  <alt>
+    <nonterminal name="num"/>
+    <nonterminal name="digit"/>
+  </alt> 
+  </rule>
+  <rule name="letter">  <alt>
+    <inclusion>
+      <range from="a" to="z"/>
+    </inclusion>
+  </alt> 
+  </rule>
+  <rule name="digit">  <alt>
+    <inclusion>
+      <range from="0" to="9"/>
+    </inclusion>
+  </alt> 
+  </rule>
+  <rule name="add">  <alt>
+    <literal sstring="+"/>
+  </alt>
+  <alt>
+    <literal sstring="-"/>
+  </alt> 
+  </rule>
+  <rule name="mul">  <alt>
+    <literal sstring="*"/>
+  </alt>
+  <alt>
+    <literal sstring="/"/>
+  </alt> 
+
+  </rule>
+</ixml>

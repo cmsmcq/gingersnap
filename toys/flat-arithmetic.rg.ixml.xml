@@ -1,0 +1,1549 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:dg-type="regular approximation"
+      gt:ra-type="Chomsky-transform"
+      gt:k="0"
+      gt:date="2021-01-15T21:22:36.05851-07:00">
+   <comment>2021-01-15T21:22:36.05851-07:00: cnf-to-rg.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/flat-arithmetic.cnf.ixml.xml</comment>
+   <comment>    This grammar is (a reconstruction of) the grammar produced by</comment>
+   <comment>    the rules in Sec. 6 of Chomsky 1959.</comment>
+   <comment> Flat arithmetic expressions (no parens).
+  A simple example for working through Chomsky 1959.
+  
+  This is Chomsky normal form, rewritten from
+  the bnf form.  Holy cow, this is ugly.
+  
+  Revisions:
+  2021-01-14 : CMSMcQ : made file
+  
+  </comment>
+   <rule name="iǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀE">
+      <alt>
+         <nonterminal name="fǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀE">
+      <alt>
+         <nonterminal name="iǀletterǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀE">
+      <alt>
+         <nonterminal name="fǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀtermǀE">
+      <alt>
+         <nonterminal name="iǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulfacǀE">
+      <alt>
+         <nonterminal name="fǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀexprǀE">
+      <alt>
+         <nonterminal name="iǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀE">
+      <alt>
+         <nonterminal name="iǀnumǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀE">
+      <alt>
+         <nonterminal name="iǀvarǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀtermǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀtermǀE">
+      <alt>
+         <nonterminal name="fǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀtermǀE">
+      <alt>
+         <nonterminal name="iǀletterǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀtermǀE">
+      <alt>
+         <nonterminal name="fǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulfacǀE">
+      <alt>
+         <nonterminal name="iǀmulǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulǀmulfacǀE">
+      <alt>
+         <nonterminal name="iǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="fǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀexprǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀexprǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀexprǀE">
+      <alt>
+         <nonterminal name="fǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀexprǀE">
+      <alt>
+         <nonterminal name="iǀletterǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀexprǀE">
+      <alt>
+         <nonterminal name="fǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="fǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀaddǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀaddǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀtermǀE">
+      <alt>
+         <nonterminal name="iǀnumǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀtermǀE">
+      <alt>
+         <nonterminal name="iǀvarǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀmulǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="fǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulǀmulfacǀE">
+      <alt>
+         <literal sstring="*"/>
+         <nonterminal name="fǀmulǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="fǀmulǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀfactorǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="iǀletterǀfactorǀmulfacǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀexprǀE">
+      <alt>
+         <nonterminal name="iǀnumǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀexprǀE">
+      <alt>
+         <nonterminal name="iǀvarǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀletterǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="iǀmulǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="iǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="fǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀaddǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀaddǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀaddǀaddtermǀE">
+      <alt>
+         <literal sstring="+"/>
+         <nonterminal name="fǀaddǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="-"/>
+         <nonterminal name="fǀaddǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀletterǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulǀmulfacǀtermǀE">
+      <alt>
+         <literal sstring="*"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀletterǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀfactorǀmulfacǀE">
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀnumǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀvarǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀmulǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulǀmulfacǀexprǀE">
+      <alt>
+         <literal sstring="*"/>
+         <nonterminal name="fǀmulǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="fǀmulǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="iǀletterǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀaddǀaddtermǀexprǀE">
+      <alt>
+         <literal sstring="+"/>
+         <nonterminal name="fǀaddǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="-"/>
+         <nonterminal name="fǀaddǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀletterǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀnumǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀvarǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀmulǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀfactorǀmulfacǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀfactorǀmulfacǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulǀmulfacǀtermǀexprǀE">
+      <alt>
+         <literal sstring="*"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀletterǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀnumǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀvarǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀmulǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀmulǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <literal sstring="*"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀletterǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀfactorǀmulfacǀtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀfactorǀmulfacǀtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀfactorǀmulfacǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀfactorǀmulfacǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀmulǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <literal sstring="*"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <literal sstring="/"/>
+         <nonterminal name="fǀmulǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀdigitǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀletterǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+      <alt>
+         <nonterminal name="iǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="fǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀfactorǀmulfacǀtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀfactorǀmulfacǀtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="fǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <nonterminal name="iǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+         <nonterminal name="fǀdigitǀnumǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+   <rule name="iǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+         <nonterminal name="fǀletterǀvarǀfactorǀmulfacǀtermǀaddtermǀexprǀE"/>
+      </alt>
+   </rule>
+</ixml>
