@@ -255,7 +255,7 @@
   <xsl:template match="text()[not(parent::comment)]"/>
 
   <!--****************************************************************
-      * Names templates
+      * Named templates
       * one-by-one (manages queue)
       * and copy-with-affix (does the actual work)
       ****************************************************************
