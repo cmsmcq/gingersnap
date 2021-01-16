@@ -178,6 +178,14 @@
 * Coverage measurement (and run coverage measurement on XSTS and/or QT
 test suites)
 
+* Translate native ixml into BNF. 
+
+* Translate BNF grammar into Chomsky Normal Form. 
+
+* Translate BNF grammar into Greibach Normal Form. 
+
+
+
 ### Further extension
 
 * Specify ixml grammar and schemas for ixml extended with annotations
