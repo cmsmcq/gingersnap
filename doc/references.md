@@ -46,10 +46,14 @@ grammars. Rpt. in *Handbook of mathematical psychology*, vol. II, ec.
 R. D. Luce, R. R. Bush, and E. Galanter (New York: John Wiley and
 Sons, 1965), pp. 125-155.
 
-    Not seen. Langendoen 1975 says "Chomsky (1959a), moreover,
+    Langendoen 1975 says "Chomsky (1959a), moreover,
     provides an algorithm for constructing FAs for sentences generated
     by arbitrary Chomsky-normal-form (CNF) grammars with up to any
-    fixed finite degree *n* of center embedding (CE)."
+    fixed finite degree *n* of center embedding (CE)."  I think he must
+	be referring to the construction introduced (with all the clarity and
+	ease of understanding for which Chomsky is known) in section 6.
+	If and when I understand the construction and the sequence of
+	eleven lemmas and one theorem which follow, I may know for sure.
 
 * Dewar / Bratley / Thorne 1969. Dewar, Hamish, Paul Bratley, and James
 Peter Thorne. A program for the syntactic anallysis of English
