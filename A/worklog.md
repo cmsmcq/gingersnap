@@ -987,3 +987,108 @@ Perhaps he is defining not a single grammar G' but a class of grammars
 -- any grammars that satisfy the constraints explicit or implicit in
 the description of the construction.
 
+### Later
+
+I've spent time trying to formulate my problem concisely, by drafting
+a letter to a friend who might be able to help me understand the
+paper. Drafting the letter helped, even though I do not expect to send
+it. (Not their problem -- my problem.)
+
+My current plan is reasonably simple. I will continue trying to
+explain the paper to myself -- the record will be in this work log --
+and my working approach will be (1) that the construction described in
+Chomsky 1959 identifies a class of grammars, an infinite number of
+which will have sets of nonterminals and sets of productions and start
+symbols that let the proofs go through, and that (2) among that
+infinite set there will be some, possibly just one, with the smallest
+suitable set of nonterminals and the smallest suitable set of
+production rules.
+
+* My initial guess is that the smallest set of nonterminals needed for
+the grammar G' is the Cartesian product of the indices 0 and f
+(Chomsky's 1 and 2) with the set of pc chains (members of Chomsky's
+set K) which begin with the start symbol of G and contain no repeating
+nonterminals.
+
+    I should define 'pc chains'. They are sequences of nonterminals (in
+    the nonterminal vocabular of G) such that each one after the first
+    appears on a right-hand side of a rule for the one on its left. So:
+    members of Chomsky's set K. The name 'pc' is from parent / child,
+    because this left-hand side / right-hand side relation is what leads
+    to parent / child relations in the nodes of parse trees. I would like
+    to call them daisy chains, and the individual members daisies, but I
+    don't think I can pull it off.
+
+    I have the impression, though, that some of the lemmas and proofs talk
+    as if the nonterminals included all non-repeating pc chains of G,
+    whether they start with S or not. So perhaps we will need to include
+    all of them.
+
+    And I am fairly confident that if G is self-embedding, a grammar made
+    in the style of G' to recognize the subset of L(G) with at most *n*
+    degrees of self embedding will need to include pc chains with up
+    to *n*+1 occurrences of any nonterminal. So perhaps we will need to
+    include even more nonterminals. Or perhaps the idea is simply to
+    unfold the grammar, *n* times, in which case we get pc chains from
+    the unfolding of G which have no repetitions but map 1:1 with chains
+    for G which do have repetitions.
+
+* My initial guess is that the terminal vocabulary of G' is that of G. 
+
+* My initial guess is that the smallest set of production rules needed
+for the proofs to go through is the set which includes all those
+required by the construction (given a particular set of nonterminals)
+and no others. (That is, I am guessing that Chomsky wrote that
+rule *p* is in the set *P* if some condition holds, and did not bother
+to say "and no other *p* is in set *P*". This may violate the rule of
+charity in interpretation: it amounts to saying that he wrote "if"
+though he meant "iff". But the alternatives currently appear even
+worse.)
+
+* My initial guess is that the only start symbol that is going to let
+the proofs go through is S.0 (Chomsky's [S]<sub>1</sub>). Or perhaps
+what I mean is that if I were trying to specify a construction of G'
+to do what I think G' is supposed to do, I would choose S.0.
+
+### Evening
+
+I have now written a stylesheet, cnf-to-rg, to translate grammars in
+Chomsky normal form into regular grammars, using my guess at the
+meaning of the Chomsky's description of the construction, supplemented
+heavily by guesses about "what would make sense" in cases where there
+is nothing to guess at because the description just doesn't say anything.
+
+As expected, providing all and only the production rules described by
+Chomsky produces a grammar with no definition for the post-state of S
+(S.f, in the notation I've been using here, fǀE in the notation
+produced by the XSLT -- I'm not sure I'm happy with the index first,
+but I remember quite clearly that I was unhappy with it coming last),
+which means the grammar is not clean and L(G') is going to be the
+empty set.
+
+Not expected, but probably not surprising, is the growth of the
+grammar. The toy grammar from which I started, in conventional ixml,
+has seven nonterminals, with ten right-hand sides:
+
+     expr: term+add.
+     term: factor+mul.
+     factor: num; var.
+     var: ['a'-'z']+.
+     num: ['0'-'9']+.
+     add: '+'; '-'.
+     mul: '*'; '/'.
+
+The BNF version also has seven nonterminals with fourteen RHS.
+
+The Chomsky Normal Form version has 12 nonterminals, with 33 RHS.
+
+And the regular grammar (finite state grammar, I guess Chomsky would
+call it) produced by cnf-to-rg has 199 nonterminals and 275 RHS.
+
+At one point, Chomsky sounds a bit apologetic about the profusion of
+empty transitions in the finite-state grammar constructed by his
+rules. I was inclined to think there was no occasion for apology, but
+... maybe there is.
+
+It remains to be seen whether having implemented cnf-to-rg will help
+me understand the paper.
