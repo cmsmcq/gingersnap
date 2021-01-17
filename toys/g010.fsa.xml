@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gt:date="2021-01-17T09:05:10.652344-07:00"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network">
+   <comment> 2021-01-17T09:05:10.652344-07:00 creation of stack-augmented pseudo-regular grammar (SAPRG) by ixml-to-saprg.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/src/grammar-pipeline-handler.xsl </comment>
+   <comment> Output grammar G′:  this grammar.</comment>
+   <comment> A stack automaton guided by grammar G′and the rtn:stack attributes should recognize L(G), the same language recognized by G.  If the rtn:stack attributes are ignored, this is a (pseudo-)regular grammar which recognizes the R_0 superset of L(G). </comment>
+   <comment>2021-01-17T09:05:10.652344-07:00: ixml-annotate-gluschkov.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g010.ixml.xml</comment>
+   <comment>    Grammar augmented with Gluschkov automata (@gl:*).</comment>
+   <comment>2021-01-17T09:05:10.652344-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g010.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g010:  the smallest possible ixml grammar (I think).
+
+  One of a series (initially for test case construction).
+  This one is an FSA with 1 (final) state and 0 transitions.
+  I do not believe ixml can describe an FSA with 1
+  nonfinal state and 0 transitions:  ixml grammars
+  require at least one rule.
+
+  L is the set consisting of the empty string.
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <comment> Expansion for S. </comment>
+   <comment> S: . </comment>
+   <rule name="S_0"/>
+   <rule name="S_f">
+      <alt rtn:RHStype="grammar-final" rtn:stack="if-stack-empty">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for S. </comment>
+</ixml>

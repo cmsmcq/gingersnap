@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
+      gt:date="2021-01-17T09:05:23.268263-07:00"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value"
+      rtn:rtn="Recursive transition network">
+   <comment> 2021-01-17T09:05:23.268263-07:00 creation of stack-augmented pseudo-regular grammar (SAPRG) by ixml-to-saprg.xsl. </comment>
+   <comment> Input grammar G: file:/Users/cmsmcq/2021/gingersnap/src/grammar-pipeline-handler.xsl </comment>
+   <comment> Output grammar G′:  this grammar.</comment>
+   <comment> A stack automaton guided by grammar G′and the rtn:stack attributes should recognize L(G), the same language recognized by G.  If the rtn:stack attributes are ignored, this is a (pseudo-)regular grammar which recognizes the R_0 superset of L(G). </comment>
+   <comment>2021-01-17T09:05:23.268263-07:00: ixml-annotate-gluschkov.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g112.ixml.xml</comment>
+   <comment>    Grammar augmented with Gluschkov automata (@gl:*).</comment>
+   <comment>2021-01-17T09:05:23.268263-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g112.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g112:  a small ixml grammar:  112
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 1 nonfinal state, 1 final state, 2 arcs.
+  (I'm not counting the nil arc marking A as final.)
+
+  L is the set containing strings of one or more 'a' and
+  nothing else.
+
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <comment> Expansion for S. </comment>
+   <comment> S: 'a', A. </comment>
+   <rule name="S_0">
+      <alt rtn:ruletype="terminal">
+         <literal sstring="a"/>
+         <nonterminal rtn:nttype="state" name="S_1"/>
+      </alt>
+   </rule>
+   <rule name="S_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="A_0" rtn:stack="push S_2"/>
+      </alt>
+   </rule>
+   <rule name="S_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="S_f"/>
+      </alt>
+   </rule>
+   <rule name="S_f">
+      <alt rtn:RHStype="grammar-final" rtn:stack="if-stack-empty">
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> End of expansion for S. </comment>
+   <comment> Expansion for A. </comment>
+   <comment> A: 'a', A; . </comment>
+   <rule name="A_0">
+      <alt rtn:ruletype="terminal">
+         <literal sstring="a"/>
+         <nonterminal rtn:nttype="state" name="A_1"/>
+      </alt>
+   </rule>
+   <rule name="A_1" rtn:nttype="state">
+      <alt rtn:ruletype="recursion">
+         <comment>nil</comment>
+         <nonterminal rtn:nttype="call" name="A_0" rtn:stack="push A_2"/>
+      </alt>
+   </rule>
+   <rule name="A_2" rtn:nttype="state">
+      <alt>
+         <comment>nil</comment>
+         <nonterminal name="A_f"/>
+      </alt>
+   </rule>
+   <rule name="A_f">
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="S_2" rtn:stack="pop S_2"/>
+      </alt>
+      <alt rtn:ruletype="return">
+         <comment>nil</comment>
+         <nonterminal name="A_2" rtn:stack="pop A_2"/>
+      </alt>
+   </rule>
+   <comment> End of expansion for A. </comment>
+</ixml>
