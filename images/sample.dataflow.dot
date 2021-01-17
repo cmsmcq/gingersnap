@@ -1,0 +1,127 @@
+digraph flow {
+
+  node [shape=box];
+  a [label="a.ixml"];
+  axml [label="a.ixml.xml"];  
+  u5 [label="a.u5.ixml.xml"];  
+  u2 [label="a.u2.ixml.xml"];
+  u5clean [label="a.u5.clean.ixml.xml"];
+  
+  so0 [label="a.S.O0.ixml.xml"];  
+  so0simpip [label="a.S.O0.simplification\n.pipeline.xml"];
+  so0sim [label="a.S.O0.simplified.ixml.xml"];  
+
+  ao2 [label="a.O2.ixml.xml"];
+
+  au5fsa [label="a.u5.fsa.xml"];
+  ao2fsa [label="a.O2.fsa.xml"];
+
+  au5lego [label="a.u5.tclego.xml"];
+  ao2lego [label="a.O2.tclego.xml"];
+
+  au5recpos [label="a.u5.tcrecipes.\n{state, arc, state-final, arc-final}\n.pos.xml", peripheries=4]
+  ao2recneg [label="a.O2.tcrecipes.\n{state, arc, state-final, arc-final}\n.neg.xml", peripheries=4]
+  
+  au5tcpos [label="a.u5.testcases.\n{state, arc, state-final, arc-final}\n.pos.xml", peripheries=4];
+  ao2tcneg [label="a.O2.testcases.\n{state, arc, state-final, arc-final}\n.neg.xml", peripheries=4];
+  
+  /*
+  au5recps [label="a.u5.tcrecipes.state.pos.xml"];
+  au5recpa [label="a.u5.tcrecipes.arc.pos.xml"];
+  au5recpsf [label="a.u5.tcrecipes.state-final.pos.xml"];
+  au5recpaf [label="a.u5.tcrecipes.arc-final.pos.xml"];
+  ao2rns [label="a.O2.tcrecipes.state.neg.xml"];
+  ao2rna [label="a.O2.tcrecipes.arc.neg.xml"];
+  ao2rnsf [label="a.O2.tcrecipes.state-final.neg.xml"];
+  ao2rnaf [label="a.O2.tcrecipes.arc-final.neg.xml"];
+
+  au5tcps [label="a.u5.testcases.state.pos.xml"];
+  au5tcpa [label="a.u5.testcases.arc.pos.xml"];
+  au5tcpsf [label="a.u5.testcases.state-final.pos.xml"];
+  au5tcpaf [label="a.u5.testcases.arc-final.pos.xml"];
+  ao2tcns [label="a.O2.testcases.state.neg.xml"];
+  ao2tcna [label="a.O2.testcases.arc.neg.xml"];
+  ao2tcnsf [label="a.O2.testcases.state-final.neg.xml"];
+  ao2tcnaf [label="a.O2.testcases.arc-final.neg.xml"];
+  */
+
+  node [shape=oval];
+  parseixml [label="ixml-to-xml-manual"];
+  rksubset2 [label="rk-subset k=2"];
+  rksubset5 [label="rk-subset k=5"];
+  r0supersetS [label="R0-superset\nstart='S'"];
+  rksimplifier [label="grammar-pipeline-handler\nstepsfile=\nsub.rk.simplifier\n.pipeline.xml"];
+  gph [label="grammar-pipeline-handler"];
+
+  r0supersetfsa2 [label="R0-superset\nstart='#inherit'"];
+  r0supersetfsa5 [label="R0-superset\nstart='#inherit'"];
+
+  mklego2 [label="grammar-pipeline-handler\nstepsfile=\na.regular-approx-to-dfsa\n.pipeline.xml"];
+  mklego5 [label="grammar-pipeline-handler\nstepsfile=\na.regular-approx-to-dfsa\n.pipeline.xml"];
+
+
+  mkrecipepos [label="tclego-to-tcrecipes\ncoverage=\n{state, arc, state-final, arc-final}\npolarity=positive"];
+  mkrecipeneg [label="tclego-to-tcrecipes\ncoverage=\n{state, arc, state-final, arc-final}\npolarity=negative"];
+  /*
+  mkrecipeps  [label="tclego-to-tcrecipes\ncoverage=state\npolarity=positive"];
+  mkrecipepa  [label="tclego-to-tcrecipes\ncoverage=arc\npolarity=positive"];
+  mkrecipepsf [label="tclego-to-tcrecipes\ncoverage=state-final\npolarity=positive"];
+  mkrecipepaf [label="tclego-to-tcrecipes\ncoverage=arc-final\npolarity=positive"];
+
+  mkrecipens  [label="tclego-to-tcrecipes\ncoverage=state\npolarity=negative"];
+  mkrecipena  [label="tclego-to-tcrecipes\ncoverage=arc\npolarity=negative"];
+  mkrecipensf [label="tclego-to-tcrecipes\ncoverage=state-final\npolarity=negative"];
+  mkrecipenaf [label="tclego-to-tcrecipes\ncoverage=arc-final\npolarity=negative"];
+  */
+
+  recipetcpos [label="tcrecipes-to-testcases"];
+  recipetcneg [label="tcrecipes-to-testcases"];
+
+  /*
+  recipetc1 [label="tcrecipes-to-testcases"];
+  recipetc2 [label="tcrecipes-to-testcases"];
+  recipetc3 [label="tcrecipes-to-testcases"];
+  recipetc4 [label="tcrecipes-to-testcases"];
+  recipetc5 [label="tcrecipes-to-testcases"];
+  recipetc6 [label="tcrecipes-to-testcases"];
+  recipetc7 [label="tcrecipes-to-testcases"];
+  recipetc8 [label="tcrecipes-to-testcases"];
+  */
+  
+  /* Hand work */
+  node [shape=oval, style=dashed, color=red];  
+  handknit [label="Knit together\nby hand"];
+  makepipe [label="Make pipeline\nfor a.S.o0"];
+
+  /* Now draw the arcs */
+  a -> parseixml -> axml;
+  axml -> rksubset2 -> u2;
+  axml -> rksubset5 -> u5 -> rksimplifier -> u5clean -> r0supersetfsa5 -> au5fsa -> mklego5 -> au5lego;
+  axml -> r0supersetS -> so0;
+  so0 -> makepipe -> so0simpip [style=dashed, color=red];
+  so0simpip -> gph [label="stepsfile="];
+  so0 -> gph -> so0sim;
+
+  { u2 so0sim } -> handknit [style=dashed, color=red];
+  handknit -> ao2 -> r0supersetfsa2 -> ao2fsa -> mklego2 -> ao2lego;
+
+  au5lego -> mkrecipepos -> au5recpos -> recipetcpos -> au5tcpos;
+  ao2lego -> mkrecipeneg -> ao2recneg -> recipetcneg -> ao2tcneg;
+
+  /*
+  au5lego -> mkrecipepos -> au5recpos -> recipetcpos -> { au5tcps au5tcpa au5tcpsf au5tcpaf };
+  ao2lego -> mkrecipeneg -> ao2recneg -> recipetcneg -> { ao2tcns ao2tcna ao2tcnsf ao2tcnaf };
+  
+  au5lego -> mkrecipeps -> au5recps -> recipetc1 -> au5tcps;
+  au5lego -> mkrecipepa -> au5recpa -> recipetc2 -> au5tcpa;
+  au5lego -> mkrecipepsf -> au5recpsf -> recipetc3 -> au5tcpsf;
+  au5lego -> mkrecipepaf -> au5recpaf -> recipetc4 -> au5tcpaf;
+  
+  ao2lego -> mkrecipens -> ao2rns -> recipetc5 -> ao2tcns;
+  ao2lego -> mkrecipena -> ao2rna -> recipetc6 -> ao2tcna;
+  ao2lego -> mkrecipensf -> ao2rnsf -> recipetc7 -> ao2tcnsf;
+  ao2lego -> mkrecipenaf -> ao2rnaf -> recipetc8 -> ao2tcnaf;
+  */
+
+  
+}
