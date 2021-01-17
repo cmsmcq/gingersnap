@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-17T12:20:56.67537-07:00">
+   <comment>2021-01-17T12:20:56.67537-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g010.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g010:  the smallest possible ixml grammar (I think).
+
+  One of a series (initially for test case construction).
+  This one is an FSA with 1 (final) state and 0 transitions.
+  I do not believe ixml can describe an FSA with 1
+  nonfinal state and 0 transitions:  ixml grammars
+  require at least one rule.
+
+  L is the set consisting of the empty string.
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <rule name="S" gt:recursive="false" gt:referenced="false">:  <comment>nil</comment>
+      <alt/>.</rule>
+</ixml>

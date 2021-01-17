@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
+      xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+      gt:date="2021-01-17T12:21:05.279064-07:00"
+      gl:gluschkov="dummy value"
+      follow:followsets="dummy value">
+   <comment>2021-01-17T12:21:05.279064-07:00: ixml-annotate-gluschkov.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g022.pc.ixml.xml</comment>
+   <comment>    Grammar augmented with Gluschkov automata (@gl:*).</comment>
+   <comment>2021-01-17T12:21:03.940812-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g022.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g022:  a small ixml grammar:  022
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 0 nonfinal states, 2 final states, 2 arcs.
+  
+  L is the set of strings with alternating a and b, length &gt;= 0.
+
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <rule name="S"
+         gt:recursive="true"
+         gl:nullable="true"
+         gl:first="S_1"
+         gl:last="S_2"
+         follow:S_1="S_2"
+         follow:S_2="">:  <comment>nil</comment>
+      <alt gl:nullable="true" gl:first="" gl:last=""/>
+      <alt gl:nullable="false"
+           gl:first="S_1"
+           gl:last="S_2"
+           follow:S_1="S_2"
+           follow:S_2="">
+         <literal sstring="a"
+                  id="S_1"
+                  gl:nullable="false"
+                  gl:first="S_1"
+                  gl:last="S_1"
+                  follow:S_1=""/>
+         <nonterminal name="A"
+                      id="S_2"
+                      gl:nullable="false"
+                      gl:first="S_2"
+                      gl:last="S_2"
+                      follow:S_2=""/>
+      </alt>. 
+</rule>
+   <rule name="A"
+         gt:recursive="true"
+         gl:nullable="true"
+         gl:first="A_1"
+         gl:last="A_2"
+         follow:A_1="A_2"
+         follow:A_2="">:  <comment>nil</comment>
+      <alt gl:nullable="true" gl:first="" gl:last=""/>
+      <alt gl:nullable="false"
+           gl:first="A_1"
+           gl:last="A_2"
+           follow:A_1="A_2"
+           follow:A_2="">
+         <literal sstring="b"
+                  id="A_1"
+                  gl:nullable="false"
+                  gl:first="A_1"
+                  gl:last="A_1"
+                  follow:A_1=""/>
+         <nonterminal name="S"
+                      id="A_2"
+                      gl:nullable="false"
+                      gl:first="A_2"
+                      gl:last="A_2"
+                      follow:A_2=""/>
+      </alt>.</rule>
+</ixml>

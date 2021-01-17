@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-17T12:21:03.940812-07:00">
+   <comment>2021-01-17T12:21:03.940812-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g022.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g022:  a small ixml grammar:  022
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 0 nonfinal states, 2 final states, 2 arcs.
+  
+  L is the set of strings with alternating a and b, length &gt;= 0.
+
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <rule name="S" gt:recursive="true">:  <comment>nil</comment>
+      <alt/>
+      <alt>
+         <literal sstring="a"/>
+         <nonterminal name="A"/>
+      </alt>. 
+</rule>
+   <rule name="A" gt:recursive="true">:  <comment>nil</comment>
+      <alt/>
+      <alt>
+         <literal sstring="b"/>
+         <nonterminal name="S"/>
+      </alt>.</rule>
+</ixml>

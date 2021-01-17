@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-17T12:20:59.112512-07:00">
+   <comment>2021-01-17T12:20:59.112512-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g011.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g011:  a small ixml grammar:  011
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 0 nonfinal states, 1 final state, 1 arc.
+
+  L is the set containing the empty string and 'a' and nothing else.
+  
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <rule name="S" gt:recursive="true">:  <comment>nil</comment>
+      <alt/>
+      <alt>
+         <literal sstring="a"/>
+         <nonterminal name="S"/>
+      </alt>.</rule>
+</ixml>

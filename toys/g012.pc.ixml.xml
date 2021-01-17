@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-17T12:21:01.531002-07:00">
+   <comment>2021-01-17T12:21:01.531002-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g012.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> g012:  a small ixml grammar:  012
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 0 nonfinal states, 1 final state, 2 arcs.
+  (I'm not counting the nil arc marking S as final.)
+
+  L is the set containing any string of XML characters other than 
+  blank or the C0 characters (tab, CR, LF).
+
+</comment>
+   <comment> Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+</comment>
+   <rule name="S" gt:recursive="true">:  <comment>nil</comment>
+      <alt/>
+      <alt>
+         <alts>
+            <alt>
+               <inclusion>
+                  <range from="#21" to="#D7FF"/>
+                  <range from="#E000" to="#FFFD"/>
+               </inclusion>
+            </alt>
+            <alt>
+               <inclusion>
+                  <range from="#10000" to="#10FFFF"/>
+               </inclusion>
+            </alt>
+         </alts>
+         <nonterminal name="S"/>
+      </alt>.</rule>
+</ixml>
