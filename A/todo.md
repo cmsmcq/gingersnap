@@ -30,9 +30,6 @@
     regular-grammar-to-testcases.  This leaves simplification of R0
     superset and knitting of R_k supersets as manual labor.
 
-* Make tool to generate dot file from regular or pseudo-regular
-  grammar, to visualize the FSA.
-
 * When stubbing out non-terminals in ixml-to-rk-subset,
     instead of defining them with a
     reference to empty set, define them with a reference to
@@ -121,6 +118,12 @@
 * Make systematic tests (XSpec) for each pipeline stage. 
 
 
+### Other things to make better
+
+* The recursive descent parser ixml-to-xml-manual.xsl fails if in g012
+there is a blank before the closing parenthesis.  I've worked around
+it for now (17 January 2021) but it should be fixed.
+
 ## Longer-term things
 
 ###  Exploration and learning (and exploitation)
@@ -182,7 +185,6 @@ test suites)
 
 * Translate BNF grammar into Chomsky Normal Form. 
 
-* Translate BNF grammar into Greibach Normal Form. 
 
 
 
@@ -253,4 +255,7 @@ calling modules into runnable and non-runnable modules).
 * make ixml-to-rk do comments first before injecting its own
   navigation markers. [Done 2021-01-12.]
 
+* Make tool to generate dot file from regular or pseudo-regular
+  grammar, to visualize the FSA.  (Done 2021-01-17, but only for
+  regular grammar, pseudo-regular will have to wait.)
 
