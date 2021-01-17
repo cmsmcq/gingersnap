@@ -36,7 +36,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-12 : CMSMcQ : revise parameters again
+      * 2021-01-17 : CMSMcQ : supply epsilon transition from N_0 to
+      * 2021-01-12 : CMSMcQ : revise parameters again 
       * 2021-01-01 : CMSMcQ : revise parameters 
       * 2020-12-28 : CMSMcQ : split into main and module to make Saxon 
       *                       stop complaining about multiple import 
@@ -436,6 +437,18 @@
       -->
       <xsl:apply-templates mode="arc"
 			   select="descendant::*[@id=$lidFirst]"/>
+      <!--* If the rule is nullable, then N_0 is final, and needs
+	  * an epsilon transition to N_f.  *-->
+      <xsl:if test="xs:boolean(@gl:nullable) = true()">
+	<xsl:element name="alt">
+	  <xsl:element name="comment">rule is nullable</xsl:element>
+	  <xsl:element name="comment">nil</xsl:element>
+	  <xsl:element name="nonterminal">
+	    <xsl:attribute name="name"
+			   select="concat(@name, '_f')"/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:if>
     </xsl:element>
     
     <!--* 3. Handle all other states, passing this rule as
