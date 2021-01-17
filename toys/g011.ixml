@@ -1,0 +1,15 @@
+{ g011:  a small ixml grammar:  011
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 0 nonfinal states, 1 final state, 1 arc.
+
+  L is the set containing the empty string and 'a' and nothing else.
+  
+}
+
+{ Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+}
+
+S: {nil}; 'a', S.

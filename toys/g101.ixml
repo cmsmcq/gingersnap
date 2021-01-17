@@ -1,0 +1,15 @@
+{ g101:  a small ixml grammar:  101
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 1 nonfinal state, 0 final states, 1 arc.
+
+  L is the empty set.
+
+}
+
+{ Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+}
+
+S: 'a', S.

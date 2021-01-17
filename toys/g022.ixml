@@ -1,0 +1,16 @@
+{ g022:  a small ixml grammar:  022
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 0 nonfinal states, 2 final states, 2 arcs.
+  
+  L is the set of strings with alternating a and b, length >= 0.
+
+}
+
+{ Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+}
+
+S: {nil}; 'a', A.
+A: {nil}; 'b', S.

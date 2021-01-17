@@ -1,0 +1,18 @@
+{ g112:  a small ixml grammar:  112
+
+  One of a series (initially for test case construction).
+
+  This one is an FSA with 1 nonfinal state, 1 final state, 2 arcs.
+  (I'm not counting the nil arc marking A as final.)
+
+  L is the set containing strings of one or more 'a' and
+  nothing else.
+
+}
+
+{ Revisions:
+  2021-01-17 : CMSMcQ : made ixml 
+}
+
+S: 'a', A.
+A: 'a', A; {nil}.
