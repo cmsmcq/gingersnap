@@ -1214,6 +1214,8 @@ rule (i).
 
 ## 2021-01-17 test cases for test case generation
 
+### Error in FSA generation
+
 The other day I noticed that a test was missing in the arc-final
 coverage for a.ixml. As I've mulled that over in the back of my mind,
 I have come to suspect a problem not (only) in the generation of
@@ -1284,3 +1286,35 @@ further by hand if need be, and proceed with my work on test-case
 generation.  Then go back and fix the pc, gl, make-rtn pipeline.
 
 I'll think about this as I do something else for a while.
+
+
+### Working on Gluschkov automaton annotation and FSA generation
+
+Well, that decision didn't take long; I hadn't gotten up before I
+started sketching what the RTN automaton should look like.
+
+Found that the Gluschkov annotation was correctly reporting both
+the list of last positions and nullability of the expression as a
+whole, but that ixml-to-saprg was acting as if only the last positions
+were final.  Added code to detect nullability on the rule and
+add an epsilon transition from N<sub>0</sub> to N<sub>f</sub>
+in that case.
+
+The grammars now being produced all look correct.  But given
+that there are so few terminal-labeled transitions, the machinery
+for stack management and finality takes a disproportionate
+share of the FSA.  The R0 FSA generated from g112 has two
+arcs labeled 'a', and eight labeled epsilon.  And eight states
+instead of two.  I should stop being appalled by the number of
+epsilon transitions in Chomsky's finite-state construction.
+
+(Hey, nice side effect: writing rg-to-dot this morning means I will be
+able to look at the generated grammar a bit more conveniently.)
+
+The RTNs being generated may be good test cases for tclego
+and friends, but they are not the test cases I was trying to make,
+so in fact I do want to determinize the original grammars (and
+change g012 into a regular grammar if I can) for the work on
+tclego.
+
+But now I really do need to do something else for a bit.
