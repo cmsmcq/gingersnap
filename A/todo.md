@@ -209,6 +209,25 @@ Schwartzbach 2010 to ixml.  I think that will involve
 
 ## Misc
 
+* From grammar, build XForm to allow manual creation of partial parse
+  trees.  Form displays a partial parse tree, beginning with S.  User
+  clicks on a nonterminal P to expand it by inserting its RHS (which
+  makes the parent P unclickable, although maybe I might want to undo
+  the expansion to back out of a bad decision).  Click on * or + or ?
+  to supply that many copies of the base term (with separators).
+  Click on one choice in a set of choices to choose that one.  Form
+  keeps track of various coverage measures (number of times each
+  alternative is chosen, possibly also number of times each
+  nonterminal has been used, parent/child counts, ancestor/descendant
+  counts, ...); counts are stored as attributes in a copy of the
+  grammar, which can be saved and re-loaded, so the form can be used
+  to generate testcase recipes to fill in coverage gaps in a test set.
+
+  This would be kind of fun to use, but it's not on the short path to
+  a test suite.
+
+  See also work long entry for 18 January 2021.
+
 
 ## Done
 
