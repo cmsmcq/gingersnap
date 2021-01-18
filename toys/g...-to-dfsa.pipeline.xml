@@ -1,0 +1,71 @@
+<grammar-pipeline>
+  <desc>
+    <p>Temporary pipeline for taking g010, g011, etc. from grammar
+    to dfsa to tclego to tcrecipes, step by step, so I can check
+    along the way but also don't clutter the directory overmuch.</p>
+
+  </desc>
+  <desc>
+    <p>Revisions:</p>
+    <p>2021-01-17 : CMSMcQ : start from a.regular-approx-to-dfsa</p>
+  </desc>
+
+  <normalize-terminals>
+    <desc>
+      <p>Normalization of terminals is required for
+      the determinization step to work, even when
+      the grammar appears not to need it: the
+      annotations are used in checking determinism.
+      </p>
+    </desc>
+  </normalize-terminals>
+
+  <eliminate-unit-rules>
+    <desc>
+      <p>The FSAs I'm working with have epsilon transitions,
+      which of course take the form of unit rules.
+      We need to lose them before determinizing.
+      </p>
+    </desc>
+  </eliminate-unit-rules>
+  
+  <!--
+
+  <annotate-pc>
+    <desc>
+      <p>Epsilon elimination does make some states unreachable,
+      so let's clear them out.  First re-annotate.</p>
+    </desc>
+  </annotate-pc>
+  <remove-unreachables>
+    <desc>
+      <p>Then do the deed.</p>
+    </desc>
+  </remove-unreachables>
+  
+  <simplify-epsilon-expressions save="temp.nfsa.xml">
+    <desc><p>Not always needed, but not harmful.</p></desc>
+    </simplify-epsilon-expressions>
+    -->
+
+  <determinize>
+    <desc>
+      <p>Now make the FSA deterministic.</p>
+    </desc>
+  </determinize>
+  
+  <simplify-epsilon-expressions/>
+
+  
+  <fsa-to-tclego/>
+  <!--
+  -->
+  
+  <!--
+  <tclego-to-tcrecipes coverage="state-final"
+		       polarity="positive"/>  
+  -->
+  
+</grammar-pipeline>
+
+  
