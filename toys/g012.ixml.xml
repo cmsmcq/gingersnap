@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
 <ixml>
    <comment> g012:  a small ixml grammar:  012
 
@@ -17,19 +18,16 @@
    <rule name="S">:  <comment>nil</comment>
       <alt/>
       <alt>
-         <alts>
-            <alt>
-               <inclusion>
-                  <range from="#21" to="#D7FF"/>
-                  <range from="#E000" to="#FFFD"/>
-               </inclusion>
-            </alt>
-            <alt>
-               <inclusion>
-                  <range from="#10000" to="#10FFFF"/>
-               </inclusion>
-            </alt>
-         </alts>
+         <inclusion>
+            <range from="#21" to="#D7FF"/>
+            <range from="#E000" to="#FFFD"/>
+         </inclusion>
+         <nonterminal name="S"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <range from="#10000" to="#10FFFF"/>
+         </inclusion>
          <nonterminal name="S"/>
       </alt>.</rule>
 </ixml>
