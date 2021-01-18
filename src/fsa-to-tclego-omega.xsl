@@ -15,6 +15,7 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-17 : CMSMcQ : Run some simple tests, make fixes
       * 2020-12-29 : CMSMcQ : Rework to remove nonterminal from paths
       * 2020-12-27 : CMSMcQ : make stylesheet by copying 
       *                       fsa-to-tclego-alpha and reversing the
@@ -88,20 +89,31 @@
   
       <!--* We start our work with the final states, and work
 	  * backwards. Final states have an empty RHS.
+	  * N.B. ixml does not guarantee that we have any
+	  * final states, so $ruleStart may be empty.
 	  *-->
-    <xsl:variable name="ruleStart" as="element(rule)+"
+    <xsl:variable name="ruleStart" as="element(rule)*"
 		  select="rule
 			  [alt[empty(* except comment)]]"/>
+
+    <xsl:if test="empty($ruleStart)">
+      <xsl:message>
+	<xsl:text>    N.B. This FSA has no final states.</xsl:text>
+	<xsl:text>&#xA;    The language it recognizes is </xsl:text>
+	<xsl:text>the empty set.</xsl:text>
+      </xsl:message>
+    </xsl:if>
     
     <xsl:call-template name="find-omega-paths">
       
       <xsl:with-param name="G" as="element(ixml)"
 		      select="$G"/>
       
-      <xsl:with-param name="active-paths" as="element(alt)+">
+      <xsl:with-param name="active-paths" as="element(alt)*">
 	<xsl:for-each select="$ruleStart">
 	  <xsl:variable name="nmDest" as="xs:string"
 			select="@name/string()"/>
+
 	  <xsl:variable name="leIncoming" as="element(alt)*"
 			select="$G/rule/alt
 				[nonterminal/@name eq $nmDest]"/>
@@ -150,6 +162,46 @@
 	      </xsl:element>
 	    </xsl:copy>
 	  </xsl:for-each>
+
+	  <!--* if $leIncoming is empty, we have no arcs naming
+	      * this $ruleStart state as their target.  So our
+	      * only path is going to be the empty path.
+	      *-->
+	  <xsl:for-each select="alt[empty(* except comment)]">
+	    <xsl:variable name="pos"
+			  select="1 + count(preceding-sibling::alt)"/>
+	    <xsl:copy>
+	      <xsl:sequence select="@* except @gt:ranges"/>
+	      <!--* insert state trace *-->
+	      <xsl:attribute name="gt:from"
+			     select="$nmDest"/>
+	      <xsl:attribute name="gt:to" select="$nmDest"/>
+	      <xsl:attribute name="gt:trace"
+			     select="concat(
+				     $nmDest,
+				     ' . ',
+				     $pos,
+				     ' / ',
+				     $nmDest
+				     )"/>
+	      <xsl:element name="comment" use-when="$element-trace">
+		<xsl:attribute name="gt:state" select="$nmDest"/>
+		<xsl:attribute name="gt:arc" select="$pos"/>
+		<xsl:value-of select="concat(
+				     $nmDest,
+				     ' . ',
+				     $pos
+				     )"/>
+	      </xsl:element>
+	      <xsl:apply-templates select="* except nonterminal"/>
+	      <!-- <xsl:sequence select="*"/> -->
+	      <xsl:element name="comment" use-when="$element-trace">
+		<xsl:attribute name="gt:state" select="$nmDest"/>
+		<xsl:value-of select="$nmDest"/>
+	      </xsl:element>
+	    </xsl:copy>
+	  </xsl:for-each>
+
 	</xsl:for-each>
       </xsl:with-param>
 		      
