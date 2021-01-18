@@ -14,8 +14,15 @@
       * with metadata, with user control of coverage criterion.
       *-->
 
-  <!--* Revisions:
-      * 2020-12-29 : CMSMcQ : time to implement this.
+  <!--* To do:
+      * . 2021-01-17:  within state and arc (internal) coverage, keep 
+      *   a list of states/arcs already used; do not generate new test
+      *   recipes for them.
+      *-->
+  <!--* Revisions: 
+      * 2021-01-17 : CMSMcQ : within state and arc coverage, avoid
+      *                       duplicates
+      * 2020-12-29 : CMSMcQ : time to implement this. 
       * 2020-12-28 : CMSMcQ : split into main and module 
       * 2020-12-26 : CMSMcQ : begin writing this, with long comment 
       *                       to clear my mind.
@@ -43,6 +50,10 @@
   <!--* Positive or negative test cases? *-->
   <xsl:param name="polarity" as="xs:string"
 	     select="('positive', 'negative', 'all')[1]"/>
+
+  <!--* filter recipes to reduce duplication? *-->
+  <xsl:param name="filter" as="xs:string"
+	     select="('yes', 'no')[1]"/>
 
   <!--****************************************************************
       * Main / starting template
@@ -79,7 +90,7 @@
     <!--* Input grammar (not sure we need this as a variable) *-->
     <xsl:variable name="G" as="element(ixml)" select="."/>    
     
-    <!--* lqFinal:  what states in the input are final?  We are 
+    <!--* lsFinal:  what states in the input are final?  We are 
 	* going to need this; let's do it once and be done. 
 	*-->
     <xsl:variable name="lsFinal" as="xs:string*"
@@ -137,8 +148,12 @@
       </xsl:element>
       <xsl:text>&#xA;</xsl:text>
 
-      <!--* Make a start rule *-->      
-      <xsl:call-template name="make-recipe-start-rule">
+      <!--* Make a start rule *-->
+      <!--* Suppressed for now:  we want to filter the rules first.
+	  * And anyway the start-rule is not actually terribly helpful
+	  * at the moment. *-->
+      <xsl:call-template use-when="false()"
+			 name="make-recipe-start-rule">
 	<xsl:with-param name="G" tunnel="yes" select="$G"/>
 	<xsl:with-param name="lsFinal" tunnel="yes"
 			select="$lsFinal"/>
@@ -146,13 +161,33 @@
 	<xsl:with-param name="lnmCoverage" select="$lnmCoverage"/>
       </xsl:call-template>
 			 
-      <!--* Do the actual work *-->      
-      <xsl:apply-templates select="rule">
-	<xsl:with-param name="G" tunnel="yes" select="$G"/>
-	<xsl:with-param name="lsFinal" tunnel="yes" select="$lsFinal"/>
-	<xsl:with-param name="lnmPolarity" select="$lnmPolarity"/>
-	<xsl:with-param name="lnmCoverage" select="$lnmCoverage"/>
-      </xsl:apply-templates>
+      <!--* Do the actual work.  First put your head down and
+	  * blindly generate tests *-->
+      <xsl:variable name="leRecipes0" as="element(rule)*">
+	<xsl:apply-templates select="rule">
+	  <xsl:with-param name="G" tunnel="yes" select="$G"/>
+	  <xsl:with-param name="lsFinal" tunnel="yes" select="$lsFinal"/>
+	  <xsl:with-param name="lnmPolarity" select="$lnmPolarity"/>
+	  <xsl:with-param name="lnmCoverage" select="$lnmCoverage"/>
+	</xsl:apply-templates>
+      </xsl:variable>
+
+      <!--* Then filter the tests to reduce the volume *-->
+      <xsl:choose>
+	<xsl:when test="$filter = ('yes', '1', 'true')">
+	  <xsl:for-each select="$lnmPolarity">
+	    <xsl:variable name="pol" as="xs:string" select="."/>
+	    <xsl:for-each select="$lnmCoverage">
+	      <xsl:variable name="cov" as="xs:string" select="."/>
+	      <xsl:sequence
+		  select="gt:filter($leRecipes0, $pol, $cov)"/>
+	    </xsl:for-each>
+	  </xsl:for-each>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:sequence select="$leRecipes0"/>
+	</xsl:otherwise>
+      </xsl:choose>
     </xsl:copy>
   </xsl:template>
 
@@ -208,7 +243,10 @@
 	<xsl:attribute name="gt:polarity"
 		       select="if ($fFinal)
 			       then 'positive'
-			       else 'negative'"/>	
+			       else 'negative'"/>
+	<xsl:attribute name="gt:coverage"
+		       select=" 'state-final' "/>
+	<xsl:attribute name="gt:state" select="$nmQ"/>
 	<xsl:sequence select="$alpha/alt"/>
       </xsl:element> 
     </xsl:if>
@@ -222,8 +260,9 @@
       <xsl:element name="rule">
 	<xsl:attribute name="name"
 		       select="concat('state-pos-', $nmQ)"/>
-	<xsl:attribute name="gt:polarity"
-		       select="'positive'"/>
+	<xsl:attribute name="gt:polarity" select="'positive'"/>
+	<xsl:attribute name="gt:coverage" select="'state'"/>
+	<xsl:attribute name="gt:state" select="$nmQ"/>
 	<xsl:for-each select="$alpha/alt">
 	  <xsl:variable name="left" as="element()*" select="."/>
 	  <xsl:for-each select="$omega/alt">
@@ -249,8 +288,9 @@
       <xsl:element name="rule">
 	<xsl:attribute name="name"
 		       select="concat('state-neg-', $nmQ)"/>
-	<xsl:attribute name="gt:polarity"
-		       select="'negative'"/>
+	<xsl:attribute name="gt:polarity" select="'negative'"/>
+	<xsl:attribute name="gt:coverage" select="'state'"/>	
+	<xsl:attribute name="gt:state" select="$nmQ"/>
 	<xsl:for-each select="$alpha/alt">
 	  <xsl:variable name="left" as="element()*" select="."/>
 	  <xsl:for-each select="$omega/alt">
@@ -320,6 +360,7 @@
 		  select="1 + count(preceding-sibling::alt)"/>
     <xsl:variable name="nmArc" as="xs:string" 
 		  select="concat($nmSource, '&#x02C3;', $pos)"/>
+    <!--* U+02C2 = modifier letter right arrowhead *-->
     <xsl:variable name="leTerminals" as="element()*" 
 		  select="* except nonterminal"/>
 
@@ -365,6 +406,8 @@
 		       select="if ($fDest-final)
 			       then 'positive'
 			       else 'negative'"/>
+	<xsl:attribute name="gt:coverage" select="'arc-final'"/>	
+	<xsl:attribute name="gt:arc" select="$nmArc"/>
 	<xsl:for-each select="$alpha/alt">
 	  <xsl:variable name="left" select="."/>
 	  <xsl:element name="alt">
@@ -389,6 +432,8 @@
 		       select="concat('arc-pos-', $nmArc)"/>
 	<xsl:attribute name="gt:polarity"
 		       select="'positive'"/>
+	<xsl:attribute name="gt:coverage" select="'arc'"/>
+	<xsl:attribute name="gt:arc" select="$nmArc"/>
 	<xsl:for-each select="$alpha/alt">
 	  <xsl:variable name="left" as="element()*" select="."/>
 	  <xsl:for-each select="$omega-dest/alt">
@@ -419,6 +464,8 @@
 		       select="concat('arc-neg-', $nmArc)"/>
 	<xsl:attribute name="gt:polarity"
 		       select="'negative'"/>
+	<xsl:attribute name="gt:coverage" select="'arc'"/>
+	<xsl:attribute name="gt:arc" select="$nmArc"/>
 	<xsl:for-each select="$alpha/alt">
 	  <xsl:variable name="left" as="element()*" select="."/>
 	  <xsl:for-each select="$omega-dest/alt">
@@ -598,6 +645,7 @@
 			  '&#x02C3;',
 			  1 + count(preceding-sibling::alt)
 			  )"/>
+    <!--* U+02C3 is modifier letter right arrowhead *-->
     <xsl:choose>
       <xsl:when test="$coverage = 'arc-final'
 		      and $polarity = 'positive'
@@ -624,6 +672,148 @@
       * Functions 
       ****************************************************************
       *-->
+  <!--* filter($rules, $pol, $cov):  filter the rules of a given
+      * polarity and coverage to reduce duplication.
+      * Arc-final and state-final are not filtered, because by
+      * nature they cannot have duplicates.
+      *-->
+  <xsl:function name="gt:filter" as="element(rule)*">
+    <xsl:param name="le0" as="element(rule)*"/>
+    <xsl:param name="sPol" as="xs:string"/>
+    <xsl:param name="sCov" as="xs:string"/>
+
+    <xsl:variable name="le1" as="element(rule)*"
+		  select="$le0[@gt:polarity = $sPol]
+			  [@gt:coverage = $sCov]"/>
+    <xsl:choose>
+      <xsl:when test="$sCov = ('state-final', 'arc-final')">
+	<xsl:sequence select="$le1"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:sequence select="gt:filter($le1, $sPol, $sCov, (), ())"/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
+  
+  <!--* filter($rules, $pol, $cov, $acc, $lsDone):  filter the
+      * rules for state and arc coverage to reduce duplication.
+      * 
+      * As long as there is a queue ($rules), check its state or
+      * arc name against $lsDone.  If it has already been handled,
+      * drop it and recur.  If not, parse its alt/@gt:trace attributes
+      * to make a list of what it covers; add it to the accumulator
+      * and the new items to $lsDone.
+      *-->
+  <xsl:function name="gt:filter" as="element(rule)*">
+    <xsl:param name="queue" as="element(rule)*"/>
+    <xsl:param name="sPol" as="xs:string"/>
+    <xsl:param name="sCov" as="xs:string"/>
+    <xsl:param name="acc" as="element(rule)*"/>
+    <xsl:param name="lsDone" as="xs:string*"/>
+    
+    <xsl:choose>
+      <xsl:when test="empty($queue)">
+	<xsl:sequence select="$acc"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:variable name="this" as="element(rule)"
+		      select="head($queue)"/>
+	<xsl:variable name="whoami" as="xs:string"
+		  select="if ($sCov = 'state')
+			  then $this/@gt:state/string()
+			  else if ($sCov = 'arc')
+			  then $this/@gt:arc/string()
+			  else 'you-in-a-heap-a-trouble-boy'
+			  "/>
+	<xsl:choose>
+	  <xsl:when test="$whoami = $lsDone">
+	    <xsl:message use-when="true()">
+	      <xsl:text>    </xsl:text>
+	      <xsl:value-of select="$sCov"/>
+	      <xsl:text> </xsl:text>
+	      <xsl:value-of select="$whoami"/>
+	      <xsl:text> dropped, already covered.</xsl:text>
+	    </xsl:message>
+	    <xsl:sequence select="gt:filter(
+				  tail($queue),
+				  $sPol,
+				  $sCov,
+				  $acc,
+				  $lsDone)"/>
+	  </xsl:when>
+	  <!--* At the risk of duplicating code, let's do arcs and
+	      * states separately for now, to keep it simpler.
+	      *-->
+	  <xsl:when test="$sCov = 'arc'">
+	    <!--* The gt:trace attribute shows alpha + arc + omega.
+		* Break it up. *-->
+	    <xsl:variable name="lsPieces"
+			  select="for $s in $this/@gt:trace/string()
+				  return tokenize($s, '\+')"/>
+
+	    <!--* lsArcs0: alpha and omega are state . arc / ... *-->
+	    <xsl:variable name="lsArcs0"
+			  select="for $s in $lsPieces
+				  return tokenize($s, '/')"/>
+	    <xsl:variable name="lsArcs1"
+			  select="for $s in $lsArcs0
+				  return normalize-space($s)"/>
+
+	    <!--* replace ' . ' with the 2c3 separator *-->
+	    <xsl:variable name="lsArcs2"
+			  select="for $s in $lsArcs1[not(. eq '')]
+				  return replace($s, ' \. ', '&#x02C3;')"/>
+	    <xsl:variable name="lsArcs"
+			  select="distinct-values($lsArcs2)"/>
+	    <xsl:variable name="lsNewArcs"
+			  select="$lsArcs[not(. = $lsDone)]"/>	    
+
+	    <xsl:sequence select="gt:filter(
+				  tail($queue),
+				  $sPol,
+				  $sCov,
+				  ($acc, $this),
+				  ($lsDone, $lsNewArcs))"/>	    
+	  </xsl:when>
+	  <xsl:when test="$sCov = 'state'">
+	    <xsl:variable name="lsPieces"
+			  select="for $s in $this/@gt:trace/string()
+				  return tokenize($s, '\+')"/>
+	    
+	    <xsl:variable name="lsStates0"
+			  select="for $s in $lsPieces
+				  return tokenize($s, '/')"/>
+	    <xsl:variable name="lsStates1"
+			  select="for $s in $lsStates0
+				  return normalize-space(
+				  if (contains($s, ' . '))
+				  then substring-before($s, ' . ')
+				  else $s
+				  )"/>
+	    <xsl:variable name="lsStates"
+			  select="distinct-values($lsStates1)"/>
+	    <xsl:variable name="lsNewStates"
+			  select="$lsStates[not(. = $lsDone)]"/>	    
+
+	    <xsl:sequence select="gt:filter(
+				  tail($queue),
+				  $sPol,
+				  $sCov,
+				  ($acc, $this),
+				  ($lsDone, $lsNewStates))"/>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:message>
+	      <xsl:text>Oh, man.  There's something </xsl:text>
+	      <xsl:text>happening here.</xsl:text>
+	      <xsl:text>&#xA;What it is </xsl:text>
+	      <xsl:text>ain't exactly clear.</xsl:text>
+	    </xsl:message>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:function>
 
   <!--****************************************************************
       * Predicates 
