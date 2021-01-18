@@ -14,7 +14,13 @@
       *
       *-->
 
-  <!--* Revisions: 
+  <!--* Revisions:
+      * 2021-01-17 : CMSMcQ : Changes while working through tests in
+      *                       toys:  g010 etc.  I suspect we are
+      *                       wrongly dropping or excluding
+      *                       zero-length paths, but first must fix
+      *                       type errors.
+      * 
       * 2020-12-29 : CMSMcQ : Rework:
       *                       Include arc ID in first step.
       *                       Drop nonterminal.
@@ -90,7 +96,12 @@
 	<xsl:for-each select="$ruleStart/alt">
 	  <xsl:variable name="pos" select="position()"/>
 	  <xsl:variable name="nmDest" as="xs:string"
-			select="nonterminal/@name/string()"/>
+			select="(nonterminal/@name/string(),
+				../@name/string())[1]"/>
+	  <!--* The alt may be empty and have no destination name.
+	      * In that case it marks the $ruleStart as final and we
+	      * have a path from that state to itself. It's an empty
+	      * path, but it's a path. *-->
 	  <xsl:variable name="trace" as="xs:string"
 			select="concat(
 				$nmSource,
@@ -223,7 +234,7 @@
 			    select="."/>
 	      <xsl:variable name="nmJoin" as="xs:string?"
 			    select="@gt:to/string()"/>
-	      <xsl:variable name="eNextrule" as="element(rule)"
+	      <xsl:variable name="eNextrule" as="element(rule)?"
 			    select="$G/rule[@name eq $nmJoin]"/>
 
 	      <xsl:for-each select="$eNextrule/alt[nonterminal]
