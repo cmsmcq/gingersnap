@@ -54,7 +54,7 @@
     <xsl:text>&#xA;</xsl:text>
   </xsl:template>
 
-  <xsl:template match="alt">
+  <xsl:template match="rule/alt">
     <!--* leCh: list of child elements *-->
     <xsl:variable name="leChildren" as="element()*"
 		  select="* except comment"/>
