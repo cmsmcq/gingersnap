@@ -1398,18 +1398,20 @@ E{1,2}; this morning I am inclined to make that (E{0,2} | E{15}) and
 (E{1,2} | E{15}), or some similarly arbitrary 'high' number. Perhaps a
 parameter.
 
+### Pipeline for lego pieces
+
 We can get to what my earlier notes called 'lego pieces' for test-case
 construction (analogous to the 'tclego' in the FSA-to-testcases
 workflow, but not identical) with a deceptively simple workflow:
 
 * Unroll repeat0, repeat1, and option.  This is a lossy rewrite:
 
-	* E`*`S rewrites as (empty | E | ESE | E(SE)<sup>*n*</sup>),
+	* `E*S` rewrites as (empty | E | ESE | E(SE)<sup>*n*</sup>),
 	where *n* + 1 is the user-specified 'high number'.
 
-    * E`+`S rewrites as (E | ESE | E(SE)<sup>*n*</sup>).
+    * `E+S` rewrites as (E | ESE | E(SE)<sup>*n*</sup>).
 
-    * E`?` rewrites as (empty | E)
+    * `E?` rewrites as (empty | E)
 
 This is structurally the same as the unsimplified and/or tree of 2019.
 
@@ -1427,8 +1429,11 @@ language, but we do not yet have what we need.
 What we need, as testcase recipes, is a set of parse-tree fragments
 whose root is the start symbol of G and whose leaves are all terminals
 or pseudo-terminals. And ideally, we would like this set to provide
-good 'coverage' of the grammar. The coverage measures I have thought
-of are:
+good 'coverage' of the grammar.
+
+### Coverage measures
+
+The coverage measures I have thought of are:
 
 * **lego piece coverage**: Each top-level sequence in the disjunctive
 normal form of the grammar is used at least once.
@@ -1448,6 +1453,9 @@ stack-path language of G (the FSA built on the parent/child relation).
 For now, I think lego-piece coverage is all we want. Stack-path
 completeness seems likely to produce tests with low average yield.
 
+
+### Building parse-trees to serve as test-case recipes: alpha, omega 
+
 How to achieve lego-piece coverage? The 2019 notes suggest a method
 similar in its way to the alpha/omega path approach used for FSAs:
 
@@ -1462,6 +1470,8 @@ FSAs.)
 But note that putting these together is going to have the same
 tendency to repetitiveness as the positive stack and arc coverage in
 FSAs does.
+
+### Building parse-trees randomly / depth first
 
 Here is another approach. We imagine that we are building things with
 Lego pieces, which we keep in piles and select and combine according
@@ -1542,11 +1552,15 @@ to produce an optimal result (however one might define 'optimal'), but
 it has the advantage that we are only ever dealing with one tree at a
 time. It's like a depth-first search in a search space.
 
+### Breadth-first?
+
 We could try a breadth-first search -- Grune and Jacobs decribe it in
 their chapter 2 -- but I expect that in general the DNF form of the
 grammar will have several RHS for each N, and we'll end up very
 quickly with a very large number of trees if we replace each N with
 each of its RHS.
+
+### Manual construction?
 
 For converting FSAs into regular expressions, I found it helpful to
 produce tools to let me specify the steps manually. What would the
