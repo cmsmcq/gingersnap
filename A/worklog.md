@@ -1287,7 +1287,7 @@ generation.  Then go back and fix the pc, gl, make-rtn pipeline.
 
 I'll think about this as I do something else for a while.
 
-
+√
 ### Working on Gluschkov automaton annotation and FSA generation
 
 Well, that decision didn't take long; I hadn't gotten up before I
@@ -1318,3 +1318,257 @@ change g012 into a regular grammar if I can) for the work on
 tclego.
 
 But now I really do need to do something else for a bit.
+
+### Attempting to reduce duplication in tcrecipes
+
+Added a filter function to the step that reads lego data and produces
+test-case recipes, but it does not seem to be reducing the number of
+recipes at all, and the results are as repetitious as before.  There may
+be a bug in the filtering code, or I may have invoked things wrong.
+I notice that empty arcs cause some traces to be different but produce
+the same recipe.
+
+On the plus side, I appear not to have broken anything.
+
+I'm going to give up on this for now, and plan to filter on the actual
+test cases, if need be.
+
+Actually, the repetitions can usefully be ignored at the moment. It
+was the positive tests that proved very repetitious; the negative
+tests are all distinctive. And while it's puzzling and I would like to
+fix it, in the immediate future I want to produce parse trees for the
+positive test cases, which means using the original grammar, not a
+subset approximation.
+
+I will need to review the work I did on generating positive cases a
+couple of years ago.
+
+## 2021-01-18 Planning work on positive test case generation
+
+Some notes from 2019 identify three ways to generate test cases for a
+regular language. And since the RHS in an EBNF grammar notation like
+ixml are regular languages over the vocabulary of G (i.e. V(G) union
+T(G)), they all come up in connection with test cases for context-free
+languages as well.  They are:
+
+* **arc-based coverage**: From an FSA, generate arc-internal and
+arc-final coverage (or state-internal and state-final, but my notes
+only mention arcs).
+
+* **expression-based choice coverage**: From a regular expression, 
+generate an and/or tree, and from that generate test case recipes that 
+guarantee that every child of an OR is included at least once. 
+
+* **Cartesian product of choices**: From a regular expression, 
+generate an and/or tree, and from that generate test case recipes that 
+include the Cartesian product of all choices.
+
+The difference between expression-based choice coverage and the
+Cartesian product is visible for an expression like ((a|b), (c|d)).
+The expression-based approach will (as implemented in 2019) generate
+tests for ac and bd. The Cartesian product will generate ac, ad, bc,
+and bd.
+
+In 2019, I ended up concluding that expression-based choice coverage
+might be a good first approach, though it was less thorough than
+arc-based coverage. Cartesian product produced a lot more tests and
+its yield (errors detected per test) seemed likely to be lower. But
+Cartesian product was the simplest to implement.
+
+In August of 2020 I wrote notes that say
+
+> It's easy to control how many positive-example schemas are produced
+> by the Cartesian-product method by using finer or coarser
+> pseudo-terminals. Given that, Cartesian product's yield need not be
+> all that low. And since it's easier to implement correctly, it's
+> probably preferable.
+
+After looking again at the notes from 2019 and 2020, that still seems
+plausible. So I will look to see if I have already implemented the
+construction of and/or trees and the Cartesian product approach (I do
+seem to remember implementing expression-based choice coverage and
+finding the bookkeeping tedious, unintuitive, and error-prone), and
+then decide whether to adapt that code or rewrite it from a blank
+page. (It seems obvious to me now that I don't need to improvise a
+vocabulary with elements named *and* and *or* when I have ixml
+with *alt* and *alts*.)
+
+In the earlier notes, my plan was to translate E* and E+ to E{0,2} and
+E{1,2}; this morning I am inclined to make that (E{0,2} | E{15}) and
+(E{1,2} | E{15}), or some similarly arbitrary 'high' number. Perhaps a
+parameter.
+
+We can get to what my earlier notes called 'lego pieces' for test-case
+construction (analogous to the 'tclego' in the FSA-to-testcases
+workflow, but not identical) with a deceptively simple workflow:
+
+* Unroll repeat0, repeat1, and option.  This is a lossy rewrite:
+
+	* E`*`S rewrites as (empty | E | ESE | E(SE)<sup>*n*</sup>),
+	where *n* + 1 is the user-specified 'high number'.
+
+    * E`+`S rewrites as (E | ESE | E(SE)<sup>*n*</sup>).
+
+    * E`?` rewrites as (empty | E)
+
+This is structurally the same as the unsimplified and/or tree of 2019.
+
+I think that by default we do not want to unroll the RHS of
+pseudo-terminals, but I may be wrong.
+
+* Reduce to disjunctive normal form. This is a non-lossy rewrite that
+simplies the and/or tree expressed by `alt` and `alts` to a single
+top-level disjunction over flat sequences of terminals and
+nonterminals.
+
+At this point we have a grammar that generates a subset of the target
+language, but we do not yet have what we need.
+
+What we need, as testcase recipes, is a set of parse-tree fragments
+whose root is the start symbol of G and whose leaves are all terminals
+or pseudo-terminals. And ideally, we would like this set to provide
+good 'coverage' of the grammar. The coverage measures I have thought
+of are:
+
+* **lego piece coverage**: Each top-level sequence in the disjunctive
+normal form of the grammar is used at least once.
+
+* **parent/child completeness**: Each parent/child pair in G appears
+in at least one tree. (This should follow from lego coverage, since
+the DNF will involve very complete coverage of each RHS for each
+nonterminal.)
+
+* **ancestor/descendant completeness**: Every ancestor/descendant pair
+in G appears in some tree.
+
+* **stack-path completeness**: The set of root-to-leaf paths in the
+test case forest provides arc-internal coverage of the FSA for the
+stack-path language of G (the FSA built on the parent/child relation).
+
+For now, I think lego-piece coverage is all we want. Stack-path
+completeness seems likely to produce tests with low average yield.
+
+How to achieve lego-piece coverage? The 2019 notes suggest a method
+similar in its way to the alpha/omega path approach used for FSAs:
+
+* For each nonterminal N, find the smallest tree(s) rooted in S with N
+as a leaf. (This is analogous to finding the shortest alpha-path from
+S to N in the stack-path language.)
+
+* For each nonterminal N, find the smallest tree(s) rooted in N with
+no nonterminal leaves. (Analogous to finding the omega paths for
+FSAs.)
+
+But note that putting these together is going to have the same
+tendency to repetitiveness as the positive stack and arc coverage in
+FSAs does.
+
+Here is another approach. We imagine that we are building things with
+Lego pieces, which we keep in piles and select and combine according
+to rules. It will probably be helpful if we construct the stack-path
+FSA for G, or at least build up a list of parent/child pairs we can
+consult, indexed by child (the lego pieces themselves will be indexed
+by parent).
+
+**Preparation**
+
+* Start with all the lego pieces in a pile labeled 'New'. (Using a map
+with RHS keyed by their LHS ought to work.)
+
+* Also start with an empty pile labeled 'Used'.
+
+* Set some limit to the depth of any tree (say, 4 * |V|?). 
+
+* Set some limit to the number of failed attempts. (I have no idea,
+but I want a guarantee that this process will terminate.)
+
+**General rules**
+
+* As a general rule, when selecting a lego piece, if there are a
+suitable pieces in the New pile, use one of them. Otherwise take one
+from the Used pile ( possible, and otherwise from the Used pile.
+
+* Whenever a piece is used, remove it from its earlier location and
+place it at the bottom of the Used pile.
+
+* When there are multiple suitable pieces in the New pile, pick one at
+random. When picking a piece from the Used pile, take the first one
+found. (Do either of these rules matter? Hmm.)
+
+**Build trees**
+
+* If the New pile is empty, we are done.  Stop.
+
+* If we have reached the failed-attempts limit, we have failed.
+Something has gone very wrong and a more intelligent algorithm will be
+needed. Stop.
+
+**Build one tree**
+
+* Otherwise, take a piece from the New pile.
+
+    As long as there are pieces for the start symbol S in the New
+    pile, start with one of those.
+
+    Build a (partial) tree T consisting of the pieces left-hand side
+    as parent and its RHS elements as children. (Does starting with S
+    where possible actually matter? Hmm.)
+
+* Let N be the root of T. If N is not S, then first build 'up' by
+finding a lego piece with a leaf labeled N, rooted in some nonterminal
+N2.
+
+* Continue building up until T is rooted in S or until T exceeds the
+depth limit.
+
+* If T exceeds the depth limit, then increment the failed-attempt
+count and skip to *Built trees*.
+
+* Now build down: For each nonterminal leaf N in T, select a lego
+piece rooted in N and plug it in.
+
+* Continue building down until T has no nonterminal leaves or until T
+exceeds the depth limit.
+
+* If T has no nonterminal leaves, the tree is done. Put it in the
+results and go back to *Build trees*.
+
+* If T is unfinished after the cycle limit is hit, then something may
+have gone wrong. Increment the failed-attempt count and go back
+to *Build trees*.
+
+This approach of building trees essentially at random seems unlikely
+to produce an optimal result (however one might define 'optimal'), but
+it has the advantage that we are only ever dealing with one tree at a
+time. It's like a depth-first search in a search space.
+
+We could try a breadth-first search -- Grune and Jacobs decribe it in
+their chapter 2 -- but I expect that in general the DNF form of the
+grammar will have several RHS for each N, and we'll end up very
+quickly with a very large number of trees if we replace each N with
+each of its RHS.
+
+For converting FSAs into regular expressions, I found it helpful to
+produce tools to let me specify the steps manually. What would the
+analogous steps be here? The only primitive operations are selecting a
+lego piece, attaching a lego piece at a location, and testing for
+completeness. I could imagine an interactive interface that worked
+something like this: Tool displays a partial tree T, with nodes styled
+to indicate whether they are pseudo-terminal, terminal, or
+nonterminal. (Frege-style tree or directory-style tree would work.)
+User clicks on a nonterminal leaf to open a menu of options, chooses
+one. The menu keeps a count of how many times each option has been
+selected, so user can manage coverage manually. When the tree is done,
+it's saved and we continue.
+
+This could work from the raw grammar, as well. Click on the
+nonterminal, get its RHS. Now the tree will contain not just
+nonterminals, pseudo-terminals, and terminals, but also the other
+elements of the ixml grammar. Click on E? and get a choice of E or
+epsilon. Click on E+ or E* and get a choice of occurrence count. The
+counts would be kept for each `alt`, `repeat1`, `repeat0`, and
+`option` in the grammar. (If we wanted to go down into the terminals,
+then also on the members of a charset. But I don't think I do want to
+at the moment.)
+
+
