@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> A short, nonsensical grammar to test generation of 
+  disjunctive normal form. </comment>
+   <rule name="S">:  <alt>
+         <repeat0>
+            <nonterminal name="A"/>
+            <sep>
+               <nonterminal name="B"/>
+            </sep>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="A">:  <alt>
+         <repeat0>
+            <nonterminal name="C"/>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="B">:  <alt>
+         <repeat1>
+            <nonterminal name="D"/>
+            <sep>
+               <nonterminal name="E"/>
+            </sep>
+         </repeat1>
+      </alt>. 
+</rule>
+   <rule name="C">:  <alt>
+         <repeat1>
+            <nonterminal name="F"/>
+         </repeat1>
+      </alt>. 
+</rule>
+   <rule name="D">:  <alt>
+         <alts>
+            <alt>
+               <alts>
+                  <alt>
+                     <repeat0>
+                        <nonterminal name="A"/>
+                        <sep>
+                           <nonterminal name="B"/>
+                        </sep>
+                     </repeat0>
+                  </alt>
+               </alts>
+            </alt>
+            <alt>
+               <repeat0>
+                  <nonterminal name="C"/>
+               </repeat0>
+            </alt>
+         </alts>
+      </alt>. 
+</rule>
+   <rule name="G">:  <alt>
+         <alts>
+            <alt>
+               <repeat1>
+                  <nonterminal name="D"/>
+                  <sep>
+                     <nonterminal name="E"/>
+                  </sep>
+               </repeat1>
+            </alt>
+            <alt>
+               <repeat1>
+                  <nonterminal name="F"/>
+               </repeat1>
+            </alt>
+         </alts>
+      </alt>. 
+</rule>
+   <rule name="E">:  <alt>
+         <nonterminal name="G"/>
+         <option>
+            <nonterminal name="H"/>
+         </option>
+         <nonterminal name="I"/>
+      </alt>
+      <alt>
+         <nonterminal name="J"/>
+         <option>
+            <nonterminal name="K"/>
+         </option>
+         <nonterminal name="L"/>
+      </alt>. 
+</rule>
+   <rule name="F">:  <alt>
+         <option>
+            <alts>
+               <alt>
+                  <nonterminal name="G"/>
+                  <option>
+                     <nonterminal name="H"/>
+                  </option>
+                  <nonterminal name="I"/>
+               </alt>
+               <alt>
+                  <nonterminal name="J"/>
+                  <option>
+                     <nonterminal name="K"/>
+                  </option>
+                  <nonterminal name="L"/>
+               </alt>
+            </alts>
+         </option>
+      </alt>. 
+<comment> Comment out the old original A.  Result is too verbose. </comment>
+      <comment>  ((A*B); C*), (D+E; F)+, (G, H?, I; J, K?, L)?. </comment>
+   </rule>
+   <rule name="A">:  <alt>
+         <repeat0>
+            <alts>
+               <alt>
+                  <nonterminal name="alpha"/>
+                  <nonterminal name="beta"/>
+               </alt>
+            </alts>
+            <sep>
+               <alts>
+                  <alt>
+                     <nonterminal name="gamma"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="delta"/>
+                  </alt>
+               </alts>
+            </sep>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="B">:  <alt>
+         <repeat1>
+            <alts>
+               <alt>
+                  <nonterminal name="eta"/>
+               </alt>
+               <alt>
+                  <nonterminal name="theta"/>
+               </alt>
+            </alts>
+            <sep>
+               <alts>
+                  <alt>
+                     <nonterminal name="chi"/>
+                     <nonterminal name="rho"/>
+                  </alt>
+               </alts>
+            </sep>
+         </repeat1>
+      </alt>. 
+<comment>
+C: 'C'.
+D: 'D'.
+E: 'e'.
+F: 'F'.
+G: 'G'.
+H: 'h'.
+I: 'i'.
+J: 'J'.
+K: 'k'.
+L: 'L'.
+alpha: 'α'.
+beta: 'β'.
+gamma: 'γ'.
+delta: 'δ'.
+eta: 'η'.
+theta: 'θ'.
+chi:  'χ'.
+rho: 'ρ'.
+</comment>
+   </rule>
+</ixml>

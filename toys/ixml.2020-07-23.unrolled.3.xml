@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-18T20:36:58.437409-07:00">
+   <comment>2021-01-18T20:36:58.437409-07:00: unroll-occurrences.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/../../../2020/Aparecium/lib/ixml.2020-07-23.xml</comment>
+   <comment>    Output:  modified grammar with ? * + unrolled. </comment>
+   <rule name="ixml">
+      <alt>
+         <nonterminal name="S"/>
+         <alts gt:trace="repeat1">
+            <alt>
+               <nonterminal name="rule"/>
+            </alt>
+            <alt>
+               <nonterminal name="rule"/>
+               <nonterminal name="rule"/>
+               <nonterminal name="rule"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule mark="-" name="S">
+      <alt>
+         <alts gt:trace="repeat0">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="whitespace"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="whitespace"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+               <alts>
+                  <alt>
+                     <nonterminal name="whitespace"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+               <alts>
+                  <alt>
+                     <nonterminal name="whitespace"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule mark="-" name="whitespace">
+      <alt>
+         <inclusion tmark="-">
+            <class code="Zs"/>
+         </inclusion>
+      </alt>
+      <alt>
+         <nonterminal name="tab"/>
+      </alt>
+      <alt>
+         <nonterminal name="lf"/>
+      </alt>
+      <alt>
+         <nonterminal name="cr"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="tab">
+      <alt>
+         <literal tmark="-" hex="9"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="lf">
+      <alt>
+         <literal tmark="-" hex="a"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="cr">
+      <alt>
+         <literal tmark="-" hex="d"/>
+      </alt>
+   </rule>
+   <rule name="comment">
+      <alt>
+         <literal tmark="-" dstring="{"/>
+         <alts gt:trace="repeat0">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="cchar"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="cchar"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+               <alts>
+                  <alt>
+                     <nonterminal name="cchar"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+               <alts>
+                  <alt>
+                     <nonterminal name="cchar"/>
+                  </alt>
+                  <alt>
+                     <nonterminal name="comment"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <literal tmark="-" dstring="}"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="cchar">
+      <alt>
+         <exclusion>
+            <literal dstring="{}"/>
+         </exclusion>
+      </alt>
+   </rule>
+   <rule name="rule">
+      <alt>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="mark"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <nonterminal name="name"/>
+         <nonterminal name="S"/>
+         <inclusion>
+            <literal dstring="=:"/>
+         </inclusion>
+         <nonterminal name="S"/>
+         <nonterminal mark="-" name="alts"/>
+         <literal dstring="."/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule mark="@" name="mark">
+      <alt>
+         <inclusion>
+            <literal dstring="@^-"/>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="alts">
+      <alt>
+         <alts gt:trace="repeat1">
+            <alt>
+               <nonterminal name="alt"/>
+            </alt>
+            <alt>
+               <nonterminal name="alt"/>
+               <alts>
+                  <alt>
+                     <inclusion>
+                        <literal dstring=";|"/>
+                     </inclusion>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+               <nonterminal name="alt"/>
+               <alts>
+                  <alt>
+                     <inclusion>
+                        <literal dstring=";|"/>
+                     </inclusion>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+               <nonterminal name="alt"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule name="alt">
+      <alt>
+         <alts gt:trace="repeat0">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <nonterminal name="term"/>
+            </alt>
+            <alt>
+               <nonterminal name="term"/>
+               <alts>
+                  <alt>
+                     <literal dstring=","/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+               <nonterminal name="term"/>
+               <alts>
+                  <alt>
+                     <literal dstring=","/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+               <nonterminal name="term"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule mark="-" name="term">
+      <alt>
+         <nonterminal name="factor"/>
+      </alt>
+      <alt>
+         <nonterminal name="option"/>
+      </alt>
+      <alt>
+         <nonterminal name="repeat0"/>
+      </alt>
+      <alt>
+         <nonterminal name="repeat1"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="factor">
+      <alt>
+         <nonterminal name="terminal"/>
+      </alt>
+      <alt>
+         <nonterminal name="nonterminal"/>
+      </alt>
+      <alt>
+         <literal dstring="("/>
+         <nonterminal name="S"/>
+         <nonterminal name="alts"/>
+         <literal dstring=")"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule name="repeat0">
+      <alt>
+         <nonterminal name="factor"/>
+         <literal dstring="*"/>
+         <nonterminal name="S"/>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <nonterminal name="sep"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule name="repeat1">
+      <alt>
+         <nonterminal name="factor"/>
+         <literal dstring="+"/>
+         <nonterminal name="S"/>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <nonterminal name="sep"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule name="option">
+      <alt>
+         <nonterminal name="factor"/>
+         <literal dstring="?"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule name="sep">
+      <alt>
+         <nonterminal name="factor"/>
+      </alt>
+   </rule>
+   <rule name="nonterminal">
+      <alt>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="mark"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <nonterminal name="name"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="terminal">
+      <alt>
+         <nonterminal name="literal"/>
+      </alt>
+      <alt>
+         <nonterminal name="charset"/>
+      </alt>
+   </rule>
+   <rule name="literal">
+      <alt>
+         <nonterminal name="quoted"/>
+      </alt>
+      <alt>
+         <nonterminal name="encoded"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="quoted">
+      <alt>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="tmark"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <nonterminal mark="-" name="string"/>
+      </alt>
+   </rule>
+   <rule mark="@" name="name">
+      <alt>
+         <nonterminal name="namestart"/>
+         <alts gt:trace="repeat0">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <nonterminal name="namefollower"/>
+            </alt>
+            <alt>
+               <nonterminal name="namefollower"/>
+               <nonterminal name="namefollower"/>
+               <nonterminal name="namefollower"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule mark="-" name="namestart">
+      <alt>
+         <inclusion>
+            <literal dstring="_"/>
+            <class code="Ll"/>
+            <class code="Lu"/>
+            <class code="Lm"/>
+            <class code="Lt"/>
+            <class code="Lo"/>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule mark="-" name="namefollower">
+      <alt>
+         <nonterminal name="namestart"/>
+      </alt>
+      <alt>
+         <inclusion>
+            <literal dstring="-.·‿⁀"/>
+            <class code="Nd"/>
+            <class code="Mn"/>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule mark="@" name="tmark">
+      <alt>
+         <inclusion>
+            <literal dstring="^-"/>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="string">
+      <alt>
+         <literal tmark="-" sstring="&#34;"/>
+         <nonterminal name="dstring"/>
+         <literal tmark="-" sstring="&#34;"/>
+         <nonterminal name="S"/>
+      </alt>
+      <alt>
+         <literal tmark="-" dstring="'"/>
+         <nonterminal name="sstring"/>
+         <literal tmark="-" dstring="'"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule mark="@" name="dstring">
+      <alt>
+         <alts gt:trace="repeat1">
+            <alt>
+               <nonterminal name="dchar"/>
+            </alt>
+            <alt>
+               <nonterminal name="dchar"/>
+               <nonterminal name="dchar"/>
+               <nonterminal name="dchar"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule mark="@" name="sstring">
+      <alt>
+         <alts gt:trace="repeat1">
+            <alt>
+               <nonterminal name="schar"/>
+            </alt>
+            <alt>
+               <nonterminal name="schar"/>
+               <nonterminal name="schar"/>
+               <nonterminal name="schar"/>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule name="dchar">
+      <alt>
+         <exclusion>
+            <literal sstring="&#34;"/>
+         </exclusion>
+      </alt>
+      <alt>
+         <literal sstring="&#34;"/>
+         <literal tmark="-" sstring="&#34;"/>
+      </alt>
+      <comment>all characters, quotes must be doubled</comment>
+   </rule>
+   <rule name="schar">
+      <alt>
+         <exclusion>
+            <literal dstring="'"/>
+         </exclusion>
+      </alt>
+      <alt>
+         <literal dstring="'"/>
+         <literal tmark="-" dstring="'"/>
+      </alt>
+      <comment>all characters, quotes must be doubled</comment>
+   </rule>
+   <rule mark="-" name="encoded">
+      <alt>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="tmark"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <literal tmark="-" dstring="#"/>
+         <nonterminal mark="@" name="hex"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule name="hex">
+      <alt>
+         <alts gt:trace="repeat1">
+            <alt>
+               <inclusion>
+                  <range from="0" to="9"/>
+                  <range from="a" to="f"/>
+                  <range from="A" to="F"/>
+               </inclusion>
+            </alt>
+            <alt>
+               <inclusion>
+                  <range from="0" to="9"/>
+                  <range from="a" to="f"/>
+                  <range from="A" to="F"/>
+               </inclusion>
+               <inclusion>
+                  <range from="0" to="9"/>
+                  <range from="a" to="f"/>
+                  <range from="A" to="F"/>
+               </inclusion>
+               <inclusion>
+                  <range from="0" to="9"/>
+                  <range from="a" to="f"/>
+                  <range from="A" to="F"/>
+               </inclusion>
+            </alt>
+         </alts>
+      </alt>
+   </rule>
+   <rule mark="-" name="charset">
+      <alt>
+         <nonterminal name="inclusion"/>
+      </alt>
+      <alt>
+         <nonterminal name="exclusion"/>
+      </alt>
+   </rule>
+   <rule name="inclusion">
+      <alt>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="tmark"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <nonterminal name="set"/>
+      </alt>
+   </rule>
+   <rule name="exclusion">
+      <alt>
+         <alts gt:trace="option">
+            <alt>
+               <comment>empty</comment>
+            </alt>
+            <alt>
+               <alts>
+                  <alt>
+                     <nonterminal name="tmark"/>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+            </alt>
+         </alts>
+         <literal dstring="~"/>
+         <nonterminal name="S"/>
+         <nonterminal name="set"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="set">
+      <alt>
+         <literal dstring="["/>
+         <nonterminal name="S"/>
+         <alts gt:trace="repeat1">
+            <alt>
+               <nonterminal name="member"/>
+            </alt>
+            <alt>
+               <nonterminal name="member"/>
+               <alts>
+                  <alt>
+                     <inclusion>
+                        <literal dstring=";|"/>
+                     </inclusion>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+               <nonterminal name="member"/>
+               <alts>
+                  <alt>
+                     <inclusion>
+                        <literal dstring=";|"/>
+                     </inclusion>
+                     <nonterminal name="S"/>
+                  </alt>
+               </alts>
+               <nonterminal name="member"/>
+            </alt>
+         </alts>
+         <literal dstring="]"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="member">
+      <alt>
+         <nonterminal name="literal"/>
+      </alt>
+      <alt>
+         <nonterminal name="range"/>
+      </alt>
+      <alt>
+         <nonterminal name="class"/>
+      </alt>
+   </rule>
+   <rule name="range">
+      <alt>
+         <nonterminal name="from"/>
+         <literal dstring="-"/>
+         <nonterminal name="S"/>
+         <nonterminal name="to"/>
+      </alt>
+   </rule>
+   <rule mark="@" name="from">
+      <alt>
+         <nonterminal name="character"/>
+      </alt>
+   </rule>
+   <rule mark="@" name="to">
+      <alt>
+         <nonterminal name="character"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="character">
+      <alt>
+         <literal tmark="-" sstring="&#34;"/>
+         <nonterminal name="dchar"/>
+         <literal tmark="-" sstring="&#34;"/>
+         <nonterminal name="S"/>
+      </alt>
+      <alt>
+         <literal tmark="-" dstring="'"/>
+         <nonterminal name="schar"/>
+         <literal tmark="-" dstring="'"/>
+         <nonterminal name="S"/>
+      </alt>
+      <alt>
+         <literal dstring="#"/>
+         <nonterminal name="hex"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule name="class">
+      <alt>
+         <nonterminal mark="@" name="code"/>
+      </alt>
+   </rule>
+   <rule name="code">
+      <alt>
+         <nonterminal name="letter"/>
+         <nonterminal name="letter"/>
+         <nonterminal name="S"/>
+      </alt>
+   </rule>
+   <rule mark="-" name="letter">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+            <range from="A" to="Z"/>
+         </inclusion>
+      </alt>
+   </rule>
+</ixml>

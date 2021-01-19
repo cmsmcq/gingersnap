@@ -1,0 +1,35 @@
+{ A short, nonsensical grammar to test generation of 
+  disjunctive normal form. }
+
+S: A*B.
+A: C*.
+B: D+E.
+C: F+.
+D: ((A*B); C*).
+G: (D+E; F+).
+E: G, H?, I; J, K?, L.
+F: (G, H?, I; J, K?, L)?.
+{ Comment out the old original A.  Result is too verbose. }
+{  ((A*B); C*), (D+E; F)+, (G, H?, I; J, K?, L)?. }
+A: (alpha, beta)*(gamma; delta).
+B: (eta; theta)+(chi, rho).
+{
+C: 'C'.
+D: 'D'.
+E: 'e'.
+F: 'F'.
+G: 'G'.
+H: 'h'.
+I: 'i'.
+J: 'J'.
+K: 'k'.
+L: 'L'.
+alpha: 'α'.
+beta: 'β'.
+gamma: 'γ'.
+delta: 'δ'.
+eta: 'η'.
+theta: 'θ'.
+chi:  'χ'.
+rho: 'ρ'.
+}
