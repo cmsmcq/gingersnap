@@ -1421,7 +1421,18 @@ pseudo-terminals, but I may be wrong.
 * Reduce to disjunctive normal form. This is a non-lossy rewrite that
 simplies the and/or tree expressed by `alt` and `alts` to a single
 top-level disjunction over flat sequences of terminals and
-nonterminals.
+nonterminals. Specifically, we move any expression that match the
+patterns below into the form on the right. 
+
+    * (E, (F, G)) = ((E, F), G) = (E, F, G) 
+    * (E; (F; G)) = ((E; F); G) = (E; F; G) 
+    * ('', E) = (E, '') = E
+    * (E, (F; G)) = (E, F); (E, G) 
+    * ((E; F), G)) = (E, G); (F, G) 
+    * (E; E) = E
+
+Since in ixml both comma and semicolon are n-ary operators not binary,
+the actual forms used will vary.
 
 At this point we have a grammar that generates a subset of the target
 language, but we do not yet have what we need.
@@ -1496,7 +1507,7 @@ but I want a guarantee that this process will terminate.)
 
 * As a general rule, when selecting a lego piece, if there are a
 suitable pieces in the New pile, use one of them. Otherwise take one
-from the Used pile ( possible, and otherwise from the Used pile.
+from the Used pile.
 
 * Whenever a piece is used, remove it from its earlier location and
 place it at the bottom of the Used pile.
@@ -1532,7 +1543,7 @@ N2.
 depth limit.
 
 * If T exceeds the depth limit, then increment the failed-attempt
-count and skip to *Built trees*.
+count and skip to *Build trees*.
 
 * Now build down: For each nonterminal leaf N in T, select a lego
 piece rooted in N and plug it in.
@@ -1585,4 +1596,34 @@ counts would be kept for each `alt`, `repeat1`, `repeat0`, and
 then also on the members of a charset. But I don't think I do want to
 at the moment.)
 
+### Evening:  unroll-occurrences and dnf-from-andor
+
+I've written a module to unroll option, repeat0, and repeat1, with a
+user parameter for how many occurrences to use for the repeats in
+addition to 0 and 1. And a module to reduce the result into
+disjunctive normal form. When there are nested occurrence indicators,
+or an occurrence indicator on a choice, the numbers grow very fast:
+(a; b)* expands, given a 'high number' parameter of 10, into 1027
+choices (one empty, one a, one b, and 1024 combinations of a and b.
+Similar but not exponential growth will occur when there's more than
+one Kleene operator in a rule.
+
+In the ixml grammar for ixml, this hits both the definition of S and
+that of comment, but nothing else. The user appears to have a choice:
+* keep *n* low (say, 3 or 4 -- even 5 is rather tedious when it lists
+all 32 combinations of choice a and choice b), or
+* use a higher *n* and hand-edit the disjunctive-normal form grammar
+to delete most of the disjuncts in cases like these.
+
+For now, I'm going with keeping *n* low: 3, or even 2. A single test
+in Knuth's style may be rhetorically effective, but it probably
+doesn't provide as much help as one might wish in finding the problem
+if one fails. A series of simpler tests is more informative. The
+testing of the unrolling and disjunctive normal form modules is a case
+in point. When the initial results were puzzling, I wished I had
+started with simpler test cases.
+
+Next step: generation of partial parse trees with terminal and
+pseudo-terminal leaves, but not actual characters. Trees without
+characters?  Musil trees?  It must be late.
 
