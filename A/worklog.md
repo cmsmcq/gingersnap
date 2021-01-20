@@ -1627,3 +1627,51 @@ Next step: generation of partial parse trees with terminal and
 pseudo-terminal leaves, but not actual characters. Trees without
 characters?  Musil trees?  It must be late.
 
+## 2021-01-19 Implementing parsetrees-from-dnf
+
+For the algorithm as I worked it out yesterday, I need to be able to
+find RHS for production rules based on their LHS, based on the
+nonterminals they contain, and based on whether they are new or old.
+
+Trying to work out how to structure a map to keep track of that took a
+while. When I was done, I realized I don't think I need a map at all.
+The RHS are all alt elements, and they are all present in the grammar.
+All I need to do is keep track of which have been used and which not.
+And if I am worried about speed (why?  it's not running slow at the moment,
+because it's not running at all, because I'm writing this and not
+writing the program!), I can just use keys.  Set operations are a
+wonderful thing.
+
+## 2021-01-20 Continuing implementation of parsetrees-from-dnf
+
+Growing the tree downward seems to be possible in several ways.
+Which should be used?
+
+* **normal**. A normal call to apply-templates will grow the tree fine but won't 
+be able to track usage of the RHS in the disjunctive normal form 
+grammar.  So, no. 
+
+* **right-sibling**. A manual depth-first tree traversal with explicit
+right-sibling call would work. I am not sure why it isn't more
+attractive but perhaps it just feels a bit like work. It would require
+a template for each node we traverse, not just one template for
+nonterminal.
+
+* **apply-templates plus inspection**. We could initialize a variable
+with a normal call to apply-templates and then inspect the result tree
+to see which new RHS are used. To simplify the inspection, each
+nonterminal would carry the identity of the RHS used to initialize it.
+(Adding a key on RHS with the generate-id() result for that RHS as the
+key value would simplify that lookup.) This would not prevent
+duplicate uses of a RHS in the same generation, but with luck that
+won't happen often. This idiom is well represented in Gingersnap
+already; it's the way the transitive closure of references is managed
+in the CNF-to-RG transform and others.
+
+* **multivalued return**. All templates in the grow-the-tree mode
+could return multiple values: an element and a sequence of RHS used to
+grow that subtree. This resembles the multivalued returns used in the
+recursive-descent parser for ixml I wrote last fall. This would
+require explicit templates for all nodes, no defaulting allowed.
+
+I think I'm looking at a right-sibling traversal here.
