@@ -81,7 +81,12 @@
       * template in fsa-to-tclego.geniza.xsl).
       *-->
 
-  <!--* Revisions:
+  <!--* To do:
+      * . 2021-01-17:  ensure that zero-length paths are included in 
+      *   alpha and omega paths, if they are the only ones available.
+      *
+      *-->
+  <!--* Revisions: 
       * 2020-12-28 : CMSMcQ : change plan w.r.t. theta rules:  use
       *                       rule/@gt:theta not new rule
       * 2020-12-27 : CMSMcQ : refactor, rewrite the planning comment 

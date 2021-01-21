@@ -10,9 +10,6 @@
 
   <!--* dnf-from-andor.xsl: Read ixml.xml grammar G, write out
       * equivalent grammar G' in disjunctive normal form.
-      *
-      * This is a lossy change.
-      * 
       *-->
 
   <!--* Revisions:
