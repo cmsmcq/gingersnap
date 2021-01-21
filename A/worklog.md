@@ -1866,3 +1866,21 @@ right-hand sides are queued for re-use (i.e. the management of the
 `$used` parameter) is not correctly implemented.
 
 But I'm going to check in the current version, just to have a check point.
+
+(Later.)  One problem was inconsistency on whether the parameters passed
+in the right-sibling traversal were to be tunnel parameters or not.  If
+you receive them as tunnel parameters but pass without tunnel="yes",
+the results will not be as expected.
+
+Running the module on ixml now produces just two tests, but only one
+of them is actually a complete tree; the second fails with 29,000 elements
+and a height of 21.  There are 1951 unexpanded nonterminal elements in
+the failed attempt, 1894 of them 'comment' or 'cchar'.  The flaw here appears
+to be that the way things get expanded, there is a higher likelihood than
+desirable that comments will nest.
+
+That falls, I supposed, into the class of 'unlucky expansions' that led me to
+want to be able to leave pseudo-terminals unexpanded.  I wonder:  if I
+specify just comment as a pseudo-terminal, would the module succeed in
+building a full test case?
+
