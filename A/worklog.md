@@ -1644,6 +1644,8 @@ wonderful thing.
 
 ## 2021-01-20 Continuing implementation of parsetrees-from-dnf
 
+### How to grow the tree
+
 Growing the tree downward seems to be possible in several ways.
 Which should be used?
 
@@ -1675,3 +1677,192 @@ recursive-descent parser for ixml I wrote last fall. This would
 require explicit templates for all nodes, no defaulting allowed.
 
 I think I'm looking at a right-sibling traversal here.
+
+### Form of partial parse trees
+
+The form of the parse trees should also be recorded. The other day I
+sketched out three possible forms. As an example, I'll use an example
+from the ixml spec.
+
+          <expr open="(" sign="+" close=")">
+            <left name="a"/>
+            <right>b</right>
+          </expr>
+
+* A literal parse tree -- like the one ixml should return, but with
+terminal elements instead of character data at the leaves, and with
+@mark (or @gt:mark) attributes.
+
+          <expr mark="^">
+            <open mark="@">
+              <literal dstring="("/>
+            </open>
+            <arith mark="-">
+              <left mark="^">
+                <name mark="@">
+                  <literal dstring="a"/>
+                </name>
+              </left>
+              <op mark="-">
+                <sign mark="@">
+                  <literal dstring="+"/>
+                </sign>
+              </op>
+              <right>
+                <name mark="-">
+                  <literal dstring="b"/>
+                </name>
+              </right>
+              <close mark="@">
+                <literal dstring=")"/>
+              </close>
+            </arith>      
+          </expr>
+
+* An expanded form of ixml
+
+          <nonterminal name="expr" mark="^">
+            <nonterminal name="open" mark="@">
+              <literal dstring="("/>
+            </nonterminal>
+            <nonterminal name="arith" mark="-">
+              <nonterminal name="left" mark="^">
+                <nonterminal name="name" mark="@">
+                  <literal dstring="a"/>
+                </nonterminal>
+              </nonterminal>
+              <nonterminal name="op" mark="-">
+                <nonterminal name="sign" mark="@">
+                  <literal dstring="+"/>
+                </nonterminal>
+              </nonterminal>
+              <nonterminal name="right" mark="^">
+                <nonterminal name="name" mark="-">
+                  <literal dstring="b"/>
+                </nonterminal>
+              </nonterminal>
+              <nonterminal name="close" mark="@">
+                <literal dstring=")"/>
+              </nonterminal>
+            </nonterminal>
+          </nonterminal>
+
+* A parse-forest grammar:
+
+          <ixml>
+            <rule name="expr-1-5" mark="^">
+              <alt>
+                <nonterminal mark="@" name="open-1-1"/>
+                <nonterminal mark="-" name="arith-2-4"/>
+                <nonterminal mark="@" name="close-5-5"/>
+              </alt> 
+            </rule>
+            <rule name="open-1-1" mark="@">
+              <alt>
+                <literal dstring="("/>
+              </alt> 
+            </rule>
+            <rule name="close-5-5">
+              <alt>
+                <literal dstring=")"/>
+              </alt> 
+            </rule>
+            <rule name="arith-2-4">
+              <alt>
+                <nonterminal name="left-2-2"/>
+                <nonterminal name="op-3-3"/>
+                <nonterminal name="right-4-4"/>
+              </alt> 
+            </rule>
+            <rule name="left-2-2">
+              <alt>
+                <nonterminal mark="@" name="name-2-2"/>
+              </alt> 
+            </rule>
+            <rule name="right">
+              <alt>
+                <nonterminal mark="-" name="name-4-4"/>
+              </alt> 
+            </rule>
+            <rule name="name-2-2" mark="@">
+              <alt>
+                <literal dstring="a"/>
+              </alt> 
+            </rule>
+            <rule name="name-4-4" mark="@">
+              <alt>
+                <literal dstring="b"/>
+              </alt> 
+            </rule>
+            <rule name="op-3-3" mark="-">
+              <alt>
+                <nonterminal name="sign-3-3"/>
+              </alt> 
+            </rule>
+            <rule name="sign-3-3" mark="@">
+              <alt>
+                <literal dstring="+"/>
+              </alt>
+            </rule>
+			</ixml>
+
+Literal results and extended ixml don't work well for test cases for
+ixml itself. The parse forest grammar does not work when we are trying
+to build the parse tree.
+
+So a fourth style is needed: every node in the (partial) raw parse
+trees we build is one of the following.
+
+* a `nonterminal` element to be replaced by a RHS as part of testcase
+recipe generation
+
+* a terminal element (`literal`, `inclusion`, or `exclusion`) to be
+replaced by characters as part of testcase generation.
+
+* a `gt:element` element to be turned into an appropriate element or
+attribute node, or deleted, as part of testcase generation.
+
+
+### Back to growing the tree
+
+There have been distractions and interruptions today, but eventually I
+got back to this and set out to right the pre- and post-order
+traversal needed to get a single round of template application with
+replacement of nonterminal leaves with RHS. There is a wrinkle I had
+overlooked -- I guess my unusual traversals have all just been
+traversing a flat sequence, rather than a tree.
+
+In the first visit to some gt:element E, I need to copy E itself as E'
+and move to the first child of E. That child calls its siblings. All
+as normal. But everything called by the first child of E ends up as a
+child of E' -- including, unless I find a way around it, the nodes
+produced from the right siblings of E, which should be siblings of E',
+not children.
+
+So I'm back to the drawing board. Perhaps I should go back
+to *apply-templates plus inspection*, but that feels too much like
+defeat.
+
+So my next plan is a sort of merge of right-sibling traversal and
+multivalued returns.
+
+The parent element E needs to capture the results of its call to
+apply-templates in a variable. Those results need to include the nodes
+produced by the children of E, and some information about their effect
+on $new and $used. (Because the template for E knows what $new and
+$used were when it passed them to the first child, all we need is a
+list of what was freshly used in processing E's children.)
+
+So the last child of E should return not only its normal result, but
+also a separator and then the list of freshly used alt elements.
+
+## 2021-01-21 Parse-tree generation
+
+The module parsetrees-from-dnf is now completely drafted, and after
+a bit of a argument Saxon accepts it as type-correct, and it runs.
+But trees are growing to the limit more often than I had expected,
+and the toy test g.roundrobin.ixml makes me suspect that the way
+right-hand sides are queued for re-use (i.e. the management of the
+`$used` parameter) is not correctly implemented.
+
+But I'm going to check in the current version, just to have a check point.
