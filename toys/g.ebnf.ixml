@@ -11,8 +11,8 @@ E: G, H?, I; J, K?, L.
 F: (G, H?, I; J, K?, L)?.
 { Comment out the old original A.  Result is too verbose. }
 {  ((A*B); C*), (D+E; F)+, (G, H?, I; J, K?, L)?. }
-A: (alpha, beta)*(gamma; delta).
-B: (eta; theta)+(chi, rho).
+H: (alpha, beta)*(gamma; delta).
+I: (eta; theta)+(chi, rho).
 {
 C: 'C'.
 D: 'D'.
@@ -21,6 +21,7 @@ F: 'F'.
 G: 'G'.
 H: 'h'.
 I: 'i'.
+}
 J: 'J'.
 K: 'k'.
 L: 'L'.
@@ -32,4 +33,3 @@ eta: 'η'.
 theta: 'θ'.
 chi:  'χ'.
 rho: 'ρ'.
-}

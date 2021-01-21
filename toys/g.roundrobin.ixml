@@ -1,0 +1,14 @@
+{ Test grammar to make it easier to detect patterns in name usage. 
+  Each rule has a label, so it is a bracketed grammar in the sense
+  of Ginsburg.
+}
+
+S: 'S1', A, B; 'S2', B, A; 'S3', A, C.
+
+A: 'a1'; 'a2'; 'a3'; 'a4'; 'a5'; 'a6'; 'a7'; 'a8'.
+
+B: 'b1'; 'b2'; 'b3'.
+
+C: 'c'.
+
+

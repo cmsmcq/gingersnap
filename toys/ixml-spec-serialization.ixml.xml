@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+  <comment> A sample grammar from the serialization section of the ixml spec. </comment>
+  <rule name="expr">
+    <alt>
+      <nonterminal name="open"/>
+      <nonterminal mark="-" name="arith"/>
+      <nonterminal mark="@" name="close"/>
+    </alt> 
+  </rule>
+  <rule name="open" mark="@">
+    <alt>
+      <literal dstring="("/>
+    </alt> 
+  </rule>
+  <rule name="close">
+    <alt>
+      <literal dstring=")"/>
+    </alt> 
+  </rule>
+  <rule name="arith">
+    <alt>
+      <nonterminal name="left"/>
+      <nonterminal name="op"/>
+      <nonterminal name="right"/>
+    </alt> 
+  </rule>
+  <rule name="left">
+    <alt>
+      <nonterminal mark="@" name="name"/>
+    </alt> 
+  </rule>
+  <rule name="right">
+    <alt>
+      <nonterminal mark="-" name="name"/>
+    </alt> 
+  </rule>
+  <rule name="name" mark="@">
+    <alt>
+      <literal dstring="a"/>
+    </alt>
+    <alt>
+      <literal dstring="b"/>
+    </alt> 
+  </rule>
+  <rule name="op" mark="-">
+    <alt>
+      <nonterminal name="sign"/>
+    </alt> 
+  </rule>
+  <rule name="sign" mark="@">
+    <alt>
+      <literal dstring="+"/>
+    </alt>
+  </rule>
+</ixml>

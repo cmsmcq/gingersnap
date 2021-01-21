@@ -1,0 +1,10 @@
+{ A sample grammar from the serialization section of the ixml spec. }
+expr: open, -arith, @close.
+@open: "(".
+close: ")".
+arith: left, op, right.
+left: @name.
+right: -name.
+@name: "a"; "b".
+-op: sign.
+@sign: "+".

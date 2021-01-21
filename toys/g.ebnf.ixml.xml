@@ -110,7 +110,7 @@
 <comment> Comment out the old original A.  Result is too verbose. </comment>
       <comment>  ((A*B); C*), (D+E; F)+, (G, H?, I; J, K?, L)?. </comment>
    </rule>
-   <rule name="A">:  <alt>
+   <rule name="H">:  <alt>
          <repeat0>
             <alts>
                <alt>
@@ -131,7 +131,7 @@
          </repeat0>
       </alt>. 
 </rule>
-   <rule name="B">:  <alt>
+   <rule name="I">:  <alt>
          <repeat1>
             <alts>
                <alt>
@@ -159,17 +159,49 @@ F: 'F'.
 G: 'G'.
 H: 'h'.
 I: 'i'.
-J: 'J'.
-K: 'k'.
-L: 'L'.
-alpha: 'α'.
-beta: 'β'.
-gamma: 'γ'.
-delta: 'δ'.
-eta: 'η'.
-theta: 'θ'.
-chi:  'χ'.
-rho: 'ρ'.
 </comment>
    </rule>
+   <rule name="J">:  <alt>
+         <literal sstring="J"/>
+      </alt>. 
+</rule>
+   <rule name="K">:  <alt>
+         <literal sstring="k"/>
+      </alt>. 
+</rule>
+   <rule name="L">:  <alt>
+         <literal sstring="L"/>
+      </alt>. 
+</rule>
+   <rule name="alpha">:  <alt>
+         <literal sstring="α"/>
+      </alt>. 
+</rule>
+   <rule name="beta">:  <alt>
+         <literal sstring="β"/>
+      </alt>. 
+</rule>
+   <rule name="gamma">:  <alt>
+         <literal sstring="γ"/>
+      </alt>. 
+</rule>
+   <rule name="delta">:  <alt>
+         <literal sstring="δ"/>
+      </alt>. 
+</rule>
+   <rule name="eta">:  <alt>
+         <literal sstring="η"/>
+      </alt>. 
+</rule>
+   <rule name="theta">:  <alt>
+         <literal sstring="θ"/>
+      </alt>. 
+</rule>
+   <rule name="chi">:   <alt>
+         <literal sstring="χ"/>
+      </alt>. 
+</rule>
+   <rule name="rho">:  <alt>
+         <literal sstring="ρ"/>
+      </alt>.</rule>
 </ixml>

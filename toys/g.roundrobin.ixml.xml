@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> Test grammar to make it easier to detect patterns in name usage. 
+  Each rule has a label, so it is a bracketed grammar in the sense
+  of Ginsburg.
+</comment>
+   <rule name="S">:  <alt>
+         <literal sstring="S1"/>
+         <nonterminal name="A"/>
+         <nonterminal name="B"/>
+      </alt>
+      <alt>
+         <literal sstring="S2"/>
+         <nonterminal name="B"/>
+         <nonterminal name="A"/>
+      </alt>
+      <alt>
+         <literal sstring="S3"/>
+         <nonterminal name="A"/>
+         <nonterminal name="C"/>
+      </alt>. 
+
+</rule>
+   <rule name="A">:  <alt>
+         <literal sstring="a1"/>
+      </alt>
+      <alt>
+         <literal sstring="a2"/>
+      </alt>
+      <alt>
+         <literal sstring="a3"/>
+      </alt>
+      <alt>
+         <literal sstring="a4"/>
+      </alt>
+      <alt>
+         <literal sstring="a5"/>
+      </alt>
+      <alt>
+         <literal sstring="a6"/>
+      </alt>
+      <alt>
+         <literal sstring="a7"/>
+      </alt>
+      <alt>
+         <literal sstring="a8"/>
+      </alt>. 
+
+</rule>
+   <rule name="B">:  <alt>
+         <literal sstring="b1"/>
+      </alt>
+      <alt>
+         <literal sstring="b2"/>
+      </alt>
+      <alt>
+         <literal sstring="b3"/>
+      </alt>. 
+
+</rule>
+   <rule name="C">:  <alt>
+         <literal sstring="c"/>
+      </alt>. 
+
+
+</rule>
+</ixml>
