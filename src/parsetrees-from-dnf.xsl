@@ -160,6 +160,16 @@
 
     <xsl:message use-when="false()">
       <xsl:text>gt:make-trees() called with </xsl:text>
+      <xsl:text>T = </xsl:text>
+      <xsl:sequence select="($T)"/>
+      <xsl:text>&#xA;     new = </xsl:text>
+      <xsl:sequence select="(for $e in $new return $e/@id/string())"/>
+      <xsl:text>&#xA;     used = </xsl:text>
+      <xsl:sequence select="(for $e in $used return $e/@id/string())"/>
+    </xsl:message>
+    
+    <xsl:message use-when="false()">
+      <xsl:text>gt:make-trees() called with </xsl:text>
       <xsl:text>&#xA;     </xsl:text>
       <xsl:value-of select="count($T)"/>
       <xsl:text> partial tree(s),</xsl:text>
@@ -266,7 +276,16 @@
 		      ) gt $maxdepth">
 	<!--* Confess *-->
 	<xsl:message use-when="true()">
-	  <xsl:text>gt:make-trees() giving up.  Tree got too big.</xsl:text>
+	  <xsl:text>gt:make-trees() giving up.  Tree </xsl:text>
+	  <xsl:text>rooted in </xsl:text>
+	  <xsl:value-of select="$T/@name"/>
+	  <xsl:text> got too big:  </xsl:text>
+	  <xsl:value-of select="count($T/descendant-or-self::*)"/>
+	  <xsl:text> elements, height = </xsl:text>
+	  <xsl:value-of select="max(
+		      for $D in $T/descendant::nonterminal
+		      return count($D/ancestor::*)
+		      )"/>
 	</xsl:message>
 	<xsl:variable name="failure" as="element(gt:failure)">
 	  <xsl:element name="gt:failure">
@@ -374,7 +393,16 @@
 		      and
 		      empty($T/descendant::nonterminal)">
 	<xsl:message use-when="true()">
-	  <xsl:text>gt:make-trees() has completed a tree.</xsl:text>
+	  <xsl:text>gt:make-trees() has completed a tree </xsl:text>
+	  <xsl:text>rooted in </xsl:text>
+	  <xsl:value-of select="$T/@name"/>
+	  <xsl:text> with </xsl:text>
+	  <xsl:value-of select="count($T/descendant-or-self::*)"/>
+	  <xsl:text> elements, height = </xsl:text>
+	  <xsl:value-of select="max(
+		      for $D in $T/descendant::*
+		      return count($D/ancestor::*)
+		      )"/>
 	</xsl:message>
 
 	<!--* Recur. *-->
@@ -564,6 +592,7 @@
 	      * be in document order.  Our slightly cumbersome
 	      * expression tries to avoid that. *-->
 	  <xsl:with-param name="used"
+			  tunnel="yes"
 			  select="for $e in $used
 				  return
 				  if (empty($e intersect $leUsed))
@@ -573,6 +602,7 @@
 	  <!--* The same applies to ngused, but this time we append
 	      * leUsed at the end of the sequence. *-->
 	  <xsl:with-param name="ngused"
+			  tunnel="yes"
 			  select="for $e in $ngused
 				  return
 				  if (empty($e intersect $leUsed))
@@ -609,7 +639,7 @@
     <xsl:param name="ngused" as="element(alt)*" tunnel="yes"/>
 
     <xsl:message use-when="false()">
-      <xsl:text>Template for reference to nonterminal </xsl:text>
+      <xsl:text>Entering template for reference to nonterminal </xsl:text>
       <xsl:value-of select="@name"/>
       <xsl:text>. &#xA;     </xsl:text>
       <xsl:value-of select="count($new)"/>
@@ -617,8 +647,9 @@
       <xsl:value-of select="count($used)"/>
       <xsl:text> RHS in $used, </xsl:text>
       <xsl:value-of select="count($ngused)"/>
-      <xsl:text> RHS in $ngused.</xsl:text>
-    </xsl:message>   
+      <xsl:text> RHS in $ngused: </xsl:text>
+      <xsl:sequence select="for $e in $ngused return $e/@id/string()"/>
+    </xsl:message>  
 
     <!--* (1) First, find a rule that applies. *-->
     <!--* To use key() we need the key value. *-->
@@ -679,14 +710,14 @@
     </xsl:if>
     
     <!--* (2) Produce a new gt:element element. *-->
-
+    <!--* To fix:  get the default mark if need be. *-->
     <xsl:element name="gt:element">
       <xsl:sequence select="@*"/>
       <xsl:sequence select="$rhs/*"/>
     </xsl:element>
 
     <!--* (3) Continue. *-->
-    <xsl:variable name="new-ngused" as="element(alt)"
+    <xsl:variable name="new-ngused" as="element(alt)+"
 		  select="for $e in $ngused
 			  return
 			  if (empty($e intersect $rhs))
@@ -694,19 +725,33 @@
 			  else (),
 			  $rhs"/>
     
+    <xsl:message use-when="false()">
+      <xsl:text>Preparing to leave template nonterminal </xsl:text>
+      <xsl:value-of select="@name"/>
+      <xsl:text>. &#xA;     </xsl:text>
+      <xsl:value-of select="count($new-ngused)"/>
+      <xsl:text> RHS in $new-ngused: </xsl:text>
+      <xsl:sequence select="for $e in $new-ngused return $e/@id/string()"/>
+    </xsl:message>    
+    
     <xsl:choose>
       <!--* (3a) Recur to right sibling if you can. *-->
       <xsl:when test="exists(following-sibling::*)">
 	<xsl:apply-templates select="following-sibling::*[1]"
 			     mode="leaf-expansion">
-	  <xsl:with-param name="new" select="$new except $rhs"/>
+	  <xsl:with-param name="new"
+			  tunnel="yes"
+			  select="$new except $rhs"/>
 	  <xsl:with-param name="used"
+			  tunnel="yes"
 			  select="for $e in $used
 				  return
 				  if (empty($e intersect $rhs))
 				  then $e
 				  else ()"/>
-	  <xsl:with-param name="ngused" select="$new-ngused"/>
+	  <xsl:with-param name="ngused"
+			  tunnel="yes"
+			  select="$new-ngused"/>
 	</xsl:apply-templates>
       </xsl:when>
       
@@ -791,12 +836,14 @@
 			     mode="leaf-expansion">
 	  
 	  <!--* Trim $new by removing $leUsed. *-->
-	  <xsl:with-param name="new" select="$new except $leUsed"/>
+	  <xsl:with-param name="new" tunnel="yes"
+			  select="$new except $leUsed"/>
 	  
 	  <!--* If we write ($used except $leUsed), the result will
 	      * be in document order.  Our slightly cumbersome
 	      * expression tries to avoid that. *-->
 	  <xsl:with-param name="used"
+			  tunnel="yes"
 			  select="for $e in $used
 				  return
 				  if (empty($e intersect $leUsed))
@@ -805,7 +852,9 @@
 
 	  <!--* The same applies to ngused, but this time we append
 	      * leUsed at the end of the sequence. *-->
-	  <xsl:with-param name="ngused" select="$new-ngused"/>
+	  <xsl:with-param name="ngused"
+			  tunnel="yes"
+			  select="$new-ngused"/>
 	</xsl:apply-templates>
       </xsl:when>
       
