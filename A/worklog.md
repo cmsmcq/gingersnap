@@ -1884,3 +1884,91 @@ want to be able to leave pseudo-terminals unexpanded.  I wonder:  if I
 specify just comment as a pseudo-terminal, would the module succeed in
 building a full test case?
 
+Modifying the module to accept a list of pseudo-terminals provides the
+answer: with maxdepth set to 20, 30, 40, 50, and 60,
+parsetrees-from-dnf produces five trees each time, of which 4, 3, 3,
+3, and 2 are failed attempts. Increasing the maximum depth by tens
+makes the failed trees larger and larger, and slows down the
+execution, but does not reduce the number of failed trees to 0.
+
+It's clear that I have both a practical problem (I need completed
+trees) and possibly a design issue (I want an algorithm to produce a
+set -- preferably the smallest set -- of complete trees that cover the
+disjuncts, and what I've got is something else).
+
+Would it help to grow in the other direction? Perhaps some or all of
+the following might help?
+
+* Extend or adapt gt:make-trees() or it caller to accept a nonterminal
+N and produce trees for N. Note that in this case we must always start
+with N, not with an arbitrary RHS, because we cannot assume that from
+an arbitrary N we can find a path ascending to the root.
+
+    This could be used to produce a grammar for the pseudo-terminals.
+
+* Write a separate stylesheet to accept a partial tree and grow it,
+either with respect to the original DNF or using an alternative
+grammar. For the cases I have in mind, there is no need to track which
+disjuncts are used.
+
+    This could be used to complete the failed test cases being
+produced now.
+
+* Manually edit the DNF to produce terminal alternatives for selected
+nonterminals.  (This could be just selection from automatically generated
+cases.)
+
+Perhaps the minimal-cost approach right now is:  for any grammar
+
+1. Unroll, make disjunctive normal form, generate some trees, possibly
+with a judicious selection of pseudo-terminals.
+
+    In the case of the ixml grammar, running parsetrees-from-dnf with
+	maxdepth=20 and pseudo-terminals=comment produces one complete and
+	four partial trees.
+
+2. Make a list of the unexpanded nonterminals that need to be replaced
+by suitable subtrees.
+
+    In the case of ixml, There are 35 distinct names among the
+	unexpanded nonterminals in those trees (of 45 nonterminals in the
+	grammar).
+
+3. For each item in the list, choose one or more replacement strings.
+For pseudo-terminals, several strings are probably desirable. For
+other nonterminals, one suffices. The partial trees already have
+complete coverage of the DNF for those nonterminals; the manually
+selected sentences for them don't need to exhibit any variety to help
+with coverage.
+
+4. Replace the nonterminals remaining in the partial parse trees with
+the replacement strings.
+
+## 2021-01-22 Trying to re-plan positive test generation from CFG
+
+Everything remains a bit hazy. I'm not happy with the behavior of
+parsetrees-from-dnf but I have not managed any statement of the goal
+crisp enough to guide an implementation. And perhaps for that reason I
+don't see a clear path to improvement. A couple of paths seem to
+invite exploration.
+
+* From G create a regular grammar describing the stack path automaton.
+(Name generation will need to be re-done in Gluschkov annotator to
+preserve the nonterminal as the state name.) From the FSA generate
+alpha and omega paths. Combine these to produce spines for test cases.
+Fill in the spines with real RHS; this will leave a lot of leaf
+nonterminals. Expand these using a collection of sentences in L(N) for
+all N in G.  Deduplication will likely be necessary.
+
+    Here I think the central idea is the spine, a path from start
+    symbol through N to a terminal.
+
+* From G generate a small collection of sentences in L(N) for all N in
+G. This can be used in several ways, no doubt; it's mentioned in the
+previous item, but it would also allow me to generate partial tests
+with parsetrees-from-dnf and then complete them.
+
+    Here the central idea is the lego piece, to reduce complexity and
+    variation in the task of expanding a nonterminal in a partial
+    parse tree.
+
