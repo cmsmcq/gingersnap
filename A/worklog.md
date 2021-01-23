@@ -1949,19 +1949,21 @@ the replacement strings.
 Everything remains a bit hazy. I'm not happy with the behavior of
 parsetrees-from-dnf but I have not managed any statement of the goal
 crisp enough to guide an implementation. And perhaps for that reason I
-don't see a clear path to improvement. A couple of paths seem to
+don't see a clear path to improvement. A few paths seem to
 invite exploration.
 
 * From G create a regular grammar describing the stack path automaton.
 (Name generation will need to be re-done in Gluschkov annotator to
-preserve the nonterminal as the state name.) From the FSA generate
-alpha and omega paths. Combine these to produce spines for test cases.
-Fill in the spines with real RHS; this will leave a lot of leaf
-nonterminals. Expand these using a collection of sentences in L(N) for
-all N in G.  Deduplication will likely be necessary.
+preserve the nonterminal as the state name.)
 
-    Here I think the central idea is the spine, a path from start
-    symbol through N to a terminal.
+* From the stack path FSA alpha and omega paths can be generated and
+combined to form spines for test cases.
+
+* Spines can be filled in - at each step in the spine, we have a
+parent/child link so we choose a RHS of that parent containing that
+child (thus giving the child siblings). This will leave a lot of leaf
+nonterminals. Expand these using a collection of sentences in L(N) for
+all N in G. Deduplication will likely be necessary.
 
 * From G generate a small collection of sentences in L(N) for all N in
 G. This can be used in several ways, no doubt; it's mentioned in the
@@ -1972,3 +1974,35 @@ with parsetrees-from-dnf and then complete them.
     variation in the task of expanding a nonterminal in a partial
     parse tree.
 
+* Given a collection of sentences from L(N), whether constructed
+manually or automatically, expand leaf nonterminals in a partial parse
+tree to make a full parse tree (modulo the fact that the terminals
+will sometimes be inclusions or exclusions, not literals, so like all
+the parse trees I have been worrying about this week they are parse
+tree schemata or parse tree skeletons or parse tree patterns or parse
+tree recipes.
+
+(Evening) It occurs (or re-occurs) to me at this point, while
+re-formulating the list just given, that (a) what I need is not (just)
+sentences from L(N) but parse trees, since they have to be plugged
+into the sockets provided by the leaf nonterminals, and (b) that the
+collection of trees produced by parsetrees-from-dnf may well already
+have such trees.
+
+Some quick exploration with BaseX shows that this is in fact the case
+-- the set of trees in which I had created while specifying `comment`
+as a pseudo-terminal even had complete trees for comment, which
+frankly I don't understand. (Or rather, don't wish to, because it's
+pretty evidently a bug.)
+
+So now I have two quick stylesheets to write, or maybe only one:
+
+* read a set of parse trees and extract one or more complete trees for
+each nonterminal specified by the user (default: all of them); choose
+the smallest such trees, since we are only interested in filling gaps.
+
+* read a set of incomplete parse trees and a set of complete trees,
+and replace each leaf nonterminal with a complete subtree.
+
+These could be done in a single stylesheet, but they will be simpler
+separate.
