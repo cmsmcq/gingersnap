@@ -13,7 +13,13 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-12 : CMSMcQ : add new parameters to make-rtn;
+      * 2021-01-24 : CMSMcQ : add new steps unroll-occurrences,
+      *                       disjunctive-normal-form,
+      *                       cnf-to-rg, rg-to-dot, ixmlgl-to-rtndot,
+      *                       ixml-to-pcdot,
+      *                       dnf-to-parsetree-matrices,
+      *                       ixml-to-nonterminalslist
+      * 2021-01-12 : CMSMcQ : add new parameters to make-rtn; 
       *                       re-import eliminate-arc-overlap
       * 2020-12-28 : CMSMcQ : Split several stylesheets into main
       *                       and library modules, to make Saxon stop
@@ -61,6 +67,8 @@
   
   <!--* modification *-->
   <xsl:import href="add-final-state-flag.xsl"/>
+  <xsl:import href="unroll-occurrences.xsl"/>
+  <xsl:import href="dnf-from-andor.xsl"/>
   
   <!--* deletion *-->
   <xsl:import href="rtn-linkage-removal.xsl"/>
@@ -75,11 +83,20 @@
   <xsl:import href="fsa-to-tclego.xsl"/>
   <xsl:import href="tclego-to-tcrecipes.lib.xsl"/>
   <xsl:import href="tcrecipes-to-testcases.lib.xsl"/>
+  <xsl:import href="cnf-to-rg.xsl"/>
   
   <!--* miscellaneous *-->
   <xsl:import href="relabel.xsl"/>
   <xsl:import href="sort-nonterminals.xsl"/>
   
+  <!--* visualization *--><!--
+  <xsl:import href="rg-to-dot.xsl"/>
+  <xsl:import href="ixmlgl-to-rtndot.xsl"/>
+  <xsl:import href="ixml-to-pcdot.xsl"/>-->
+
+  <!--* export to non-grammatical forms *-->
+  <!-- <xsl:import href="ixml-to-nonterminalslist.xsl"/> -->
+  <xsl:import href="parsetrees-from-dnf.xsl"/>
 
   <xsl:output method="xml"
 	      indent="yes"/>
@@ -258,6 +275,24 @@
 	      </xsl:apply-templates>	      
 	    </xsl:when>
 	    
+	    <xsl:when test="$step/self::unroll-occurrences">
+	      <xsl:apply-templates select="$grammar"
+				   mode="unroll-occurrences">
+		<xsl:with-param name="n" tunnel="yes"
+				select="xs:integer(
+					$step/@n/string(),
+					3
+					)[1])"/>
+	      </xsl:apply-templates>	      
+	    </xsl:when>
+	    
+	    <xsl:when test="$step/self::disjunctive-normal-form">
+	      <xsl:apply-templates select="$grammar"
+				   mode="dnf-from-andor">
+		<!--* should allow specification of $loops *-->
+	      </xsl:apply-templates>	      
+	    </xsl:when>
+	    
 
 	    <!--* Group 4: removing things, selectively or
 		* automatically 
@@ -384,6 +419,11 @@
 	      <xsl:apply-templates select="$grammar"
 				   mode="tcrecipes-to-testcases"/>
 	    </xsl:when>
+	    
+	    <xsl:when test="$step/self::cnf-to-rg">
+	      <xsl:apply-templates select="$grammar"
+				   mode="cnf-to-rg"/>
+	    </xsl:when>
 
 	    <!--* Group 6:  miscellaneous 
 		*-->
@@ -399,6 +439,61 @@
 	    <xsl:when test="$step/self::sort-nonterminals">
 	      <xsl:apply-templates select="$grammar"
 				   mode="sort-nonterminals"/>
+	    </xsl:when>
+
+	    <!--* Group 7:  visualization 
+		*-->
+	    <!--* Postponed:  these stylesheets are not ready to
+		* be imported and used this way. *-->
+	    <!--
+	    <xsl:when test="$step/self::rg-to-dot">
+	      <xsl:apply-templates select="$grammar"
+				   mode="relabel">
+		<xsl:with-param name="desc" tunnel="yes"
+				select="string($step/@newdesc)"/>
+	      </xsl:apply-templates>	      
+	    </xsl:when>
+
+	    <xsl:when test="$step/self::ixmlgl-to-rtndot">...
+	      <xsl:apply-templates select="$grammar"
+				   mode="relabel">
+		<xsl:with-param name="desc" tunnel="yes"
+				select="string($step/@newdesc)"/>
+	      </xsl:apply-templates>	      
+	    </xsl:when>
+
+	    <xsl:when test="$step/self::ixml-to-pcdot">...
+	      <xsl:apply-templates select="$grammar"
+				   mode="relabel">
+		<xsl:with-param name="desc" tunnel="yes"
+				select="string($step/@newdesc)"/>
+	      </xsl:apply-templates>	      
+	    </xsl:when>
+	    -->
+	    
+	    <!--* Group 8:  export to non-grammatical format
+		*-->
+	    <!--
+	    <xsl:when test="$step/self::ixml-to-nonterminalslist">...
+	      <xsl:apply-templates select="$grammar"
+				   mode="relabel">
+		<xsl:with-param name="desc" tunnel="yes"
+				select="string($step/@newdesc)"/>
+	      </xsl:apply-templates>	      
+	    </xsl:when>-->
+
+	    <xsl:when test="$step/self::dnf-to-parsetree-matrices">
+	      <xsl:apply-templates select="$grammar"
+				   mode="parsetrees-from-dnf">
+		<xsl:with-param name="maxdepth" tunnel="yes"
+				select="(xs:integer($step/@maxdepth),
+					20)[1]"/>
+		<xsl:with-param name="maxfail" tunnel="yes"
+				select="(xs:integer($step/@maxfail),
+					10)[1]"/>
+		<xsl:with-param name="pseudoterminals" tunnel="yes"
+				select="string($step/@pseudoterminals)"/>
+	      </xsl:apply-templates>	      
 	    </xsl:when>
 
 	    <!--* It would be tempting to try to handle all the
