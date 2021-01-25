@@ -27,7 +27,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-19/21 : CMSMcQ : filling it in (went very slowly)
+      * 2021-01-24 : CMSMcQ : be careful to preserve @mark
+      * 2021-01-19/21 : CMSMcQ : filling it in (went very slowly) 
       * 2021-01-18 : CMSMcQ : try to make at least an outline. 
       *-->
 
@@ -161,53 +162,6 @@
     <xsl:variable name="maxfail" as="xs:integer"
 		  select="($options('maxfail'),$maxfail)[1]"/>
 
-    <xsl:message use-when="false()">
-      <xsl:text>gt:make-trees() called with </xsl:text>
-      <xsl:text>T = </xsl:text>
-      <xsl:sequence select="($T)"/>
-      <xsl:text>&#xA;     new = </xsl:text>
-      <xsl:sequence select="(for $e in $new return $e/@id/string())"/>
-      <xsl:text>&#xA;     used = </xsl:text>
-      <xsl:sequence select="(for $e in $used return $e/@id/string())"/>
-    </xsl:message>
-    
-    <xsl:message use-when="false()">
-      <xsl:text>gt:make-trees() called with </xsl:text>
-      <xsl:text>&#xA;     </xsl:text>
-      <xsl:value-of select="count($T)"/>
-      <xsl:text> partial tree(s),</xsl:text>
-      <xsl:text>&#xA;     </xsl:text>
-      <xsl:value-of select="count($acc)"/>
-      <xsl:text> tree(s) in the accumulator,</xsl:text>
-      <xsl:text>&#xA;     </xsl:text>
-      <xsl:value-of select="count($new)"/>
-      <xsl:text> RHS not yet used,</xsl:text>
-      <xsl:text>&#xA;     </xsl:text>
-      <xsl:value-of select="count($used)"/>
-      <xsl:text> RHS already used at least once,</xsl:text>
-      <xsl:text>&#xA;     cFails = </xsl:text>
-      <xsl:value-of select="$cFails"/>
-      <xsl:text>&#xA;     maxdepth = </xsl:text>
-      <xsl:value-of select="$maxdepth"/>
-      <xsl:text>&#xA;     maxfail = </xsl:text>
-      <xsl:value-of select="$maxfail"/>
-    </xsl:message>
-    
-    <xsl:message use-when="false()">
-      <xsl:text>gt:make-trees() called with </xsl:text>
-      <xsl:text>&#xA;     </xsl:text>
-      <xsl:value-of select="count($T)"/>
-      <xsl:text> partial tree(s) rooted in </xsl:text>
-      <xsl:value-of select="$T/@name"/>
-      <xsl:text> of depth </xsl:text>
-      <xsl:value-of select="max(
-		      for $D in $T/descendant::*
-		      return count($D/ancestor::*)
-		      )"/>
-      <xsl:text>&#xA;     maxdepth = </xsl:text>
-      <xsl:value-of select="$maxdepth"/>
-    </xsl:message>
-
     <xsl:choose>
       <!--* if all pieces have been used, stop *-->
       <xsl:when test="count($new) eq 0 and empty($T)">
@@ -238,20 +192,6 @@
       
       <!--* if we have no tree, start one *-->
       <xsl:when test="empty($T)">
-	<xsl:message use-when="false()">
-	  <xsl:text>gt:make-trees() starting a new tree, with </xsl:text>
-	  <xsl:text>&#xA;     </xsl:text>
-	  <xsl:value-of select="count($acc)"/>
-	  <xsl:text> tree(s) in the accumulator,</xsl:text>
-	  <xsl:text>&#xA;     </xsl:text>
-	  <xsl:value-of select="count($new)"/>
-	  <xsl:text> RHS not yet used,</xsl:text>
-	  <xsl:text>&#xA;     </xsl:text>
-	  <xsl:value-of select="count($used)"/>
-	  <xsl:text> RHS already used at least once,</xsl:text>
-	  <xsl:text>&#xA;     cFails = </xsl:text>
-	  <xsl:value-of select="$cFails"/>
-	</xsl:message>
 	
 	<!--* pick a new lego piece *-->
 	<xsl:variable name="rhs" as="element(alt)"
@@ -262,6 +202,11 @@
 				  $rhs/*"/>
 	  </xsl:element>
 	</xsl:variable>
+	
+	<xsl:message use-when="true()">
+	  <xsl:text>gt:make-trees() starting a new tree, rooted at </xsl:text>
+	  <xsl:value-of select="$T1/@name"/>
+	</xsl:message>
 	
 	<!--* recur *-->
 	<xsl:sequence select="gt:make-trees(
@@ -306,34 +251,14 @@
       <!--* if we have a tree, grow it upwards to
 	  * the start symbol. *-->
       <xsl:when test="$T/@name ne $options('start-symbol')">
-	<xsl:message use-when="false()">
-	  <xsl:text>gt:make-trees() growing upwards, </xsl:text>
-	  <xsl:text>partial tree is rooted in </xsl:text>
-	  <xsl:value-of select="$T/@name"/>
-	  <xsl:text>, start symbol is </xsl:text>
-	  <xsl:value-of select="$options('start-symbol')"/>
-	</xsl:message>
-	<xsl:message use-when="false()">	  
-	  <xsl:text>     count($new): </xsl:text>
-	  <xsl:value-of select="count($new)"/>
-	  <xsl:text>.&#xA;     count($used): </xsl:text>
-	  <xsl:value-of select="count($used)"/>	  
-	</xsl:message>
 	
 	<!--* find a potential parent *-->
-	<!--
-	<xsl:variable name="leRHS0" as="element(alt)+"
-		      select="key('rhs', $T/@name/string(), ($new, $used)[1]/root()/ixml)"/>
-	<xsl:variable name="leRHS1" as="element(alt)*"
-		      select="$leRHS0 intersect $new"/>
-	<xsl:variable name="leRHS2" as="element(alt)*"
-		      select="$leRHS0 except $leRHS1"/>
-	<xsl:variable name="rhs" as="element(alt)"
-                      select="($leRHS1, $leRHS2)[1]"/>
-	-->
-
+	<!--* G is the grammar we are working with
+	    * (needed for key() function) *-->
 	<xsl:variable name="G" as="element(ixml)"
 		      select="($new, $used)[1]/root()/ixml"/>
+	<!--* leNew0, leUsed0:  preliminary lists of candidate
+	    * right-hand sides. *-->
 	<xsl:variable name="leNew0" as="element(alt)*"
 		      select="$new intersect key('rhs', $T/@name, $G)"/>
 	<xsl:variable name="leUsed0" as="element(alt)*"
@@ -353,20 +278,49 @@
 	  </xsl:message>
 	</xsl:if>
 	<!--* end temporary paranoia *-->
-	
+
+	<!--* Pick a right-hand side with a nonterminal child
+	    * matching the head of T. That child is the 
+	    * target of our docking maneuver. *-->
 	<xsl:variable name="rhs" as="element(alt)"
-                      select="head(($leNew0, $leUsed0))"/>
+                      select="head(($leNew0, $leUsed0))"/>	
 	<xsl:variable name="target" as="element(nonterminal)"
 		      select="$rhs/nonterminal[@name=$T/@name][1]"/>
 	
 	<!--* Build new T. *-->
 	<xsl:variable name="T1" as="element()">
 	  <xsl:element name="gt:element">
-	    <xsl:sequence select="$rhs/parent::rule/@*,
-				  $target/@mark (: may override @mark :),
-				  $target/preceding-sibling::*,
-				  $T,
-				  $target/following-sibling::*"/>	    
+	    <!--* New root of tree is LHS of $rhs.  So it gets
+		* its @name and @mark from there. *-->
+	    <xsl:sequence select="$rhs/parent::rule/@*"/>
+	    
+	    <!--* Children are, first, those before the target. *-->
+	    <xsl:sequence select="$target/preceding-sibling::*"/>
+
+	    <!--* Children are, second, $T, or possibly a modified
+		* form of $T:  if the target has a @mark, it overrides
+		* what's now in $T. *-->
+
+	    <xsl:choose>
+	      <xsl:when test="exists($target/@mark)">
+		<!--* need new root for what was $T *-->
+		<xsl:element name="gt:element">
+		  <!--* New root has the old attributes, e.g. @name,
+		      * overridden by those of $target (esp. @mark),
+		      * followed by children of $T. *-->
+		  <xsl:sequence select="$T/@*, $target/@*, $T/*"/>
+		</xsl:element>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<!--* if $target has no @mark, we don't need to
+		    * modify $T (beyond attaching it here to a new
+		    * parent). *-->
+		<xsl:sequence select="$T"/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	    
+	    <!--* Children are, finally, those after the target. *-->
+	    <xsl:sequence select="$target/following-sibling::*"/>
 	  </xsl:element>
 	</xsl:variable>
 
@@ -662,7 +616,7 @@
     <!--* To use key() we need the key value. *-->
     <xsl:variable name="name" as="xs:string"
 		  select="@name"/>
-    <!--* To use key() we also need a node from G, any node will do. *-->
+    <!--* To use key() we also need a node from G, best the root. *-->
     <xsl:variable name="grammar-node" as="element()"
 		  select="($new, $used, $ngused)[1]/root()/ixml"/>
     <!--* Bresaking out the pieces of this calculation to find out
@@ -717,9 +671,9 @@
     </xsl:if>
     
     <!--* (2) Produce a new gt:element element. *-->
-    <!--* To fix:  get the default mark if need be. *-->
+    <!--* Get the default mark from the left-hand side. *-->
     <xsl:element name="gt:element">
-      <xsl:sequence select="@*"/>
+      <xsl:sequence select="@name, $rhs/parent::rule/@mark, @mark"/>
       <xsl:sequence select="$rhs/*"/>
     </xsl:element>
 
