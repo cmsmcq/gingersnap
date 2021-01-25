@@ -31,6 +31,7 @@
       *-->
   
   <xsl:mode name="parsetrees-cooked" on-no-match="shallow-skip"/>
+  <xsl:mode name="attributes" on-no-match="shallow-skip"/>
 
   <xsl:variable name="fDebugging" as="xs:boolean"
 		select="false()"/>
@@ -44,14 +45,20 @@
       * find the attributes, and find the children. *-->
   <xsl:template match="gt:element[not(@mark) or @mark='^']">
     <xsl:element name="{@name}">
-      <xsl:apply-templates mode="attributes"/>
+      <!--* attributes must be formed from a parsetree node
+	  * (gt:element) with mark="@", so terminal children of this
+	  * element can be skipped.
+	  *-->
+      <xsl:apply-templates select="gt:element"
+			   mode="attributes"/>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
 
-  <!--* In attributes mode, finding a serialized elements means
+  <!--* In attributes mode, finding a serialized element means
       * recursion can stop. *-->
-  <xsl:template match="gt:element[not(@mark) or @mark='^']" mode="attributes"/>
+  <xsl:template match="gt:element[not(@mark) or @mark='^']"
+		mode="attributes"/>
   
   <!--* if gt:element is marked -, do not emit an element node, 
       * but recur to children. Do this for both the default
@@ -69,7 +76,8 @@
   </xsl:template>
 
   <!--* if gt:element is marked @, in parsetrees-cooked mode,
-      * do nothing.  Attributes are emitted only in attributes mode.
+      * do nothing.  In particular, do not recur.  Attributes
+      * are emitted only in attributes mode.
       *-->  
   <xsl:template match="gt:element[@mark='@']"/>
 
@@ -77,16 +85,31 @@
       * the attribute.  This is our time to shine!
       *-->  
   <xsl:template match="gt:element[@mark='@']" mode="attributes">
-    <xsl:element name="{@name}">
-      <xsl:apply-templates mode="attributes"/>
-    </xsl:element>
+    <xsl:attribute name="{@name}">
+      <!--* Switch back to default mode here, to get
+	  * literals to speak up. *-->
+      <xsl:apply-templates/>
+    </xsl:attribute>
   </xsl:template>
   
-  <xsl:template match="inclusion|exclusion|literal"
-		mode="#default attributes">
+  <xsl:template match="inclusion|exclusion|literal">
     <!-- <xsl:sequence select="."/> -->
-    <xsl:value-of select="gt:serialize(.)"/> 
+    <xsl:choose>
+      <xsl:when test="not(@tmark) or (@tmark = '^')">
+	<xsl:value-of select="gt:serialize(.)"/>
+      </xsl:when>
+      <xsl:when test="@tmark = '-'"/>
+      <xsl:otherwise>
+	<xsl:message>
+	  <xsl:text>This makes no sense!  What's going on?</xsl:text>
+	</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
+
+  <xsl:template match="inclusion|exclusion|literal"
+		mode="attributes"/>
+  
 
   <xsl:template match="comment" mode="#default attributes"/>
 

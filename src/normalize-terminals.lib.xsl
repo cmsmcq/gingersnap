@@ -25,7 +25,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-23 : CMSMcQ : extend to handle positive parse trees
+      * 2021-01-24 : CMSMcQ : edit to preserve @tmark, needed now.
+      * 2021-01-23 : CMSMcQ : extend to handle positive parse trees 
       *                       from parsetrees-from-dnf process.
       * 2020-12-28 : CMSMcQ : split into main and module to quiet Saxon
       * 2020-12-28 : CMSMcQ : move merge-elements function into
@@ -90,10 +91,12 @@
   <!--* For literals with @dstring or @sstring, we split the string
       * if need be, and add @gt:range to each. *-->
   <xsl:template match="literal[@dstring or @sstring]">
-    <!--* First, get the string. *-->
+    <!--* First, get the string and the tmark attribute. *-->
     <xsl:variable name="s" as="xs:string"
 		  select="(@dstring/string(),
 			  @sstring/string())[1]"/>
+    <xsl:variable name="tmark" as="attribute(tmark)?"
+		  select="@tmark"/>
     
     <!--* Then generate a sequence of literal elements. *-->
     <xsl:variable name="leLiterals" as="element(literal)+">
@@ -103,6 +106,7 @@
 	<xsl:variable name="cp" as="xs:integer"
 		      select="string-to-codepoints($c)"/>
 	<xsl:element name="literal">
+	  <xsl:sequence select="$tmark"/>
 	  <xsl:choose>
 	    <xsl:when test="$c eq $dq">
 	      <xsl:attribute name="sstring" select="$c"/>

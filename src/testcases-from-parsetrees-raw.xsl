@@ -5,8 +5,9 @@
     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+    xmlns:d2x="http://www.blackmesatech.com/2014/lib/d2x"
     default-mode="parsetrees-raw"
-    exclude-result-prefixes="gt xs gl rtn follow"
+    exclude-result-prefixes="gt xs gl rtn follow d2x"
     version="3.0">
 
   <!--* testcases-from-parsetrees.xsl  Read parse trees as produced
@@ -51,13 +52,23 @@
 
   <xsl:template match="gt:element">
     <xsl:element name="{@name}">
+      <xsl:sequence select="@* except @name"/>
       <xsl:apply-templates/>
     </xsl:element>
   </xsl:template>
   
   <xsl:template match="inclusion|exclusion|literal">
     <!-- <xsl:sequence select="."/> -->
-    <xsl:value-of select="gt:serialize(.)"/> 
+    <xsl:variable name="s" as="xs:string"
+		  select="gt:serialize(.)"/>
+    <gt:character>
+      <xsl:sequence select="@* except @gt:ranges"/>
+      <xsl:attribute name="hex"
+		     select="d2x:d2x(
+			     string-to-codepoints($s)
+			     )"/>
+      <xsl:value-of select="$s"/>
+    </gt:character>
   </xsl:template>
 
   <xsl:template match="comment"/>

@@ -63,6 +63,7 @@
   <xsl:include href="testcases-from-parsetrees-raw.xsl"/>
   <xsl:include href="testcases-from-parsetrees-cooked.xsl"/>
   <xsl:import href="codepoint-serialization.lib.xsl"/>
+  <xsl:import href="../../../lib/xslt/d2x.xsl"/>
   
   <xsl:output method="xml"
 	      indent="yes"/>
