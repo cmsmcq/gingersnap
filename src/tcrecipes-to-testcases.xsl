@@ -24,6 +24,8 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-23 : CMSMcQ : split codepoint-serialization functions 
+      *                       out into library. 
       * 2020-12-28 : CMSMcQ : split into main and module 
       * 2020-12-26 : CMSMcQ : begin writing this, with long comment 
       *                       to clear my mind.
@@ -35,6 +37,7 @@
       *-->
   
   <xsl:include href="tcrecipes-to-testcases.lib.xsl"/>
+  <xsl:include href="codepoint-serialization.lib.xsl"/>
 
   <xsl:output method="xml"
 	      indent="yes"/>  
