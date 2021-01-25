@@ -4,6 +4,11 @@ grammar {
 	# Maintenance notes below.
 	#
 	# Revisions:
+	# 2021-01-24 : CMSMcQ : add new steps for cnf-to-rg translation,
+	#                       unrolling occurrences, reduction to
+	#                       disjunctive normal form, making parse
+	#                       tree matrices from the DNF, and making 
+	#                       test cases from the matrices.
 	# 2021-01-12 : CMSMcQ : add new parameters to make-rtn
 	# 2021-01-01 : CMSMcQ : add eliminate-unit-rules
 	# 2020-12-29 : CMSMcQ : Add attributes to tclego-to-tcrecipes
@@ -23,10 +28,12 @@ grammar {
 
 	start = grammar-pipeline
 
-	grammar-pipeline = element grammar-pipeline { (desc | step)* }
+	grammar-pipeline = element grammar-pipeline { (desc* & (step*, final?) }
 
 	step = annotation | algebra | modification | deletion
 	       | derivation | miscellaneous
+
+        final = visualize | make-non-grammar
 
 # Let's group the steps
 # 1 Annotation
@@ -108,12 +115,20 @@ grammar {
 # 3 Changes to the grammar
 
 	modification = add-final-flag
+	             | unroll-occurrences
+	             | disjunctive-normal-form
 
     	add-final-flag = element add-final-flag {
 	     attribute final { text },
 	     desc
 	}
-	
+
+        unroll-occurrences = element unroll-occurrences {
+	     attribute n { text }?, 
+	     desc
+	}
+
+	disjunctive-normal-form = element disjunctive-normal-form { desc }
 
 # 4 Deletion of things, usually cruft
 
@@ -153,6 +168,7 @@ grammar {
 		   | fsa-to-tclego
 		   | tclego-to-tcrecipes
 		   | tcrecipes-to-testcases
+		   | cnf-to-rg
 
  	rk-subset = element rk-subset {
 	     attribute k { text },
@@ -186,6 +202,7 @@ grammar {
 	
         tcrecipes-to-testcases = element tcrecipes-to-testcases { desc }
 
+        cnf-to-rg = element cnf-to-rg { desc }
 
 # 6 Miscellaneous
 
@@ -199,10 +216,31 @@ grammar {
 	sort-nonterminals = element sort-nonterminals {
 	    desc
 	}
-	
-	
-	
 
+# 7 visualization and creation of non-grammar work products
+
+        visualize = rg-to-dot
+	          | ixmlgl-to-rtndot
+		  | ixml-to-pcdot
+
+        rg-to-dot = element rg-to-dot { desc }
+	ixmlgl-to-rtndot = element ixmlgl-to-rtndot { desc }
+	ixml-to-pcdot = element ixml-to-pcdot { desc }
+
+		  
+	make-non-grammar = dnf-to-parsetree-matrices
+	                 | ixml-to-nonterminalslist
+			 
+	dnf-to-parsetree-matrices = element dnf-to-parsetree-matrices {
+	    attribute maxdepth { text }?,
+	    attribute maxfail { text }?,
+	    attribute pseudoterminals { text }?,
+	    desc
+	}
+
+	ixml-to-nonterminalslist = element ixml-to-nonterminalslist { desc }
+
+# Common constructs
 
 	# 'desc' also handles the save attribute
 	desc = attribute save { text}?, element desc { p+ }?
