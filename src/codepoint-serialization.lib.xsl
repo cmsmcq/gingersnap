@@ -14,7 +14,9 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-23 : CMSMcQ : split off from tcrecipes-to-testcases, so
+      * 2021-01-24 : CMSMcQ : fix an oversight in the handling of range
+      *                       lists with a single range.
+      * 2021-01-23 : CMSMcQ : split off from tcrecipes-to-testcases, so 
       *                       the functions can also be used in
       *                       testcases-from-parsetrees.xsl
       *-->
@@ -52,7 +54,8 @@
 			      [normalize-space()]
 			      return xs:integer($t)
 			      "/>
-	<xsl:sequence select="if (count($lr) eq 2)
+	<xsl:sequence select="if ((count($lr) eq 2)
+			          and ($lr[1] eq $lr[2]))
 			      then $lr[1]
 			      else if (count($lr) eq 0)
 			      then ()
@@ -81,13 +84,13 @@
 		  select="$lr[last()]"/>
 
     <!--* slightly better than nothing:  return a character
-	* from somewhere among the ranges.  (Currently
-	* always the start or end of an atomic range; later,
-	* make it sometimes pick a middle code point.)
+	* from somewhere among the ranges.
 	*-->
+    <!--* c:  how many items are in $lr?  Two for each range. *-->
     <xsl:variable name="c" as="xs:integer"
 		  use-when="$cp-selector eq 'better-than-nothing'"
 		  select="count($lr)"/>
+    <!--* nT is an arbitrary number to try to simulate randomness *-->
     <xsl:variable name="nT" as="xs:integer"
 		  use-when="$cp-selector eq 'better-than-nothing'"
 		  select="1 + count($eTerminal/preceding-sibling::*)"/>
@@ -96,13 +99,16 @@
     <xsl:variable name="nR" as="xs:integer"
 		  use-when="$cp-selector eq 'better-than-nothing'"
 		  select="1 + count($eTerminal/preceding::*)"/>
-    <!-- Initial version works less well for parse-trees, which
+    <!-- For the record (why?  who cares?), the initial version
+	 is reproduced here.  It works badly for parse-trees, which
 	 lack rule elements. -->
     <!-- <xsl:variable name="nR" as="xs:integer"
 		  use-when="$cp-selector eq 'better-than-nothing'"
 		  select="1 + count($eTerminal
 			  /ancestor::rule
 			  /preceding-sibling::*)"/> -->
+
+    <!--* iIndex:  an integer index into $lr *-->
     <xsl:variable name="iIndex" as="xs:integer"
 		  use-when="$cp-selector eq 'better-than-nothing'"
 		  select="1 + ($nR * $nT) mod $c"/>
