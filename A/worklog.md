@@ -2069,3 +2069,9 @@ are not being suppressed properly (they are not attending to the
 @tmark attribute), terminals are being output twice (once in default
 mode and once in attributes mode, I suppose), and attributes are not
 being created properly.  The second and third are surely related.
+
+(Later.) That was confusing enough to take a little time, but
+attributes are now being emitted without error in the ixml test cases
+in the toys directory, and I believe they are correct.
+
+
