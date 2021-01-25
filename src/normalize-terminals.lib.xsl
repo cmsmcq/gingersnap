@@ -25,6 +25,8 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-23 : CMSMcQ : extend to handle positive parse trees
+      *                       from parsetrees-from-dnf process.
       * 2020-12-28 : CMSMcQ : split into main and module to quiet Saxon
       * 2020-12-28 : CMSMcQ : move merge-elements function into
       *                       range-operations, needed elsewhere
@@ -121,6 +123,9 @@
 	<!--* Sometimes, just replace one literal with several. 
 	    * So in an alt, an inclusion, or an exclusion. 
 	    *-->
+	<xsl:sequence select="$leLiterals"/>
+      </xsl:when>
+      <xsl:when test="parent::gt:element">
 	<xsl:sequence select="$leLiterals"/>
       </xsl:when>
       <xsl:when test="parent::repeat0
