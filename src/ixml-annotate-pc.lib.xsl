@@ -11,7 +11,8 @@
       *-->
 
   <!--* Revisions:
-      * 2020-12-28 : CMSMcQ : split into main and module
+      * 2021-01-26 : CMSMcQ : inject gt:base-grammar and ...-uri
+      * 2020-12-28 : CMSMcQ : split into main and module 
       * 2020-12-01 : CMSMcQ : add rule/@gt:reachable,
       *                       restore nonterminal/@gt:defined
       *                       (both for value=false, omit if true)
@@ -26,7 +27,11 @@
 
   <xsl:mode name="annotate-pc" on-no-match="shallow-copy"/>
 
+  <!--* fListdesc:  List descendants?  true or false *-->
   <xsl:param name="fListdesc" as="xs:boolean" select="false()"/>
+
+  <!--* G:  short name for this grammar *-->
+  <xsl:param name="G" as="xs:string?" select="()"/>
   
   <!--****************************************************************
       * Main / starting template
@@ -71,6 +76,16 @@
     <xsl:copy>
       <xsl:sequence select="@* except @gt:*"/>
       <xsl:attribute name="gt:date" select="current-dateTime()"/>
+      <xsl:attribute name="gt:base-grammar"
+		     select="(@gt:base-grammar,
+			     $G,
+			     base-uri(),
+			     'unidentified grammar'
+			     )[1]"/>
+      <xsl:attribute name="gt:base-grammar-uri"
+		     select="(@gt:base-grammar-uri,
+			     base-uri()
+			     )[1]"/>
       <xsl:element name="comment">
 	<xsl:value-of select="current-dateTime()"/>
 	<xsl:text>: ixml-annotate-pc.xsl.</xsl:text>
