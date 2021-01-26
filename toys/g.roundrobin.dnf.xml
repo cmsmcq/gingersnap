@@ -12,61 +12,61 @@
   of Ginsburg.
 </comment>
    <rule name="S">
-      <alt>
+      <alt id="S1">
          <literal sstring="S1"/>
          <nonterminal name="A"/>
          <nonterminal name="B"/>
       </alt>
-      <alt>
+      <alt id="S2">
          <literal sstring="S2"/>
          <nonterminal name="B"/>
          <nonterminal name="A"/>
       </alt>
-      <alt>
+      <alt id="S3">
          <literal sstring="S3"/>
          <nonterminal name="A"/>
          <nonterminal name="C"/>
       </alt>
    </rule>
    <rule name="A">
-      <alt>
+      <alt id="A1">
          <literal sstring="a1"/>
       </alt>
-      <alt>
+      <alt id="A2">
          <literal sstring="a2"/>
       </alt>
-      <alt>
+      <alt id="A3">
          <literal sstring="a3"/>
       </alt>
-      <alt>
+      <alt id="A4">
          <literal sstring="a4"/>
       </alt>
-      <alt>
+      <alt id="A5">
          <literal sstring="a5"/>
       </alt>
-      <alt>
+      <alt id="A6">
          <literal sstring="a6"/>
       </alt>
-      <alt>
+      <alt id="A7">
          <literal sstring="a7"/>
       </alt>
-      <alt>
+      <alt id="A8">
          <literal sstring="a8"/>
       </alt>
    </rule>
    <rule name="B">
-      <alt>
+      <alt id="B1">
          <literal sstring="b1"/>
       </alt>
-      <alt>
+      <alt id="B2">
          <literal sstring="b2"/>
       </alt>
-      <alt>
+      <alt id="B3">
          <literal sstring="b3"/>
       </alt>
    </rule>
    <rule name="C">
-      <alt>
+      <alt id="C1">
          <literal sstring="c"/>
       </alt>
    </rule>
