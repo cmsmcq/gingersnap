@@ -5,7 +5,11 @@
   the cnf form.  
   
   Revisions:
-  2021-01-14 : CMSMcQ : made file
+  2021-01-14 : CMSMcQ : made file.  Did not complete; doing this
+                        manually is too tedious.  It will be faster
+			to implement this as a transform; the rewrite
+			and affix code from ixml-to-rk-subset should
+			be a good basis.
 
 }
 
