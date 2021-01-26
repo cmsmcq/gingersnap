@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parse-tree-collection xmlns:gt="http://blackmesatech.com/2020/grammartools"
+                       gt:date="2021-01-22T22:08:00.452139-07:00">
+   <comment>2021-01-22T22:08:00.452139-07:00: parsetrees-from-dnf.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/ab/a.dnf3.xml</comment>
+   <comment>    Output:  trees rooted in start symbol with terminals and pseudoterminals as leaves.</comment>
+   <gt:element name="S">
+      <literal sstring="a"/>
+   </gt:element>
+   <gt:element name="S">
+      <literal sstring="("/>
+      <gt:element name="S">
+         <literal sstring="a"/>
+      </gt:element>
+      <literal sstring=")"/>
+   </gt:element>
+
+   <!--* This example developed manually. *-->
+   <gt:element name="S">
+     <literal sstring="("/>
+     <gt:element name="S">
+       <literal sstring="("/>
+       <gt:element name="S">
+	 <literal sstring="("/>
+	 <gt:element name="S">
+	   <literal sstring="("/>
+	   <gt:element name="S">
+	     <literal sstring="("/>
+	     <gt:element name="S">
+	       <literal sstring="("/>
+	       <gt:element name="S">
+		 <literal sstring="("/>
+		 <gt:element name="S">
+		   <literal sstring="("/>
+		   <gt:element name="S">
+		     <literal sstring="a"/>
+		   </gt:element>
+		   <literal sstring=")"/>
+		 </gt:element>
+		 <literal sstring=")"/>
+	       </gt:element>
+	       <literal sstring=")"/>
+	     </gt:element>
+	     <literal sstring=")"/>
+	   </gt:element>
+	   <literal sstring=")"/>
+	 </gt:element>
+	 <literal sstring=")"/>
+       </gt:element>
+       <literal sstring=")"/>
+     </gt:element>
+     <literal sstring=")"/>
+   </gt:element>   
+</parse-tree-collection>
