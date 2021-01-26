@@ -202,7 +202,7 @@
       </xsl:message>
 
       <xsl:variable name="leRules" as="element(rule)*">
-	<xsl:call-template name="one-by-one">
+	<xsl:call-template name="one-by-one-cnfrg">
 	  <xsl:with-param name="queue" select="$queue"/>
 	  <xsl:with-param name="k" tunnel="yes" select="$k"/>
 	</xsl:call-template>
@@ -226,16 +226,16 @@
 
   <!--****************************************************************
       * Named templates
-      * one-by-one (manages queue)
+      * one-by-one-cnfrg (manages queue)
       * and make-rules (does the actual work)
       ****************************************************************
       *-->
-  <!--* one-by-one:  work through the items in the queue,
+  <!--* one-by-one-cnfrg:  work through the items in the queue,
       * one by one.
       * Stop when you're done.
       *-->
 
-  <xsl:template name="one-by-one">
+  <xsl:template name="one-by-one-cnfrg">
     <xsl:param name="queue"
 	       as="element(gt:please-define)*"
 	       required="yes"/>
@@ -258,12 +258,12 @@
     -->
     
     <xsl:message use-when="false()">
-      <xsl:text>one-by-one:  </xsl:text>
+      <xsl:text>one-by-one-cnfrg:  </xsl:text>
       <xsl:text>&#xA;  queue = </xsl:text>
       <xsl:sequence select="$queue/@name/string()"/>
     </xsl:message>
     <xsl:message use-when="false()">
-      <xsl:text>one-by-one:  </xsl:text>
+      <xsl:text>one-by-one-cnfrg:  </xsl:text>
       <xsl:text>&#xA;  queue = </xsl:text>
       <xsl:sequence select="$queue/@name/string()"/>
       <xsl:text>&#xA;  done = </xsl:text>
@@ -332,7 +332,7 @@
 
 	<!--* (3) Write out the new rule, recur with new queue. *-->
 	<xsl:sequence select="$new-rules"/>
-	<xsl:call-template name="one-by-one">
+	<xsl:call-template name="one-by-one-cnfrg">
 	  <xsl:with-param name="queue"
 			  select="($queue[position() gt 1],
 				  $leNewtasks)"/>
