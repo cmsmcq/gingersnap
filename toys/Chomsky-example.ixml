@@ -1,0 +1,9 @@
+{ a toy example meant to help me understand Chomsky 1959a }
+
+{ Consider a.ixml:  S = '(', S, ')'; 'a'.  }
+
+S: 'a'; 
+   L, SR.
+L: '('.
+SR: S, R.
+R: ')'.

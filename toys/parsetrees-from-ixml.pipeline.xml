@@ -1,0 +1,22 @@
+<grammar-pipeline>
+  <desc>
+    <p>Experimental pipeline for arbitrary g.ixml.xml from grammar
+    to unrolled grammar (lossy) to disjunctive normal form to
+    parse trees (and thence to test cases, I guess, but that's not
+    ready yet).</p>
+
+  </desc>
+  <desc>
+    <p>Revisions:</p>
+    <p>2021-01-20 : CMSMcQ : start from scratch</p>
+  </desc>
+
+  <unroll-occurrences/>
+  <disjunctive-normal-form/>
+  <parse-trees-from-dnf/>
+  <ln-from-parsetrees/>
+  <parsetree-pointing/>
+  
+</grammar-pipeline>
+
+  
