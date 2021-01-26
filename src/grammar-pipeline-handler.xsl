@@ -13,7 +13,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-24 : CMSMcQ : add new steps unroll-occurrences,
+      * 2021-01-26 : CMSMcQ : fix some errors introduced with new steps
+      * 2021-01-24 : CMSMcQ : add new steps unroll-occurrences, 
       *                       disjunctive-normal-form,
       *                       cnf-to-rg, rg-to-dot, ixmlgl-to-rtndot,
       *                       ixml-to-pcdot,
@@ -83,6 +84,7 @@
   <xsl:import href="fsa-to-tclego.xsl"/>
   <xsl:import href="tclego-to-tcrecipes.lib.xsl"/>
   <xsl:import href="tcrecipes-to-testcases.lib.xsl"/>
+  <xsl:import href="codepoint-serialization.lib.xsl"/>
   <xsl:import href="cnf-to-rg.xsl"/>
   
   <!--* miscellaneous *-->
@@ -279,10 +281,10 @@
 	      <xsl:apply-templates select="$grammar"
 				   mode="unroll-occurrences">
 		<xsl:with-param name="n" tunnel="yes"
-				select="xs:integer(
-					$step/@n/string(),
+				select="(xs:integer(
+					$step/@n/string()),
 					3
-					)[1])"/>
+					)[1]"/>
 	      </xsl:apply-templates>	      
 	    </xsl:when>
 	    
@@ -331,7 +333,8 @@
 		*-->
 	    <xsl:when test="$step/self::rk-subset">
 	      <xsl:message>
-		<xsl:text> @config = </xsl:text>
+		<xsl:text> pipeline info: </xsl:text>
+		<xsl:text>&#xA; @config = </xsl:text>
 		<xsl:value-of select="$step/@config"/>
 		<xsl:text>&#xA; base uri = </xsl:text>
 		<xsl:value-of select="$base-uri"/>
