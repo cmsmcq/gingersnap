@@ -1,13 +1,13 @@
 # To-do list for Gingersnap
 
-2020-11-27, rev. 2020-12-26, last rev. 2021-01-11
+2020-11-27, rev. 2020-12-26, last rev. 2021-01-25
 
 ## Short-term needs
 
 ### Quick things to fix
 
 * Extend rule-substitution code to support the scenario of inlining
-    all nonterminals.  Think what to do if there are recursive
+    all nonterminals in an FSA.  Think what to do if there are recursive
     nonterminals present: produce bad output? die? leave them alone?
     [2020-01-02]
 
@@ -25,10 +25,11 @@
     * pool of characters from ranges
     * pool of characters from theta ranges (?)
 
-* Make high-level single stylesheets to wrap up standard pipelines
-    for ixml-to-subset-rk (k parameterized), ixml-to-superset-R0, and
+* Make high-level single stylesheets to wrap up standard pipelines for
+    ixml-to-subset-rk (k parameterized), ixml-to-superset-R0, and
     regular-grammar-to-testcases.  This leaves simplification of R0
     superset and knitting of R_k supersets as manual labor.
+    (2021-01-25: in progress, but I'm not sure it's completely done.)
 
 * When stubbing out non-terminals in ixml-to-rk-subset,
     instead of defining them with a
@@ -36,6 +37,7 @@
     *max-`{$basename}`*, and define that with a reference to empty-set.
     This will make it easier to knit the subset and superset grammars
     together, because there will be just the one point of contact.
+	(Note 2021-01-25:  done, but I seem to recall it needs improvement.)
 
 ## Things to make better
 
@@ -45,31 +47,39 @@
     a given state corresponds to.  (Can we carry the original items
     from the original states?)
 
-    Make ixml-annotate-pc record the input URI in an attribute,
-    since it has one.  Others should update it if they have one,
-    else leave it alone.
+    Make all stages record the input URI in an attribute, if they have
+    a URI for it.  If there already an input URI, update it.  If no
+    input URI.  (This is in addition to adding comments at the top;
+    the goal is to have something that stays even if comments are
+    swept.)
 
     Extend function in ixml-to-saprg to accept a state name or
     element or something and insert a location pointer after it.
     Then we can associate items with each state.
 
-* Also retention of information about the original source grammar
-    and important derivation steps (gt:* attributes on the ixml
-    document, maybe?) to allow test case collections to have a
-    coherent automatically generated description of what they are.
+* Also retention of information about the original source grammar and
+    important derivation steps (gt:* attributes on the ixml document,
+    maybe?) to allow test case collections to have a coherent
+    automatically generated description of what they are.
 
-* add pipeline stage to rename trace attributes (e.g. to protect pc
+* Add pipeline stage to rename trace attributes (e.g. to protect pc
     annotations made on original grammar from loss when pc is run
     again on derived grammars.
 
-* develop convention for comments to carry step-by-step
-    information by enveloping earlier step information:  most recent
-    step is outer comment, its input is its child.  Sanity check:
-    there must never be more than one metadata comment in a
-    gt-well-formed tgrammar.
+* Develop convention for comments to carry step-by-step information by
+    enveloping earlier step information: most recent step is outer
+    comment, its input is its child.  Sanity check: there must never
+    be more than one metadata comment in a gt-well-formed tgrammar.
 
-* Make a coherent plan for a test catalog; review the XSTS and 
-    QT-FOTS-3 schemas and take inspiration from them. 
+* Make a coherent plan for a test catalog; review the XSTS and
+  QT-FOTS-3 schemas and take inspiration from them.
+
+     * https://www.w3.org/XML/2004/xml-schema-test-suite/index.html
+     * https://www.w3.org/XML/2004/xml-schema-test-suite/AnnotatedTSSchema.xsd
+	 * https://github.com/w3c/xsdtests
+	 * https://dev.w3.org/2011/QT3-test-suite/catalog-schema.xsd
+     * https://dev.w3.org/2011/QT3-test-suite/
+	 * https://github.com/w3c/qt3tests
 
 * Make simplify-expressions (which deals with empty-set)
     iterate to a fixed-point or a maximum number of iterations.
@@ -185,7 +195,13 @@ test suites)
 
 * Translate BNF grammar into Chomsky Normal Form. 
 
-
+* If the recursive transition network push-down automaton is extended
+  with instructions to emit start- and end-tags, it would produce a
+  parse tree.  Can the FSA built from a *u*<sub>*k*</sub> subset be
+  similarly extended?  Then FSA-coverage rules could be used to
+  generate positive test cases with their parse trees.
+  
+  
 
 
 ### Further extension
