@@ -24,6 +24,7 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-26 : CMSMcQ : import inlineability functions
       * 2021-01-23 : CMSMcQ : split codepoint-serialization functions 
       *                       out into library. 
       * 2020-12-28 : CMSMcQ : split into main and module 
@@ -38,7 +39,9 @@
   
   <xsl:include href="tcrecipes-to-testcases.lib.xsl"/>
   <xsl:include href="codepoint-serialization.lib.xsl"/>
-
+  <xsl:include href="inlineability-tests.lib.xsl"/>
+  <xsl:import href="../../../lib/xslt/d2x.xsl"/>
+  
   <xsl:output method="xml"
 	      indent="yes"/>  
 
