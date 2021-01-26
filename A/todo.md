@@ -57,6 +57,12 @@
     element or something and insert a location pointer after it.
     Then we can associate items with each state.
 
+* In Makefile, use grep to check success of parsetrees-from-dnf 
+   and stop the process if gt:failure is present. 
+
+* In rk-subset, accept parameter for URI and shortname of grammar,
+  pass them to annotate-pc (parallel to unroll-occurrences).
+
 * Also retention of information about the original source grammar and
     important derivation steps (gt:* attributes on the ixml document,
     maybe?) to allow test case collections to have a coherent
@@ -70,16 +76,6 @@
     enveloping earlier step information: most recent step is outer
     comment, its input is its child.  Sanity check: there must never
     be more than one metadata comment in a gt-well-formed tgrammar.
-
-* Make a coherent plan for a test catalog; review the XSTS and
-  QT-FOTS-3 schemas and take inspiration from them.
-
-     * https://www.w3.org/XML/2004/xml-schema-test-suite/index.html
-     * https://www.w3.org/XML/2004/xml-schema-test-suite/AnnotatedTSSchema.xsd
-	 * https://github.com/w3c/xsdtests
-	 * https://dev.w3.org/2011/QT3-test-suite/catalog-schema.xsd
-     * https://dev.w3.org/2011/QT3-test-suite/
-	 * https://github.com/w3c/qt3tests
 
 * Make simplify-expressions (which deals with empty-set)
     iterate to a fixed-point or a maximum number of iterations.
@@ -105,7 +101,9 @@
     might as well use what that buys me.)
 
 * Bettter control of when to eliminate attributes as no longer
-    relevant.
+  relevant.
+
+* Deal more consistently with name of base grammar.
 
 * Make RNG, RNC schemas for current ixml. 
 
@@ -294,3 +292,13 @@ calling modules into runnable and non-runnable modules).
   grammar, to visualize the FSA.  (Done 2021-01-17, but only for
   regular grammar, pseudo-regular will have to wait.)
 
+* Make a coherent plan for a test catalog; review the XSTS and
+  QT-FOTS-3 schemas and take inspiration from them.
+  [First cut at catalog made 2021-01-25.]
+
+     * https://www.w3.org/XML/2004/xml-schema-test-suite/index.html
+     * https://www.w3.org/XML/2004/xml-schema-test-suite/AnnotatedTSSchema.xsd
+	 * https://github.com/w3c/xsdtests
+	 * https://dev.w3.org/2011/QT3-test-suite/catalog-schema.xsd
+     * https://dev.w3.org/2011/QT3-test-suite/
+	 * https://github.com/w3c/qt3tests
