@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <parse-tree-collection xmlns:gt="http://blackmesatech.com/2020/grammartools"
-                       gt:date="2021-01-21T13:03:06.873061-07:00">
-   <comment>2021-01-21T13:03:06.873061-07:00: parsetrees-from-dnf.xsl.</comment>
+                       gt:date="2021-01-21T13:49:18.927176-07:00">
+   <comment>2021-01-21T13:49:18.927176-07:00: parsetrees-from-dnf.xsl.</comment>
    <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/g.roundrobin.dnf.xml</comment>
    <comment>    Output:  trees rooted in start symbol with terminals and pseudoterminals as leaves.</comment>
    <gt:element name="S">
@@ -19,13 +19,13 @@
          <literal sstring="b2"/>
       </gt:element>
       <gt:element name="A">
-         <literal sstring="a1"/>
+         <literal sstring="a2"/>
       </gt:element>
    </gt:element>
    <gt:element name="S">
       <literal sstring="S3"/>
       <gt:element name="A">
-         <literal sstring="a2"/>
+         <literal sstring="a3"/>
       </gt:element>
       <gt:element name="C">
          <literal sstring="c"/>
@@ -34,7 +34,34 @@
    <gt:element name="S">
       <literal sstring="S1"/>
       <gt:element name="A">
-         <literal sstring="a2"/>
+         <literal sstring="a4"/>
+      </gt:element>
+      <gt:element name="B">
+         <literal sstring="b3"/>
+      </gt:element>
+   </gt:element>
+   <gt:element name="S">
+      <literal sstring="S2"/>
+      <gt:element name="B">
+         <literal sstring="b1"/>
+      </gt:element>
+      <gt:element name="A">
+         <literal sstring="a5"/>
+      </gt:element>
+   </gt:element>
+   <gt:element name="S">
+      <literal sstring="S3"/>
+      <gt:element name="A">
+         <literal sstring="a6"/>
+      </gt:element>
+      <gt:element name="C">
+         <literal sstring="c"/>
+      </gt:element>
+   </gt:element>
+   <gt:element name="S">
+      <literal sstring="S1"/>
+      <gt:element name="A">
+         <literal sstring="a7"/>
       </gt:element>
       <gt:element name="B">
          <literal sstring="b2"/>
@@ -46,52 +73,7 @@
          <literal sstring="b3"/>
       </gt:element>
       <gt:element name="A">
-         <literal sstring="a3"/>
-      </gt:element>
-   </gt:element>
-   <gt:element name="S">
-      <literal sstring="S3"/>
-      <gt:element name="A">
-         <literal sstring="a4"/>
-      </gt:element>
-      <gt:element name="C">
-         <literal sstring="c"/>
-      </gt:element>
-   </gt:element>
-   <gt:element name="S">
-      <literal sstring="S1"/>
-      <gt:element name="A">
-         <literal sstring="a5"/>
-      </gt:element>
-      <gt:element name="B">
-         <literal sstring="b3"/>
-      </gt:element>
-   </gt:element>
-   <gt:element name="S">
-      <literal sstring="S2"/>
-      <gt:element name="B">
-         <literal sstring="b1"/>
-      </gt:element>
-      <gt:element name="A">
-         <literal sstring="a6"/>
-      </gt:element>
-   </gt:element>
-   <gt:element name="S">
-      <literal sstring="S3"/>
-      <gt:element name="A">
-         <literal sstring="a7"/>
-      </gt:element>
-      <gt:element name="C">
-         <literal sstring="c"/>
-      </gt:element>
-   </gt:element>
-   <gt:element name="S">
-      <literal sstring="S1"/>
-      <gt:element name="A">
          <literal sstring="a8"/>
-      </gt:element>
-      <gt:element name="B">
-         <literal sstring="b1"/>
       </gt:element>
    </gt:element>
 </parse-tree-collection>
