@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
-      gt:date="2021-01-18T20:36:58.437409-07:00">
-   <comment>2021-01-18T20:36:58.437409-07:00: unroll-occurrences.xsl.</comment>
+      gt:date="2021-01-20T19:22:28.009834-07:00">
+   <comment>2021-01-20T19:22:28.009834-07:00: unroll-occurrences.xsl.</comment>
    <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/toys/../../../2020/Aparecium/lib/ixml.2020-07-23.xml</comment>
    <comment>    Output:  modified grammar with ? * + unrolled. </comment>
    <rule name="ixml">
