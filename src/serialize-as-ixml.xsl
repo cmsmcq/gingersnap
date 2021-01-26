@@ -4,13 +4,16 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+    default-mode="serialize-as-ixml"
     version="3.0">
 
   <!--* Read ixml grammar, write out in ixml notation.
       *-->
 
   <!--* Revisions:
-      * 2020-12-16 : CMSMcQ : made stylesheet, in a bit of a rush
+      * 2021-01-26 : CMSMcQ : provide default mode, to make it easier
+      *                       to use this from other stylesheets
+      * 2020-12-16 : CMSMcQ : made stylesheet, in a bit of a rush 
       *-->
 
   <!--****************************************************************
@@ -19,6 +22,8 @@
       *-->
   
   <xsl:output method="text"/>
+
+  <xsl:mode name="serialize-as-ixml" on-no-match="text-only-copy"/>
 
   <xsl:template match="*">
     <xsl:message>You never told me there would be <xsl:value-of
