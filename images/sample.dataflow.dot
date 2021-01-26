@@ -1,5 +1,14 @@
 digraph flow {
 
+  /* Diagram showing data flow in preparation of test cases
+     from a.ixml, via subset and superset construction, and
+     generation of test cases from the FSA.  2021-01-16.
+
+     2021-01-25:  added flow for test cases via unrolling,
+     disjunctive normal form, and tree construction with
+     at-least-once coverage of RHS in the disjunctive normal
+     form.
+  */
   node [shape=box];
   a [label="a.ixml"];
   axml [label="a.ixml.xml"];  
@@ -45,6 +54,15 @@ digraph flow {
   ao2tcnaf [label="a.O2.testcases.arc-final.neg.xml"];
   */
 
+  /* positive cases path */
+  unroll3 [label="a.unroll3.xml"];
+  dnf3 [label="a.dnf3.xml"];
+  trees3partial [label="a.ptm3.partial.xml"];
+  ln3 [label="a.ln3.xml"];
+  trees3comp [label="a.ptm3.complete.xml"];
+  trees3ranged [label="a.ptm3.ranged.xml"];
+  testcat [label="a.testcat.3.xml"];
+
   node [shape=oval];
   parseixml [label="ixml-to-xml-manual"];
   rksubset2 [label="rk-subset k=2"];
@@ -87,9 +105,18 @@ digraph flow {
   recipetc7 [label="tcrecipes-to-testcases"];
   recipetc8 [label="tcrecipes-to-testcases"];
   */
+
+  /* positive path */
+  unroll [label="unroll-occurrences"];
+  mkdnf [label="dnf-from-andor"];
+  mkptm [label="parsetrees-from-dnf"];
+  mkln [label="ln-from-parsetrees"];
+  fixptm [label="parsetree-pointing"];
+  normterm [label="normalize-terminals"];
+  mkcat [label="testcases-from-parsetrees"];
   
   /* Hand work */
-  node [shape=oval, style=dashed, color=red];  
+  node [shape=oval; style="dashed,filled"; color=red; fillcolor="#FFEEEE"];  
   handknit [label="Knit together\nby hand"];
   makepipe [label="Make pipeline\nfor a.S.o0"];
 
@@ -123,5 +150,6 @@ digraph flow {
   ao2lego -> mkrecipenaf -> ao2rnaf -> recipetc8 -> ao2tcnaf;
   */
 
-  
+  axml -> unroll -> unroll3 -> mkdnf -> dnf3 -> mkptm -> trees3partial -> mkln -> ln3 -> fixptm;
+  trees3partial -> fixptm -> trees3comp -> normterm -> trees3ranged -> mkcat -> testcat;
 }
