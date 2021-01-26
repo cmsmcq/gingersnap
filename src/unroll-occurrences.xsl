@@ -35,6 +35,17 @@
       * with 0.  More sophisticated control is not currently needed.
       *-->
   <xsl:param name="n" as="xs:integer" select="15"/>
+
+  <!--* G:  short name for this grammar *-->
+  <xsl:param name="G" as="xs:string?" select="()"/>
+
+  <!--* uri:  URI to record for this grammar.
+      * In practice, we want it relative, not absolute,
+      * and having make pass in the file name is the easiest
+      * way I have thought of so far.
+      *-->
+  <xsl:param name="uri" as="xs:string"
+	     select=" 'unspecified.ixml.xml' "/>
   
   <!--****************************************************************
       * Main / starting template
@@ -49,6 +60,17 @@
     <xsl:copy>
       <xsl:sequence select="@*"/>
       <xsl:attribute name="gt:date" select="current-dateTime()"/>
+      <xsl:attribute name="gt:base-grammar"
+		     select="(@gt:base-grammar,
+			     $G,
+			     base-uri(),
+			     'unidentified grammar'
+			     )[1]"/>
+      <xsl:attribute name="gt:base-grammar-uri"
+		     select="($uri,
+			     @gt:base-grammar-uri,
+			     base-uri()
+			     )[1]"/>
       <xsl:element name="comment">
 	<xsl:value-of select="current-dateTime()"/>
 	<xsl:text>: unroll-occurrences.xsl.</xsl:text>
