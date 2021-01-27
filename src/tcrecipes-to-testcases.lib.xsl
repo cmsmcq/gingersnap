@@ -6,8 +6,9 @@
     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
     xmlns:d2x="http://www.blackmesatech.com/2014/lib/d2x"
+    xmlns:testcat="https://github.com/cmsmcq/ixml-tests"
     default-mode="make-test-cases"
-    exclude-result-prefixes="gt xs gl rtn follow d2x"
+    exclude-result-prefixes="gt xs gl rtn follow d2x testcat"
     version="3.0">
 
   <!--* trecipes-to-testcases.xsl  Read test-case recipes grammar,
@@ -16,7 +17,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-26 : CMSMcQ : change output to agree with draft schema
+      * 2021-01-26 : CMSMcQ : change output to agree with draft
+      *                       schema; insert xml-stylesheet PI      
       * 2021-01-23 : CMSMcQ : split codepoint-serialization functions 
       *                       out into library. 
       * 2020-12-28 : CMSMcQ : split into main and module 
@@ -57,6 +59,10 @@
   <xsl:param name="result-dir" as="xs:string"
 	     select="resolve-uri('external', base-uri(/))"/>
 
+  <!--* ns-tc:  test-catalog namespace *-->
+  <xsl:variable name="ns-tc" as="xs:string"
+		select=" 'https://github.com/cmsmcq/ixml-tests' " />
+
 
   <!--****************************************************************
       * Main / starting template
@@ -68,11 +74,21 @@
       *-->
   <xsl:template match="ixml">
 
-    <xsl:element name="test-catalog">
+    <xsl:processing-instruction name="xml-stylesheet">
+      <xsl:text>type="text/xsl" </xsl:text>
+      <xsl:text>href="../../lib/testcat-html.xsl"</xsl:text>
+    </xsl:processing-instruction>
+
+    <xsl:element name="test-catalog" namespace="{$ns-tc}">
+      <xsl:attribute name="name"
+		     select="(@gt:base-grammar,
+			     'Test catalog')[1]"/>
+      <xsl:attribute name="release-date" select="$when"/>
       <xsl:attribute name="gt:date" select="current-dateTime()"/>
+      
       <xsl:call-template name="catalog-header"/>
       
-      <xsl:element name="test-set">
+      <xsl:element name="test-set" namespace="{$ns-tc}">
 	<xsl:call-template name="test-set-header"/>
 	<xsl:call-template name="insert-grammar"/>
 	<xsl:apply-templates/>
@@ -82,21 +98,24 @@
   </xsl:template>
 
   <xsl:template match="rule[@gt:polarity]/alt">
-    <test-case>
+    <xsl:element name="test-case" namespace="{$ns-tc}">
       <xsl:attribute name="xml:id" select="../@name"/>
       <xsl:sequence select="../@gt:polarity, @gt:trace"/>
-      <created by="{$who}" on="{$when}" />
-
-      <xsl:variable name="s" as="xs:string"
+      <xsl:element name="created" namespace="{$ns-tc}">
+	<xsl:attribute name="by" select="$who"/>
+	<xsl:attribute name="on" select="$when" />
+      </xsl:element>
+      
+      <xsl:variable name="s" as="xs:string" 
 		    select="gt:serialize(*)"/>
       <xsl:choose>
 	<xsl:when test="gt:inlineable-string($s)">
-	  <test-string
-	      gt:hex="{for $cp in string-to-codepoints($s) 
-		   return concat('#', d2x:d2x($cp)) }"
-	      >
+	  <xsl:element name="test-string" namespace="{$ns-tc}">
+	    <xsl:attribute name="gt:hex"
+			   select="for $cp in string-to-codepoints($s) 
+				   return concat('#', d2x:d2x($cp))"/>
 	    <xsl:value-of select="$s"/>
-	  </test-string>
+	  </xsl:element>
 	</xsl:when>
 	<xsl:otherwise>
 	  <xsl:variable name="filename" as="xs:string"
@@ -107,23 +126,25 @@
 			       indent="no">
 	    <xsl:sequence select="$s"/>
 	  </xsl:result-document>
-	  <test-string-ref href="{$filename}"/>
+	  <xsl:element name="test-string-ref" namespace="{$ns-tc}">
+	    <xsl:attribute name="href" select="$filename"/>
+	  </xsl:element>
 	</xsl:otherwise>
       </xsl:choose>
-      <result>
+      <xsl:element name="result" namespace="{$ns-tc}">
 	<xsl:choose>
 	  <xsl:when test="../@gt:polarity = 'negative'">
-	    <assert-not-a-sentence/>
+	    <xsl:element name="assert-not-a-sentence" namespace="{$ns-tc}"/>
 	  </xsl:when>
 	  <xsl:when test="../@gt:polarity = 'positive'">
-	    <assert-is-a-sentence/>
+	    <xsl:element name="assert-is-a-sentence" namespace="{$ns-tc}"/>
 	  </xsl:when>
 	  <xsl:otherwise>
-	    <assert-test-case-serializer-is-buggy/>
+	    <xsl:element name="assert-test-case-serializer-is-buggy" namespace="{$ns-tc}"/>
 	  </xsl:otherwise>
 	</xsl:choose>
-      </result>
-    </test-case>    
+      </xsl:element>
+    </xsl:element>
   </xsl:template>
 
   <!--****************************************************************
@@ -131,8 +152,8 @@
       ****************************************************************
       *-->
   <xsl:template name="catalog-header">
-    <description>
-      <xsl:element name="p">
+    <xsl:element name="description" namespace="{$ns-tc}">
+      <xsl:element name="p" namespace="{$ns-tc}">
 	<xsl:text>This test catalog describes tests for </xsl:text>
 	<xsl:text>the language defined by </xsl:text>
 	<xsl:value-of select="($G,
@@ -140,19 +161,38 @@
 			      '[grammar short-name]')[1]"/>
 	<xsl:text>.</xsl:text>
       </xsl:element>
-      <p>Test polarity:  <xsl:value-of select="@gt:test-polarity"/>.</p>
-      <p>Test selection:  <xsl:value-of select="@gt:test-selection"/>.</p>
-    </description>
+      <xsl:element name="p" namespace="{$ns-tc}">
+	<xsl:text>Test polarity:  </xsl:text>
+	<xsl:value-of select="@gt:test-polarity"/>
+	<xsl:text>.</xsl:text>
+      </xsl:element>
+      <xsl:element name="p" namespace="{$ns-tc}">
+	<xsl:text>Test selection:  </xsl:text>
+	<xsl:value-of select="@gt:test-selection"/>
+	<xsl:text>.</xsl:text>
+      </xsl:element>
+    </xsl:element>
   </xsl:template>
   
   <xsl:template name="test-set-header">
-    <created by="{$who}" on="{$when}"/>
-    <description>
-      <p>This test set was generated by Gingersnap.</p>
-      <p>Test polarity: see the indivicual tests.</p>
-      <p>Test selection: see the individual tests.</p>
-      <p>Test pipeline: approximation + FSA + tests.</p>
-    </description>
+    <xsl:element name="created" namespace="{$ns-tc}">
+      <xsl:attribute name="by" select="$who"/>
+      <xsl:attribute name="on" select="$when"/>
+    </xsl:element>
+    <xsl:element name="description" namespace="{$ns-tc}">
+      <xsl:element name="p" namespace="{$ns-tc}">
+	<xsl:text>This test set was generated by Gingersnap.</xsl:text>
+      </xsl:element>
+      <xsl:element name="p" namespace="{$ns-tc}">
+	<xsl:text>Test polarity: see the indivicual tests.</xsl:text>
+      </xsl:element>
+      <xsl:element name="p" namespace="{$ns-tc}">
+	<xsl:text>Test selection: see the individual tests.</xsl:text>
+      </xsl:element>
+      <xsl:element name="p" namespace="{$ns-tc}">
+	<xsl:text>Test pipeline: approximation + FSA + tests.</xsl:text>
+      </xsl:element>
+    </xsl:element>
   </xsl:template>
   
 

@@ -62,17 +62,22 @@
 	* specifications of the grammar.  If we have it
 	* in multiple forms, we might as well do it.
 	*-->
+
+
+    <!--* ns-tc:  test-catalog namespace *-->
+    <xsl:variable name="ns-tc" as="xs:string"
+		  select=" 'https://github.com/cmsmcq/ixml-tests' " />    
     
     <!--* ixml, if we have it *-->
     <xsl:if test="exists(/*/comment[@gt:type='ixml'])">
-      <xsl:element name="ixml-grammar">
+      <xsl:element name="ixml-grammar" namespace="{$ns-tc}">
 	<xsl:value-of select="/*/comment[@gt:type='ixml']"/>
       </xsl:element>
     </xsl:if>
 
     <!--* reference to ixml, if we have it *-->
     <xsl:if test="exists(/*/@gt:ixml-grammar-uri)">
-      <xsl:element name="ixml-grammar-ref">
+      <xsl:element name="ixml-grammar-ref" namespace="{$ns-tc}">
 	<xsl:attribute name="href" select="/*/@gt:ixml-grammar-ref"/>
       </xsl:element>
     </xsl:if>
@@ -89,14 +94,14 @@
 			  then doc(string($uriG))/ixml
 			  else ()"/>
     <xsl:if test="exists($eG) and gt:inlineable-xml($eG)">
-      <xsl:element name="vxml-grammar">
+      <xsl:element name="vxml-grammar" namespace="{$ns-tc}">
 	<xsl:sequence select="$eG"/>
       </xsl:element>
     </xsl:if>
 
     <!--* XML reference, if we have it. *-->
     <xsl:if test="exists(/*/@gt:base-grammar-uri)">
-      <xsl:element name="vxml-grammar-ref">
+      <xsl:element name="vxml-grammar-ref" namespace="{$ns-tc}">
 	<xsl:attribute name="href" select="/*/@gt:base-grammar-uri"/>
       </xsl:element>
     </xsl:if>
@@ -105,7 +110,7 @@
     <xsl:if test="not(exists(/*/comment[@gt:type='ixml']))
 		  and not(exists(/*/@gt:ixml-grammar-uri)) 
 		  and not(exists(/*/@gt:base-grammar-uri))">
-      <xsl:element name="ixml-grammar">
+      <xsl:element name="ixml-grammar" namespace="{$ns-tc}">
 	<xsl:text>{grammar not found, </xsl:text>
 	<xsl:text>manual intervention needed}</xsl:text>
       </xsl:element>
