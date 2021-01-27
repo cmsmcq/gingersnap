@@ -20,7 +20,9 @@
       *-->
 
   <!--* Revisions:
-      * 2020-12-13 : CMSMcQ : made stylesheet, for the process of
+      * 2021-01-26 : CMSMcQ : recognize that there may be no
+      *                       non-matching right-hand sides.
+      * 2020-12-13 : CMSMcQ : made stylesheet, for the process of 
       *                       working with R_0 grammars.
       *-->
 
@@ -81,7 +83,7 @@
 
 	<!--* Base RHS are everything else *-->
 	<xsl:variable name="non-matching-RHS"
-		      as="element(alt)+"
+		      as="element(alt)*"
 		      select="alt except $matching-RHS"/>
 
 	<!--* copy the rule *-->
