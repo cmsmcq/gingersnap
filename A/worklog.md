@@ -2074,4 +2074,36 @@ being created properly.  The second and third are surely related.
 attributes are now being emitted without error in the ixml test cases
 in the toys directory, and I believe they are correct.
 
+## 2021-01-26 More progress 
+
+Have spent the last two days running the flows from the ixml document
+to positive test cases and through the O3 superset to negative test cases.
+
+The ixml-tests project now has positive and negative test cases for
+the gxxx grammars, and positive test cases for the arithmetic expression
+grammar.  The O3 superset flow is running into difficulties, because
+ixml-to-saprg is not dealing well with pseudo-terminals in the case
+that a start symbol is specified.  Apparently the revision did not
+handle all cases:  either I didn't implement it right, or I overlooked
+something.
+
+Or possibly when revising the transform I expected pseudoterminals
+to have been expanded in place.
+
+## 2021-01-26 Asymptotic progress
+
+Taking the O0 versions of expr, term, and factor in the arith.ixml grammar
+and simplifying them to a single rule was a very painful experience.  Found
+bugs in ixml-to-saprg, and the make file and R0-subset transform were not
+much help.  Eventually got the simplifications by a much more manual process
+than I would have liked, involving factoring some disjunctions into ad hoc
+nonterminals by hand, halfway through the development.  (I don't have a
+tool for doing such factoring, because specifying what to factor seems
+tricky.  Perhaps I just need to bite the bullet and allow tumbler references
+to the subexpression I have in mind.)
+
+Eventually got it done, and generated the negative tests.  Put them into the
+ixml-tests project.
+
+If I can, this afternoon I'll do tests for ixml itself.  That may be a challenge.
 
