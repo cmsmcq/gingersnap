@@ -17,7 +17,8 @@
       *-->
 
   <!--* Revisions:
-      * 2020-12-19 : CMSMcQ : made stylesheet, for simplifying regular
+      * 2021-01-26 : CMSMcQ : add a second rule
+      * 2020-12-19 : CMSMcQ : made stylesheet, for simplifying regular 
       *                       grammars and their FSAs
       *-->
 
@@ -40,11 +41,18 @@
       * Templates
       ****************************************************************
       *-->
-  <!--* A sequence containing only a choice of sequences.  Lost the
+  <!--* A sequence containing only a choice of sequences.  Lose the
       * wrapper.
       *-->
   <xsl:template match="alt[alts][count(*) eq 1]">
     <xsl:apply-templates select="./alts/alt"/>
+  </xsl:template>
+  
+  <!--* A choice containing only a single sequence.  Lose the
+      * wrapper.
+      *-->
+  <xsl:template match="alt/alts[alt][count(*) eq 1]">
+    <xsl:apply-templates select="./alt/*"/>
   </xsl:template>
   
   
