@@ -132,8 +132,12 @@
 	       select="$fissile"/>
     <xsl:param name="non-fissile" as="xs:string*" tunnel="yes"
 	       select="$non-fissile"/>
+    <xsl:param name="linkage" as="xs:string*" tunnel="yes"
+	       select="$linkage"/>
     <xsl:param name="start" as="xs:string?" tunnel="yes"
 	       select="$start"/>
+    <xsl:param name="keep-non-fissiles" as="xs:string*" tunnel="yes"
+	       select="$keep-non-fissiles"/>
     
     <xsl:variable name="G" as="element(ixml)" select="."/>
 
@@ -225,15 +229,19 @@
       * cause head-scratching.  Think of it as similar to strip-space
       * and preserve-space.
       *-->
-  <xsl:template match="rule">
+  <xsl:template match="rule">    
     <xsl:param name="fissile" as="xs:string*" tunnel="yes"
 	       select="$fissile"/>
     <xsl:param name="non-fissile" as="xs:string*" tunnel="yes"
 	       select="$non-fissile"/>
+    <xsl:param name="linkage" as="xs:string*" tunnel="yes"
+	       select="$linkage"/>
+    <xsl:param name="start" as="xs:string?" tunnel="yes"
+	       select="$start"/>
     <xsl:param name="keep-non-fissiles" as="xs:string*" tunnel="yes"
 	       select="$keep-non-fissiles"/>
 
-    <xsl:message use-when="false()">
+    <xsl:message use-when="true()">
       <xsl:text>Processing rule for </xsl:text>
       <xsl:value-of select="@name"/>
       <xsl:text> ...</xsl:text>
@@ -253,7 +261,7 @@
 	  <!--* Case 1.1: There are no pseudo-terminals, break this
 	      * rule out. *-->
 	  <xsl:when test="$non-fissile eq '#none'">
-	    <xsl:message use-when="false()">
+	    <xsl:message use-when="true()">
 	      <xsl:text>    $fissile = '#all'</xsl:text>
 	      <xsl:text>&#xA;    $non-fissile = '#none'</xsl:text>
 	      <xsl:text>&#xA;    Calling breakout</xsl:text>
@@ -268,7 +276,7 @@
 	  <xsl:when test="($non-fissile eq '#non-recursive')
 			  and
 			  gt:fIsRecursiverule(.)">
-	    <xsl:message use-when="false()">
+	    <xsl:message use-when="true()">
 	      <xsl:text>    $fissile = '#all'</xsl:text>
 	      <xsl:text>&#xA;    $non-fissile = '#non-recursive'</xsl:text>
 	      <xsl:text>&#xA;    gt:fIsRecursiverule(.) is true</xsl:text>
@@ -280,7 +288,7 @@
 	  <xsl:when test="($non-fissile eq '#non-recursive')
 			  and
 			  not(gt:fIsRecursiverule(.))">
-	    <xsl:message use-when="false()">
+	    <xsl:message use-when="true()">
 	      <xsl:text>    $fissile = '#all'</xsl:text>
 	      <xsl:text>&#xA;    $non-fissile = '#non-recursive'</xsl:text>
 	      <xsl:text>&#xA;    gt:fIsRecursiverule(.) is false</xsl:text>
@@ -300,7 +308,7 @@
 	      * matches, leave it alone, else break it out. *-->
 	  <xsl:when test="@name = $non-fissile">
 	    <!--* Case 1.3. This is a pseudo-terminal. *-->
-	    <xsl:message use-when="false()">
+	    <xsl:message use-when="true()">
 	      <xsl:text>    $fissile = '#all'</xsl:text>
 	      <xsl:text>&#xA;    $non-fissile matches @name</xsl:text>
 	      <xsl:text>&#xA;    This is a pseudo-terminal, falling back</xsl:text>
@@ -311,7 +319,7 @@
 	  </xsl:when>
 	  <xsl:otherwise>
 	    <!--* Case 1.4. This is NOT a pseudo-terminal. *-->
-	    <xsl:message use-when="false()">
+	    <xsl:message use-when="true()">
 	      <xsl:text>    $fissile = '#all'</xsl:text>
 	      <xsl:text>&#xA;    $non-fissile does not match @name</xsl:text>
 	      <xsl:text>&#xA;    Not a pseudo-terminal, breaking out</xsl:text>
@@ -325,7 +333,7 @@
 	  * those and no others. *-->
       <xsl:when test="@name = $fissile">
 	<!-- <xsl:message>Yeow!</xsl:message> -->
-	<xsl:message use-when="false()">
+	<xsl:message use-when="true()">
 	  <xsl:text>    $fissile matches @name</xsl:text>
 	  <xsl:text>&#xA;    Calling breakout</xsl:text>
 	</xsl:message>
@@ -338,7 +346,7 @@
 	  * non-fissile nonterminals, otherwise suppress it.
 	  *-->
       <xsl:otherwise> 
-	<xsl:message use-when="false()">
+	<xsl:message use-when="true()">
 	  <xsl:text>    $fissile does not match @name</xsl:text>
 	  <xsl:text>&#xA;    Falling back, confused</xsl:text>
 	</xsl:message>   
@@ -362,7 +370,7 @@
     <xsl:param name="start" as="xs:string?" tunnel="yes"
 	       select="$start"/>
     
-    <xsl:message use-when="false()">
+    <xsl:message use-when="true()">
       <xsl:text>Breaking out fissile rule </xsl:text>
       <xsl:value-of select="@name"/>
       <xsl:text> ...</xsl:text>
@@ -538,13 +546,38 @@
       *-->
   <xsl:template match="*" mode="arc">
     <xsl:param name="G" tunnel="yes"/>
+    <xsl:param name="fissile" as="xs:string*" tunnel="yes"
+	       select="$fissile"/>
+    <xsl:param name="non-fissile" as="xs:string*" tunnel="yes"
+	       select="$non-fissile"/>    
+    
+    <xsl:if test="self::nonterminal" use-when="true()">
+      <xsl:variable name="flag" as="xs:boolean"
+		    select="gt:fIsPseudoterminal(
+ 			    string(@name), $G, $fissile, $non-fissile
+			    )"/>
+      <xsl:message>
+	<xsl:text>Debugging:  nonterminal </xsl:text>
+	<xsl:value-of select="@name"/>
+	<xsl:choose>
+	  <xsl:when test="$flag = true()">
+	    <xsl:text> is a pseudo-terminal.</xsl:text>
+	  </xsl:when>
+	  <xsl:otherwise>
+	    <xsl:text> is NOT a pseudo-terminal.</xsl:text>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:message>
+    </xsl:if>
+    
     <xsl:choose>
       <xsl:when test="not(self::nonterminal)
 	or
 	self::nonterminal
 	[gt:fIsPseudoterminal(
  	    string(@name), $G, $fissile, $non-fissile
-	)]">
+	    )]">
+		
 	<xsl:element name="alt">
 	  <xsl:attribute name="rtn:ruletype"
 			 select="if (self::nonterminal)
@@ -663,6 +696,15 @@
     
     <!--* if rule has gt:recursive=true, then yes, else no.
 	*-->
+    <xsl:message use-when="false()">
+      <xsl:text>fIsRecursiverule on rule for "</xsl:text>
+      <xsl:value-of select="$e/@name"/>
+      <xsl:text>" returns </xsl:text>
+      <xsl:sequence select="if (empty($e))
+			    then false()
+			    else xs:boolean($e/@gt:recursive)"/>
+    </xsl:message>
+    
     <xsl:sequence select="if (empty($e))
 			  then false()
 			  else xs:boolean($e/@gt:recursive)"/>
@@ -678,33 +720,48 @@
     <xsl:param name="fissile" as="xs:string*"/>
     <xsl:param name="non-fissile" as="xs:string*"/>
 
+    <xsl:message use-when="true()">
+      <xsl:text>fIsPTRule(</xsl:text>
+      <xsl:value-of select="$e/@name"/>
+      <xsl:text>, (</xsl:text>
+      <xsl:sequence select="$fissile"/>
+      <xsl:text>), (</xsl:text>
+      <xsl:sequence select="$non-fissile"/>
+      <xsl:text>)) ... </xsl:text>
+    </xsl:message>   
+
     <xsl:choose>
       <xsl:when test="($fissile = '#all')
-		      and ($non-fissile eq '#non-recurive')">
+		      and ($non-fissile eq '#non-recursive')">
 	<!--* default case:  pseudo-terminal iff not recursive *-->
+	<xsl:message use-when="true()">  ... able: calling not fIsRecursiverule </xsl:message>
 	<xsl:sequence select="not(gt:fIsRecursiverule($e))"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
 		      and ($non-fissile eq '#none')">
 	<!--* if there are no pseudo-terminals, then this cannot
 	    * be one. *-->
+	<xsl:message use-when="true()">  ... baker: false </xsl:message>
 	<xsl:sequence select="false()"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
 		      and ($non-fissile = $e/@name)">
 	<!--* if this is named as a pseudo-terminal, then it 
 	    * is one (but only if $fissile = '#all') *-->
+	<xsl:message use-when="true()">  ... charlie: true </xsl:message>
 	<xsl:sequence select="true()"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
 		      and not($non-fissile = $e/@name)">
 	<!--* if we are listing all pseudo-terminals and this is not
-	    * in the list, then it is not one *-->
+	    * in the list, then it is not one *-->	
+	<xsl:message use-when="true()">  ... dog: false </xsl:message>
 	<xsl:sequence select="false()"/>
       </xsl:when>
       <xsl:when test="($fissile = $e/@name)">
 	<!--* If we said this one was fissile, then it is not
-	    * a pseudo-terminal, now is it?  Keep up! *-->
+	    * a pseudo-terminal, now is it?  Keep up! *-->	
+	<xsl:message use-when="true()">  ... easy: false </xsl:message>
 	<xsl:sequence select="false()"/>
       </xsl:when>
       <xsl:when test="not($fissile = '#all')
@@ -712,6 +769,7 @@
 	<!--* We are naming fissile nonterminals (because
 	    * $fissile ne '#all') but this one is not listed.
 	    * So it's by fiat a pseudo-terminal. *-->
+	<xsl:message use-when="true()">  ... fox: true </xsl:message>
 	<xsl:sequence select="true()"/>
       </xsl:when>
       <xsl:otherwise>
@@ -747,6 +805,13 @@
     <!--* Kick the can to the rule.  If the rule is a
 	* pseudo-terminal rule, then yes, else no.
 	*-->
+    <xsl:message use-when="true()">
+      <xsl:text>fIsPseudoterminal is about to call fIsPTRule on "</xsl:text>
+      <xsl:value-of select="$n"/>
+      <xsl:text>", and fIsPTRule will return </xsl:text>
+      <xsl:sequence select="gt:fIsPTrule($rule, $fissile, $non-fissile)"/>
+    </xsl:message>
+    
     <xsl:sequence select="gt:fIsPTrule($rule, $fissile, $non-fissile)"/>
 
     <!--
