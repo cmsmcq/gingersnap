@@ -6,6 +6,10 @@
 
 ### Quick things to fix
 
+* arith.ixml is exercising a puzzling behavior in Gluschkov
+  annotation:  addop and mulop get states 0 1 2 4 f, no 3.
+  And the RTN has a bogon there in its place.
+
 * Extend rule-substitution code to support the scenario of inlining
     all nonterminals in an FSA.  Think what to do if there are recursive
     nonterminals present: produce bad output? die? leave them alone?
@@ -38,6 +42,11 @@
     This will make it easier to knit the subset and superset grammars
     together, because there will be just the one point of contact.
 	(Note 2021-01-25:  done, but I seem to recall it needs improvement.)
+
+* It would make knitting the O0 rules into the uk grammars easier
+   if the simplification pipeline ended with a transform that renamed
+   a non-terminal, so we could automatically shift S_0 to max-S.
+
 
 ## Things to make better
 
@@ -136,6 +145,11 @@ it for now (17 January 2021) but it should be fixed.
 
 ###  Exploration and learning (and exploitation)
 
+* Go back to g112, particularly the O0 expansion of A, and figure out
+  what ought to be happening with S_f in that expansion.  Should it
+  recognize the empty string or the empty set?   Adjust ixml-to-saprg
+  as needed.
+  
 * Redo the examples worked out by hand during the early exploratory
   work and record them as simple illustrations.  (They were chosen in
   part to help gain understanding; they can maybe help a reader
