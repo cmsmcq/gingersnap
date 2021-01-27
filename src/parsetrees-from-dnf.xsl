@@ -55,10 +55,10 @@
       *-->
   <xsl:param name="maxfail" as="xs:integer" select="10"/>
 
-  <!--* pseudoterminals: list of nonterminals which should not
+  <!--* pseudo-terminals: list of nonterminals which should not
       * be expanded.
       *-->
-  <xsl:param name="pseudoterminals" as="xs:string*" select="()"/>
+  <xsl:param name="pseudo-terminals" as="xs:string*" select="()"/>
 
   <!--* Define keys lhs and rhs to make it easier to find rule/alt
       * elements when we need them.
@@ -81,8 +81,8 @@
 	       select="$maxdepth"/>
     <xsl:param name="maxfail" as="xs:integer" tunnel="yes"
 	       select="$maxfail"/>
-    <xsl:param name="pseudoterminals" as="xs:string*" tunnel="yes"
-	       select="$pseudoterminals"/>
+    <xsl:param name="pseudo-terminals" as="xs:string*" tunnel="yes"
+	       select="$pseudo-terminals"/>
 
     <xsl:message use-when="false()">
       <xsl:text>maxfail = </xsl:text>
@@ -102,7 +102,7 @@
       </xsl:element>
       <xsl:element name="comment">
 	<xsl:text>    Output:  trees rooted in start symbol </xsl:text>
-	<xsl:text>with terminals and pseudoterminals as leaves.</xsl:text>
+	<xsl:text>with terminals and pseudo-terminals as leaves.</xsl:text>
       </xsl:element>
       
       <xsl:text>&#xA;</xsl:text>
@@ -113,7 +113,7 @@
 			    0,
 			    map{'maxdepth':  $maxdepth,
 			    'maxfail':  $maxfail, 
-			    'pseudoterminals':  $pseudoterminals, 
+			    'pseudo-terminals':  $pseudo-terminals, 
 			    'start-symbol': rule[1]/@name/string()})"/>
     </xsl:element>
   </xsl:template>
@@ -349,7 +349,7 @@
       <xsl:when test="$T/@name eq $options('start-symbol')
 		      and
 		      empty($T/descendant::nonterminal
-		      [not(@name=$options('pseudoterminals'))])">
+		      [not(@name=$options('pseudo-terminals'))])">
 	<xsl:message use-when="true()">
 	  <xsl:text>gt:make-trees() has completed a tree </xsl:text>
 	  <xsl:text>rooted in </xsl:text>
@@ -375,7 +375,7 @@
       <!--* if the tree is not complete, grow
 	  * downwards toward terminals *-->
       <xsl:when test="exists($T/descendant::nonterminal
-		      [not(@name=$options('pseudoterminals'))])">
+		      [not(@name=$options('pseudo-terminals'))])">
 	<xsl:message use-when="false()">
 	  <xsl:text>gt:make-trees() growing down. </xsl:text>
 	</xsl:message>
@@ -593,7 +593,7 @@
   <!--* Nonterminals do the interesting work.  Let's do them next.
       *--> 
   
-  <xsl:template match="nonterminal[not(@name = $pseudoterminals)]"
+  <xsl:template match="nonterminal[not(@name = $pseudo-terminals)]"
 		mode="leaf-expansion">
     <xsl:param name="new" as="element(alt)*" tunnel="yes"/>
     <xsl:param name="used" as="element(alt)*" tunnel="yes"/>
@@ -838,7 +838,7 @@
       *-->
 
   <xsl:template match="*[not(descendant-or-self::nonterminal)]
-		       | nonterminal[(@name = $pseudoterminals)]"
+		       | nonterminal[(@name = $pseudo-terminals)]"
 		mode="leaf-expansion">
     <xsl:param name="ngused" tunnel="yes"/>
 
