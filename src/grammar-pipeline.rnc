@@ -28,7 +28,7 @@ grammar {
 
 	start = grammar-pipeline
 
-	grammar-pipeline = element grammar-pipeline { (desc* & (step*, final?) }
+	grammar-pipeline = element grammar-pipeline { (desc* & (step*, final?)) }
 
 	step = annotation | algebra | modification | deletion
 	       | derivation | miscellaneous

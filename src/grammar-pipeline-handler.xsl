@@ -90,6 +90,7 @@
   <!--* miscellaneous *-->
   <xsl:import href="relabel.xsl"/>
   <xsl:import href="sort-nonterminals.xsl"/>
+  <xsl:import href="inlineability-tests.lib.xsl"/>
   
   <!--* visualization *--><!--
   <xsl:import href="rg-to-dot.xsl"/>
