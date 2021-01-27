@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ixml>
+   <comment> Grammar for simple arithmetic expressions, for testing of test-case
+  generation and grammar-manipulation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made grammar
+</comment>
+   <rule name="expr">:  <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>. 
+</rule>
+   <rule name="term">:   <alt>
+         <repeat1>
+            <nonterminal name="factor"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>. 
+</rule>
+   <rule name="factor">:   <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr"/>
+         <literal sstring="}"/>
+      </alt>. 
+</rule>
+   <rule name="num">:   <alt>
+         <repeat1>
+            <nonterminal name="digit"/>
+         </repeat1>
+         <option>
+            <alts>
+               <alt>
+                  <literal sstring="."/>
+                  <repeat0>
+                     <nonterminal name="digit"/>
+                  </repeat0>
+               </alt>
+            </alts>
+         </option>
+      </alt>. 
+</rule>
+   <rule name="var">:   <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+      </alt>. 
+</rule>
+   <rule name="addop">:  <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <inclusion>
+            <literal dstring="+-"/>
+         </inclusion>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="mulop">:  <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <inclusion>
+            <literal dstring="*/×÷"/>
+         </inclusion>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+      </alt>. 
+</rule>
+   <rule name="digit">:  <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+      </alt>. 
+</rule>
+   <rule name="s">:  <alt>
+         <literal hex="20"/>
+      </alt>
+      <alt>
+         <literal hex="9"/>
+      </alt>
+      <alt>
+         <literal hex="a"/>
+      </alt>.</rule>
+</ixml>

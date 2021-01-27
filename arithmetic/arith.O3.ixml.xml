@@ -1,0 +1,1781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<?xml-stylesheet type="text/xsl" href="../src/ixml-html.xsl"?>
+<ixml xmlns:gt="http://blackmesatech.com/2020/grammartools"
+      gt:date="2021-01-26T19:52:49.707615-07:00"
+      gt:base-grammar="file:/Users/cmsmcq/2021/gingersnap/arithmetic/arith.ixml.xml"
+      gt:base-grammar-uri="file:/Users/cmsmcq/2021/gingersnap/arithmetic/arith.ixml.xml"
+      gt:dg-type="regular approximation"
+      gt:ra-type="rk-subset"
+      gt:k="3">
+   <comment>2021-01-26T19:52:49.707615-07:00: ixml-to-rk-subset.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/arithmetic/arith.ixml.xml</comment>
+   <comment>    This grammar accepts the r_3 subset </comment>
+   <comment>    of the language accepted by the input grammar.</comment>
+   <comment>2021-01-26T19:52:49.707615-07:00: ixml-annotate-pc.xsl.</comment>
+   <comment>    Input: file:/Users/cmsmcq/2021/gingersnap/arithmetic/arith.ixml.xml</comment>
+   <comment>    Grammar augmented with @gt:recursive etc.</comment>
+   <comment> Grammar for simple arithmetic expressions, for testing of test-case
+  generation and grammar-manipulation tools.
+
+  Revisions:
+  2020-12-30 : CMSMcQ : made grammar
+</comment>
+   <comment> First, nonrecursive production rules </comment>
+   <rule name="num" gt:recursive="false">
+      <alt>
+         <repeat1>
+            <nonterminal name="digit"/>
+         </repeat1>
+         <option>
+            <alts>
+               <alt>
+                  <literal sstring="."/>
+                  <repeat0>
+                     <nonterminal name="digit"/>
+                  </repeat0>
+               </alt>
+            </alts>
+         </option>
+      </alt>
+   </rule>
+   <rule name="var" gt:recursive="false">
+      <alt>
+         <inclusion>
+            <range from="a" to="z"/>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="addop" gt:recursive="false">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <inclusion>
+            <literal dstring="+-"/>
+         </inclusion>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+      </alt>
+   </rule>
+   <rule name="mulop" gt:recursive="false">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <inclusion>
+            <literal dstring="*/×÷"/>
+         </inclusion>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+      </alt>
+   </rule>
+   <rule name="digit" gt:recursive="false">
+      <alt>
+         <inclusion>
+            <range from="0" to="9"/>
+         </inclusion>
+      </alt>
+   </rule>
+   <rule name="s" gt:recursive="false">
+      <alt>
+         <literal hex="20"/>
+      </alt>
+      <alt>
+         <literal hex="9"/>
+      </alt>
+      <alt>
+         <literal hex="a"/>
+      </alt>
+   </rule>
+   <comment> Second, recursive production rules </comment>
+   <rule name="expr"
+         gt:basename="expr"
+         gt:affix=""
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·" gt:basename="term" gt:affix="expr·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term"
+         gt:basename="term"
+         gt:affix=""
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·" gt:basename="factor" gt:affix="term·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor"
+         gt:basename="factor"
+         gt:affix=""
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·" gt:basename="expr" gt:affix="factor·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·" gt:basename="expr" gt:affix="factor·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·" gt:basename="expr" gt:affix="factor·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="term·expr·"
+         gt:basename="term"
+         gt:affix="expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·" gt:basename="factor" gt:affix="term·expr·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·"
+         gt:basename="factor"
+         gt:affix="term·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·" gt:basename="expr" gt:affix="factor·term·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·" gt:basename="expr" gt:affix="factor·term·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·" gt:basename="expr" gt:affix="factor·term·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·"
+         gt:basename="expr"
+         gt:affix="factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·" gt:basename="term" gt:affix="expr·factor·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·"
+         gt:basename="factor"
+         gt:affix="term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·"
+         gt:basename="expr"
+         gt:affix="factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·"
+         gt:basename="term"
+         gt:affix="expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·expr·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·expr·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·term·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·term·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·expr·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·term·expr·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·term·expr·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·term·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·factor·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·expr·factor·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·expr·factor·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·expr·factor·term·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·expr·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·term·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:type="stack-affixed">
+      <alt>
+         <nonterminal name="num"/>
+      </alt>
+      <alt>
+         <nonterminal name="var"/>
+      </alt>
+      <alt>
+         <literal sstring="("/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"/>
+         <literal sstring=")"/>
+      </alt>
+      <alt>
+         <literal sstring="["/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"/>
+         <literal sstring="]"/>
+      </alt>
+      <alt>
+         <literal sstring="{"/>
+         <nonterminal name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+                      gt:basename="expr"
+                      gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"/>
+         <literal sstring="}"/>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat0>
+            <nonterminal name="s"/>
+         </repeat0>
+         <repeat1>
+            <nonterminal name="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+                         gt:basename="term"
+                         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"/>
+            <sep>
+               <nonterminal name="addop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:type="stack-affixed">
+      <alt>
+         <repeat1>
+            <nonterminal name="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+                         gt:basename="factor"
+                         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"/>
+            <sep>
+               <nonterminal name="mulop"/>
+            </sep>
+         </repeat1>
+      </alt>
+   </rule>
+   <rule name="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:basename="expr"
+         gt:affix="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·"
+         gt:type="stub">
+      <alt>
+         <nonterminal name="max-expr"/>
+      </alt>
+   </rule>
+   <rule name="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:basename="term"
+         gt:affix="expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·term·"
+         gt:type="stub">
+      <alt>
+         <nonterminal name="max-term"/>
+      </alt>
+   </rule>
+   <rule name="factor·term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:basename="factor"
+         gt:affix="term·expr·factor·term·expr·factor·term·expr·factor·term·expr·factor·"
+         gt:type="stub">
+      <alt>
+         <nonterminal name="max-factor"/>
+      </alt>
+   </rule>
+
+   <rule name="max-expr">
+     <alt>
+       <repeat0>
+         <alts>
+           <alt>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <literal hex="20" id="s_1"/>
+                 </alt>
+                 <alt>
+                   <literal hex="9" id="s_2"/>
+                 </alt>
+                 <alt>
+                   <literal hex="a" id="s_3"/>
+                 </alt>
+               </alts>
+             </repeat0>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <alts>
+                     <alt>
+                       <repeat1>
+                         <alts>
+                           <alt>
+                             <inclusion id="digit_1">
+                               <range from="0" to="9"/>
+                             </inclusion>
+                           </alt>
+                         </alts>
+                       </repeat1>
+                       <option>
+                         <alts>
+                           <alt>
+                             <literal sstring="." id="num_2"/>
+                             <repeat0>
+                               <alts>
+                                 <alt>
+                                   <inclusion id="digit_1">
+                                     <range from="0" to="9"/>
+                                   </inclusion>
+                                 </alt>
+                               </alts>
+                             </repeat0>
+                           </alt>
+                         </alts>
+                       </option>
+                     </alt>
+                     <alt>
+                       <inclusion id="var_1">
+                         <range from="a" to="z"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                   <repeat0>
+                     <alts>
+                       <alt>
+                         <alts>
+                           <alt>
+                             <literal sstring=")"/>
+                           </alt>
+                           <alt>
+                             <literal sstring="]"/>
+                           </alt>
+                           <alt>
+                             <literal sstring="}"/>
+                           </alt>
+                         </alts>
+                       </alt>
+                     </alts>
+                   </repeat0>
+                   <alts>
+                     <alt>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <literal hex="20" id="s_1"/>
+                           </alt>
+                           <alt>
+                             <literal hex="9" id="s_2"/>
+                           </alt>
+                           <alt>
+                             <literal hex="a" id="s_3"/>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                       <inclusion id="mulop_2">
+                         <literal dstring="*/×÷"/>
+                       </inclusion>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <literal hex="20" id="s_1"/>
+                           </alt>
+                           <alt>
+                             <literal hex="9" id="s_2"/>
+                           </alt>
+                           <alt>
+                             <literal hex="a" id="s_3"/>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                     </alt>
+                     <alt>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <literal hex="20" id="s_1"/>
+                           </alt>
+                           <alt>
+                             <literal hex="9" id="s_2"/>
+                           </alt>
+                           <alt>
+                             <literal hex="a" id="s_3"/>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                       <inclusion id="addop_2">
+                         <literal dstring="+-"/>
+                       </inclusion>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <literal hex="20" id="s_1"/>
+                           </alt>
+                           <alt>
+                             <literal hex="9" id="s_2"/>
+                           </alt>
+                           <alt>
+                             <literal hex="a" id="s_3"/>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                     </alt>
+                   </alts>
+                 </alt>
+               </alts>
+             </repeat0>
+             <alts>
+               <alt>
+                 <literal sstring="("/>
+               </alt>
+               <alt>
+                 <literal sstring="["/>
+               </alt>
+               <alt>
+                 <literal sstring="{"/>
+               </alt>
+             </alts>
+           </alt>
+         </alts>
+       </repeat0>
+       <repeat0>
+         <alts>
+           <alt>
+             <literal hex="20" id="s_1"/>
+           </alt>
+           <alt>
+             <literal hex="9" id="s_2"/>
+           </alt>
+           <alt>
+             <literal hex="a" id="s_3"/>
+           </alt>
+         </alts>
+       </repeat0>
+       <repeat0>
+         <alts>
+           <alt>
+             <alts>
+               <alt>
+                 <repeat1>
+                   <alts>
+                     <alt>
+                       <inclusion id="digit_1">
+                         <range from="0" to="9"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                 </repeat1>
+                 <option>
+                   <alts>
+                     <alt>
+                       <literal sstring="." id="num_2"/>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <inclusion id="digit_1">
+                               <range from="0" to="9"/>
+                             </inclusion>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                     </alt>
+                   </alts>
+                 </option>
+               </alt>
+               <alt>
+                 <inclusion id="var_1">
+                   <range from="a" to="z"/>
+                 </inclusion>
+               </alt>
+             </alts>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <alts>
+                     <alt>
+                       <literal sstring=")"/>
+                     </alt>
+                     <alt>
+                       <literal sstring="]"/>
+                     </alt>
+                     <alt>
+                       <literal sstring="}"/>
+                     </alt>
+                   </alts>
+                 </alt>
+               </alts>
+             </repeat0>
+             <alts>
+               <alt>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+                 <inclusion id="mulop_2">
+                   <literal dstring="*/×÷"/>
+                 </inclusion>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+               </alt>
+               <alt>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+                 <inclusion id="addop_2">
+                   <literal dstring="+-"/>
+                 </inclusion>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+               </alt>
+             </alts>
+           </alt>
+         </alts>
+       </repeat0>
+       <alts>
+         <alt>
+           <repeat1>
+             <alts>
+               <alt>
+                 <inclusion id="digit_1">
+                   <range from="0" to="9"/>
+                 </inclusion>
+               </alt>
+             </alts>
+           </repeat1>
+           <option>
+             <alts>
+               <alt>
+                 <literal sstring="." id="num_2"/>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <inclusion id="digit_1">
+                         <range from="0" to="9"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                 </repeat0>
+               </alt>
+             </alts>
+           </option>
+         </alt>
+         <alt>
+           <inclusion id="var_1">
+             <range from="a" to="z"/>
+           </inclusion>
+         </alt>
+       </alts>
+       <repeat0>
+         <alts>
+           <alt>
+             <alts>
+               <alt>
+                 <literal sstring=")"/>
+               </alt>
+               <alt>
+                 <literal sstring="]"/>
+               </alt>
+               <alt>
+                 <literal sstring="}"/>
+               </alt>
+             </alts>
+           </alt>
+         </alts>
+       </repeat0>
+     </alt>
+   </rule>
+   
+   <rule name="max-term">
+     <comment> Arden's lemma has been applied here. </comment>
+     <alt>
+       <repeat0>
+         <alts>
+           <alt>
+             <alts>
+               <alt>
+                 <repeat1>
+                   <alts>
+                     <alt>
+                       <inclusion id="digit_1">
+                         <range from="0" to="9"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                 </repeat1>
+                 <option>
+                   <alts>
+                     <alt>
+                       <literal sstring="." id="num_2"/>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <inclusion id="digit_1">
+                               <range from="0" to="9"/>
+                             </inclusion>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                     </alt>
+                   </alts>
+                 </option>
+               </alt>
+               <alt>
+                 <inclusion id="var_1">
+                   <range from="a" to="z"/>
+                 </inclusion>
+               </alt>
+             </alts>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <repeat0>
+                     <alts>
+                       <alt>
+                         <literal hex="20" id="s_1"/>
+                       </alt>
+                       <alt>
+                         <literal hex="9" id="s_2"/>
+                       </alt>
+                       <alt>
+                         <literal hex="a" id="s_3"/>
+                       </alt>
+                     </alts>
+                   </repeat0>
+                   <inclusion id="mulop_2">
+                     <literal dstring="*/×÷"/>
+                   </inclusion>
+                   <repeat0>
+                     <alts>
+                       <alt>
+                         <literal hex="20" id="s_1"/>
+                       </alt>
+                       <alt>
+                         <literal hex="9" id="s_2"/>
+                       </alt>
+                       <alt>
+                         <literal hex="a" id="s_3"/>
+                       </alt>
+                     </alts>
+                   </repeat0>
+                   <alts>
+                     <alt>
+                       <repeat1>
+                         <alts>
+                           <alt>
+                             <inclusion id="digit_1">
+                               <range from="0" to="9"/>
+                             </inclusion>
+                           </alt>
+                         </alts>
+                       </repeat1>
+                       <option>
+                         <alts>
+                           <alt>
+                             <literal sstring="." id="num_2"/>
+                             <repeat0>
+                               <alts>
+                                 <alt>
+                                   <inclusion id="digit_1">
+                                     <range from="0" to="9"/>
+                                   </inclusion>
+                                 </alt>
+                               </alts>
+                             </repeat0>
+                           </alt>
+                         </alts>
+                       </option>
+                     </alt>
+                     <alt>
+                       <inclusion id="var_1">
+                         <range from="a" to="z"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                 </alt>
+                 <alt>
+                   <alts>
+                     <alt>
+                       <literal sstring=")"/>
+                     </alt>
+                     <alt>
+                       <literal sstring="]"/>
+                     </alt>
+                     <alt>
+                       <literal sstring="}"/>
+                     </alt>
+                   </alts>
+                 </alt>
+               </alts>
+             </repeat0>
+             <alts>
+               <alt>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+                 <inclusion id="mulop_2">
+                   <literal dstring="*/×÷"/>
+                 </inclusion>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+                 <alts>
+                   <alt>
+                     <literal sstring="("/>
+                   </alt>
+                   <alt>
+                     <literal sstring="["/>
+                   </alt>
+                   <alt>
+                     <literal sstring="{"/>
+                   </alt>
+                 </alts>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+               </alt>
+               <alt>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+                 <inclusion id="addop_2">
+                   <literal dstring="+-"/>
+                 </inclusion>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <literal hex="20" id="s_1"/>
+                     </alt>
+                     <alt>
+                       <literal hex="9" id="s_2"/>
+                     </alt>
+                     <alt>
+                       <literal hex="a" id="s_3"/>
+                     </alt>
+                   </alts>
+                 </repeat0>
+               </alt>
+             </alts>
+           </alt>
+           <alt>
+             <alts>
+               <alt>
+                 <literal sstring="("/>
+               </alt>
+               <alt>
+                 <literal sstring="["/>
+               </alt>
+               <alt>
+                 <literal sstring="{"/>
+               </alt>
+             </alts>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <literal hex="20" id="s_1"/>
+                 </alt>
+                 <alt>
+                   <literal hex="9" id="s_2"/>
+                 </alt>
+                 <alt>
+                   <literal hex="a" id="s_3"/>
+                 </alt>
+               </alts>
+             </repeat0>
+           </alt>
+         </alts>
+       </repeat0>
+       <alts>
+         <alt>
+           <repeat1>
+             <alts>
+               <alt>
+                 <inclusion id="digit_1">
+                   <range from="0" to="9"/>
+                 </inclusion>
+               </alt>
+             </alts>
+           </repeat1>
+           <option>
+             <alts>
+               <alt>
+                 <literal sstring="." id="num_2"/>
+                 <repeat0>
+                   <alts>
+                     <alt>
+                       <inclusion id="digit_1">
+                         <range from="0" to="9"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                 </repeat0>
+               </alt>
+             </alts>
+           </option>
+         </alt>
+         <alt>
+           <inclusion id="var_1">
+             <range from="a" to="z"/>
+           </inclusion>
+         </alt>
+       </alts>
+       <repeat0>
+         <alts>
+           <alt>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <literal hex="20" id="s_1"/>
+                 </alt>
+                 <alt>
+                   <literal hex="9" id="s_2"/>
+                 </alt>
+                 <alt>
+                   <literal hex="a" id="s_3"/>
+                 </alt>
+               </alts>
+             </repeat0>
+             <inclusion id="mulop_2">
+               <literal dstring="*/×÷"/>
+             </inclusion>
+             <repeat0>
+               <alts>
+                 <alt>
+                   <literal hex="20" id="s_1"/>
+                 </alt>
+                 <alt>
+                   <literal hex="9" id="s_2"/>
+                 </alt>
+                 <alt>
+                   <literal hex="a" id="s_3"/>
+                 </alt>
+               </alts>
+             </repeat0>
+             <alts>
+               <alt>
+                 <repeat1>
+                   <alts>
+                     <alt>
+                       <inclusion id="digit_1">
+                         <range from="0" to="9"/>
+                       </inclusion>
+                     </alt>
+                   </alts>
+                 </repeat1>
+                 <option>
+                   <alts>
+                     <alt>
+                       <literal sstring="." id="num_2"/>
+                       <repeat0>
+                         <alts>
+                           <alt>
+                             <inclusion id="digit_1">
+                               <range from="0" to="9"/>
+                             </inclusion>
+                           </alt>
+                         </alts>
+                       </repeat0>
+                     </alt>
+                   </alts>
+                 </option>
+               </alt>
+               <alt>
+                 <inclusion id="var_1">
+                   <range from="a" to="z"/>
+                 </inclusion>
+               </alt>
+             </alts>
+           </alt>
+           <alt>
+             <alts>
+               <alt>
+                 <literal sstring=")"/>
+               </alt>
+               <alt>
+                 <literal sstring="]"/>
+               </alt>
+               <alt>
+                 <literal sstring="}"/>
+               </alt>
+             </alts>
+           </alt>
+         </alts>
+       </repeat0>
+     </alt>
+   </rule>
+   <rule name="max-factor">
+      <alt>
+         <repeat0>
+            <alts>
+               <alt>
+                  <alts>
+                     <alt>
+                        <repeat1>
+                           <alts>
+                              <alt>
+                                 <inclusion id="digit_1">
+                                    <range from="0" to="9"/>
+                                 </inclusion>
+                              </alt>
+                           </alts>
+                        </repeat1>
+                        <option>
+                           <alts>
+                              <alt>
+                                 <literal sstring="." id="num_2"/>
+                                 <repeat0>
+                                    <alts>
+                                       <alt>
+                                          <inclusion id="digit_1">
+                                             <range from="0" to="9"/>
+                                          </inclusion>
+                                       </alt>
+                                    </alts>
+                                 </repeat0>
+                              </alt>
+                           </alts>
+                        </option>
+                     </alt>
+                     <alt>
+                        <inclusion id="var_1">
+                           <range from="a" to="z"/>
+                        </inclusion>
+                     </alt>
+                  </alts>
+                  <repeat0>
+                     <alts>
+                        <alt>
+                           <alts>
+                              <alt>
+                                 <literal sstring=")"/>
+                              </alt>
+                              <alt>
+                                 <literal sstring="]"/>
+                              </alt>
+                              <alt>
+                                 <literal sstring="}"/>
+                              </alt>
+                           </alts>
+                        </alt>
+                     </alts>
+                  </repeat0>
+                  <alts>
+                     <alt>
+                        <repeat0>
+                           <alts>
+                              <alt>
+                                 <literal hex="20" id="s_1"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="9" id="s_2"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="a" id="s_3"/>
+                              </alt>
+                           </alts>
+                        </repeat0>
+                        <inclusion id="mulop_2">
+                           <literal dstring="*/×÷"/>
+                        </inclusion>
+                        <repeat0>
+                           <alts>
+                              <alt>
+                                 <literal hex="20" id="s_1"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="9" id="s_2"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="a" id="s_3"/>
+                              </alt>
+                           </alts>
+                        </repeat0>
+                     </alt>
+                     <alt>
+                        <repeat0>
+                           <alts>
+                              <alt>
+                                 <literal hex="20" id="s_1"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="9" id="s_2"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="a" id="s_3"/>
+                              </alt>
+                           </alts>
+                        </repeat0>
+                        <inclusion id="addop_2">
+                           <literal dstring="+-"/>
+                        </inclusion>
+                        <repeat0>
+                           <alts>
+                              <alt>
+                                 <literal hex="20" id="s_1"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="9" id="s_2"/>
+                              </alt>
+                              <alt>
+                                 <literal hex="a" id="s_3"/>
+                              </alt>
+                           </alts>
+                        </repeat0>
+                     </alt>
+                  </alts>
+               </alt>
+               <alt>
+                  <alts>
+                     <alt>
+                        <literal sstring="("/>
+                     </alt>
+                     <alt>
+                        <literal sstring="["/>
+                     </alt>
+                     <alt>
+                        <literal sstring="{"/>
+                     </alt>
+                  </alts>
+                  <repeat0>
+                     <alts>
+                        <alt>
+                           <literal hex="20" id="s_1"/>
+                        </alt>
+                        <alt>
+                           <literal hex="9" id="s_2"/>
+                        </alt>
+                        <alt>
+                           <literal hex="a" id="s_3"/>
+                        </alt>
+                     </alts>
+                  </repeat0>
+               </alt>
+            </alts>
+         </repeat0>
+         <alts>
+            <alt>
+               <repeat1>
+                  <alts>
+                     <alt>
+                        <inclusion id="digit_1">
+                           <range from="0" to="9"/>
+                        </inclusion>
+                     </alt>
+                  </alts>
+               </repeat1>
+               <option>
+                  <alts>
+                     <alt>
+                        <literal sstring="." id="num_2"/>
+                        <repeat0>
+                           <alts>
+                              <alt>
+                                 <inclusion id="digit_1">
+                                    <range from="0" to="9"/>
+                                 </inclusion>
+                              </alt>
+                           </alts>
+                        </repeat0>
+                     </alt>
+                  </alts>
+               </option>
+            </alt>
+            <alt>
+               <inclusion id="var_1">
+                  <range from="a" to="z"/>
+               </inclusion>
+            </alt>
+         </alts>
+         <repeat0>
+            <alts>
+               <alt>
+                  <alts>
+                     <alt>
+                        <literal sstring=")"/>
+                     </alt>
+                     <alt>
+                        <literal sstring="]"/>
+                     </alt>
+                     <alt>
+                        <literal sstring="}"/>
+                     </alt>
+                  </alts>
+               </alt>
+            </alts>
+         </repeat0>
+         <comment>nil</comment>
+      </alt>
+   </rule>
+   <comment> bye </comment>
+</ixml>
