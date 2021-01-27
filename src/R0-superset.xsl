@@ -7,7 +7,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-10 : CMSMcQ : make stylesheet for convenience.
+      * 2021-01-26 : CMSMcQ : add pseudo-terminals parameter
+      * 2021-01-10 : CMSMcQ : make stylesheet for convenience. 
       *-->
 
   <!--****************************************************************
@@ -22,6 +23,12 @@
 
   <xsl:param name="start" as="xs:string" required="yes"/>
 
+  <!--* pseudo-terminals: list of nonterminals which should not
+      * be expanded.
+      *-->
+  <xsl:param name="pseudo-terminals" as="xs:string*" select="()"/>  
+
+  
   <xsl:variable name="pipeline"
 		as="element(grammar-pipeline)">
 
@@ -42,27 +49,36 @@
 	</p>
       </desc>
 
-      <annotate-pc>
+      <annotate-pc save="temp.r0.pc.xml">
 	<desc>
 	  <p>Parent/child annotation is a prerequisite for
 	  Gluschkov annoation.</p>
 	</desc>
       </annotate-pc>
 
-      <annotate-gl>
+      <annotate-gl save="temp.r0.gl.xml">
 	<desc>
 	  <p>Gluschkov annotation is a prerequisite for
 	  making the RTN.</p>
 	</desc>
       </annotate-gl>
 
-      <make-rtn non-fissile="#none" start="{$start}" linkage="#none" keep-non-fissiles="#no">
+      <make-rtn non-fissile="{if (empty($pseudo-terminals))
+			     then '#none'
+			     else $pseudo-terminals}"
+		start="{$start}"
+		linkage="#none"
+		keep-non-fissiles="#yes"
+		save="temp.r0.rtn.xml"
+		>
 	<desc>
 	  <p>Build the RTN, using all recursive nonterminals
 	  and providing no external linkage.</p>
 	</desc>
-      </make-rtn>    
-
+      </make-rtn>
+      <!--
+      <expand-references nonterminal="{$pseudo-terminals}"/>      
+      -->
     </grammar-pipeline>    
   </xsl:variable>
   
