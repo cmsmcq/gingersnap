@@ -63,7 +63,7 @@
 	  div.repeatsep { background-color: #DDFFDD; }
 	  span.rhs > span.alt { display: block; margin-left:  1em; }
 	  span.stack-rule { font-variant-caps: small-caps; color: navy; }
-	  .alts { background-color: pink; }
+	  .alts { background-color: #FEE; }
 	</style>
       </head>
       <body>
