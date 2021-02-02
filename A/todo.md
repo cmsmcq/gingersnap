@@ -18,6 +18,10 @@
 * Absolutize the reference to ixml-html.xsl, based on stylesheet
   location (?).
 
+* Make unit rule elimination stop injecting the same RHS more
+  than once.  (The O0 superset of ixml ends up with three copies
+  of some RHS, currently.   Worth fixing.)
+
 ### User conveniences, release engineering
 
 * Make stylesheet to read original grammar and produce draft
