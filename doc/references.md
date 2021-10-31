@@ -74,7 +74,7 @@ and 8th conference of the European Chapter of the Association for
 Computational Linguistics. (Madrid: EACL, 1997), pp. 452-459.
 
 * Langendoen 1975. D. Terence Langendoen. Finite-State parsing of
-phrase-structure languages and the status of readjustement rules in
+phrase-structure languages and the status of readjustment rules in
 grammar. *Linguistic Inquiry* 6.4 (Autumn 1975): 533-544.
 
 * Langendoen / Langsam 1987. D. Terence Langendoen and Yedidiyah Langsam.

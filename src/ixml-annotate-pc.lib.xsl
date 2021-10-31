@@ -70,7 +70,7 @@
 		  [name() = 'xml-stylesheet'])]">
       <xsl:processing-instruction name="xml-stylesheet">
 	<xsl:text>type="text/xsl"</xsl:text>
-	<xsl:text> href="../src/ixml-html.xsl"</xsl:text>
+	<xsl:text> href="../../../gingersnap/src/ixml-html.xsl"</xsl:text>
       </xsl:processing-instruction>
     </xsl:if>
     <xsl:copy>

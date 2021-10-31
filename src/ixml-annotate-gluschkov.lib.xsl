@@ -29,7 +29,8 @@
       *-->
 
   <!--* Revisions:
-      * 2020-12-28 : CMSMcQ : split into main and module
+      * 2021-01-30 : CMSMcQ : generate @xml:id not @id
+      * 2020-12-28 : CMSMcQ : split into main and module 
       * 2020-12-04 : CMSMcQ : found error in handling of sequences. 
       *                       Fixed (typo in handling option).
       *
@@ -85,7 +86,7 @@
     <xsl:variable name="id" select="gt:generate-id(.)"/>    
     <xsl:copy>
       <xsl:sequence select="@* except @gl:*"/>
-      <xsl:attribute name="id" select="$id"/>
+      <xsl:attribute name="xml:id" select="$id"/>
       <xsl:attribute name="gl:nullable" select="false()"/>
       <xsl:attribute name="gl:first" select="$id"/>
       <xsl:attribute name="gl:last" select="$id"/>
@@ -384,10 +385,13 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="lnRHS"
+		      as="element()*"
 		      select="$e/ancestor::rule/descendant::*"/>
 	<xsl:variable name="lnTokens"
+		      as="element()*"
 		      select="$lnRHS[gt:fIstoken(.)]"/>
 	<xsl:variable name="lnPrecedingtokens"
+		      as="element()*"
 		      select="$lnTokens[. &lt;&lt; $e]"/>
 	<xsl:variable name="pos"
 		      select="1 + count($lnPrecedingtokens)"/>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<locatingRules xmlns="http://thaiopensource.com/ns/locating-rules/1.0">
+  <uri resource="arith.O3.test-catalog.all.neg.xml" uri="../../ixml-tests/lib/test-catalog.rnc"/>
+  <uri resource="temp.arith.expr.O0.rg.xml.simpipe.xml" uri="../src/grammar-pipeline.rnc"/>
+  <uri resource="temp.e-pipe.2.xml" uri="../src/grammar-pipeline.rnc"/>
+  <uri resource="temp.t-pipe.2.xml" uri="../src/grammar-pipeline.rnc"/>
+  <uri resource="temp.f-pipe.1.xml" uri="../src/grammar-pipeline.rnc"/>
+  <uri resource="temp.f-pipe.2.xml" uri="../src/grammar-pipeline.rnc"/>
+</locatingRules>

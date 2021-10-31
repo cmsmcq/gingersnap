@@ -36,7 +36,11 @@
       *-->
 
   <!--* Revisions:
+      * 2021-01-30 : CMSMcQ : use @xml:id not @id
+      * 2021-01-27 : CMSMcQ : use = not eq for some comparisons 
       * 2021-01-17 : CMSMcQ : supply epsilon transition from N_0 to
+      *                       N_f if rule as a whole is nullable
+      *                       (list of last states omits N_0).
       * 2021-01-12 : CMSMcQ : revise parameters again 
       * 2021-01-01 : CMSMcQ : revise parameters 
       * 2020-12-28 : CMSMcQ : split into main and module to make Saxon 
@@ -260,7 +264,7 @@
 	<xsl:choose>
 	  <!--* Case 1.1: There are no pseudo-terminals, break this
 	      * rule out. *-->
-	  <xsl:when test="$non-fissile eq '#none'">
+	  <xsl:when test="$non-fissile = '#none'">
 	    <xsl:message use-when="false()">
 	      <xsl:text>    $fissile = '#all'</xsl:text>
 	      <xsl:text>&#xA;    $non-fissile = '#none'</xsl:text>
@@ -273,7 +277,7 @@
 	      * alone.
 	      * 1.2.a recursive:  break it out.
 	      *-->
-	  <xsl:when test="($non-fissile eq '#non-recursive')
+	  <xsl:when test="($non-fissile = '#non-recursive')
 			  and
 			  gt:fIsRecursiverule(.)">
 	    <xsl:message use-when="false()">
@@ -285,7 +289,7 @@
 	    <xsl:call-template name="breakout"/>
 	  </xsl:when>
 	  <!--* 1.2.b non-recursive, so non-fissile *-->
-	  <xsl:when test="($non-fissile eq '#non-recursive')
+	  <xsl:when test="($non-fissile = '#non-recursive')
 			  and
 			  not(gt:fIsRecursiverule(.))">
 	    <xsl:message use-when="false()">
@@ -444,7 +448,7 @@
       <xsl:comment>* lidFirst:  <xsl:value-of select="$lidFirst"/></xsl:comment>
       -->
       <xsl:apply-templates mode="arc"
-			   select="descendant::*[@id=$lidFirst]"/>
+			   select="descendant::*[@xml:id=$lidFirst]"/>
       <!--* If the rule is nullable, then N_0 is final, and needs
 	  * an epsilon transition to N_f.  *-->
       <xsl:if test="xs:boolean(@gl:nullable) = true()">
@@ -473,7 +477,7 @@
 
       <xsl:for-each select="//nonterminal[@name=$n]">
 	<xsl:variable name="eReferrer" as="element()" select="."/>
-	<xsl:variable name="idReferrer" as="xs:string" select="string(@id)"/>
+	<xsl:variable name="idReferrer" as="xs:string" select="string(@xml:id)"/>
 	<xsl:variable name="eRefRule" as="element(rule)" select="./ancestor::rule"/>
 
 	<xsl:choose>
@@ -590,7 +594,7 @@
 	  <xsl:copy>
 	    <xsl:sequence select="@*
 				  except
-				  (@id, @gl:*, @follow:*)"/>
+				  (@xml:id, @gl:*, @follow:*)"/>
 	    <xsl:sequence select="node()"/>
 	  </xsl:copy>
 	  <!--* Then the target state, which is the one for the
@@ -598,7 +602,7 @@
 	  <xsl:element name="nonterminal">
 	    <xsl:attribute name="rtn:nttype"
 			   select=" 'state' "/>
-	    <xsl:attribute name="name" select="string(@id)"/>
+	    <xsl:attribute name="name" select="string(@xml:id)"/>
 	  </xsl:element>
 	</xsl:element>
       </xsl:when>
@@ -618,7 +622,7 @@
 			   select=" 'call' "/>
 	    <xsl:attribute name="name" select="concat(@name, '_0')"/>
 	    <xsl:attribute name="rtn:stack"
-			   select="concat('push ', string(@id))"/>
+			   select="concat('push ', string(@xml:id))"/>
 	  </xsl:element>
 	</xsl:element>
       </xsl:when>
@@ -631,11 +635,11 @@
   <!--* We handle states with mode state-rule *-->
   <xsl:template match="*" mode="state-rule">
     <xsl:param name="rule" as="element(rule)" required="yes"/>
-    <xsl:variable name="state" select="@id"/>
+    <xsl:variable name="state" select="@xml:id"/>
     
     <!--* Make a rule for this state. *--> 
     <xsl:element name="rule">
-      <xsl:attribute name="name" select="@id"/>
+      <xsl:attribute name="name" select="@xml:id"/>
       <xsl:attribute name="rtn:nttype"
 		     select=" 'state' "/>
 
@@ -657,7 +661,7 @@
       <xsl:copy-of select="$lidFollowset"/></xsl:comment>
       -->
       <xsl:apply-templates mode="arc"
-			   select="$rule/descendant::*[@id=$lidFollowset]"/>
+			   select="$rule/descendant::*[@xml:id=$lidFollowset]"/>
       
       <!--* If this state is final in $rule, then make an arc to go
 	  * to N_f.
@@ -665,7 +669,7 @@
       <xsl:variable name="lidLast"
 		    as="xs:string*"
 		    select="tokenize($rule/@gl:last, '\s+')"/>
-      <xsl:if test="@id = $lidLast">
+      <xsl:if test="@xml:id = $lidLast">
 	<xsl:element name="alt">
 	  <xsl:element name="comment">nil</xsl:element>
 	  <xsl:element name="nonterminal">
@@ -732,13 +736,13 @@
 
     <xsl:choose>
       <xsl:when test="($fissile = '#all')
-		      and ($non-fissile eq '#non-recursive')">
+		      and ($non-fissile = '#non-recursive')">
 	<!--* default case:  pseudo-terminal iff not recursive *-->
 	<xsl:message use-when="false()">  ... able: calling not fIsRecursiverule </xsl:message>
 	<xsl:sequence select="not(gt:fIsRecursiverule($e))"/>
       </xsl:when>
       <xsl:when test="($fissile = '#all')
-		      and ($non-fissile eq '#none')">
+		      and ($non-fissile = '#none')">
 	<!--* if there are no pseudo-terminals, then this cannot
 	    * be one. *-->
 	<xsl:message use-when="false()">  ... baker: false </xsl:message>

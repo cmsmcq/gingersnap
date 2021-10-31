@@ -8,7 +8,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-16 : CMSMcQ : made stylesheet, cutting some corners
+      * 2021-01-30 : CMSMcQ : try to handle pseudo-terminals
+      * 2021-01-16 : CMSMcQ : made stylesheet, cutting some corners 
       *-->
 
   <!--****************************************************************
@@ -63,7 +64,7 @@
 		  select="gt:nodename(string(../@name))"/>
     <xsl:variable name="sTo" as="xs:string?"
 		  select="if (exists(nonterminal))
-			  then gt:nodename(nonterminal/@name/string())
+			  then gt:nodename(nonterminal[last()]/@name/string())
 			  else ()"/>
 
     <xsl:choose>
@@ -85,6 +86,16 @@
 	<xsl:value-of select="$sTo"/>
 	<xsl:text> [label="</xsl:text>
 	<xsl:apply-templates select="* except (nonterminal, comment)"/>	
+	<xsl:text>"];&#xA;</xsl:text>
+      </xsl:when>
+      <xsl:when test="count($leChildren) eq 2
+		      and count(nonterminal) eq 2">
+	<!-- pseudo-terminal, I hope *-->
+	<xsl:value-of select="$sFrom"/>
+	<xsl:text> -> </xsl:text>
+	<xsl:value-of select="$sTo"/>
+	<xsl:text> [label="</xsl:text>
+	<xsl:apply-templates select="* except (nonterminal[last()], comment)"/>	
 	<xsl:text>"];&#xA;</xsl:text>
       </xsl:when>
       <xsl:otherwise>
@@ -132,6 +143,13 @@
     <xsl:if test="following-sibling::*[not(self::comment)]">
       <xsl:text>; </xsl:text>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="nonterminal">
+    <!--* The only time we match a nonterminal is when it's
+	* not the last item in a RHS. We infer that it's a
+	* pseudo-terminal. Hope that's true. *-->
+    <xsl:value-of select="@name"/>
   </xsl:template>
   
 </xsl:stylesheet>

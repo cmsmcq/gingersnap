@@ -7,7 +7,9 @@
       *-->
 
   <!--* Revisions:
-      * 2020-12-28 : CMSMcQ : rename as ixml-grammar-tools.lib.xsl
+      * 2021-01-30 : CMSMcQ : make fIsToken return false for
+      *                       literals within character sets.
+      * 2020-12-28 : CMSMcQ : rename as ixml-grammar-tools.lib.xsl 
       *                       as part of restructuring and naming
       *                       changes.
       * 2020-12-23 : CMSMcQ : make this not a package.  What I learned
@@ -138,7 +140,7 @@
 			  [self::nonterminal
 			  or self::inclusion
 			  or self::exclusion
-			  or self::literal
+			  or self::literal[empty(parent::inclusion | parent::exclusion)]
 			  ])"/>
   </xsl:function>
 
