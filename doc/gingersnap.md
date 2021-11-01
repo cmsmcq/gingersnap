@@ -2,7 +2,9 @@
 
 2021-01-23, rev. 2021-01-24
 
-This is just a list of the stylesheets and modules in the Gingersnap library, with brief descriptions of what they do.
+# What's here
+
+This is currently just a list of the stylesheets and modules in the Gingersnap library, with brief descriptions of what they do.
 
 It does not explain how to do anything useful, or provide examples.  That will have to wait.
 
@@ -28,7 +30,7 @@ Unless otherwise indicated, all stylesheets read an ixml grammar and produce an 
 
 * *pseudo-regular grammars* (sometimes PRG) treat some nonterminals as if they were terminals; normally those nonterminals generate a regular language and might be treated as terminal symbols in a parser with a lexer.  I often call such nonterminals *pseudo-terminals*.
 
-* *stack-augmented pseudo-regular grammars* (sometimes SAPRG) are pseudo-regular grammars in which some rules and some nonterminals are augmented with instructions for managing a push-down stack.  When interpreted by suitable software, SAPRGs thus effectively define a push-down automaton.  The *ixml-to-saprg* module generates a push-down automaton which can effectively interprets the input grammar as a recursive transition network in the sense of Wood 1970.  Ignoring the stack  in such a push-down automaton reduces -- in particular ignoring the stack-related constraints on transitions -- reduces the push-down automaton to a finite state automaton recognizing the O<sub>0</sub> superset of the language of the push-down automaton.
+* *stack-augmented pseudo-regular grammars* (sometimes SAPRG) are pseudo-regular grammars in which some rules and some nonterminals are augmented with instructions for managing a push-down stack.  When interpreted by suitable software, SAPRGs thus effectively define a push-down automaton.  The *ixml-to-saprg* module generates a push-down automaton which can effectively interprets the input grammar as a recursive transition network in the sense of Wood 1970.  Ignoring the stack in such a push-down automaton reduces -- in particular ignoring the stack-related constraints on transitions -- reduces the push-down automaton to a finite state automaton recognizing the O<sub>0</sub> superset of the language of the push-down automaton.
 
 * *mixed grammar* is a grammar in which some production rules have been translated into a stack-augmented pseudo-regular grammar and others have been left alone.  (The recursive transition network is simpler and smaller if non-recursive symbols in the grammar are left alone when building the RTN.)
 
@@ -84,7 +86,7 @@ Some of these may be applicable to grammars in general, but most were developed 
 
 * `determinize-ixml-fsa.xsl` reads an FSA and produces an equivalent deterministic FSA.  Presupposes that terminals have been normalized. 
 
-* `dnf-from-andor.xsl` expands choices nested within sequences to turn a grammar with no `repeat0`, `repeat1`, or `option` elements into disjuntive normal form.  (If repeats and options are present, behavior is undefined and probably not helpful; safely used after repeats and options have been unrolled.)
+* `dnf-from-andor.xsl` expands choices nested within sequences to turn a grammar with no `repeat0`, `repeat1`, or `option` elements into disjunctive normal form.  (If repeats and options are present, behavior is undefined and probably not helpful; safely used after repeats and options have been unrolled.)
 
 ### Changes to the grammar
 
@@ -129,7 +131,7 @@ The following relate specifically to the creation of positive test cases from a 
 
 * `unroll-occurrences.xsl` replaces E? with ({nil} | E), E*F with ({nil} | E | EFEFE... ), and E+F with (E | EFEFE... ).  Note that this is a lossy transformation.  A parameter controls the number of repetitions in the last disjunct for repeats; the default is 3, because higher numbers easily produce very voluminous, repetitive results.  The resulting grammar is effectively restricted to terminal symbols, nonterminal symbols, sequences (`alt` elements) and choices (`alts` elements) and can usefully be interpreted as a set of and/or trees.  The output from this stylesheet should normally be fed to `dnf-from-andor` to create a grammar in disjunctive normal form.  
 
-* `parsetrees-from-dnf.xsl` reads a grammar in disjunctive normal form (normally produced from the grammar for which we want positive test cases by running it through `untroll-occurrences` and `dnf-from-andor`) and produces a set of parsetrees.  The algorithm is simple:  it picks a RHS from the grammar and extends it upward until it starts with the start symbol and downward until all nonterminals have been expanded.  Whenever a RHS is needed, preference is given to right-hand sides not already used.  If the tree exceeds a user-specified height before being completed, it is abandoned but included in the output as a failed tree.  Processing ends when all right-hand sides in the input have been used, or when a user-specified limit on the number of failed trees is exceeded.
+* `parsetrees-from-dnf.xsl` reads a grammar in disjunctive normal form (normally produced from the grammar for which we want positive test cases by running it through `unroll-occurrences` and `dnf-from-andor`) and produces a set of parsetrees.  The algorithm is simple:  it picks a RHS from the grammar and extends it upward until it starts with the start symbol and downward until all nonterminals have been expanded.  Whenever a RHS is needed, preference is given to right-hand sides not already used.  If the tree exceeds a user-specified height before being completed, it is abandoned but included in the output as a failed tree.  Processing ends when all right-hand sides in the input have been used, or when a user-specified limit on the number of failed trees is exceeded.
 
 In practice, for 'real' grammars the majority of trees produced by `parsetrees-from-dnf` may be incomplete, because of interactions among the way repeats are handled in `unroll-occurrences` and the way right-hand sides are re-used in building trees.  The next two stylesheets are written to fix up this situation.
 
