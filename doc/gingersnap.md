@@ -1,5 +1,11 @@
 # Overview of Gingersnap
 
+Gingersnap is a collection of tools for working with invisible-XML grammars.
+
+'Invisible XML' is the name given to an idea put forward by Steven Pemberton:  we can make non-XML resources accessible to XML-based tools by writing a grammar describing them and using an invisible-XML parser to use the grammar to parse the resource and produce an XML representation of the resource.
+
+Gingersnap is not an invisible-XML parser.  (There are a few in development.)  It's a tool to do things with ixml grammars.
+
 2021-01-23, rev. 2021-01-24
 
 # What's here
@@ -8,7 +14,7 @@ This is currently just a list of the stylesheets and modules in the Gingersnap l
 
 It does not explain how to do anything useful, or provide examples.  That will have to wait.
 
-In its current state, Gingersnap is messy.  Its primary job so far has been to enabel the author to get some specific tasks done. The stylesheets work, at least on the data processed so far, and it's possible to string them together to do useful things.  But the library has been written piece by piece as things were needed, and the kind of consistency that follows from a clear central plan is mostly missing.  Naming conventions are inconsistent, and putting sequences of transforms together into work flows requires an awareness of a great deal of detail irrelevant to the ultimate goal.  (The library thus qualifies as 'low-level' by Perlis's criterion.  I comfort myself by reflecting that he also said "Everything should be built top-down, except the first time," and also "Simplicity does not precede complexity, but follows it.")
+In its current state, Gingersnap is messy.  Its primary job so far has been to enable the author to get some specific tasks done. The stylesheets work, at least on the data processed so far, and it's possible to string them together to do useful things.  But the library has been written piece by piece as things were needed, and the kind of consistency that follows from a clear central plan is mostly missing.  Naming conventions are inconsistent, and putting sequences of transforms together into work flows requires an awareness of a great deal of detail irrelevant to the ultimate goal.  (The library thus qualifies as 'low-level' by Perlis's criterion.  I comfort myself by reflecting that he also said "Everything should be built top-down, except the first time," and also "Simplicity does not precede complexity, but follows it.")
 
 So:  anyone is welcome to look around and play with the library. but potentially interested users should be warned that in its current state, the library may be unnecessarily and frustratingly difficult for other people to use.  You have been warned.  (And it's no good telling me I should write some introductory documentation.  I agree; it's on the to-do list.  But better documentation is currently less urgent than the things above it on that list.
 
