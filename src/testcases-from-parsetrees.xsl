@@ -32,7 +32,8 @@
       *-->
 
   <!--* Revisions:
-      * 2021-01-25 : CMSMcQ : modify to match draft schema for test
+      * 2021-11-17 : CMSMcQ : adjustments to match test-catalog.rnc
+      * 2021-01-25 : CMSMcQ : modify to match draft schema for test 
       *                       catalogs
       * 2021-01-24 : CMSMcQ : continue working, writing cooked mode
       * 2021-01-23 : CMSMcQ : make this file 
@@ -276,6 +277,7 @@
   </xsl:template>
   
   <xsl:template name="test-set-header">
+    <xsl:attribute name="name" select="test-set-nnn"/>
     <xsl:element name="created" namespace="{$ns-tc}">
       <xsl:attribute name="by" select="$who"/>
       <xsl:attribute name="on" select="$when"/>
