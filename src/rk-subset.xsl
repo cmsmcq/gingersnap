@@ -27,10 +27,10 @@
     <grammar-pipeline>
 
       <desc>
-	<p>This pipeline takes an ixml grammar and produces an r_k
-	subset grammar.</p>
-	<p>Two steps are required:  first, parent/child annotation,
-	and then the generation of the subset.</p>
+        <p>This pipeline takes an ixml grammar and produces an r_k
+        subset grammar.</p>
+        <p>Two steps are required:  first, parent/child annotation,
+        and then the generation of the subset.</p>
       </desc>
 
       <annotate-pc/>
