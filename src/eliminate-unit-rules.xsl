@@ -33,6 +33,26 @@
   
   <xsl:mode name="eliminate-unit-rules" on-no-match="shallow-copy"/>
 
+  <!--* fissile and non-fissile copied in from ixml-to-saprg.lib.xsl.
+      * They are not actually used in this stylesheet. *-->
+  
+  <!--* fissile: which nonterminals should be broken out?
+      * Either '#all' (meaning everything not marked non-fissile)
+      * or a list of names.
+      * Default is:  #all.
+      *-->
+  <xsl:param name="fissile" as="xs:string*"
+	     select=" '#all' "/>
+
+  <!--* non-fissile: which nonterminals should be treated as
+      * pseudo-terminals and NOT be broken out?
+      * Either '#non-recursive' (relying on @gt:recursive marking)
+      * or '#none' (meaning all nonterminals are fissile)
+      * or a list of names (for hand-selected pseudo-terminals)
+      * Default is:  #non-recursive.
+      *-->
+  <xsl:param name="non-fissile" as="xs:string*"
+	     select=" '#non-recursive' "/>
   
   <!--****************************************************************
       * Main / starting template
