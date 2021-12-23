@@ -1,6 +1,6 @@
 # Generating infinite series of regular subset and superset approximations for context-free languages
 
-2020-01-11
+2021-01-11, minor changes 2021-12-22
 
 This document describes a method for generating an infinite series of
 pairs of regular approximations for a given context free language *L*
@@ -14,18 +14,18 @@ language *L* there exists a number *m* such that any sentence *s*
 in *L* of length greater than *m* can be partitioned into
 substrings *u*, *v*, and *w* such that
 
-* *v* is non-empty (though *u* and *w* may be)
+* *v* is non-empty (though *u* and *w* may be empty)
 * |*u* *w*| <= *m*
 * *s* = *u* *v* *w*
 * for all integers *n* >= 0, the string *u* *v*<sup>*n*</sup> *w* is in *L*
 
-(I am using blank as a concatenation operator here.)
+I am using blank as a concatenation operator here.
 
-(I am also quoting from memory, so if the reader wants to be
+I am also quoting from memory, so if the reader wants to be
 absolutely sure of the details, the reader should check a book on
 automata theory.  The fact that without *v* the sentence is shorter
 than *m* symbols long and with *v* it's not appears to be important
-for some proofs; it's not important for my purposes.)
+for some proofs; it's not important for my purposes.
 
 ### The pumping lemma and walking through the FSA 
 
@@ -37,17 +37,17 @@ recognize *L*.) Each sentence *s* in *L* can be associated with a walk
 through the FSA which leads from the start state to some final state,
 traversing one transition arc per symbol in *s*.
 
-(I am using *walk*, not *path*, because in graph theory a path has
-restrictions I don't want.)
+I am using *walk*, not *path*, because in graph theory a path has
+restrictions I don't want.
 
 Now, if *s* has more symbols than the FSA has states, it's clear that
 at some point in the walk some state *r* is visited for the second
 time.
 
-So there must be a cycle in the FSA. (If there is no cycle in the FSA,
+So there must be a cycle in the FSA. If there is no cycle in the FSA,
 there will be a maximum length to sentences in *L* and only a finite
 number of sentences. The pumping lemma is vacuously true if we set *m*
-to the maximum length of sentences in *L*.)
+to the maximum length of sentences in *L*.
 
 To make the statements in the lemma true, we let
 
@@ -55,7 +55,7 @@ To make the statements in the lemma true, we let
 * *v* = the string that gets us from the first visit to *r* to the second visit to *r*
 * *w* = the string that gets us from the second visit to *r* to some final state
 
-It's clear that *u* *w* (= *u* *v*<sup>0</sup> *w*) has a walk that goes from  
+It's clear that *u* *w* (= *u* *v*<sup>0</sup> *w*) has a walk that goes from 
 the start state to a final state, so it must be in *L*.
 
 We know from the givens that *u* *v* *w* (= *u* *v*<sup>1</sup> *w*) is in *L*.
@@ -85,12 +85,12 @@ terminal symbol *T*; the second corresponds to an empty transition
 (epsilon transition) from *N* to *N2*. The third rule form marks *N*
 as a final state.
 
-(Some authors allow rules of the form
+Some authors allow rules of the form
 
 * N: T.
 
 and disallow the third form, but then the 1:1 correspondence of FSA
-states and nonterminals falls apart.)
+states and nonterminals falls apart.
 
 Each walk through the FSA from start state to some final state
 corresponds to a parse tree. Each state that is visited more than once
@@ -106,7 +106,7 @@ If the recursive nonterminal is *r*, then
 
 When there is a cycle in the FSA from state *r* to state *r*, then the
 nonterminal *r* can derive a sentential form containing the
-nonterminal *r* (which is what I mean when I say *r* is recursive).
+nonterminal *r*, which is what I mean when I say *r* is recursive.
 
 Just as we can walk the cycle zero times, once, or more than once, so
 the topmost *r* in a parse tree can have no *r* nodes among its
@@ -131,14 +131,18 @@ string *u* *v*<sup>*n*</sup> *w* *x*<sup>*n*</sup> *y* is in *L*
 Here, as above, the observations about the length of the sentence with
 and without the repeatable substrings are not important for our
 purposes. Any sentence for which the first three conditions are
-satisifed I will call a *pumpable* sentence. (It can occur that there
+satisifed I will call a *pumpable* sentence. It can occur that there
 are pumpable sentences shorter than the *m* for a given language. I
 don't care about *m*, I only care about the first three properties.
 
-Note that if either *v* or *x* is empty, this reduces to the pumping
-lemma for regular languages: the sentence has a prefix, a non-empty
-repeatable substring, and a suffix. If both *v* and *x* are non-empty,
-then the language is non-regular.
+Note that if either *v* or *x* is empty, the pumping lemma for
+context-freee languages reduces to the pumping lemma for regular
+languages: the sentence has a prefix, a non-empty repeatable
+substring, and a suffix. If the languages is non-regular, then both
+*v* and *x* will be non-empty.  (The converse is not guaranteed: it is
+possible to construct grammars for regular languages with non-empty
+*v* and *x*, and Greibach's theorem tells us we cannot always detect
+that the language recognized is regular.)
 
 A simple example is given by the grammar
 
@@ -183,10 +187,11 @@ One way to understand why the pumping lemma holds is to consider parse
 trees in which some recursive nonterminal *r* occurs both as an
 ancestor and as a descendant. A drawing of the tree would be
 convenient, but for now I'll attempt to make things clear by talking
-about sentential forms. If an *r* appears in a parse tree at all, then
-it must be the case that the start symbol of the grammar generates
-some sentential form (alpha, *r*, zeta), where alpha and zeta are
-sequences of symbols (arbitrary mixes of terminal and non-terminal)
+about sentential forms.  (This saves me some fighting with Markdown.)
+If an *r* appears in a parse tree at all, then it must be the case
+that the start symbol of the grammar generates some sentential form
+(alpha, *r*, zeta), where alpha and zeta are sequences of symbols
+(arbitrary mixes of terminal and non-terminal)
 
 * S =>* alpha *r* zeta
 
@@ -286,8 +291,9 @@ given finite maximum depth *k*.
 Since subsets do not generate all the sentences of the target 
 language, they can be said to 'under-generate'. We refer to a subset 
 for a given *k* as *U(k)*.   (Note:  in some older materials and in some
-program names, the terms *r*<sub>*k*</sub> or *r_k* or *rk* may
-be used instead.)
+program names, I have used the terms *r*<sub>*k*</sub> or *r_k* or
+*rk* and these terms may still be hanging around in some materials
+in this project.)
 
 
 ### Approximation with a superset
