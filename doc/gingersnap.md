@@ -1,8 +1,16 @@
-# Overview of Gingersnap
+<# Overview of Gingersnap
+
+Gingersnap is a collection of tools for working with invisible-XML grammars.
+
+'Invisible XML' is the name given to an idea put forward by Steven Pemberton:  we can make non-XML resources accessible to XML-based tools by writing a grammar describing them and using an invisible-XML parser to use the grammar to parse the resource and produce an XML representation of the resource.
+
+Gingersnap is not an invisible-XML parser.  (There are a few in development.)  It's a tool to do things with ixml grammars.
 
 2021-01-23, rev. 2021-01-24
 
-This is just a list of the stylesheets and modules in the Gingersnap
+# What's here 
+
+This is currently just a list of the stylesheets and modules in the Gingersnap
 library, with brief descriptions of what they do.
 
 It does not explain how to do anything useful, or provide examples.
@@ -29,6 +37,8 @@ for other people to use.  You have been warned.  (And it's no good
 telling me I should write some introductory documentation.  I agree;
 it's on the to-do list.  But better documentation is currently less
 urgent than the things above it on that list.)
+
+
 
 ## Subclasses of grammar
 
@@ -401,6 +411,20 @@ another, governed by an XML document listing the sequence of steps.
 * `grammar-pipeline.rnc` is a Relax NG compact-syntax schema defining
   the set of pipeline documents for which the grammar pipeline handler
   should be prepared.
+
+* `parsetrees-from-dnf.xsl` reads a grammar in disjunctive normal form
+  (normally produced from the grammar for which we want positive test
+  cases by running it through `unroll-occurrences` and
+  `dnf-from-andor`) and produces a set of parsetrees.  The algorithm
+  is simple: it picks a RHS from the grammar and extends it upward
+  until it starts with the start symbol and downward until all
+  nonterminals have been expanded.  Whenever a RHS is needed,
+  preference is given to right-hand sides not already used.  If the
+  tree exceeds a user-specified height before being completed, it is
+  abandoned but included in the output as a failed tree.  Processing
+  ends when all right-hand sides in the input have been used, or when
+  a user-specified limit on the number of failed trees is exceeded.
+
 
 As this first description is written, the pipeline schema and handler
 are a little behind: there are some newer stylesheet modules that have
