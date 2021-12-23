@@ -46,7 +46,7 @@
   <xsl:output method="xml" indent="yes"/>
 
   <!--* maxdepth: what is maximum depth of a resulting tree?
-      * When do we quit if we don't manage a complete xsl?
+      * When do we quit if we don't manage a complete tree?
       *-->
   <xsl:param name="maxdepth" as="xs:integer" select="40"/>
 
@@ -58,7 +58,11 @@
   <!--* pseudo-terminals: list of nonterminals which should not
       * be expanded.
       *-->
-  <xsl:param name="pseudo-terminals" as="xs:string*" select="()"/>
+  <xsl:param name="pseudo-terminals" as="xs:string*"
+	     select="('mark', 'tmark', 'name', 'hex', 'string',
+		     'whitespace', 'comment')"/>
+  <!-- <xsl:param name="pseudo-terminals" as="xs:string*"
+       select="()"/> -->
 
   <!--* Define keys lhs and rhs to make it easier to find rule/alt
       * elements when we need them.
