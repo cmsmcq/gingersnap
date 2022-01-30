@@ -41,16 +41,28 @@
       * Rewriting:
       * rule/alt[count(*) = 1]/alts:  promote grandchildren
       * rule/alt[count(*) = 1]/option:  empty or E
-      * rule/alt[count(*) = 1]/repeat0:  empty or E, E, more_Es
+      * rule/alt[count(*) = 1]/repeat0:  empty or E, more_Es
       *   where more_Es = empty; SEP, E, more_Es.
       * rule/alt[count(*) = 1]/repeat1:  E or E, E, more_Es
       *   where more_Es = empty; SEP, E, more_Es.
       *
+      * The last two create multiple copies of E, so they should 
+      * be performed only after the choices in E have been sufficiently
+      * reified or flattened.
+      *
       * In order to inject the reifications and the more_Es rules, 
-      * the rule element traverses its children twice.
+      * the rule element traverses its children twice.  
+      *
+      * In order to ensure that the flattening and rule-generation
+      * work is done for the same nodes, we use the same templates
+      * on both passes.  (Modes should work but I was getting rules
+      * generated for choice elements which had been reified, because
+      * a node was skipped in one mode but not in the other.  So I
+      * have shifted to a tunnel parameter.)
       *-->
 
   <!--* Revisions:
+      * 2022-01-30 : CMSMcQ : make the output more economical
       * 2022-01-29 : CMSMcQ : made transform after thinking about it
       *                       for quite a while.
       *-->
@@ -60,7 +72,6 @@
       ****************************************************************
       *-->
   <xsl:mode name="tc-flattening" on-no-match="shallow-copy"/>
-  <xsl:mode name="rule-addition" on-no-match="shallow-skip"/>
   
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
@@ -85,6 +96,11 @@
     <xsl:param name="passes-remaining" as="xs:integer"
 	       select="$max-passes"/>
 
+    <xsl:message>
+      <xsl:text>Pass number </xsl:text>
+      <xsl:value-of select="1 + $max-passes - $passes-remaining"/>
+    </xsl:message>    
+
     <xsl:variable name="stylesheet" as="processing-instruction()">
       <xsl:processing-instruction name="xml-stylesheet">
 	<xsl:text>type="text/xsl" href="ixml-html.xsl"</xsl:text>
@@ -97,7 +113,10 @@
       </xsl:when>
       <xsl:otherwise>
 	<xsl:variable name="doc1" as="element(ixml)">
-	  <xsl:apply-templates select="$doc0" mode="tc-flattening"/>
+	  <xsl:apply-templates select="$doc0" mode="tc-flattening">
+	    <xsl:with-param name="kwHow" select="'tc-flattening'"
+			    tunnel="yes"/>
+	  </xsl:apply-templates>
 	</xsl:variable>
 	<xsl:choose>
 	  <xsl:when test="deep-equal($doc0, $doc1)">
@@ -120,151 +139,280 @@
       ****************************************************************
       *-->
 
-  <!--* for every rule, first copy it in tc-flattening mode, then
-      * process it again in rule-addition mode, in case we need to
-      * add new rules to reify a choice within the original rule.
+  <!--* for every rule, first handle it in tc-flattening mode, then
+      * process it again to produce any required new rules.
       *-->
-  <xsl:template match="rule">
+  <xsl:template match="rule" priority="5">
     <xsl:copy>
       <xsl:sequence select="@*"/>
-      <xsl:apply-templates mode="tc-flattening"/>
+      <xsl:apply-templates>
+	<xsl:with-param name="kwHow" select="'tc-flattening'"
+			tunnel="yes"/>
+      </xsl:apply-templates>
     </xsl:copy>
-    <xsl:apply-templates mode="rule-addition"/>
+    <xsl:apply-templates>
+      <xsl:with-param name="kwHow" select="'rule-addition'"
+		      tunnel="yes"/>
+    </xsl:apply-templates>
   </xsl:template>
 
-  <!--* In tc-flattening mode, replace choice with a reference
-      * to a new nonterminal.  (Note that if the choice element
-      * is the sole child of a right-hand side, this template
-      * won't fire because the template for alt will fire first.
-      *-->
-  <xsl:template match="alts | option | repeat0 | repeat1"
-		mode="tc-flattening">
+  <!--* In the tc-flattening pass, replace choice with a reference
+      * to a new nonterminal.  Note that if the choice element
+      * is the sole child of a right-hand side, we do not want
+      * this template to fire.
+      *
+      * In the rule-addition pass, generate a new rule for the 
+      * newly generated nonterminal.
+      *-->  
+  <xsl:template match="*
+		       [self::alts[count(alt) gt 1] 
+		       or self::option 
+		       or self::repeat0
+		       or self::repeat1]
+		       [ (count(../* except ../comment) gt 1)
+		       or empty(parent::alt/parent::rule)]
+		       "
+		mode="tc-flattening"
+		priority="2">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>
+
     <xsl:variable name="N" as="xs:string"
 		  select="gt:generate-nonterminal(.)"/>
-    <xsl:element name="nonterminal">
-      <xsl:attribute name="name" select="$N"/>
-    </xsl:element>
+
+    <xsl:choose>
+      <xsl:when test="$kwHow = 'tc-flattening'">
+	<xsl:message>
+	  <xsl:text>  Reifying </xsl:text>
+	  <xsl:value-of select="name()"/>
+	  <xsl:text>  element in </xsl:text>
+	  <xsl:value-of select="ancestor::rule/@name"/>
+	  <xsl:text> as </xsl:text>
+	  <xsl:value-of select="$N"/>      
+	</xsl:message>
+    
+	<xsl:element name="nonterminal">
+	  <xsl:attribute name="name" select="$N"/>
+	</xsl:element>
+      </xsl:when>
+      
+      <xsl:when test="$kwHow = 'rule-addition'">
+	
+	<xsl:message>
+	  <xsl:text>  Writing rule for </xsl:text>
+	  <xsl:value-of select="name()"/>
+	  <xsl:text> element in </xsl:text>
+	  <xsl:value-of select="ancestor::rule/@name"/>
+	  <xsl:text> as </xsl:text>
+	  <xsl:value-of select="$N"/>      
+	</xsl:message>
+	
+	<xsl:element name="rule">
+	  <xsl:attribute name="name" select="$N"/>
+	  <xsl:attribute name="mark" select="'-'"/>
+	  <xsl:element name="alt">
+	    <xsl:sequence select="."/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:when>
+
+      <xsl:otherwise>
+	<xsl:message>All bets are off.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
-  <!--* In rule-addition mode, generate a new rule for the 
-      * newly generated nonterminal.
-      *-->
-  <xsl:template match="alts | option | repeat0 | repeat1"
-		mode="rule-addition">
-    <xsl:variable name="N" as="xs:string"
-		  select="gt:generate-nonterminal(.)"/>
-    <xsl:if test="(count(../* except ../comment) gt 1)
-		  or empty(parent::alt/parent::rule)">
-      <xsl:element name="rule">
-	<xsl:attribute name="name" select="$N"/>
-	<xsl:attribute name="mark" select="'-'"/>
-	<xsl:element name="alt">
-	  <xsl:sequence select="."/>
-	</xsl:element>
-      </xsl:element>
-    </xsl:if>
-  </xsl:template>
 
   <!--****************************************************************
       * Rewriting
       ****************************************************************
       *-->
 
-  <!--* rule/alt[count(* except comment) = 1]/alts:  promote grandchildren       *-->
+  <!--* alts:  Exp = (F | G) *-->
+  <!--* rule/alt[count(* except comment) = 1]/alts:  promote 
+      * grandchildren
+      *-->
   
-  <xsl:template match="rule/alt[count(* except comment) = 1][alts]">
-    <xsl:sequence select="alts/*"/>
+  <xsl:template match="rule/alt
+		       [alts]
+		       [count(* except comment) = 1]
+		       ">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>
+    <xsl:choose>
+      <xsl:when test="$kwHow = 'tc-flattening'">
+	<xsl:sequence select="alts/*"/>
+      </xsl:when>
+      <xsl:when test="$kwHow = 'rule-addition'">
+	<!--* do nothing:  we don't need a new rule,
+	    * and the flattening pass does not recur. *-->
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>Thud.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
 
   
+  <!--* option:  Exp = E? *-->
   <!--* rule/alt[count(*) = 1]/option:  empty or E                *-->
   
-  <xsl:template match="rule/alt[count(* except comment) = 1][option]">
-    <xsl:element name="alt">
-      <xsl:element name="comment">
-	<xsl:text>* empty *</xsl:text>
-      </xsl:element>
-    </xsl:element>
-    <xsl:element name="alt">
-      <xsl:sequence select="option/*"/>
-    </xsl:element>
+  <xsl:template match="rule/alt
+		       [option]
+		       [count(* except comment) = 1]
+		       ">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>
+    <xsl:choose>
+      <xsl:when test="$kwHow = 'tc-flattening'">
+	<xsl:element name="alt">
+	  <xsl:element name="comment">
+	    <xsl:text>* empty *</xsl:text>
+	  </xsl:element>
+	</xsl:element>
+	<xsl:element name="alt">
+	  <xsl:sequence select="option/*"/>
+	</xsl:element>
+      </xsl:when>
+      <xsl:when test="$kwHow = 'rule-addition'">
+	<!--* do nothing:  we don't need a new rule,
+	    * and the flattening pass does not recur. *-->
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>Not with a bang, but a whisper.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+    
   </xsl:template>
 
   
-  <!--* rule/alt[count(*) = 1]/repeat0:  empty or E, E, more_Es
+  <!--* repetitions:  Exp = E*SEP, Exp = E+SEP *-->
+  <!--* rule/alt[count(*) = 1]/repeat0:  empty or E, more_Es
       *   where more_Es = empty; SEP, E, more_Es.                 *-->
-  
-  <xsl:template match="rule/alt[count(* except comment) = 1][repeat0]">
-    <xsl:variable name="N" as="xs:string"
-		  select="gt:generate-nonterminal(.)"/>
-    <xsl:variable name="E" as="element()+"
-		  select="repeat0/(* except (sep|comment))"/>
-    <xsl:variable name="SEP" as="element()?"
-		  select="repeat0/sep"/>
-    <xsl:element name="alt">
-      <xsl:element name="comment">
-	<xsl:text>* empty *</xsl:text>
-      </xsl:element>
-    </xsl:element>
-    <xsl:element name="alt">
-      <xsl:sequence select="$E"/>
-      <xsl:element name="nonterminal">
-	<xsl:attribute name="name" select="concat('_more_', $N)"/>
-	<xsl:attribute name="mark" select="'-'"/>
-      </xsl:element>
-    </xsl:element>
-  </xsl:template>
-  
   <!--* rule/alt[count(*) = 1]/repeat1:  E or E, E, more_Es
       *   where more_Es = empty; SEP, E, more_Es.                 *-->
   
-  <xsl:template match="rule/alt[count(* except comment) = 1][repeat1]">
-    <xsl:variable name="N" as="xs:string"
-		  select="gt:generate-nonterminal(.)"/>
-    <xsl:variable name="E" as="element()+"
-		  select="repeat1/(* except (sep|comment))"/>
-    <xsl:variable name="SEP" as="element()?"
-		  select="repeat1/sep"/>
-    <xsl:element name="alt">
-      <xsl:sequence select="$E"/>
-    </xsl:element>
-    <xsl:element name="alt">
-      <xsl:sequence select="$E, $SEP, $E"/>
-      <xsl:element name="nonterminal">
-	<xsl:attribute name="name" select="concat('_more_', $N)"/>
-	<xsl:attribute name="mark" select="'-'"/>
-      </xsl:element>
-    </xsl:element>
-  </xsl:template>
-
-  
-  <xsl:template match="rule/alt[count(* except comment) = 1][repeat1 or repeat0]"
-		mode="rule-addition">
-    <xsl:variable name="N" as="xs:string"
-		  select="gt:generate-nonterminal(.)"/>
-    <xsl:variable name="E" as="element()+"
-		  select="*/(* except (sep|comment))"/>
-    <xsl:variable name="SEP" as="element()?"
-		  select="*/sep"/>
+  <xsl:template match="rule/alt
+		       [repeat0 or repeat1]
+		       [count(* except comment) = 1]
+		       [empty(*/descendant::alts[count(alt) gt 1])]
+		       [empty(*/descendant::option)]
+		       [empty(*/descendant::repeat0)]
+		       [empty(*/descendant::repeat1)]
+		       ">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>    
     
-    <xsl:element name="rule">
-      <xsl:attribute name="name" select="concat('_more_', $N)"/>
-      <xsl:element name="alt">
-	<xsl:element name="comment">
-	  <xsl:text>* empty *</xsl:text>
+    <xsl:variable name="N" as="xs:string"
+		  select="gt:generate-nonterminal(.)"/>
+    <xsl:variable name="R" as="element()"
+		  select="repeat0 | repeat1"/>
+    <xsl:variable name="E" as="element()+"
+		  select="$R/(* except (sep|comment))"/>
+    <xsl:variable name="SEP" as="element()?"
+		  select="$R/sep"/>
+
+    
+    <xsl:choose>
+      
+      <xsl:when test="($kwHow = 'tc-flattening')
+		      and exists($R/self::repeat0)">
+	<!--* For a repeat0, write (empty | E, _more_E) *-->
+	<xsl:element name="alt">
+	  <xsl:element name="comment">
+	    <xsl:text>* empty *</xsl:text>
+	  </xsl:element>
 	</xsl:element>
-      </xsl:element>
-      <xsl:element name="alt">      
-	<xsl:sequence select="$SEP, $E"/>
-	<xsl:element name="nonterminal">
+	<xsl:element name="alt">
+	  <xsl:sequence select="$E"/>
+	  <xsl:element name="nonterminal">
+	    <xsl:attribute name="name" select="concat('_more_', $N)"/>
+	    <xsl:attribute name="mark" select="'-'"/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:when>
+      
+      <xsl:when test="($kwHow = 'tc-flattening')
+		      and exists($R/self::repeat1)">
+	<!--* For a repeat1, write (E | E, SEP, E, _more_E) *-->      
+	<xsl:element name="alt">
+	  <xsl:sequence select="$E"/>
+	</xsl:element>
+	<xsl:element name="alt">
+	  <xsl:sequence select="$E, $SEP, $E"/>
+	  <xsl:element name="nonterminal">
+	    <xsl:attribute name="name" select="concat('_more_', $N)"/>
+	    <xsl:attribute name="mark" select="'-'"/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:when>
+      
+      <xsl:when test="$kwHow = 'rule-addition'">
+	<!--* In rule-addition pass, generate the rule for _more_E:
+	    * _more_E: empty; SEP, E, _more_E. 
+	    *-->
+	<xsl:element name="rule">
 	  <xsl:attribute name="name" select="concat('_more_', $N)"/>
-	  <xsl:attribute name="mark" select="'-'"/>
+	  <xsl:element name="alt">
+	    <xsl:element name="comment">
+	      <xsl:text>* empty *</xsl:text>
+	    </xsl:element>
+	  </xsl:element>
+	  <xsl:element name="alt">      
+	    <xsl:sequence select="$SEP, $E"/>
+	    <xsl:element name="nonterminal">
+	      <xsl:attribute name="name" select="concat('_more_', $N)"/>
+	      <xsl:attribute name="mark" select="'-'"/>
+	    </xsl:element>
+	  </xsl:element>
 	</xsl:element>
-      </xsl:element>
-    </xsl:element>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>
+	  <xsl:text>Catastrophic failure of program logic.  </xsl:text>
+	  <xsl:text>It was thought that this could never happen.</xsl:text>
+	</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!--* Default template.  Since we are not using modes, the double
+      * pass over rule elements produces double results, unless we
+      * do this.  (The design for this stylesheet was so clean, once
+      * upon a time.  Why is it so gnarly now?)
+      *-->
+  <xsl:template match="*[ancestor-or-self::rule]" priority="0">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"
+	       select="'tc-flattening'"/>
+
+    <xsl:choose>
+      <xsl:when test="$kwHow = 'tc-flattening'">
+	<xsl:copy>
+	  <xsl:apply-templates select="@*, node()"/>
+	</xsl:copy>
+      </xsl:when>
+      <xsl:when test="$kwHow = 'rule-addition'">
+	<xsl:apply-templates select="node()"/>
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>Moriturus te salutat.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
+  <xsl:template match="text()[ancestor-or-self::rule]" priority="0">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"
+	       select="'tc-flattening'"/>
 
+    <xsl:choose>
+      <xsl:when test="$kwHow = 'tc-flattening'">
+	<xsl:sequence select="."/>
+      </xsl:when>
+      <xsl:when test="$kwHow = 'rule-addition'">
+      </xsl:when>
+      <xsl:otherwise>
+	<xsl:message>Wow, this is a surprise.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+ 
   <!--****************************************************************
       * Functions
       ****************************************************************
@@ -296,7 +444,8 @@
 			      then 'opt'
 			      else $gi"/>
 	<xsl:variable name="n" as="xs:integer"
-		      select="count($E/preceding::*)"/>
+		      select="count($E/preceding::*)
+			      + count($E/ancestor-or-self::*)"/>
 	<xsl:value-of select="concat('_', $g, $n)"/>
       </xsl:otherwise>
     </xsl:choose>
