@@ -263,11 +263,7 @@
     <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>
     <xsl:choose>
       <xsl:when test="$kwHow = 'tc-flattening'">
-	<xsl:element name="alt">
-	  <xsl:element name="comment">
-	    <xsl:text>* empty *</xsl:text>
-	  </xsl:element>
-	</xsl:element>
+	<xsl:element name="alt"/><!-- yes, empty -->
 	<xsl:element name="alt">
 	  <xsl:sequence select="option/*"/>
 	</xsl:element>
@@ -301,7 +297,9 @@
     <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>    
     
     <xsl:variable name="N" as="xs:string"
-		  select="gt:generate-nonterminal(.)"/>
+		  select="gt:generate-nonterminal((repeat0, repeat1)[1])"/>
+    <!--* that argument to generate-nonterminal is an experiment.
+	* It may blow up. *-->
     <xsl:variable name="R" as="element()"
 		  select="repeat0 | repeat1"/>
     <xsl:variable name="E" as="element()+"
@@ -315,11 +313,7 @@
       <xsl:when test="($kwHow = 'tc-flattening')
 		      and exists($R/self::repeat0)">
 	<!--* For a repeat0, write (empty | E, _more_E) *-->
-	<xsl:element name="alt">
-	  <xsl:element name="comment">
-	    <xsl:text>* empty *</xsl:text>
-	  </xsl:element>
-	</xsl:element>
+	<xsl:element name="alt"/>
 	<xsl:element name="alt">
 	  <xsl:sequence select="$E"/>
 	  <xsl:element name="nonterminal">
@@ -336,7 +330,7 @@
 	  <xsl:sequence select="$E"/>
 	</xsl:element>
 	<xsl:element name="alt">
-	  <xsl:sequence select="$E, $SEP, $E"/>
+	  <xsl:sequence select="$E, $SEP/*, $E"/>
 	  <xsl:element name="nonterminal">
 	    <xsl:attribute name="name" select="concat('_more_', $N)"/>
 	    <xsl:attribute name="mark" select="'-'"/>
@@ -350,13 +344,9 @@
 	    *-->
 	<xsl:element name="rule">
 	  <xsl:attribute name="name" select="concat('_more_', $N)"/>
-	  <xsl:element name="alt">
-	    <xsl:element name="comment">
-	      <xsl:text>* empty *</xsl:text>
-	    </xsl:element>
-	  </xsl:element>
+	  <xsl:element name="alt"/>
 	  <xsl:element name="alt">      
-	    <xsl:sequence select="$SEP, $E"/>
+	    <xsl:sequence select="$SEP/*, $E"/>
 	    <xsl:element name="nonterminal">
 	      <xsl:attribute name="name" select="concat('_more_', $N)"/>
 	      <xsl:attribute name="mark" select="'-'"/>
