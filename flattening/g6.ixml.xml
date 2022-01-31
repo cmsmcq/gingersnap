@@ -1,0 +1,13 @@
+<ixml>
+  <comment> S = 'a', 'b'*. </comment>
+  <comment> Test case 6 for grammar flattening. </comment>
+
+  <rule name="S">
+    <alt>
+      <literal sstring="a"/>
+      <repeat0>
+	<literal dstring="b"/>
+      </repeat0>
+    </alt>
+  </rule>
+</ixml>

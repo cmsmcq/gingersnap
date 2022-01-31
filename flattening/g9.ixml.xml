@@ -1,0 +1,48 @@
+<ixml>
+  <comment> S = a, (b, (c? | d))+, (e+, f*)+. </comment>
+  <comment> a = 'a'. ... f = 'f'.</comment>
+  <comment> Test case 9 for grammar flattening. </comment>
+
+  <rule name="S">
+    <alt>      
+      <nonterminal name="a"/>
+      <repeat1>
+	<alts>
+	  <alt>
+	    <nonterminal name="b"/>
+	    <alts>
+	      <alt>
+		<option>
+		  <nonterminal name="c"/>
+		</option>
+	      </alt>
+	      <alt>
+		<nonterminal name="d"/>
+	      </alt>
+	    </alts>
+	  </alt>
+	</alts>
+      </repeat1>
+      <repeat1>
+	<alts>
+	  <alt>
+	    <repeat1>
+	      <nonterminal name='e'/>
+	    </repeat1>
+	    <repeat0>
+	      <nonterminal name='f'/>
+	    </repeat0>
+	  </alt>
+	</alts>
+      </repeat1>
+    </alt>
+  </rule>
+
+  <rule name="a"><alt><literal sstring="a"/></alt></rule>
+  <rule name="b"><alt><literal sstring="b"/></alt></rule>
+  <rule name="c"><alt><literal sstring="c"/></alt></rule>
+  <rule name="d"><alt><literal sstring="d"/></alt></rule>
+  <rule name="e"><alt><literal sstring="e"/></alt></rule>
+  <rule name="f"><alt><literal sstring="f"/></alt></rule>
+  
+</ixml>

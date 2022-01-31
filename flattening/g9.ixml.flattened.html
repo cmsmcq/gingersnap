@@ -1,0 +1,164 @@
+<html xmlns:gt="http://blackmesatech.com/2020/grammartools" xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>iXML grammar</title>
+<style type="text/css">
+	  div.unknown { color: red; margin-left: 1em; }
+	  span.tag { font-family: Courier, monospace; }
+	  div.titlearea { border-bottom: 1px solid black; margin-bottom: 1em; }
+	  .comment-body { font-style: italic; }
+	  div.rule { margin-top: 0.5em; }
+	  div.unsatisfiable { background-color: #EAA; }
+	  div.repeatfactor { background-color: #DDDDFF; }
+	  div.repeatsep { background-color: #DDFFDD; }
+	  span.rhs > span.alt { display: block; margin-left:  1em; }
+	  span.stack-rule { font-variant-caps: small-caps; color: navy; }
+	  .alts { background-color: #FEE; }
+	</style>
+</head>
+<body><div class="grammar">
+<div class="titlearea"><h1>iXML grammar</h1></div>
+<div class="comment">
+<span class="comdelim">{</span><span class="comment-body"> S = a, (b, (c? | d))+, (e+, f*)+. </span><span class="comdelim">}</span>
+</div>
+<div class="comment">
+<span class="comdelim">{</span><span class="comment-body"> a = 'a'. ... f = 'f'.</span><span class="comdelim">}</span>
+</div>
+<div class="comment">
+<span class="comdelim">{</span><span class="comment-body"> Test case 9 for grammar flattening. </span><span class="comdelim">}</span>
+</div>
+<div class="rule" id="S">
+<span class="lhs">S</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <a class="nonterminal" href="#a">a</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_plus8">_plus8</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_plus18">_plus18</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_plus8">
+<span class="lhs">-_plus8</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <a class="nonterminal" href="#b">b</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_or16">_or16</a>
+      <span class="altdelim">; </span></span><span class="alt">
+         <span class="alts"><span class="altsdelim">(</span>
+            <span class="alt">
+               <a class="nonterminal" href="#b">b</a><span class="seqdelim">, </span>
+               <a class="nonterminal" href="#_or16">_or16</a>
+            </span>
+         <span class="altsdelim">)</span></span><span class="seqdelim">, </span>
+         <span class="alts"><span class="altsdelim">(</span>
+            <span class="alt">
+               <a class="nonterminal" href="#b">b</a><span class="seqdelim">, </span>
+               <a class="nonterminal" href="#_or16">_or16</a>
+            </span>
+         <span class="altsdelim">)</span></span><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__plus12">-_more__plus12</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_more__plus12">
+<span class="lhs">_more__plus12</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt"><span class="altdelim">; </span></span><span class="alt">
+         <span class="alts"><span class="altsdelim">(</span>
+            <span class="alt">
+               <a class="nonterminal" href="#b">b</a><span class="seqdelim">, </span>
+               <a class="nonterminal" href="#_or16">_or16</a>
+            </span>
+         <span class="altsdelim">)</span></span><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__plus12">-_more__plus12</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_or16">
+<span class="lhs">-_or16</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt"><span class="altdelim">; </span></span><span class="alt">
+         <a class="nonterminal" href="#c">c</a>
+      <span class="altdelim">; </span></span><span class="alt">
+         <a class="nonterminal" href="#d">d</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_plus18">
+<span class="lhs">-_plus18</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <a class="nonterminal" href="#_plus27">_plus27</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_star29">_star29</a>
+      <span class="altdelim">; </span></span><span class="alt">
+         <span class="alts"><span class="altsdelim">(</span>
+            <span class="alt">
+               <a class="nonterminal" href="#_plus27">_plus27</a><span class="seqdelim">, </span>
+               <a class="nonterminal" href="#_star29">_star29</a>
+            </span>
+         <span class="altsdelim">)</span></span><span class="seqdelim">, </span>
+         <span class="alts"><span class="altsdelim">(</span>
+            <span class="alt">
+               <a class="nonterminal" href="#_plus27">_plus27</a><span class="seqdelim">, </span>
+               <a class="nonterminal" href="#_star29">_star29</a>
+            </span>
+         <span class="altsdelim">)</span></span><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__plus27">-_more__plus27</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_more__plus27">
+<span class="lhs">_more__plus27</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt"><span class="altdelim">; </span></span><span class="alt">
+         <span class="alts"><span class="altsdelim">(</span>
+            <span class="alt">
+               <a class="nonterminal" href="#_plus27">_plus27</a><span class="seqdelim">, </span>
+               <a class="nonterminal" href="#_star29">_star29</a>
+            </span>
+         <span class="altsdelim">)</span></span><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__plus27">-_more__plus27</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_plus27">
+<span class="lhs">-_plus27</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <a class="nonterminal" href="#e">e</a>
+      <span class="altdelim">; </span></span><span class="alt">
+         <a class="nonterminal" href="#e">e</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#e">e</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__plus34">-_more__plus34</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_more__plus34">
+<span class="lhs">_more__plus34</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt"><span class="altdelim">; </span></span><span class="alt">
+         <a class="nonterminal" href="#e">e</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__plus34">-_more__plus34</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_star29">
+<span class="lhs">-_star29</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt"><span class="altdelim">; </span></span><span class="alt">
+         <a class="nonterminal" href="#f">f</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__star38">-_more__star38</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_more__star38">
+<span class="lhs">_more__star38</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt"><span class="altdelim">; </span></span><span class="alt">
+         <a class="nonterminal" href="#f">f</a><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_more__star38">-_more__star38</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="a">
+<span class="lhs">a</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'a'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="b">
+<span class="lhs">b</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'b'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="c">
+<span class="lhs">c</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'c'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="d">
+<span class="lhs">d</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'d'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="e">
+<span class="lhs">e</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'e'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="f">
+<span class="lhs">f</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'f'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+</div></body>
+</html>

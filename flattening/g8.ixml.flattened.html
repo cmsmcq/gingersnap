@@ -1,0 +1,41 @@
+<html xmlns:gt="http://blackmesatech.com/2020/grammartools" xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>iXML grammar</title>
+<style type="text/css">
+	  div.unknown { color: red; margin-left: 1em; }
+	  span.tag { font-family: Courier, monospace; }
+	  div.titlearea { border-bottom: 1px solid black; margin-bottom: 1em; }
+	  .comment-body { font-style: italic; }
+	  div.rule { margin-top: 0.5em; }
+	  div.unsatisfiable { background-color: #EAA; }
+	  div.repeatfactor { background-color: #DDDDFF; }
+	  div.repeatsep { background-color: #DDFFDD; }
+	  span.rhs > span.alt { display: block; margin-left:  1em; }
+	  span.stack-rule { font-variant-caps: small-caps; color: navy; }
+	  .alts { background-color: #FEE; }
+	</style>
+</head>
+<body><div class="grammar">
+<div class="titlearea"><h1>iXML grammar</h1></div>
+<div class="comment">
+<span class="comdelim">{</span><span class="comment-body"> S = 'a', ('b' | 'c'). </span><span class="comdelim">}</span>
+</div>
+<div class="comment">
+<span class="comdelim">{</span><span class="comment-body"> Test case 8 for grammar flattening. </span><span class="comdelim">}</span>
+</div>
+<div class="rule" id="S">
+<span class="lhs">S</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'a'</span><span class="seqdelim">, </span>
+         <a class="nonterminal" href="#_or7">_or7</a>
+      </span></span><span class="ruledelim">.</span>
+</div>
+<div class="rule" id="_or7">
+<span class="lhs">-_or7</span><span class="ruledelim"> = </span><span class="rhs"><span class="alt">
+         <span class="literal">'b'</span>
+      <span class="altdelim">; </span></span><span class="alt">
+         <span class="literal">'c'</span>
+      </span></span><span class="ruledelim">.</span>
+</div>
+</div></body>
+</html>

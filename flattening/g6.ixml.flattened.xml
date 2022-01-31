@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ixml-html.xsl"?>
+<ixml>
+   <comment> S = 'a', 'b'*. </comment>
+   <comment> Test case 6 for grammar flattening. </comment>
+   <rule name="S">
+      <alt>
+         <literal sstring="a"/>
+         <nonterminal name="_star7"/>
+      </alt>
+   </rule>
+   <rule name="_star7" mark="-">
+      <alt/>
+      <alt>
+         <literal dstring="b"/>
+         <nonterminal name="_more__star10" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_more__star10">
+      <alt/>
+      <alt>
+         <literal dstring="b"/>
+         <nonterminal name="_more__star10" mark="-"/>
+      </alt>
+   </rule>
+</ixml>

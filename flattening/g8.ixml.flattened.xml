@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ixml-html.xsl"?>
+<ixml>
+   <comment> S = 'a', ('b' | 'c'). </comment>
+   <comment> Test case 8 for grammar flattening. </comment>
+   <rule name="S">
+      <alt>
+         <literal sstring="a"/>
+         <nonterminal name="_or7"/>
+      </alt>
+   </rule>
+   <rule name="_or7" mark="-">
+      <alt>
+         <literal sstring="b"/>
+      </alt>
+      <alt>
+         <literal sstring="c"/>
+      </alt>
+   </rule>
+</ixml>

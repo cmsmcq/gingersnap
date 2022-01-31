@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ixml-html.xsl"?>
+<ixml>
+   <comment> S = a, (b, (c? | d))+, (e+, f*)+. </comment>
+   <comment> a = 'a'. ... f = 'f'.</comment>
+   <comment> Test case 9 for grammar flattening. </comment>
+   <rule name="S">
+      <alt>
+         <nonterminal name="a"/>
+         <nonterminal name="_plus8"/>
+         <nonterminal name="_plus18"/>
+      </alt>
+   </rule>
+   <rule name="_plus8" mark="-">
+      <alt>
+         <nonterminal name="b"/>
+         <nonterminal name="_or16"/>
+      </alt>
+      <alt>
+         <alts>
+            <alt>
+               <nonterminal name="b"/>
+               <nonterminal name="_or16"/>
+            </alt>
+         </alts>
+         <alts>
+            <alt>
+               <nonterminal name="b"/>
+               <nonterminal name="_or16"/>
+            </alt>
+         </alts>
+         <nonterminal name="_more__plus12" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_more__plus12">
+      <alt/>
+      <alt>
+         <alts>
+            <alt>
+               <nonterminal name="b"/>
+               <nonterminal name="_or16"/>
+            </alt>
+         </alts>
+         <nonterminal name="_more__plus12" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_or16" mark="-">
+      <alt/>
+      <alt>
+         <nonterminal name="c"/>
+      </alt>
+      <alt>
+         <nonterminal name="d"/>
+      </alt>
+   </rule>
+   <rule name="_plus18" mark="-">
+      <alt>
+         <nonterminal name="_plus27"/>
+         <nonterminal name="_star29"/>
+      </alt>
+      <alt>
+         <alts>
+            <alt>
+               <nonterminal name="_plus27"/>
+               <nonterminal name="_star29"/>
+            </alt>
+         </alts>
+         <alts>
+            <alt>
+               <nonterminal name="_plus27"/>
+               <nonterminal name="_star29"/>
+            </alt>
+         </alts>
+         <nonterminal name="_more__plus27" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_more__plus27">
+      <alt/>
+      <alt>
+         <alts>
+            <alt>
+               <nonterminal name="_plus27"/>
+               <nonterminal name="_star29"/>
+            </alt>
+         </alts>
+         <nonterminal name="_more__plus27" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_plus27" mark="-">
+      <alt>
+         <nonterminal name="e"/>
+      </alt>
+      <alt>
+         <nonterminal name="e"/>
+         <nonterminal name="e"/>
+         <nonterminal name="_more__plus34" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_more__plus34">
+      <alt/>
+      <alt>
+         <nonterminal name="e"/>
+         <nonterminal name="_more__plus34" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_star29" mark="-">
+      <alt/>
+      <alt>
+         <nonterminal name="f"/>
+         <nonterminal name="_more__star38" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="_more__star38">
+      <alt/>
+      <alt>
+         <nonterminal name="f"/>
+         <nonterminal name="_more__star38" mark="-"/>
+      </alt>
+   </rule>
+   <rule name="a">
+      <alt>
+         <literal sstring="a"/>
+      </alt>
+   </rule>
+   <rule name="b">
+      <alt>
+         <literal sstring="b"/>
+      </alt>
+   </rule>
+   <rule name="c">
+      <alt>
+         <literal sstring="c"/>
+      </alt>
+   </rule>
+   <rule name="d">
+      <alt>
+         <literal sstring="d"/>
+      </alt>
+   </rule>
+   <rule name="e">
+      <alt>
+         <literal sstring="e"/>
+      </alt>
+   </rule>
+   <rule name="f">
+      <alt>
+         <literal sstring="f"/>
+      </alt>
+   </rule>
+</ixml>

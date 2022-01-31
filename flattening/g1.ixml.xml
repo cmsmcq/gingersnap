@@ -1,0 +1,8 @@
+<ixml>
+  <comment> S = 'a'?. </comment>
+  <comment> Test case 1 for grammar flattening. </comment>
+
+  <rule name="S">
+    <alt><option><literal dstring="a"/></option></alt>
+  </rule>
+</ixml>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ixml-html.xsl"?>
+<ixml>
+   <comment> S = 'a'. </comment>
+   <comment> Test case 0 for grammar flattening. Do nothing.</comment>
+   <rule name="S">
+      <alt>
+         <literal dstring="a"/>
+      </alt>
+   </rule>
+</ixml>
