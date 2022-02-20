@@ -21,7 +21,9 @@
   <xsl:output method="xml"
 	      indent="yes"/>
 
-  <xsl:param name="start" as="xs:string" required="yes"/>
+  <!-- <xsl:param name="start" as="xs:string" required="yes"/> -->
+  <xsl:param name="start" as="xs:string"
+	     select="/descendant::rule[1]/@name/string()"/>
 
   <!--* pseudo-terminals: list of nonterminals which should not
       * be expanded.
@@ -62,6 +64,13 @@
 	  making the RTN.</p>
 	</desc>
       </annotate-gl>
+
+      <item-labels>
+	<desc>
+	  <p>Label each symbol with a parse item, to make
+	  the RTN easier to read and interpret.</p>
+	</desc>
+      </item-labels>
 
       <make-rtn non-fissile="{if (empty($pseudo-terminals))
 			     then '#none'

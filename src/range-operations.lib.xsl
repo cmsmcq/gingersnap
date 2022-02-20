@@ -33,7 +33,7 @@
       * Setup
       ****************************************************************
       *-->
-  <xsl:import href="../../../lib/xslt/d2x.xsl"/>
+  <xsl:import href="d2x.xsl"/>
 
   <xsl:output method="xml"
 	      indent="yes"/>

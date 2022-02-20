@@ -13,6 +13,7 @@
       *-->
 
   <!--* Revisions:
+      * 2022-02-19 : CMSMcQ : add item labeling for RTNs
       * 2021-01-26 : CMSMcQ : fix some errors introduced with new steps
       * 2021-01-24 : CMSMcQ : add new steps unroll-occurrences, 
       *                       disjunctive-normal-form,
@@ -52,6 +53,7 @@
   <!--* annotation *-->
   <xsl:import href="ixml-annotate-pc.lib.xsl"/>
   <xsl:import href="ixml-annotate-gluschkov.lib.xsl"/>
+  <xsl:import href="label-symbols-with-items.xsl"/>
   
   <!--* algebra *-->
   <xsl:import href="rule-substitution.xsl"/>
@@ -179,6 +181,11 @@
 	    <xsl:when test="$step/self::annotate-gl">
 	      <xsl:apply-templates select="$grammar"
 				   mode="annotate-gl"/>
+	    </xsl:when>
+	    
+	    <xsl:when test="$step/self::item-labels">
+	      <xsl:apply-templates select="$grammar"
+				   mode="item-labeling"/>
 	    </xsl:when>
 	    
 	    <!--*

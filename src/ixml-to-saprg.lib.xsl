@@ -36,6 +36,7 @@
       *-->
 
   <!--* Revisions:
+      * 2022-02-19 : CMSMcQ : use rtn:item labels if we have them
       * 2021-01-30 : CMSMcQ : use @xml:id not @id
       * 2021-01-27 : CMSMcQ : use = not eq for some comparisons 
       * 2021-01-17 : CMSMcQ : supply epsilon transition from N_0 to
@@ -642,6 +643,10 @@
       <xsl:attribute name="name" select="@xml:id"/>
       <xsl:attribute name="rtn:nttype"
 		     select=" 'state' "/>
+      <!--* If this state is for a symbol that has an @rtn:item 
+          * attribute, copy that attribute to the rule, so we
+	  * can display it for orientation. *-->
+      <xsl:sequence select="@rtn:item"/>
 
       <!--* For every item in the follow set of this token, 
 	  * make an arc to go there. 
@@ -929,6 +934,13 @@
 			      string($e/@tmark), 
 			      &quot;&apos;&quot; , 
 			      string($e/@sstring),
+			      &quot;&apos;&quot;
+			      )
+			      else if ($e/@string) then
+			      concat(
+			      string($e/@tmark), 
+			      &quot;&apos;&quot; , 
+			      string($e/@string),
 			      &quot;&apos;&quot;
 			      )
 			      else

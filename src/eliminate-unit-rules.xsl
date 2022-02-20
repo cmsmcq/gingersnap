@@ -19,6 +19,9 @@
       *-->
 
   <!--* Revisions:
+      * 2022-02-19 : CMSMcQ : If the input has rtn:stack attributes
+      *                       on epsilon transitions, carry them
+      *                       forward.
       * 2021-01-12 : CMSMcQ : change value-of to sequence to make
       *                       Saxon stop complaining
       * 2021-01-01 : CMSMcQ : make file, for dealing with FSAs made 
@@ -108,29 +111,81 @@
       * But for the moment, I'm going to ignore that problem.
       *-->
 
-  <xsl:template match="rule/alt[gt:is-unit-rule(.)]">
+  <xsl:template match="rule/alt">
     <xsl:param name="lnSeen" as="xs:string*"/>
-    
-    <!--* This unit rule needs to be replaced by the
-	* RHS of the nonterminal it points to.  Unless,
-	* of course, we have already seen that nonterminal.
-	*-->    
-    <xsl:variable name="nRHS" as="xs:string"
-		  select="nonterminal/@name/string()"/>
+    <xsl:param name="stack-operations" as="attribute(rtn:stack)*"/>
+
     <xsl:choose>
-      <xsl:when test="$nRHS = $lnSeen"/>
+      <xsl:when test="gt:is-unit-rule(.)">
+	<!--* This unit rule needs to be replaced by the
+	    * RHS of the nonterminal it points to.  Unless,
+	    * of course, we have already seen that nonterminal.
+	    *-->
+	<xsl:variable name="nRHS" as="xs:string"
+		      select="nonterminal/@name/string()"/>
+	<xsl:variable name="stack-op" as="attribute(rtn:stack)?"
+		      select="nonterminal/@rtn:stack"/>
+	<xsl:choose>
+	  <xsl:when test="$nRHS = $lnSeen"/>
+	  <xsl:otherwise>
+	    <xsl:variable name="rRHS" as="element(rule)"
+			  select="../../rule[@name = $nRHS]"/>
+	    <xsl:for-each select="$rRHS/alt">
+	      <xsl:apply-templates select=".">
+		<xsl:with-param name="lnSeen"
+				select="$nRHS, $lnSeen"/>
+		<xsl:with-param name="stack-operations"
+				select="$stack-operations, $stack-op"/>
+	      </xsl:apply-templates>
+	    </xsl:for-each>
+	  </xsl:otherwise>
+	</xsl:choose>
+      </xsl:when>
+      <xsl:when test="exists($stack-operations)">
+	<!--* if we have any stack operations, then we can assume the
+	    * input is a stack automaton and we want to inject the
+	    * stack operations into the child non-terminal.  If the
+	    * input is not a stack automaton, then the rtn:stack 
+	    * attributes are meaningless.
+	    *-->
+	<xsl:copy>
+	  <xsl:apply-templates select="@*"/>
+	  <xsl:for-each select="child::node()">
+	    <xsl:choose>
+	      <xsl:when test="self::nonterminal">
+		<xsl:copy>
+		  <xsl:apply-templates select="@* except @rtn:stack"/>
+		  <xsl:attribute name="rtn:stack">
+		    <xsl:sequence
+			select="string-join(
+				  ($stack-operations/string(), 
+                                   @rtn:stack/string(.)),
+				  ', '
+				)"/>
+		  </xsl:attribute>
+		  <xsl:apply-templates select="child::node()"/>
+		</xsl:copy>
+	      </xsl:when>
+	      <xsl:otherwise>
+		<xsl:sequence select="."/>
+	      </xsl:otherwise>
+	    </xsl:choose>
+	  </xsl:for-each>
+	</xsl:copy>	
+      </xsl:when>
       <xsl:otherwise>
-	<xsl:variable name="rRHS" as="element(rule)"
-		      select="../../rule[@name = $nRHS]"/>
-	<xsl:for-each select="$rRHS/alt">
-	  <xsl:apply-templates select=".">
-	    <xsl:with-param name="lnSeen"
-			    select="$nRHS, $lnSeen"/>
-	  </xsl:apply-templates>
-	</xsl:for-each>
+	<!--* if we don't have any stack operations, then just
+	    * continue with a shallow copy. 
+	    *-->
+	<xsl:copy>
+	  <xsl:apply-templates select="@*, child::node()"/>
+	</xsl:copy>
       </xsl:otherwise>
     </xsl:choose>
-  </xsl:template>  
+  </xsl:template>
+
+
+
 
   <!--****************************************************************
       * Functions

@@ -40,9 +40,11 @@ grammar {
 
 	annotation = annotate-pc
 		   | annotate-gl
+		   | item-labels
 
      	annotate-pc = element annotate-pc {desc}	
      	annotate-gl = element annotate-gl {desc}
+     	item-labels = element item-labels {desc}
 	
 
 # 2 Algebraic manipulation

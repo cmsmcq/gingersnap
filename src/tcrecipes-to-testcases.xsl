@@ -40,7 +40,7 @@
   <xsl:include href="tcrecipes-to-testcases.lib.xsl"/>
   <xsl:include href="codepoint-serialization.lib.xsl"/>
   <xsl:include href="inlineability-tests.lib.xsl"/>
-  <xsl:import href="../../../lib/xslt/d2x.xsl"/>
+  <xsl:import href="d2x.xsl"/>
   
   <xsl:output method="xml"
 	      indent="yes"/>  
