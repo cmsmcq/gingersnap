@@ -248,11 +248,15 @@
        2981 z notation spot
        25CF black circle
        25CB white circle
+       26AB medium black circle
+
+       2024 one dot leader
+       23FA black circle for record
   -->
   <xsl:template name="mark-if-kilroy">
     <xsl:param name="kilroy" as="node()" tunnel="yes"/>
     <xsl:if test=". is $kilroy">
-      <xsl:text> &#x2981; </xsl:text>
+      <xsl:text> &#x2022; </xsl:text>
     </xsl:if>
   </xsl:template>
   
