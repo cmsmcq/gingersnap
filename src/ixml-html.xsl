@@ -148,10 +148,17 @@
       <span class="repeatfactor">
 	<xsl:apply-templates mode="repeat-factor"/>
       </span>
-      <xsl:text>*</xsl:text>
-      <span class="repeatsep">
-	<xsl:apply-templates select="sep" mode="repeat-sep"/>
-      </span>
+      <xsl:choose>
+	<xsl:when test="sep">
+	  <xsl:text>**</xsl:text>
+	  <span class="repeatsep">
+	    <xsl:apply-templates select="sep" mode="repeat-sep"/>
+	  </span>
+	</xsl:when>
+	<xsl:otherwise>
+	  <xsl:text>*</xsl:text>
+	</xsl:otherwise>
+      </xsl:choose>
     </span>
     <xsl:apply-templates select="." mode="seqdelim"/>
   </xsl:template>
@@ -160,7 +167,10 @@
     <span class="repeat1">
       <xsl:apply-templates mode="repeat-factor"/>
       <xsl:text>+</xsl:text>
-      <xsl:apply-templates select="sep" mode="repeat-sep"/>
+      <xsl:if test="sep">
+	<xsl:text>+</xsl:text>
+	<xsl:apply-templates select="sep" mode="repeat-sep"/>
+      </xsl:if>
     </span>
     <xsl:apply-templates select="." mode="seqdelim"/>
   </xsl:template>
@@ -223,6 +233,38 @@
     </span>
     <xsl:apply-templates select="." mode="seqdelim"/>
   </xsl:template>
+  
+  <xsl:template match="member[@string]">
+    <span class="member">
+      <xsl:apply-templates select="@*"/>
+    </span>
+    <xsl:apply-templates select="." mode="incldelim"/>
+  </xsl:template>
+  
+  <xsl:template match="member[@hex]">
+    <span class="member">
+      <xsl:apply-templates select="@*"/>
+    </span>
+    <xsl:apply-templates select="." mode="incldelim"/>
+  </xsl:template>
+  
+  <xsl:template match="member[@from]">
+    <span class="range member">
+      <span class="rangedelim">"</span>
+      <span class="rangefrom"><xsl:value-of select="@from"/></span>
+      <span class="rangedelim">"-"</span>
+      <span class="rangefrom"><xsl:value-of select="@to"/></span>
+      <span class="rangedelim">"</span>
+    </span>
+    <xsl:apply-templates select="." mode="incldelim"/>
+  </xsl:template>
+  
+  <xsl:template match="member[@code]">
+    <span class="member">
+      <xsl:value-of select="@code"/>
+    </span>
+    <xsl:apply-templates select="." mode="incldelim"/>
+  </xsl:template>
 
   <xsl:template match="@*" priority="1"/>
   
@@ -233,6 +275,12 @@
   </xsl:template>
   
   <xsl:template match="@sstring" priority="10">
+    <xsl:text>'</xsl:text>
+    <xsl:value-of select="."/>
+    <xsl:text>'</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="@string" priority="10">
     <xsl:text>'</xsl:text>
     <xsl:value-of select="."/>
     <xsl:text>'</xsl:text>
