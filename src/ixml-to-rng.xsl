@@ -5,6 +5,7 @@
     xmlns:gl="http://blackmesatech.com/2019/iXML/Gluschkov"
     xmlns:rtn="http://blackmesatech.com/2020/iXML/recursive-transition-networks"
     xmlns:follow="http://blackmesatech.com/2016/nss/ixml-gluschkov-automata-followset"
+    xmlns:d2x="http://www.blackmesatech.com/2014/lib/d2x"
     
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
     
@@ -26,6 +27,8 @@
       *-->
 
   <!--* Revisions:
+      * 2022-05-20 : CMSMcQ : make all content models interleave extensions
+      * 2022-05-19 : CMSMcQ : handle easy attributes
       * 2022-03-15 : CMSMcQ : made first draft
       *-->
 
@@ -33,7 +36,10 @@
       * Setup
       ****************************************************************
       *-->
+  <xsl:import href="d2x.xsl"/>
+  
   <xsl:mode name="ixml-to-rng" on-no-match="fail"/>
+  <xsl:mode name="regex-from-rules" on-no-match="fail"/>
   
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
@@ -53,7 +59,8 @@
       </rng:start>
 
       <xsl:apply-templates/>
-      
+
+      <xsl:call-template name="define-extension-patterns"/>      
     </rng:grammar>
   </xsl:template>
 
@@ -94,8 +101,11 @@
     <xsl:if test="'^' = ($mark, $reference-marks)">
       <rng:define name="e.{$N}">
 	<rng:element name="{$N}">
-	  <rng:ref name="external-attributes"/>
-	  <xsl:call-template name="content-pattern"/> 
+	  <rng:ref name="extension-attributes"/>
+	  <rng:interleave>
+	    <rng:ref name="extension-elements"/>
+	    <xsl:call-template name="content-pattern"/>
+	  </rng:interleave>
 	</rng:element>
       </rng:define>
     </xsl:if>
@@ -103,7 +113,7 @@
     <xsl:if test="'@' = ($mark, $reference-marks)">
       <rng:define name="a.{$N}">
 	<rng:attribute name="{$N}">
-	  <xsl:call-template name="content-pattern"/>
+	  <xsl:call-template name="attribute-value-pattern"/>
 	</rng:attribute>
       </rng:define>
     </xsl:if>
@@ -260,8 +270,36 @@
       * Attribute value patterns
       ****************************************************************
       *-->
-  <!--* Does this need to be distinct? *-->
+  <!--* We make this distinct so that we can (try to) make a regular
+      * expression for an attribute, if in fact it accepts a regular
+      * language. 
+      *
+      * Current element is rule.  We assume parent/child annotation.
+      *-->
   <xsl:template name="attribute-value-pattern">
+    <xsl:choose>
+      <!-- First case:  simple attribute, no nonterminals in the RHS -->
+      <xsl:when test="exists(@gt:descendants) and (@gt:descendants) eq ''">
+	<xsl:element name="rng:data">
+	  <xsl:attribute name="type" select=" 'string' "/>
+	  <xsl:element name="rng:param">
+	    <xsl:attribute name="name" select=" 'pattern' "/>
+	    <xsl:apply-templates mode="regex-from-rules"/>
+	  </xsl:element>
+	</xsl:element>
+      </xsl:when>
+
+      <!-- Next case:   nonterminal in the RHS (handle if regular) -->
+      <xsl:when test="exists(@gt:descendants) and (@gt:descendants) ne ''">
+	<xsl:call-template name="content-pattern"/>
+      </xsl:when>
+      
+      <!-- Fallback case:   no gt annotations, do nothing -->
+      <xsl:otherwise>
+	<xsl:comment> No annotations found, falling back to 'text'. </xsl:comment>
+	<rng:text/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
   <!--****************************************************************
@@ -270,14 +308,165 @@
       *-->
   <xsl:template match="comment"/>
 
+  <xsl:template match="processing-instruction()">
+    <xsl:copy-of select="."/>
+  </xsl:template>  
 
+  <!--****************************************************************
+      * regex-from-rules mode
+      ****************************************************************
+      *-->
+  <xsl:template match="alt" mode="regex-from-rules">
+    <xsl:choose>
+      <xsl:when test="following-sibling::alt">
+	<xsl:text>(</xsl:text>	
+	<xsl:apply-templates mode="regex-from-rules"/>
+	<xsl:text>)|</xsl:text>
+      </xsl:when>
+      <xsl:when test="preceding-sibling::alt">
+	<xsl:text>(</xsl:text>	
+	<xsl:apply-templates mode="regex-from-rules"/>
+	<xsl:text>)</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>	
+	<xsl:apply-templates mode="regex-from-rules"/>
+      </xsl:otherwise>
+    </xsl:choose>    
+  </xsl:template>
+  
+  <xsl:template match="repeat0[not(sep)]"
+		mode="regex-from-rules">
+    <xsl:apply-templates mode="regex-from-rules"/>
+    <xsl:text>0</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="repeat1[not(sep)]"
+		mode="regex-from-rules">
+    <xsl:apply-templates mode="regex-from-rules"/>
+    <xsl:text>+</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="inclusion" mode="regex-from-rules">
+    <xsl:text>[</xsl:text>	
+    <xsl:apply-templates mode="regex-from-rules"/>
+    <xsl:text>]</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="exclusion" mode="regex-from-rules">
+    <xsl:text>[^</xsl:text>	
+    <xsl:apply-templates mode="regex-from-rules"/>
+    <xsl:text>]</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="inclusion/member|exclusion/member" mode="regex-from-rules">
+    <xsl:choose>
+      
+      <xsl:when test="@string">
+	<xsl:sequence select="replace(@string, '([\^\-\[\]])', '\\$1')"/>
+      </xsl:when>
+      
+      <xsl:when test="@hex">
+	<xsl:sequence select="codepoints-to-string(
+			      d2x:x2d(@hex/string())
+			      )"/>
+      </xsl:when>
+      
+      <xsl:when test="@from">
+	<xsl:variable name="f" as="xs:string"
+		      select="gt:range-bound-to-char(@from/string())"/>
+	<xsl:variable name="t" as="xs:string"
+		      select="gt:range-bound-to-char(@to/string())"/>
+	<xsl:sequence select="concat($f, '-', $t)"/>
+      </xsl:when>
+      
+      <xsl:otherwise>
+	<xsl:message>
+	  <xsl:text>regex-from-rules mode is not ready for this:&#xA;</xsl:text>
+	  <xsl:copy-of select="."/>
+	</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  
   <!--****************************************************************
       * Functions
       ****************************************************************
       *-->
+  <xsl:function name="gt:range-bound-to-char" as="xs:string">
+    <xsl:param name="s" as="xs:string"/>
+    <xsl:sequence select="if (string-length($s) eq 1)
+      then $s
+      else if (starts-with($s, '#') and (translate($s, '#0123456789abcdefABCDEF', '') eq ''))
+      then codepoints-to-string(d2x:x2d(substring($s, 2)))
+      else ''"/>
+  </xsl:function>
   
   <!--****************************************************************
       * Predicates 
       *-->
-      
+
+  <!--****************************************************************
+      * Miscellaneous
+      *-->
+
+  <xsl:template name="define-extension-patterns">
+    <!-- Extension attributes are any namespace-qualified attributes -->
+    <rng:define name="extension-attributes">
+      <rng:zeroOrMore>
+	<rng:ref name="nsq-att"/>
+      </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="nsq-att">
+      <rng:attribute>
+	<rng:anyName>
+          <rng:except>
+            <rng:nsName ns=""/>
+          </rng:except>
+	</rng:anyName>
+      </rng:attribute>
+    </rng:define>
+    
+    <!-- Extension elements are any namespace-qualified elements -->
+    <rng:define name="extension-elements">
+      <rng:zeroOrMore>
+	<rng:ref name="nsq-element"/>
+      </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="nsq-element">
+      <rng:element>
+	<rng:anyName>
+          <rng:except>
+            <rng:nsName ns=""/>
+          </rng:except>
+	</rng:anyName>
+	<rng:ref name="anything"/>	
+      </rng:element>
+    </rng:define>
+    
+    <!-- Extension elements can include anything, including
+	 unqualified elements and ixml elements -->
+    <rng:define name="anything">
+      <rng:zeroOrMore>
+	<rng:choice>
+          <rng:ref name="any-element"/>
+          <rng:ref name="any-attribute"/>
+          <rng:text/>
+	</rng:choice>
+      </rng:zeroOrMore>
+    </rng:define>
+    <rng:define name="any-element">
+      <rng:element>
+	<rng:anyName/>
+	<rng:ref name="anything"/>
+      </rng:element>
+    </rng:define>
+    <rng:define name="any-attribute">
+      <rng:attribute>
+	<rng:anyName/>
+      </rng:attribute>
+    </rng:define>
+    
+  </xsl:template>
+  
 </xsl:stylesheet>
