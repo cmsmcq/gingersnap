@@ -467,7 +467,7 @@ For regular approximations, see [Generating regular
 approximations](generating-regular-approximations.md) in this
 directory.
 
-Foir test cases, see [Generating test cases](generating-test-cases.md)
+For test cases, see [Generating test cases](generating-test-cases.md)
 in this directory.
 
 

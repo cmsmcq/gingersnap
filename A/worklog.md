@@ -107,7 +107,7 @@ It would be nice if that were not necessary.
 ### Miscellaneous changes
 
 Various changes. Moved from 2020 directory to 2021; made separate git
-repo for the 2021/gingersnap directory, set it up to to push to
+repo for the 2021/gingersnap directory, set it up to push to
 github.
 
 Spent a lot of time trying to work out how many different things I

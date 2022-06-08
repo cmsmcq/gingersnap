@@ -14,7 +14,7 @@ workflow.
 If you have a more general interest, or just want to see how things
 work, the examples below may not help much.  Sorry.  In any case, take
 what's here with a grain of salt.  The library is not finished, and
-working to improve it is more interesting than document its current
+working to improve it is more interesting than documenting its current
 state.  It's never a good time to write out examples for this section.
 What's here was cobbled together while I was trying to understand the
 library, coming back to it after months of not using it.  (Maybe there

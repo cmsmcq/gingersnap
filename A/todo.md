@@ -183,7 +183,7 @@ it for now (17 January 2021) but it should be fixed.
 
 * FSA intersection, union, difference. 
 
-* Implement testing for ambiguity (from that paper you saw once
+* Implement testing for ambiguity (from that paper I saw once
 [I think that means Braband / Giegerich / Møller 2010]) 
 
 * LL(1), LL(k) testing. 
@@ -217,8 +217,6 @@ test suites)
   similarly extended?  Then FSA-coverage rules could be used to
   generate positive test cases with their parse trees.
   
-  
-
 
 ### Further extension
 
@@ -230,7 +228,7 @@ test suites)
   but perhaps start with XPath 3.1? 
 
 * Try to apply the reversibility analysis of Braband / Møller /
-Schwartzbach 2010 to ixml.  I think that will involve
+  Schwartzbach 2010 to ixml.  I think that will involve
 
     * Reading ixml grammars backwards / rewriting them as grammars of
       tagged documents (not quite the same as schemas), so they can be
@@ -238,6 +236,11 @@ Schwartzbach 2010 to ixml.  I think that will involve
 
     * Writing an ixml unparser (re-serializes the output of an ixml
       parser in the non-XML syntax)
+
+* Specify notation for affix grammars over a finite lattice; translate
+  AGFLs into standard ixml.  (See C.H.A. Koster 1991 "Affix grammars
+  for natural languages".)  Can such a notation be used to simplify
+  the grammar for ISBNs given in the ixml repo?
 
 ## Misc
 

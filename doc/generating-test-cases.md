@@ -67,8 +67,8 @@ to be useful.
 
 * nonterminal completeness: every nonterminal occurs in at least one
 parse tree. This produces a light-weight set of tests which may be
-helpful for a small test case to be run very frequently but will be
-inadequate for serious work.
+helpful for a small set of test cases to be run very frequently but
+will be inadequate for serious work.
 
 * choice completeness: for each choice in the grammar, every branch is
 exercised at least once.  Expressions of the form *E?*, *E**, and *E+*

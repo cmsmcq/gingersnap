@@ -12,6 +12,8 @@
       * Read ixml.xml grammar, write it out again, suppressing 
       * rules for unreachable nonterminals.
       *
+      * Relies on ixml-annotate-pc gt:unreachable annotation.
+      *
       * This is used as part of simplification in the removal
       * of unsatisfiable expression.
       *-->
