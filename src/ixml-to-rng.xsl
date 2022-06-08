@@ -40,6 +40,7 @@
   
   <xsl:mode name="ixml-to-rng" on-no-match="fail"/>
   <xsl:mode name="regex-from-rules" on-no-match="fail"/>
+  <xsl:mode name="inline-nt-refs" on-no-match="shallow-copy"/>
   
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
@@ -290,8 +291,25 @@
       </xsl:when>
 
       <!-- Next case:   nonterminal in the RHS (handle if regular) -->
-      <xsl:when test="exists(@gt:descendants) and (@gt:descendants) ne ''">
-	<xsl:call-template name="content-pattern"/>
+      <xsl:when test="exists(@gt:descendants) 
+		      and (@gt:descendants ne '')
+                      and (@gt:recursive eq 'false')
+		      and (every $nm-d in tokenize(@gt:descendants,'\s+')
+		      satisfies (//rule[@name = $nm-d]/@gt:recursive = 'false')
+		      )">
+	<!-- First, flatten the rhs of this rule -->
+	<xsl:variable name="flat-rule" as="element(rule)">
+	  <xsl:apply-templates select="." mode="inline-nt-refs"/>
+	</xsl:variable>
+		      
+	<!-- Then make a regex from the flattened rule -->
+	<xsl:element name="rng:data">
+	  <xsl:attribute name="type" select=" 'string' "/>
+	  <xsl:element name="rng:param">
+	    <xsl:attribute name="name" select=" 'pattern' "/>
+	    <xsl:apply-templates select="$flat-rule/child::node()" mode="regex-from-rules"/>
+	  </xsl:element>
+	</xsl:element>
       </xsl:when>
       
       <!-- Fallback case:   no gt annotations, do nothing -->
@@ -316,6 +334,12 @@
       * regex-from-rules mode
       ****************************************************************
       *-->
+  <xsl:template match="alts" mode="regex-from-rules">
+    <xsl:text>(</xsl:text>	
+    <xsl:apply-templates mode="regex-from-rules"/>
+    <xsl:text>)</xsl:text>
+  </xsl:template>
+  
   <xsl:template match="alt" mode="regex-from-rules">
     <xsl:choose>
       <xsl:when test="following-sibling::alt">
@@ -337,13 +361,26 @@
   <xsl:template match="repeat0[not(sep)]"
 		mode="regex-from-rules">
     <xsl:apply-templates mode="regex-from-rules"/>
-    <xsl:text>0</xsl:text>
+    <xsl:text>*</xsl:text>
   </xsl:template>
   
   <xsl:template match="repeat1[not(sep)]"
 		mode="regex-from-rules">
     <xsl:apply-templates mode="regex-from-rules"/>
     <xsl:text>+</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="option"
+		mode="regex-from-rules">
+    <xsl:apply-templates mode="regex-from-rules"/>
+    <xsl:text>?</xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="literal"
+		mode="regex-from-rules">
+    <xsl:if test="not(@tmark='-')">
+      <xsl:sequence select="gt:ensafen-literal(@string)"/>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="inclusion" mode="regex-from-rules">
@@ -362,7 +399,7 @@
     <xsl:choose>
       
       <xsl:when test="@string">
-	<xsl:sequence select="replace(@string, '([\^\-\[\]])', '\\$1')"/>
+	<xsl:sequence select="gt:ensafen-pos-char-class(@string)"/>
       </xsl:when>
       
       <xsl:when test="@hex">
@@ -376,7 +413,11 @@
 		      select="gt:range-bound-to-char(@from/string())"/>
 	<xsl:variable name="t" as="xs:string"
 		      select="gt:range-bound-to-char(@to/string())"/>
-	<xsl:sequence select="concat($f, '-', $t)"/>
+	<xsl:value-of select="concat($f, '-', $t)"/>
+      </xsl:when>
+      
+      <xsl:when test="@code">
+	<xsl:value-of select="concat('\p{', @code, '}')"/>
       </xsl:when>
       
       <xsl:otherwise>
@@ -386,6 +427,24 @@
 	</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template match="text()[normalize-space() eq '']" mode="regex-from-rules"/>
+
+
+  <!--****************************************************************
+      * inline-nt-refs mode:  replace all references with their rhs.
+      * 
+      * The caller is responsible for ensuring that there are no 
+      * recursive calls.
+      ****************************************************************
+      *-->
+  <xsl:template match="nonterminal" mode="inline-nt-refs">
+    <xsl:variable name="nt" as="xs:string" select="@name/string()"/>
+    
+    <xsl:element name="alts">
+      <xsl:apply-templates select="//rule[@name=$nt]/alt" mode="inline-nt-refs"/>
+    </xsl:element>
   </xsl:template>
 
   
@@ -400,6 +459,16 @@
       else if (starts-with($s, '#') and (translate($s, '#0123456789abcdefABCDEF', '') eq ''))
       then codepoints-to-string(d2x:x2d(substring($s, 2)))
       else ''"/>
+  </xsl:function>
+
+  <xsl:function name="gt:ensafen-pos-char-class" as="xs:string">
+    <xsl:param name="s" as="xs:string"/>
+    <xsl:sequence select="replace($s, '([\^\-\[\]])', '\\$1')"/>
+  </xsl:function>
+
+  <xsl:function name="gt:ensafen-literal" as="xs:string">
+    <xsl:param name="s" as="xs:string"/>
+    <xsl:sequence select="replace($s, '([\^\-\[\]\{\}\.\\\?*+()\|])', '\\$1')"/>
   </xsl:function>
   
   <!--****************************************************************
