@@ -921,7 +921,7 @@
 			      string($e/@name)
 			      )"/>
       </xsl:when>
-      <xsl:when test="$e/self::literal">
+      <xsl:when test="$e/self::literal or $e/self::member/@string">
 	<xsl:sequence select="if ($e/@dstring) then
 			      concat(
 			      string($e/@tmark),
@@ -963,14 +963,14 @@
 			      ']'
 			      )"/>
       </xsl:when>
-      <xsl:when test="$e/self::range">
+      <xsl:when test="$e/self::range or $e/self::member[@from]">
 	<xsl:sequence select="concat(
 			      gt:quote-char($e/@from), 
 			      '-',
 			      gt:quote-char($e/@to)
 			      )"/>
       </xsl:when>
-      <xsl:when test="$e/self::class">
+      <xsl:when test="$e/self::class or $e/self::member[@code]">
 	<xsl:sequence select="concat(
 			      '\p{',
 			      string($e/@code),
