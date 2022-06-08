@@ -16,7 +16,7 @@
       * grammar-choice criterion with repetitions treated as three-way
       * branches (0, 1, 2 for repeat0 and 1, 2, 3 for repeat1).  If the
       * parameter minimal=true is specified, we make a slightly smaller
-      * BNF.
+      * BNF.  [not yet implemented]
       *
       * Elements involving a choice (alts, option, repeat0, repeat1)
       * are rewritten; other constructs are left alone.  Choice elements
@@ -62,6 +62,8 @@
       *-->
 
   <!--* Revisions:
+      * 2022-05-27 : CMSMcQ : drop all @tmark attributes, too
+      * 2022-05-25 : CMSMcQ : drop all @mark attributes or try to
       * 2022-01-30 : CMSMcQ : make the output more economical
       * 2022-01-29 : CMSMcQ : made transform after thinking about it
       *                       for quite a while.
@@ -76,7 +78,7 @@
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
 
-  <!--* Parameters allowed, but they do nothing yet. *-->
+  <!--* Parameters allowed, but minimal and rep-count do nothing yet. *-->
   <xsl:param name="minimal" as="xs:boolean" select="false()"/>
   <xsl:param name="rep-count" as="xs:integer" select="3"/>
   <xsl:param name="max-passes" as="xs:integer" select="20"/>
@@ -144,7 +146,7 @@
       *-->
   <xsl:template match="rule" priority="5">
     <xsl:copy>
-      <xsl:sequence select="@*"/>
+      <xsl:sequence select="@* except (@mark, @tmark)"/>
       <xsl:apply-templates>
 	<xsl:with-param name="kwHow" select="'tc-flattening'"
 			tunnel="yes"/>
@@ -217,6 +219,42 @@
 
       <xsl:otherwise>
 	<xsl:message>All bets are off.</xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+
+  <!--* In the tc-flattening pass, let's do one simplification:
+      * an alts with a single alt child, with alt as parent, can
+      * be simplified by promoting the children.
+      *
+      * No rule-addition pass is needed for this case.
+      *-->  
+  <xsl:template match="alt/alts[count(alt) eq 1]"
+		mode="tc-flattening"
+		priority="3">
+    <xsl:param name="kwHow" as="xs:string" tunnel="yes"/>
+
+    <xsl:variable name="N" as="xs:string"
+		  select="gt:generate-nonterminal(.)"/>
+
+    <xsl:choose>
+      <xsl:when test="$kwHow = 'tc-flattening'">
+	<xsl:message>
+	  <xsl:text>  Flattening alt/alts[count(alt) eq 1]/alt</xsl:text>
+	  <xsl:text>  in </xsl:text>
+	  <xsl:value-of select="ancestor::rule/@name"/>
+	  <xsl:text>. </xsl:text>      
+	</xsl:message>
+    
+	<xsl:sequence select="alt/child::node()"/>
+      </xsl:when>
+      
+      <xsl:when test="$kwHow = 'rule-addition'">
+	<!-- nop -->
+      </xsl:when>
+
+      <xsl:otherwise>
+	<xsl:message>Say what?  I don't know about this.</xsl:message>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -375,7 +413,7 @@
     <xsl:choose>
       <xsl:when test="$kwHow = 'tc-flattening'">
 	<xsl:copy>
-	  <xsl:apply-templates select="@*, node()"/>
+	  <xsl:apply-templates select="@* except (@mark, @tmark), node()"/>
 	</xsl:copy>
       </xsl:when>
       <xsl:when test="$kwHow = 'rule-addition'">
@@ -433,9 +471,14 @@
 			      else if ($gi eq 'option')
 			      then 'opt'
 			      else $gi"/>
+	<xsl:variable name="n" as="xs:integer">
+	  <xsl:number count="*" level="any" select="$E"/>
+	</xsl:variable>
+	<!--
 	<xsl:variable name="n" as="xs:integer"
 		      select="count($E/preceding::*)
 			      + count($E/ancestor-or-self::*)"/>
+	-->
 	<xsl:value-of select="concat('_', $g, $n)"/>
       </xsl:otherwise>
     </xsl:choose>
