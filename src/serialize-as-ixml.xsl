@@ -142,23 +142,22 @@
     <xsl:apply-templates/>
   </xsl:template>
 
-  <xsl:template match="nonterminal">
-    <xsl:value-of select="string(@name)"/>
+  <xsl:template match="nonterminal">    
+    <xsl:value-of select="concat(@mark, @name)"/>
   </xsl:template>
 
   <xsl:template match="literal[@hex]">
-    <xsl:value-of select="concat('#x', @hex)"/>
+    <xsl:value-of select="concat(@tmark, '#', @hex)"/>
   </xsl:template>
-  <xsl:template match="literal[@dstring]">
-    <xsl:value-of select="concat('&quot;', @dstring, '&quot;')"/>
-  </xsl:template>
-  <xsl:template match="literal[@sstring]">
-    <xsl:value-of select="concat(&quot;&apos;&quot;,
-			  replace(@sstring, '&quot;', '&quot;'),
-			  &quot;&apos;&quot;)"/>
+  <xsl:template match="literal[@string]">
+    <xsl:value-of select="concat(@tmark,
+                          '&quot;', 
+			  replace(@string, '&quot;', '&quot;&quot;'),
+			  '&quot;')"/>
   </xsl:template>
 
   <xsl:template match="inclusion">
+    <xsl:value-of select="@tmark"/>
     <xsl:text>[</xsl:text>
     <xsl:variable name="ls"
 		  as="xs:string*">
@@ -169,6 +168,7 @@
   </xsl:template>
   
   <xsl:template match="exclusion">
+    <xsl:value-of select="@tmark"/>
     <xsl:text>~[</xsl:text>
     <xsl:variable name="ls"
 		  as="xs:string*">
@@ -178,18 +178,23 @@
     <xsl:text>]</xsl:text>    
   </xsl:template>
   
-  <xsl:template match="range">
+  <xsl:template match="member[@from]">
     <xsl:value-of select="concat(
       &quot;&apos;&quot;, @from, &quot;&apos;&quot;, 
       '-',
       &quot;&apos;&quot;, @to, &quot;&apos;&quot;)"/>    
   </xsl:template>
   
-  <xsl:template match="class">
-    <xsl:message>fix me!</xsl:message>
-    <xsl:value-of
-	select="concat(
-		'\p{', @code, '}')"/>    
+  <xsl:template match="member[@code]">
+    <xsl:value-of select="@code"/>    
+  </xsl:template>
+  
+  <xsl:template match="member[@string]">
+    <xsl:value-of select="@string"/>
+  </xsl:template>
+  
+  <xsl:template match="member[@hex]">
+    <xsl:value-of select="concat('#', @hex)"/>
   </xsl:template>
 
   <xsl:template match="text()"/>
