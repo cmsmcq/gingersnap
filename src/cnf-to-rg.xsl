@@ -16,7 +16,7 @@
       * John Wiley and Sons, 1965), pp. 125-155.
       *
       * One challenge is that the paragraphs labeled "Construction"
-      * in section 6 of the paper do not actually say how to contruct
+      * in section 6 of the paper do not actually say how to construct
       * grammar G' = (V, T, P, S):  they constrain the nonterminals in
       * V to take the form of rewrite chains of nonterminals in G plus
       * a two-valued subscript, and they constrain the production rules
@@ -24,7 +24,7 @@
       * the production rules of G contain nonterminals and rules of
       * certain patterns, but they do not say how to construct,
       * generate, identify, or enumerate the members of V or P, and 
-      * they say nothing abt all about T or S.
+      * they say nothing at all about T or S.
       *
       * I'm writing this in large part to try to put some guesses into
       * concrete form.

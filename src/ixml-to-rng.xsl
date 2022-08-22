@@ -280,7 +280,7 @@
   <xsl:template name="attribute-value-pattern">
     <xsl:choose>
       <!-- First case:  simple attribute, no nonterminals in the RHS -->
-      <xsl:when test="exists(@gt:descendants) and (@gt:descendants) eq ''">
+      <xsl:when test="exists(@gt:descendants) and (@gt:descendants eq '')">
 	<xsl:element name="rng:data">
 	  <xsl:attribute name="type" select=" 'string' "/>
 	  <xsl:element name="rng:param">
