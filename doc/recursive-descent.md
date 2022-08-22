@@ -302,4 +302,14 @@ in the grammar with different marks.
 ## Additional notes
 
 See also [my notes from ten years ago on recursive-descent parsing in
-XQuery](http://cmsmcq.com/mib/?p=1260).
+XQuery](http://cmsmcq.com/mib/?p=1260).  Like the parser skeleton
+described there, a parser produced using the patterns shown above
+requires that the grammar be LL(1).  In particular,
+
+  * For any set of alternatives (A; B; ...), first(A), first(B)
+    etc. must be pairwise disjoint.
+
+  * For options (A?) and repetitions (A*, A**B, A+, A++B), first(A)
+    and first(B) must be disjoint from the follow-set of the
+    expression.
+
