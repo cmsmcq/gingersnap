@@ -182,15 +182,38 @@ in the grammar with different marks.
     
   * `^`*N* ⇒ rd:e.*N*($E0)`
 
-    Returns an element named *N*.
+    Returns an element named *N*:
+    ````
+    declare function rd:e.*N*(
+      $E0 as ENV
+    ) as element(*N*) {
+      element *N* { Pr(rhs) }
+    };
+    ````
+    where *rhs* is the right-hand side of the production rule for *N*.
     
   * `@`*N* ⇒ rd:a.*N*($E0)`
 
     Returns an attribute named *N*.
+    ````
+    declare function rd:a.*N*(
+      $E0 as ENV
+    ) as attribute(*N*) {
+      attribute *N* { Pr(rhs) }
+    };
+    ````
+    where *rhs* is the right-hand side of the production rule for *N*.
 
   * `-`*N* ⇒ rd:h.*N*($E0)`
 
     Returns a sequence of nodes with no wrapper.
+    ````
+    declare function rd:a.*N*(
+      $E0 as ENV
+    ) as item()+ {
+      Pr(rhs)
+    };
+    ````
 
 
 ### Expressions
