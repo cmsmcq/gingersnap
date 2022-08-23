@@ -249,14 +249,14 @@ in the grammar with different marks.
   
   * *factor* `**` *sep* ⇒ rd:seqsep_*factor*_*sep*($E0)
 
-    where rd:seqseq_*factor*_*sep*() is
+    where rd:seqsep_*factor*_*sep*() is
     ````
-    declare function rd:seq_*factor*_*sep*($E0 as ENV) as item()+ {
+    declare function rd:seqsep_*factor*_*sep*($E0 as ENV) as item()+ {
         if (rd:sym($E0) = rd:first(*factor*))
 	then let $E1 := Pr(*factor*, $E0),
 	         $E2 := if (rd:sym($E1[1]) = rd:first(*sep*))
 		        then let $E3 := Pr(*sep*, $E1[1]), 
-                                 $E4 := rd:seq_*factor*($E3[1])
+                                 $E4 := rd:seq_*factor*_*sep*($E3[1])
 		             return ($E4[1], tail($E3), tail($E4))
 			else $E1[1]
 	     return ($E2[1], tail($E1), tail($E2))
@@ -271,7 +271,7 @@ in the grammar with different marks.
     else error
     ````
 
-    where rd:seqseq_*factor*_*sep*() is as above.
+    where rd:seqsep_*factor*_*sep*() is as above.
     
   * *term<sub>0</sub>* `,`  *term<sub>1</sub>* ⇒
     ````
