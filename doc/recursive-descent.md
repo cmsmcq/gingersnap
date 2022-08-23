@@ -251,12 +251,15 @@ in the grammar with different marks.
 
     where rd:seqseq_*factor*_*sep*() is
     ````
-    declare function rd:seq_*factor*($E0 as ENV) as item()+ {
+    declare function rd:seq_*factor*_*sep*($E0 as ENV) as item()+ {
         if (rd:sym($E0) = rd:first(*factor*))
 	then let $E1 := Pr(*factor*, $E0),
-	         $E2 := Pr(*sep*, $E1[1]), 
-	         $E3 := rd:seq_*factor*($E2[1])
-	     return ($E3[1], tail($E1), tail($E2), tail($E3))
+	         $E2 := if (rd:sym($E1[1]) = rd:first(*sep*))
+		        then let $E3 := Pr(*sep*, $E1[1]), 
+                                 $E4 := rd:seq_*factor*($E3[1])
+		             return ($E4[1], tail($E3), tail($E4))
+			else $E1[1]
+	     return ($E2[1], tail($E1), tail($E2))
 	else $E0
     }
     ````
