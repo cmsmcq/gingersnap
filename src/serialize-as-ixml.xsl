@@ -11,6 +11,7 @@
       *-->
 
   <!--* Revisions:
+      * 2023-11-28 : CMSMcQ : support ++ and ** operators
       * 2021-01-26 : CMSMcQ : provide default mode, to make it easier
       *                       to use this from other stylesheets
       * 2020-12-16 : CMSMcQ : made stylesheet, in a bit of a rush 
@@ -129,7 +130,14 @@
   <xsl:template name="repeat">
     <xsl:param name="op"/>
     <xsl:apply-templates select="* except *[self::sep or preceding-sibling::sep]"/>
-    <xsl:value-of select="$op"/>
+    <xsl:choose>
+      <xsl:when test="*[self::sep or preceding-sibling::sep]">
+        <xsl:value-of select="concat($op, $op)"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$op"/>
+      </xsl:otherwise>
+    </xsl:choose>
     <xsl:apply-templates select="*[self::sep or preceding-sibling::sep]"/>
   </xsl:template>
   
