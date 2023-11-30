@@ -33,6 +33,12 @@
       *-->
 
   <!--* Revisions:
+      * 2023-11-30 : CMSMcQ : working to fix O3a and O3b.
+      *                       . be more careful about ch-right-alt-2
+      *                       . supply IDs for everything first
+      *                       to do:
+      *                       . avoid duplication of new names
+      *                       . avoid duplication of the injected rule
       * 2023-11-29 : CMSMcQ : begin this, starting from old
       *                       bnf-from-ebnf.tc.xsl
       *-->
@@ -42,6 +48,7 @@
       ****************************************************************
       *-->
   
+  <xsl:mode name="id-all-non-ebnf" on-no-match="shallow-copy" />
   <xsl:mode name="ebnf-rewriting" on-no-match="shallow-copy"/>
   <xsl:mode name="rule-extraposition" on-no-match="shallow-copy"/>
   
@@ -53,7 +60,10 @@
        situation. -->
   <xsl:param name="option" as="xs:string"
              select="( 'O1a', 'O1b', 'O2a', 'O2b',
-                          'O3a', 'O3b', 'O4a', 'O4b')[5]"/>
+                     'O3a', 'O3b', 'O4a', 'O4b')[5]"/>
+
+  <xsl:variable name="ns-gt" as="xs:string"
+                select=" 'http://blackmesatech.com/2020/grammartools' "/>  
   
   <!--****************************************************************
       * Main / starting template
@@ -68,19 +78,54 @@
     </xsl:variable>    
 
     <xsl:variable name="R0" as="element(ixml)">
-      <xsl:apply-templates mode="ebnf-rewriting" select="ixml"/>
-    </xsl:variable>
-    
-    <xsl:variable name="R1" as="element(ixml)">
-      <xsl:apply-templates mode="rule-extraposition" select="$R0"/>
+      <xsl:apply-templates mode="id-all-non-ebnf" select="ixml"/>
     </xsl:variable>
 
-    <xsl:sequence select="$stylesheet-pi, $R1"/>
+    <xsl:variable name="R1" as="element(ixml)">
+      <xsl:apply-templates mode="ebnf-rewriting" select="$R0"/>
+    </xsl:variable>
+    
+    <xsl:variable name="R2" as="element(ixml)">
+      <xsl:apply-templates mode="rule-extraposition" select="$R1"/>
+    </xsl:variable>
+
+    <xsl:sequence select="$stylesheet-pi, $R2"/>
   </xsl:template>  
 
   <!--****************************************************************
-      * Option
+      * MODE id-all-non-ebnf
       ****************************************************************
+      *-->
+  <!--* special-case ixml, to put a gt namespace declaration on it. -->
+  <xsl:template match="ixml" mode="id-all-non-ebnf">
+    <xsl:copy>
+      <xsl:namespace name="gt" select="$ns-gt"/>
+      <xsl:sequence select="@*"/>
+      <xsl:apply-templates select="*" mode="id-all-non-ebnf"/>
+    </xsl:copy>
+  </xsl:template>
+      
+  <xsl:template match="option
+                       | repeat0
+                       | repeat1
+                       | rule/alt/descendant::alts
+                       | alt[option]"
+                mode="id-all-non-ebnf">
+    <xsl:copy>
+      <xsl:sequence select="@*"/>
+      <xsl:if test="not(@gt:expname)">
+        <xsl:attribute name="gt:expname" select="gt:generate-nonterminal(.)"/>
+      </xsl:if>
+      <xsl:apply-templates mode="id-all-non-ebnf"/>
+    </xsl:copy>
+  </xsl:template>
+  
+  <!--****************************************************************
+      * MODE ebnf-rewriting
+      ****************************************************************
+      *-->
+  <!--****************************************************************
+      * Option in mode ebnf-rewriting
       *-->
   
   <!--* Rule O1a:  inline, empty-last
@@ -133,8 +178,18 @@
             <!-- 1a puts empty last, 1b puts empty first -->
             <xsl:choose>
               <xsl:when test="$option eq 'O1a'">
-                <alt><xsl:sequence select="$ch-with"/></alt>
-                <alt><xsl:sequence select="$ch-without"/></alt>
+                <alt>
+                  <!--
+                      <xsl:copy-of select="$ch-with" copy-namespaces="no"/>
+                      -->
+                  <!-- Just embedding the sequence is no good,
+                       it causes an implicit copy with
+                       copy-namespaces="yes" -->
+                  <xsl:sequence select="$ch-with"/>
+                </alt>
+                <alt>
+                  <xsl:sequence select="$ch-without"/>
+                </alt>
               </xsl:when>
               <xsl:when test="$option eq 'O1b'">
                 <alt><xsl:sequence select="$ch-without"/></alt>
@@ -386,12 +441,19 @@
   </xsl:template>
   
   <!--****************************************************************
-      * Mode rule-extraposition
+      * MODE rule-extraposition
+      ****************************************************************
       *-->
   <!--* Copy everything except comments with gt:flag='injection'.
       * Move their comments to the end of the ixml element.
+      *
+      * Also do any other miscellaneous cleanup needed.
+      * . strip gt:* attributes
       *-->
   <xsl:template match="comment[@gt:flag='injection']"
+                mode="rule-extraposition"/>
+  
+  <xsl:template match="@gt:*"
                 mode="rule-extraposition"/>
   
   <xsl:template match="ixml"
@@ -406,17 +468,17 @@
         </xsl:element>
       </xsl:if>
 
-      <!--
+
       <xsl:apply-templates mode="rule-extraposition"
                            select="descendant::comment[@gt:flag='injection']
                            /rule"/>
-                           -->
+
       <!-- we apply templates because otherwise nested injections
            still show up as comments -->
-
+      <!--
       <xsl:sequence select="descendant::comment[@gt:flag='injection']
                             /rule"/>
-
+                           -->
     </xsl:copy>
   </xsl:template>
   
