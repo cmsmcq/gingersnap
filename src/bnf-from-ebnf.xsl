@@ -36,8 +36,9 @@
       * 2023-11-30 : CMSMcQ : working to fix O3a and O3b.
       *                       . be more careful about ch-right-alt-2
       *                       . supply IDs for everything first
+      *                       . supply name for created alt, to avoid
+      *                         getting _xx multiple times.
       *                       to do:
-      *                       . avoid duplication of new names
       *                       . avoid duplication of the injected rule
       * 2023-11-29 : CMSMcQ : begin this, starting from old
       *                       bnf-from-ebnf.tc.xsl
@@ -338,6 +339,12 @@
         *   apply templates to handle them. *-->
     <xsl:variable name="ch-right-alt-1" as="element(alt)">
       <xsl:element name="alt">
+        <xsl:if test="$ch-right-0[self::option]">
+          <xsl:attribute name="gt:expname"
+                         select="concat('_xx',
+                                 $ch-right-0[self::option][1]
+                                 /@gt:expname)"/>
+        </xsl:if>
         <xsl:sequence select="$ch-right-0"/>
       </xsl:element>
     </xsl:variable>
