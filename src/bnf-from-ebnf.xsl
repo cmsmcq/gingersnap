@@ -12,7 +12,8 @@
   <!--* bnf-from-ebnf.xsl: read an ixml grammar, produce an equivalent
         BNF grammar, using whatever rewrite rules are selected.
       
-        The current version uses static variables to select templates.
+        The current version uses parameters to select templates.
+      
         Elements involving a choice (alts, option, repeat0, repeat1)
         are rewritten; other constructs are left alone.  Choice
         elements alone at the top of a RHS are rewritten as a set of
@@ -47,8 +48,11 @@
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
 
-  <xsl:variable name="option" static="yes" as="xs:string"
-                select="( 'O1a', 'O1b', 'O2a', 'O2b',
+  <!-- Shift from static variable to parameter.  It's already
+       inconvenient to edit the source to change the testing
+       situation. -->
+  <xsl:param name="option" as="xs:string"
+             select="( 'O1a', 'O1b', 'O2a', 'O2b',
                           'O3a', 'O3b', 'O4a', 'O4b')[5]"/>
   
   <!--****************************************************************
@@ -84,8 +88,9 @@
       * A, B?, C rewrites to (A, B, C | A C), or (A, C | A, B, C).
       * The template must act on the entire sequence, not just B?.
       *-->
-  <xsl:template match="alt[option]" mode="ebnf-rewriting"
-                use-when="$option = ('O1a', 'O1b')">
+  <xsl:template match="alt[option][$option = ('O1a', 'O1b')]"
+                mode="ebnf-rewriting"
+                >
     <!--* 1 Normalize all non-option children.
         * 2 Duplicate once with and once without the first option
         * 3 If there are further options, apply templates to them.
@@ -101,11 +106,6 @@
     <!--* 2 Duplicate once with and once without the first option -->
     <xsl:variable name="gis" as="xs:string*"
                   select="for $e in $children-0 return local-name($e)"/>
-
-    <xsl:message>
-      <xsl:text>$gis: </xsl:text>
-      <xsl:value-of select="$gis"/>
-    </xsl:message>
     
     <xsl:variable name="indices" as="xs:integer*"
                   select="index-of($gis, 'option')"/>
@@ -131,13 +131,16 @@
           <!--* 3a If there are no further options, return. -->
           <xsl:when test="count($indices) eq 1">
             <!-- 1a puts empty last, 1b puts empty first -->
-            <alt xsl:use-when="$option eq 'O1a'">
-              <xsl:sequence select="$ch-with"/>
-            </alt>
-            <alt><xsl:sequence select="$ch-without"/></alt>
-            <alt xsl:use-when="$option eq 'O1b'">
-              <xsl:sequence select="$ch-with"/>
-            </alt>
+            <xsl:choose>
+              <xsl:when test="$option eq 'O1a'">
+                <alt><xsl:sequence select="$ch-with"/></alt>
+                <alt><xsl:sequence select="$ch-without"/></alt>
+              </xsl:when>
+              <xsl:when test="$option eq 'O1b'">
+                <alt><xsl:sequence select="$ch-without"/></alt>
+                <alt><xsl:sequence select="$ch-with"/></alt>
+              </xsl:when>
+            </xsl:choose>
           </xsl:when>
           <!--* 3b If there are further options, apply templates to them. -->
           <xsl:when test="count($indices) gt 1">
@@ -152,12 +155,16 @@
               </xsl:element>
             </xsl:variable>
             <!-- 1a puts empty last, 1b puts empty first -->
-            <xsl:apply-templates mode="ebnf-rewriting"
-                                 use-when="$option eq 'O1a'"
-                                 select="$alt-with, $alt-without"/>
-            <xsl:apply-templates mode="ebnf-rewriting"
-                                 use-when="$option eq 'O1b'"
-                                 select="$alt-without, $alt-with"/>            
+            <xsl:choose>
+              <xsl:when test="$option eq 'O1a'">
+                <xsl:apply-templates mode="ebnf-rewriting"
+                                     select="$alt-with, $alt-without"/>
+              </xsl:when>
+              <xsl:when test="$option eq 'O1b'">
+                <xsl:apply-templates mode="ebnf-rewriting"
+                                     select="$alt-without, $alt-with"/>
+              </xsl:when>
+            </xsl:choose>
           </xsl:when>
           <xsl:otherwise>
             <!-- we found no option here -->
@@ -175,11 +182,12 @@
 
   <!--................................................................-->
   <!--* Rule O2a:  reifying, empty-last
-      * Rule 02b:  reifying, empty-first
+      * Rule O2b:  reifying, empty-first
       * A, B?, C rewrites to (A, opt-B, C), with new opt-B.
       *-->
-  <xsl:template match="option" mode="ebnf-rewriting"
-                use-when="$option = ('O2a', 'O2b')">
+  <xsl:template match="option[$option = ('O2a', 'O2b')]"
+                mode="ebnf-rewriting"
+                >
     <!--* 1 Normalize all non-option children.
         * 2 Write a new nonterminal
         * 3 Write a rule for that nonterminal, with one alt
@@ -206,12 +214,16 @@
       <xsl:element name="rule">
         <xsl:attribute name="name" select="$N"/>
         <xsl:attribute name="mark" select=" '-' "/>
-        
-        <xsl:element name="alt" use-when="$option eq 'O2b'"/>
+
+        <xsl:if test="$option eq 'O2b'">
+          <xsl:element name="alt"/>
+        </xsl:if>
         <xsl:element name="alt">
           <xsl:sequence select="$children-0"/>
         </xsl:element>
-        <xsl:element name="alt" use-when="$option eq 'O2a'"/>
+        <xsl:if test="$option eq 'O2a'">
+          <xsl:element name="alt"/>
+        </xsl:if>
       </xsl:element>
     </xsl:element>
     
@@ -219,13 +231,14 @@
 
   <!-- ................................................................ -->
   <!--* Rule O3a:  reify with right context, empty-last
-      * Rule 03b:  reify with right context, empty-first
+      * Rule O3b:  reify with right context, empty-first
       * A, B?, C rewrites to A, opt-B, with opt-B = B, C | C.
       * Because this captures the right-context, it must act on
       * the containing alt, not just on the option.
       *-->
-  <xsl:template match="alt[option]" mode="ebnf-rewriting"
-                use-when="$option = ('O3a', 'O3b')">
+  <xsl:template match="alt[option][$option = ('O3a', 'O3b')]"
+                mode="ebnf-rewriting"
+                >
     <!--* 1 Normalize all non-option children.
         * 2 Split the sequence at the first option.
         * 3 If there are options after the first,
@@ -236,6 +249,7 @@
         *-->
     
     <!--* 1 Normalize all children. *-->
+    <!--* Expected:  any sequence of terms, including at least one option element *-->
     <xsl:variable name="children-0" as="element()*">
       <xsl:apply-templates select="*" mode="ebnf-rewriting"/>
     </xsl:variable>
@@ -244,10 +258,7 @@
     <xsl:variable name="gis" as="xs:string*"
                   select="for $e in $children-0 return local-name($e)"/>
 
-    <xsl:message>
-      <xsl:text>$gis: </xsl:text>
-      <xsl:value-of select="$gis"/>
-    </xsl:message>
+    <xsl:message expand-text="yes">gis of children-0: {$gis}</xsl:message>
     
     <xsl:variable name="indices" as="xs:integer*"
                   select="index-of($gis, 'option')"/>
@@ -262,6 +273,11 @@
                   select="$children-0[position() eq $index]"/>
     <xsl:variable name="ch-right-0" as="element()*"
                   select="$children-0[position() gt $index]"/>
+    <!--* Expected:  any sequence of terms, possibly including option elements *-->
+
+    <xsl:variable name="tmp-gis-r-0" as="xs:string*"
+                  select="for $e in $ch-right-0 return local-name($e)"/>
+    <xsl:message expand-text="yes">gis of ch-right-0: {$tmp-gis-r-0}</xsl:message>    
         
     <!--* 3 If there are options after the first,
         *   apply templates to handle them. *-->
@@ -270,11 +286,27 @@
         <xsl:sequence select="$ch-right-0"/>
       </xsl:element>
     </xsl:variable>
+    <!--* Expected:  either an alt whose children are as before
+        * (but normalized)
+        * or an alt whose (option, ...) suffix is replaced by
+        * a new nonterminal
+        * Either way: no option children
+        *-->
+
+    <xsl:variable name="tmp-gis-1" as="xs:string*"
+                  select="for $e in $ch-right-alt-1 return name($e)"/>
+    <xsl:message expand-text="yes">ch-right-alt-1: {$tmp-gis-1}</xsl:message>
+
+    <xsl:variable name="tmp-gis-1ch" as="xs:string*"
+                  select="for $e in $ch-right-alt-1/* return name($e)"/>
+    <xsl:message expand-text="yes">ch-right-alt-1/*: {$tmp-gis-1ch}</xsl:message>
     
-    <xsl:variable name="ch-right-alt-2" as="element(alt)">
+    <xsl:variable name="ch-right-alt-2" as="element()*">
+      <!-- Expected: alt, or (alt, comment) -->
       <xsl:choose>
         <xsl:when test="count($indices) gt 1">
-          <xsl:apply-templates select="$ch-right-alt-1"/>
+          <xsl:apply-templates mode="ebnf-rewriting"
+                               select="$ch-right-alt-1"/>
         </xsl:when>
         <xsl:otherwise>
           <!-- In principle, we don't need this choice,
@@ -284,6 +316,17 @@
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
+    <!--* Expected: an alt with no options among children,
+        * optionally followed by comment with injected rule.
+        *-->
+
+    <xsl:variable name="tmp-gis-2" as="xs:string*"
+                  select="for $e in $ch-right-alt-2 return name($e)"/>
+    <xsl:message expand-text="yes">ch-right-alt-2: {$tmp-gis-2}</xsl:message>    
+
+    <xsl:variable name="tmp-gis-2ch" as="xs:string*"
+                  select="for $e in $ch-right-alt-2/* return name($e)"/>
+    <xsl:message expand-text="yes">ch-right-alt-2/*: {$tmp-gis-2ch}</xsl:message>
         
     <!--* 4 Write out an alt element containing the left context
         * and a new nonterminal. *-->
@@ -306,16 +349,37 @@
         <xsl:attribute name="name" select="$N"/>
         <xsl:attribute name="mark" select=" '-' "/>
 
-        <!-- An alt without the optional material (maybe) -->
-        <xsl:sequence select="$ch-right-alt-2"
-                      use-when="$option eq '03b'"/>
-        <!-- An alt with the optional material -->
-        <xsl:element name="alt">
-          <xsl:sequence select="$ch-center"/>
-        </xsl:element>
-        <!-- An alt without the optional material (maybe) -->
-        <xsl:sequence select="$ch-right-alt-2"
-                      use-when="$option eq '03a'"/>
+        <xsl:choose>
+          <xsl:when test="$option eq 'O3a'">
+            <!-- An alt with the optional material -->
+            <xsl:element name="alt">
+              <xsl:sequence select="$ch-center/*"/>
+              <!-- <xsl:sequence select="$ch-right-alt-2/*"/> -->
+              <!-- <xsl:sequence select="for $e in $ch-right-alt-2/*
+                                    return if ($e/self::option)
+                                    then $e/*
+                                    else $e"/> -->
+              <xsl:sequence select="for $e in $ch-right-alt-2
+                                    return if ($e/self::alt)
+                                    then $e/*
+                                    else $e"/>
+            </xsl:element>
+            <!-- An alt without the optional material -->
+            <xsl:sequence select="$ch-right-alt-2"/>
+          </xsl:when>
+          <xsl:when test="$option eq 'O3b'">
+            <!-- An alt without the optional material -->
+            <xsl:sequence select="$ch-right-alt-2"/>
+            <!-- An alt with the optional material -->
+            <xsl:element name="alt">
+              <xsl:sequence select="$ch-center/*"/>
+              <xsl:sequence select="for $e in $ch-right-alt-2
+                                    return if ($e/self::alt)
+                                    then $e/*
+                                    else $e"/>
+            </xsl:element>
+          </xsl:when>
+        </xsl:choose>
       </xsl:element>
     </xsl:element>
 
@@ -336,12 +400,23 @@
       <xsl:sequence select="@*"/>      
       <xsl:apply-templates mode="rule-extraposition"/>
 
-      <xsl:element name="comment">
-        <xsl:text>* New rules *</xsl:text>
-      </xsl:element>      
+      <xsl:if test="descendant::comment[@gt:flag='injection']">
+        <xsl:element name="comment">
+          <xsl:text>* New rules *</xsl:text>
+        </xsl:element>
+      </xsl:if>
+
+      <!--
+      <xsl:apply-templates mode="rule-extraposition"
+                           select="descendant::comment[@gt:flag='injection']
+                           /rule"/>
+                           -->
+      <!-- we apply templates because otherwise nested injections
+           still show up as comments -->
+
       <xsl:sequence select="descendant::comment[@gt:flag='injection']
                             /rule"/>
-      
+
     </xsl:copy>
   </xsl:template>
   
