@@ -38,8 +38,7 @@
       *                       . supply IDs for everything first
       *                       . supply name for created alt, to avoid
       *                         getting _xx multiple times.
-      *                       to do:
-      *                       . avoid duplication of the injected rule
+      *                       . avoid duplicating the injected rule
       * 2023-11-29 : CMSMcQ : begin this, starting from old
       *                       bnf-from-ebnf.tc.xsl
       *-->
@@ -413,7 +412,8 @@
 
         <xsl:choose>
           <xsl:when test="$option eq 'O3a'">
-            <!-- An alt with the optional material -->
+            <!-- An alt with the optional material
+                 but without injected rule -->
             <xsl:element name="alt">
               <xsl:sequence select="$ch-center/*"/>
               <!-- <xsl:sequence select="$ch-right-alt-2/*"/> -->
@@ -424,9 +424,13 @@
               <xsl:sequence select="for $e in $ch-right-alt-2
                                     return if ($e/self::alt)
                                     then $e/*
+                                    else if ($e/self::comment[@gt:flag='injection'])
+                                    then ()
                                     else $e"/>
             </xsl:element>
-            <!-- An alt without the optional material -->
+            <!-- An alt without the optional material
+                 but with the injected rule -->
+            <!-- don't take children of ch-right-alt-2, we want the alt -->
             <xsl:sequence select="$ch-right-alt-2"/>
           </xsl:when>
           <xsl:when test="$option eq 'O3b'">
@@ -438,6 +442,8 @@
               <xsl:sequence select="for $e in $ch-right-alt-2
                                     return if ($e/self::alt)
                                     then $e/*
+                                    else if ($e/self::comment[@gt:flag='injection'])
+                                    then ()
                                     else $e"/>
             </xsl:element>
           </xsl:when>
