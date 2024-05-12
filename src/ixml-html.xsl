@@ -64,6 +64,15 @@
 	  span.rhs > span.alt { display: block; margin-left:  1em; }
 	  span.stack-rule { font-variant-caps: small-caps; color: navy; }
 	  .alts { background-color: #FEE; }
+	  .lit-string { color: brown; }
+	  .hex { color: orange; }
+	  .comment { color: #888; }
+	  .callers.comment { margin-left: 1em; }
+	  .caller { color: #888; }
+	  .pragma { background-color: #EFF; }
+	  .pragma-delim { color: #ADA; }
+	  .pragma-name { color: #080; font-variant: small-caps;}
+	  .pragma-data { color: purple; }
 	</style>
       </head>
       <body>
@@ -103,11 +112,48 @@
 
   <xsl:template match="rule">
     <div class="rule" id="{@name}">
-      <span class="lhs"><xsl:value-of select="concat(@mark, @name)"/></span>
+      <xsl:if test="child::*[1]/self::pragma">
+        <xsl:apply-templates select="pragma[not(preceding-sibling::alt)]"
+                             mode="pragma"/>
+      </xsl:if>
+      <span class="lhs">
+        <xsl:value-of select="concat(@mark, @name)"/>
+        <xsl:apply-templates select="@alias"/>
+      </span>
       <span class="ruledelim"> = </span>
       <span class="rhs">
 	<xsl:apply-templates/>
       </span>
+      <div class="callers comment">
+        <span class="comdelim">{</span>
+        <span class="comment-body">
+          <xsl:variable name="N" select="string(@name)"/>
+          <xsl:variable name="callers" select="//nonterminal[@name = $N]"/>
+          <xsl:choose>
+            <xsl:when test="$callers">
+              <xsl:text> Used by: </xsl:text>
+              <xsl:for-each select="$callers">
+                <xsl:variable name="caller-name" select="ancestor::rule[1]/@name"/>
+                <a class="caller" href="#{$caller-name}">
+                  <xsl:value-of select="$caller-name"/>
+                </a>
+                <xsl:choose>
+                  <xsl:when test="position() = last()">
+                    <xsl:text>. </xsl:text>
+                  </xsl:when>
+                  <xsl:otherwise>
+                    <xsl:text>, </xsl:text>
+                  </xsl:otherwise>
+                </xsl:choose>
+              </xsl:for-each>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text> Not used elsewhere. </xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+        </span>      
+        <span class="comdelim">}</span>
+      </div>
       <span class="ruledelim">.</span>
     </div>
   </xsl:template>
@@ -121,6 +167,11 @@
       </span>
       <span class="ruledelim">.</span>
     </div>
+  </xsl:template>
+
+  <xsl:template match="@alias">
+    <span class="aliasdelim"> > </span>
+    <span class="alias"><xsl:value-of select="."/></span>
   </xsl:template>
   
   <xsl:template match="alt">
@@ -250,11 +301,29 @@
   
   <xsl:template match="member[@from]">
     <span class="range member">
-      <span class="rangedelim">"</span>
-      <span class="rangefrom"><xsl:value-of select="@from"/></span>
-      <span class="rangedelim">"-"</span>
-      <span class="rangefrom"><xsl:value-of select="@to"/></span>
-      <span class="rangedelim">"</span>
+      <xsl:choose>
+        <xsl:when test="string-length(@from) > 1
+                        and substring(@from, 1, 1) = '#'">
+          <span class="hex"><xsl:value-of select="@from"/></span>
+        </xsl:when>
+        <xsl:otherwise>
+          <span class="rangedelim">"</span>
+          <span class="rangefrom"><xsl:value-of select="@from"/></span>
+          <span class="rangedelim">"</span>
+        </xsl:otherwise>
+      </xsl:choose>
+      <span class="rangesep">-</span>
+      <xsl:choose>
+        <xsl:when test="string-length(@to) > 1
+                        and substring(@to, 1, 1) = '#'">
+          <span class="hex"><xsl:value-of select="@to"/></span>
+        </xsl:when>
+        <xsl:otherwise>
+          <span class="rangedelim">"</span>
+          <span class="rangefrom"><xsl:value-of select="@to"/></span>
+          <span class="rangedelim">"</span>
+        </xsl:otherwise>
+      </xsl:choose>
     </span>
     <xsl:apply-templates select="." mode="incldelim"/>
   </xsl:template>
@@ -282,7 +351,9 @@
   
   <xsl:template match="@string" priority="10">
     <xsl:text>'</xsl:text>
-    <xsl:value-of select="."/>
+    <span class="lit-string">
+      <xsl:value-of select="."/>
+    </span>
     <xsl:text>'</xsl:text>
   </xsl:template>
   
@@ -336,6 +407,34 @@
       <xsl:value-of select="."/>
       <xsl:text> &#x296F;}</xsl:text>
     </span>
+  </xsl:template>
+
+  <!-- Pragmas -->
+  <!-- Simple case:  display the pragma -->
+  <xsl:template match="pragma" name="pragma">
+    <span class="pragma">
+      <span class="pragma-delim">{[</span>
+      <span class="pragma-name">
+        <xsl:value-of select="@pname"/>
+      </span>
+      <xsl:apply-templates select="pragma-data"/>
+      <span class="pragma-delim">]}</span>
+    </span>
+  </xsl:template>
+  
+  <!-- pragmas which appear in the naming section of the rule.
+       In the XML they appear as first children of rule.
+       They require special serialization, so in default mode
+       they are skipped. -->
+  <xsl:template match="pragma[not(preceding-sibling::alt)]" />
+  <xsl:template match="pragma[not(preceding-sibling::alt)]" mode="pragma">
+    <xsl:call-template name="pragma"/>
+    <xsl:text> </xsl:text>
+  </xsl:template>
+  
+  <xsl:template match="pragma-data">
+    <span> </span>
+    <xsl:value-of select="string()"/>
   </xsl:template>
   
 </xsl:stylesheet>
