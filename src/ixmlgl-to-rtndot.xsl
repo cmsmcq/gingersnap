@@ -209,7 +209,7 @@
 		    select="."/>
       <xsl:variable name="token"
 		    as="element()"
-		    select="$rule/descendant::*[@id=$id]"/>
+		    select="$rule/descendant::*[@xml:id=$id]"/>
 
       <xsl:text>    </xsl:text>
       <xsl:value-of select="gt:nodename($id)"/>

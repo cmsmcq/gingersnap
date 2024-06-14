@@ -373,7 +373,7 @@
 		<xsl:text>Fissile:  </xsl:text>
 		<xsl:sequence
 		    select="tokenize($step/@fissile, '\s+')"/>
-	      </xsl:message>	      
+	      </xsl:message>
 	      <xsl:apply-templates select="$grammar"
 				   mode="make-rtn">
 		<xsl:with-param name="G" tunnel="yes"
