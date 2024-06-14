@@ -67,7 +67,9 @@
 	  .lit-string { color: brown; }
 	  .hex { color: orange; }
 	  .comment { color: #888; }
-	  .callers.comment { margin-left: 1em; }
+          .comment { white-space: pre; }
+	  span.rhs > div.comment { margin-left: 1em; }
+	  .callers.comment { margin-left: 1em; white-space: normal }
 	  .caller { color: #888; }
 	  .pragma { background-color: #EFF; }
 	  .pragma-delim { color: #ADA; }
@@ -90,7 +92,7 @@
     </div>
   </xsl:template>
 
-  <xsl:template match="ixml/comment" priority="10">
+  <xsl:template match="ixml/comment | rule/comment" priority="10">
     <div class="comment">
       <span class="comdelim">{</span>
       <span class="comment-body">
@@ -112,7 +114,7 @@
 
   <xsl:template match="rule">
     <div class="rule" id="{@name}">
-      <xsl:if test="child::*[1]/self::pragma">
+      <xsl:if test="child::pragma[not(preceding-sibling::alt)]">
         <xsl:apply-templates select="pragma[not(preceding-sibling::alt)]"
                              mode="pragma"/>
       </xsl:if>
@@ -245,6 +247,7 @@
       <xsl:value-of select="concat(@mark, @name)"/>
     </a>
     <xsl:apply-templates select="@rtn:stack" mode="stack"/>
+    <xsl:apply-templates select="comment"/>
     <xsl:apply-templates select="." mode="seqdelim"/>
   </xsl:template>
   
