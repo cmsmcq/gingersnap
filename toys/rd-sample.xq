@@ -32,6 +32,8 @@ declare function local:S($E0 as element(env)) as item()+ {
       $R2 := (  let $sym := local:sym($R1[1])
                 return if ($sym = ('b', 'B', 'D'))
                        then local:B($R1[1])
+                       else if (string-length($sym) eq 0)
+                       then local:B($R1[1])
                        else if ($sym = ('c'))
                        then local:C($R1[1])
                        else <error/>
@@ -51,7 +53,7 @@ declare function local:seqsep_a_dot($E0 as element(env)) as item()+ {
   if (local:sym($E0) = ('a'))
   then let $R1 := local:plus_a($E0),
            $R2 := ( if (local:sym($R1[1]) = '.')
-                    then let $R3 := (local:next($R1[1]), '.'),
+                    then let $R3 := (local:next($R1[1]), text { '.' }),
                              $R4 := local:seqsep_a_dot($R3[1]) 
                          return ($R4[1], tail($R3), tail($R4))
                     else $R1[1]
@@ -68,7 +70,7 @@ declare function local:plus_a($E0 as element(env)) as item()+ {
 
 declare function local:star_a($E0 as element(env)) as item()+ {
   if (local:sym($E0) = ('a'))
-  then let $R1 := (local:next($E0), 'a'),
+  then let $R1 := (local:next($E0), text { 'a' }),
            $R2 := local:star_a($R1[1])
        return ($R2[1], tail($R1), tail($R2))
   else $E0
@@ -78,7 +80,7 @@ declare function local:star_a($E0 as element(env)) as item()+ {
 declare function local:B($E0 as element(env)) as item()+ {
   let $R1 := local:star_Bb($E0),
       $R2 := (if (local:sym($R1[1]) = 'D')
-              then (local:next($R1[1]), 'D')
+              then (local:next($R1[1]), text{'D'})
               else $R1[1]
              )
   return ($R2[1], element B { tail($R1), tail($R2) })
@@ -86,7 +88,7 @@ declare function local:B($E0 as element(env)) as item()+ {
 
 declare function local:star_Bb($E0 as element(env)) as item()+ {
   if (local:sym($E0) = ('B', 'b'))
-  then let $R1 := (local:next($E0), local:sym($E0)),
+  then let $R1 := (local:next($E0), text { local:sym($E0) }),
            $R2 := local:star_Bb($R1[1])
        return ($R2[1], tail($R1), tail($R2))
   else $E0
@@ -102,9 +104,9 @@ declare function local:C($E0 as element(env)) as item()+ {
 
 declare function local:seqsep_c_hyphen($E0 as element(env)) as item()+ {
   if (local:sym($E0) = ('c'))
-  then let $R1 := ( local:next($E0), 'c' ),
+  then let $R1 := ( local:next($E0), text { 'c' } ),
            $R2 := if (local:sym($R1[1]) = ('-'))
-                  then let $R3 := ( local:next($R1[1]), '-' ), 
+                  then let $R3 := ( local:next($R1[1]), text { '-' }), 
                            $R4 := local:seqsep_c_hyphen($R3[1])
                        return ($R4[1], tail($R3), tail($R4))
                   else $R1[1]
@@ -121,11 +123,24 @@ declare function local:D($E0 as element(env)) as item()+ {
   return ($R1[1], element D { tail($R1) } )
 };
 
-let $initial := element env {
-  element sym { 'a' },
-  element input { 'aaa.a.aaBbBb'},
-  element pos { 1 },
-  element len { 12 }
-}
-return (: local:S($initial) :)
-  local:S($initial) 
+let $strings := <strings>
+      <string></string>
+      <string>aD</string>
+      <string>aaaaa.aB</string>
+      <string>a.a.a.aa.aBbBbBbBBBBbbbbD</string>
+      <string>aaa.aaac</string>
+      <string>c-c-c-c-c-c-c</string>>
+      <string>abc</string>
+    </strings>
+return <parse-trees>{
+  for $s in $strings/string/string()
+  let $E0 := element env {
+    element sym { substring($s,1,1) },
+    element input { $s },
+    element pos { 1 },
+    element len { string-length($s) }
+  }
+  let $R1 := local:S($E0)
+  return <parse-tree input="{$s}">{tail($R1)}</parse-tree>
+ 
+}</parse-trees>

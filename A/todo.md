@@ -211,6 +211,11 @@ test suites)
 
 * Translate BNF grammar into Chomsky Normal Form. 
 
+* Translate BNF grammar into Greibach Normal Form. 
+
+* Translate (BNF? any?) grammar with left recursion into equivalent
+  grammar without left recursion.
+
 * If the recursive transition network push-down automaton is extended
   with instructions to emit start- and end-tags, it would produce a
   parse tree.  Can the FSA built from a *u*<sub>*k*</sub> subset be
@@ -242,6 +247,22 @@ test suites)
   for natural languages".)  Can such a notation be used to simplify
   the grammar for ISBNs given in the ixml repo?
 
+* Given a grammar in which ambiguity results from overlap between two
+  token classes, generate an equivalent unambiguous grammar which
+  recognizes the same sentences and produces the desired parse trees.
+  We can assume the grammar is annotated, or parameters supplied, to
+  specify which nonterminal(s) should be modified to exclude which
+  exceptions.
+
+  For example: given the grammar for Oberon, rewrite the definition of
+  identifier to exclude all of the reserved words.
+
+  Ideally, this should handle any regular language defined as the
+  difference of two regular languages (Brzozowski shows how to get the
+  FSA), but even a solution that only handles the difference of a
+  regular language and a finite language (e.g. identifier and
+  reserved-words) will be helpful.
+  
 ## Misc
 
 * From grammar, build XForm to allow manual creation of partial parse
