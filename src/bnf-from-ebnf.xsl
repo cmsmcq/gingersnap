@@ -59,14 +59,63 @@
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
 
-  <!-- Shift from static variable to parameter.  It's already
-       inconvenient to edit the source to change the testing
-       situation. -->
+  <!-- Behavior is controlled with these parameters.  (For mass
+       processing, static variables would be better, but for
+       experimentation this is better.) -->
+  <!-- Default is to do nothing; this simplifies testing rules
+       in isolation.  It also requires the user to say what is wanted,
+       rather than providing a useful default, in a slightly
+       passive-aggessive way. -->
   <xsl:param name="option" as="xs:string"
-             select="( 'O1a', 'O1b', 'O2a', 'O2b',
-                     'O3a', 'O3b', 'O4a', 'O4b')[5]"/>
+             select="('none'
+                     'O1a', 'O1b',
+                     'O2a', 'O2b',
+                     'O3a', 'O3b',
+                     'O4a', 'O4b'
+                     )[1]"/>
+  <xsl:param name="star" as="xs:string"
+             select="('none',
+                     'S1a', 'S1b', 'S1c', 'S1d',
+                     'S2a', 'S2b',
+                     'S3a', 'S3b', 
+                     'S4a', 'S4b', 'S4c', 'S4d'
+                     )[1]"/>
+  <xsl:param name="plus" as="xs:string"
+             select="('none',
+                     'P1a', 'P1b', 'P1c', 'P1d',
+                     'P2a', 'P2b',
+                     'P3a', 'P3b', 'P3c', 'P3d',  
+                     ('P4aw', 'P4ax', 'P4ay', 'P4az',
+                     'P4bw', 'P4bx', 'P4by', 'P4bz',
+                     'P4cw', 'P4cx', 'P4cy', 'P4cz',
+                     'P4dw', 'P4dx', 'P4dy', 'P4dz',
+                     'P4ew', 'P4ex', 'P4ey', 'P4ez',
+                     'P4fw', 'P4fx', 'P4fy', 'P4fz'
+                     )[1]"/>
+  <xsl:param name="starstar" as="xs:string"
+             select="(
+                     'none',
+                     'SS1a', 'SS1b', 'SS1c', 'SS1d',
+                     'SS2',
+                     'SS3',
+                     'SS4',
+                     'SS5',
+                     'SS6a', 'SS6b', 'SS6c', 'SS6d',
+                     'SS7a', 'SS7b', 'SS7c', 'SS7d',
+                     )[1]"/>
+  <xsl:param name="plusplus" as="xs:string"
+             select="(
+                     'none',
+                     'PP1a', 'PP1b',
+                     'PP2',
+                     'PP3a', 'PP3b',
+                     'PP4a', 'PP4b',
+                     'PP5a', 'PP5b', 'PP5c', 'PP5d'
+                     )[1]"/>
   <xsl:param name="alts" as="xs:string"
-             select="( 'C1', 'C2')[1]"/>
+             select="('none',
+                     'C1 C2'
+                     )[1]"/>
 
   <xsl:variable name="ns-gt" as="xs:string"
                 select=" 'http://blackmesatech.com/2020/grammartools' "/>  
@@ -142,6 +191,7 @@
           <xsl:when test="self::alt">
             <xsl:call-template name="find-fixpoint">
               <xsl:with-param name="E" select="."/>
+              <xsl:with-param name="rule" select="../@name"/>
             </xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
@@ -349,7 +399,7 @@
     <xsl:variable name="gis" as="xs:string*"
                   select="for $e in $children-0 return local-name($e)"/>
 
-    <xsl:message expand-text="yes">gis of children-0: {$gis}</xsl:message>
+    <!-- <xsl:message expand-text="yes">gis of children-0: {$gis}</xsl:message> -->
     
     <xsl:variable name="indices" as="xs:integer*"
                   select="index-of($gis, 'option')"/>
@@ -368,7 +418,7 @@
 
     <xsl:variable name="tmp-gis-r-0" as="xs:string*"
                   select="for $e in $ch-right-0 return local-name($e)"/>
-    <xsl:message expand-text="yes">gis of ch-right-0: {$tmp-gis-r-0}</xsl:message>    
+    <!-- <xsl:message expand-text="yes">gis of ch-right-0: {$tmp-gis-r-0}</xsl:message> -->    
         
     <!--* 3 If there are options after the first,
         *   apply templates to handle them. *-->
@@ -392,11 +442,11 @@
 
     <xsl:variable name="tmp-gis-1" as="xs:string*"
                   select="for $e in $ch-right-alt-1 return name($e)"/>
-    <xsl:message expand-text="yes">ch-right-alt-1: {$tmp-gis-1}</xsl:message>
+    <!-- <xsl:message expand-text="yes">ch-right-alt-1: {$tmp-gis-1}</xsl:message> -->
 
     <xsl:variable name="tmp-gis-1ch" as="xs:string*"
                   select="for $e in $ch-right-alt-1/* return name($e)"/>
-    <xsl:message expand-text="yes">ch-right-alt-1/*: {$tmp-gis-1ch}</xsl:message>
+    <!-- <xsl:message expand-text="yes">ch-right-alt-1/*: {$tmp-gis-1ch}</xsl:message> -->
     
     <xsl:variable name="ch-right-alt-2" as="element()*">
       <!-- Expected: alt, or (alt, comment) -->
@@ -419,11 +469,11 @@
 
     <xsl:variable name="tmp-gis-2" as="xs:string*"
                   select="for $e in $ch-right-alt-2 return name($e)"/>
-    <xsl:message expand-text="yes">ch-right-alt-2: {$tmp-gis-2}</xsl:message>    
+    <!-- <xsl:message expand-text="yes">ch-right-alt-2: {$tmp-gis-2}</xsl:message> -->    
 
     <xsl:variable name="tmp-gis-2ch" as="xs:string*"
                   select="for $e in $ch-right-alt-2/* return name($e)"/>
-    <xsl:message expand-text="yes">ch-right-alt-2/*: {$tmp-gis-2ch}</xsl:message>
+    <!-- <xsl:message expand-text="yes">ch-right-alt-2/*: {$tmp-gis-2ch}</xsl:message> -->
         
     <!--* 4 Write out an alt element containing the left context
         * and a new nonterminal. *-->
@@ -525,6 +575,27 @@
     </xsl:element>
     
   </xsl:template>
+
+  <!--****************************************************************
+      * repeat0 (star) in mode ebnf-rewriting
+      *-->
+  <!--* To be supplied *-->
+
+  <!--****************************************************************
+      * repeat1 (plus) in mode ebnf-rewriting
+      *-->
+  <!--* To be supplied *-->
+
+  <!--****************************************************************
+      * repeat0 with separator (starstar) in mode ebnf-rewriting
+      *-->
+  <!--* To be supplied *-->
+
+  <!--****************************************************************
+      * repeat1 with separator (plusplus) in mode ebnf-rewriting
+      *-->
+  <!--* To be supplied *-->
+
 
   <!--****************************************************************
       * Alts (nested-or) in mode ebnf-rewriting
@@ -655,9 +726,23 @@
       </xsl:if>
 
 
+      <xsl:variable name="promises-to-keep" as="element(rule)*"
+                    select="descendant::gt:comment[@gt:flag='injection']
+                            /rule"/>
+      
+      <xsl:variable name="new_nonterminals" as="xs:string*"
+                    select="$promises-to-keep/@name/string()"/>
+
+      <xsl:variable name="indices" as="xs:integer*"
+                    select="for $N in distinct-values($new_nonterminals)
+                            return index-of($new_nonterminals, $N)[1]"/>
+      
       <xsl:apply-templates mode="rule-extraposition"
+                           select="$promises-to-keep[position() = $indices]"/>
+      
+      <!-- <xsl:apply-templates mode="rule-extraposition"
                            select="descendant::gt:comment[@gt:flag='injection']
-                           /rule"/>
+                           /rule"/> -->
 
       <!-- we apply templates because otherwise nested injections
            still show up as comments -->
@@ -691,6 +776,7 @@
     <!--* ttl:  time to live.  Give up (detect loop) at zero *-->
     <!--* 10 set for debugging; use larger number for production *-->
     <xsl:param name="ttl" as="xs:integer" select="10"/>
+    <xsl:param name="rule" as="xs:string?"/>
     <!--
     <xsl:message>
       <xsl:text>find-fixpoint($E, </xsl:text>
@@ -717,6 +803,20 @@
         <xsl:sequence select="$E"/>
       </xsl:when>
       <xsl:when test="$ttl eq 0">
+        <xsl:message>
+          <xsl:text>! Ran out of time - infinite loop? </xsl:text>
+          <xsl:choose>
+            <xsl:when test="exists($rule)">
+              <xsl:text>&#xA;This RHS of rule </xsl:text>
+              <xsl:value-of select="$rule"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:text>&#xA;This expression (rule unknown) </xsl:text>
+            </xsl:otherwise>
+          </xsl:choose>
+          <xsl:text>is not yet BNF:&#xA;</xsl:text>
+          <xsl:copy-of select="$E"/>
+        </xsl:message>
         <xsl:sequence select="$E"/>
       </xsl:when>
       <xsl:otherwise>
@@ -732,6 +832,7 @@
           </xsl:message> -->
           <xsl:call-template name="find-fixpoint">
             <xsl:with-param name="E" select="."/>
+            <xsl:with-param name="rule" select="$rule"/>
             <xsl:with-param name="ttl" select="$ttl - 1"/>
           </xsl:call-template>
         </xsl:for-each>
