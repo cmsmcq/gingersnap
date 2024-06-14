@@ -8,8 +8,11 @@
     xmlns:d2x="http://www.blackmesatech.com/2014/lib/d2x"
     
     xmlns:rng="http://relaxng.org/ns/structure/1.0"
+    xmlns:ra="http://relaxng.org/ns/compatibility/annotations/1.0"
+    xmlns:db="http://docbook.org/ns/docbook"
     
     default-mode="ixml-to-rng"
+    exclude-result-prefixes="xsl gt xs gl rtn follow d2x rng ra db"
     version="3.0">
 
   <!--* ixml-to-rng.xsl: read an invisible-XML grammar, write a
@@ -27,6 +30,8 @@
       *-->
 
   <!--* Revisions:
+      * 2024-05-30 : CMSMcQ : support prolog in input (ignore for now)
+      * 2024-05-01 : CMSMcQ : inject some simple annotation
       * 2022-05-20 : CMSMcQ : make all content models interleave extensions
       * 2022-05-19 : CMSMcQ : handle easy attributes
       * 2022-03-15 : CMSMcQ : made first draft
@@ -44,6 +49,8 @@
   
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
+
+  <xsl:param name="grammar-name" as="xs:string?"/>
   
   <!--****************************************************************
       * Main / starting template
@@ -54,7 +61,24 @@
   </xsl:template>
   
   <xsl:template match="ixml">
-    <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+                 xmlns:ra="http://relaxng.org/ns/compatibility/annotations/1.0"
+                 >
+      <ra:documentation>
+        <xsl:text>This Relax NG schema was generated from </xsl:text>
+        <xsl:choose>
+          <xsl:when test="empty($grammar-name)">
+            <xsl:text>an invisible-XML grammar</xsl:text>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:text>the invisible-XML grammar </xsl:text>
+            <xsl:value-of select="$grammar-name"/>
+          </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text>&#xA; by ixml-to-rng.xsl, on </xsl:text>
+        <xsl:value-of select="adjust-date-to-timezone(current-date(), ())"/>
+        <xsl:text>.</xsl:text>
+      </ra:documentation>
       <rng:start>
 	<rng:ref name="{rule[1]/@name}"/>
       </rng:start>
@@ -80,7 +104,14 @@
     <!--* 1. Define the default rule for this nonterminal, based
 	* on the mark.
 	*-->
-    <rng:define name="{@name}">      
+    <xsl:text>&#xA;</xsl:text>
+    <rng:define name="{@name}">
+      <db:refname xsl:expand-text="yes">{@name}</db:refname>
+      <ra:documentation>
+        <xsl:text>Default rule for nonterminal '</xsl:text>
+        <xsl:value-of select="@name"/>
+        <xsl:text>'</xsl:text>
+      </ra:documentation>
       <rng:ref name="{
 		     if ($mark = '^') 
                      then 'e.'
@@ -101,6 +132,12 @@
     
     <xsl:if test="'^' = ($mark, $reference-marks)">
       <rng:define name="e.{$N}">
+        <db:refname xsl:expand-text="yes">e.{$N}</db:refname>
+        <ra:documentation>
+          <xsl:text>Nonterminal '</xsl:text>
+          <xsl:value-of select="@name"/>
+          <xsl:text>', serialized as element</xsl:text>
+        </ra:documentation>
 	<rng:element name="{$N}">
 	  <rng:ref name="extension-attributes"/>
 	  <rng:interleave>
@@ -113,6 +150,12 @@
     
     <xsl:if test="'@' = ($mark, $reference-marks)">
       <rng:define name="a.{$N}">
+        <db:refname xsl:expand-text="yes">a.{$N}</db:refname>
+        <ra:documentation>
+          <xsl:text>Nonterminal '</xsl:text>
+          <xsl:value-of select="@name"/>
+          <xsl:text>', serialized as attribute</xsl:text>
+        </ra:documentation>
 	<rng:attribute name="{$N}">
 	  <xsl:call-template name="attribute-value-pattern"/>
 	</rng:attribute>
@@ -121,6 +164,12 @@
     
     <xsl:if test="'-' = ($mark, $reference-marks)">
       <rng:define name="h.{$N}">
+        <db:refname xsl:expand-text="yes">h.{$N}</db:refname>
+        <ra:documentation>
+          <xsl:text>Nonterminal '</xsl:text>
+          <xsl:value-of select="@name"/>
+          <xsl:text>', not serialized (hidden)</xsl:text>
+        </ra:documentation>
 	<xsl:call-template name="content-pattern"/>
       </rng:define>
     </xsl:if>
@@ -319,6 +368,22 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <!--****************************************************************
+      * Prolog
+      ****************************************************************
+      *-->
+  <!--* Ignore the prolog for now.  Later, perhaps extract the
+      * version number and other metadata for injection into the
+      * RNG schema. *-->
+  <xsl:template match="prolog"/>
+  
+  <!--****************************************************************
+      * Pragmas
+      ****************************************************************
+      *-->
+  <!--* Ignore pragmas for now.  Later, perhaps  *-->
+  <xsl:template match="prolog"/>
   
   <!--****************************************************************
       * Misc
@@ -537,5 +602,8 @@
     </rng:define>
     
   </xsl:template>
-  
+
+  <!-- ixml, prolog, rule, comment, prolog/version,
+       prolog/ppragma @pname, pragma-data,
+       pragma, @mark ... -->
 </xsl:stylesheet>
