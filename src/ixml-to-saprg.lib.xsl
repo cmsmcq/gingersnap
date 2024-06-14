@@ -36,6 +36,8 @@
       *-->
 
   <!--* Revisions:
+      * 2024-06-14 : CMSMcQ : Change some ixml comment to XML comments
+      *                       to address validity issues in output.
       * 2022-02-19 : CMSMcQ : use rtn:item labels if we have them
       * 2021-01-30 : CMSMcQ : use @xml:id not @id
       * 2021-01-27 : CMSMcQ : use = not eq for some comparisons 
@@ -427,7 +429,7 @@
 	<xsl:attribute name="rtn:ruletype" select=" 'linkage-stub' "/>      
 	<xsl:element name="alt">
       	  <xsl:attribute name="rtn:ruletype" select=" 'linkage' "/>
-      	  <xsl:element name="comment">nil</xsl:element>
+      	  <xsl:comment>nil</xsl:comment>
       	  <xsl:element name="nonterminal">
       	    <xsl:attribute name="name" select="concat(@name, '_0')"/>
       	    <xsl:attribute name="rtn:stack"
@@ -454,8 +456,8 @@
 	  * an epsilon transition to N_f.  *-->
       <xsl:if test="xs:boolean(@gl:nullable) = true()">
 	<xsl:element name="alt">
-	  <xsl:element name="comment">rule is nullable</xsl:element>
-	  <xsl:element name="comment">nil</xsl:element>
+	  <xsl:comment>rule is nullable</xsl:element>
+	  <xsl:comment>nil</xsl:comment>
 	  <xsl:element name="nonterminal">
 	    <xsl:attribute name="name"
 			   select="concat(@name, '_f')"/>
@@ -492,7 +494,7 @@
 	  <xsl:otherwise>
 	    <xsl:element name="alt">
 	      <xsl:attribute name="rtn:ruletype" select=" 'return' "/>
-	      <xsl:element name="comment">nil</xsl:element>
+	      <xsl:comment>nil</xsl:comment>
 	      <xsl:element name="nonterminal">
 		<xsl:attribute name="name" select="$idReferrer"/>
 		<xsl:attribute name="rtn:stack"
@@ -510,7 +512,7 @@
 	<xsl:element name="alt">
       	  <xsl:attribute name="rtn:ruletype" select=" 'linkage-return' "/>
       	  <xsl:attribute name="rtn:stack" select=" concat('pop ', 'extcall_', $n) "/>
-      	  <xsl:element name="comment">nil</xsl:element>
+      	  <xsl:comment>nil</xsl:comment>
 	</xsl:element>
       </xsl:if>
 
@@ -524,7 +526,7 @@
 	<xsl:element name="alt">
       	  <xsl:attribute name="rtn:RHStype" select=" 'grammar-final' "/>
       	  <xsl:attribute name="rtn:stack" select=" 'if-stack-empty' "/>
-      	  <xsl:element name="comment">nil</xsl:element>
+      	  <xsl:comment>nil</xsl:comment>
 	</xsl:element>
       </xsl:if>
       
@@ -615,7 +617,7 @@
 	  <xsl:attribute name="rtn:ruletype"
 			 select=" 'recursion' "/>
 	  <!--* First the terminal, only there is none *-->
-	  <xsl:element name="comment">nil</xsl:element>
+	  <xsl:comment>nil</xsl:comment>
 	  <!--* Then the target state, which is the one for the
 	      * element we are processing.  So we use its ID. *-->
 	  <xsl:element name="nonterminal">
@@ -676,7 +678,7 @@
 		    select="tokenize($rule/@gl:last, '\s+')"/>
       <xsl:if test="@xml:id = $lidLast">
 	<xsl:element name="alt">
-	  <xsl:element name="comment">nil</xsl:element>
+	  <xsl:comment>nil</xsl:comment>
 	  <xsl:element name="nonterminal">
 	    <xsl:attribute name="name"
 			   select="concat($rule/@name, '_f')"/>
