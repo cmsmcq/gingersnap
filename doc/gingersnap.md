@@ -62,7 +62,10 @@ of grammars may be distinguished:
     automata; the first two rule forms describe transitions from state
     *n1* to state *n2* on terminal *t* or on the empty string (epsilon
     transitions), and the third rule form identifies state *n1* as a
-    final state.
+    final state.  I believe that most authorities define right-regular
+    grammars to exclude the third form and allow instead a rule of
+    the form *n1*: *t*.  That makes the final state reached via *t*
+    anonymous; the form used here gives each state a name.
 
 * *FSA* (finite state automaton) is used here sometimes to denote a
   right regular grammar.
@@ -79,7 +82,7 @@ of grammars may be distinguished:
   When interpreted by suitable software, SAPRGs thus effectively
   define a push-down automaton.  The *ixml-to-saprg* module generates
   a push-down automaton which can effectively interprets the input
-  grammar as a recursive transition network in the sense of Wood 1970.
+  grammar as a recursive transition network in the sense of Woods 1970.
   Ignoring the stack in such a push-down automaton -- in particular
   ignoring the stack-related constraints on transitions -- reduces the
   push-down automaton to a finite state automaton recognizing the
@@ -105,8 +108,8 @@ of grammars may be distinguished:
 
 Note that for technical reasons (avoiding double import of utility
 modules), some stylesheets are split into a top-level executable and
-an included module that does all the work.  The name *foo.lib.xsl*
-indicates that the module is not directly executable.
+an included module that does all the work.  A name of the form
+*foo.lib.xsl* indicates that the module is not directly executable.
 
 ### Annotation of the grammar
 
@@ -284,9 +287,9 @@ make things easier for myself.
   earlier convention for naming superset approximations that used *R*
   instead of *O*.)
 
-  This is the 'high-level' stylesheet contains a pipeline which bundles
-  together the sequence of smaller steps needed and calls the pipeline
-  handler to handle the pipeline.
+  This is the 'high-level' stylesheet; it contains a pipeline which
+  bundles together the sequence of smaller steps needed and calls the
+  pipeline handler to handle the pipeline.
 
 Then there are lower-level transforms that do the actual work.
 
