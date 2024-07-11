@@ -1,0 +1,37 @@
+namespace db = "http://docbook.org/ns/docbook"
+namespace ra = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+
+## This Relax NG schema was generated from an invisible-XML grammar
+##  by ixml-to-rng.xsl, on 2024-07-11.
+
+grammar {
+  start = url
+
+  url = e.url
+  e.url = element url { scheme, authority, path }
+
+  scheme = a.scheme
+  a.scheme =
+    attribute scheme {
+      xsd:string { pattern = "([a-z]|[A-Z]|[0-9])+" }
+    }
+
+  authority = e.authority
+  e.authority = element authority { host }
+
+  host = e.host
+  e.host =
+    element host {
+      xsd:string {
+        pattern = "([a-z]|[A-Z]|[0-9])+(\.([a-z]|[A-Z]|[0-9])+)*"
+      }
+    }
+
+  path = e.path
+  e.path =
+    element path {
+      xsd:string { pattern = "(/([a-z]|[A-Z]|[0-9]|\.)+)+" }
+    }
+}

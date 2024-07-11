@@ -1,0 +1,137 @@
+namespace db = "http://docbook.org/ns/docbook"
+namespace ra = "http://relaxng.org/ns/compatibility/annotations/1.0"
+namespace rng = "http://relaxng.org/ns/structure/1.0"
+
+
+## This Relax NG schema was generated from an invisible-XML grammar
+##  by ixml-to-rng.xsl, on 2024-07-11.
+[ ra:desc = "Relax NG annotations" db:desc = "DocBook" ]
+grammar {
+  start = url
+  [
+    db:refname [ "url" ]
+    ra:documentation [ "Default rule for nonterminal 'url'" ]
+  ]
+  url = e.url
+  [
+    db:refname [ "e.url" ]
+    ra:documentation [ "Nonterminal 'url', serialized as element" ]
+  ]
+  e.url =
+    element url {
+      scheme,
+      # can a data element be used?
+      text,
+      authority,
+      path
+    }
+  [
+    db:refname [ "scheme" ]
+    ra:documentation [ "Default rule for nonterminal 'scheme'" ]
+  ]
+  scheme = e.scheme
+  [
+    db:refname [ "e.scheme" ]
+    ra:documentation [ "Nonterminal 'scheme', serialized as element" ]
+  ]
+  e.scheme = element scheme { letter+ }
+  [
+    db:refname [ "authority" ]
+    ra:documentation [ "Default rule for nonterminal 'authority'" ]
+  ]
+  authority = e.authority
+  [
+    db:refname [ "e.authority" ]
+    ra:documentation [
+      "Nonterminal 'authority', serialized as element"
+    ]
+  ]
+  e.authority =
+    element authority {
+      # can a data element be used?
+      text,
+      host
+    }
+  [
+    db:refname [ "host" ]
+    ra:documentation [ "Default rule for nonterminal 'host'" ]
+  ]
+  host = e.host
+  [
+    db:refname [ "e.host" ]
+    ra:documentation [ "Nonterminal 'host', serialized as element" ]
+  ]
+  e.host =
+    element host {
+      sub,
+      (# can a data element be used?
+       text,
+       sub)*
+    }
+  [
+    db:refname [ "sub" ]
+    ra:documentation [ "Default rule for nonterminal 'sub'" ]
+  ]
+  sub = e.sub
+  [
+    db:refname [ "e.sub" ]
+    ra:documentation [ "Nonterminal 'sub', serialized as element" ]
+  ]
+  e.sub = element sub { letter+ }
+  [
+    db:refname [ "path" ]
+    ra:documentation [ "Default rule for nonterminal 'path'" ]
+  ]
+  path = e.path
+  [
+    db:refname [ "e.path" ]
+    ra:documentation [ "Nonterminal 'path', serialized as element" ]
+  ]
+  e.path =
+    element path {
+      (# can a data element be used?
+       text,
+       seg)+
+    }
+  [
+    db:refname [ "seg" ]
+    ra:documentation [ "Default rule for nonterminal 'seg'" ]
+  ]
+  seg = e.seg
+  [
+    db:refname [ "e.seg" ]
+    ra:documentation [ "Nonterminal 'seg', serialized as element" ]
+  ]
+  e.seg = element seg { fletter* }
+  [
+    db:refname [ "letter" ]
+    ra:documentation [ "Default rule for nonterminal 'letter'" ]
+  ]
+  letter = h.letter
+  [
+    db:refname [ "h.letter" ]
+    ra:documentation [ "Nonterminal 'letter', not serialized (hidden)" ]
+  ]
+  h.letter =
+    # can a data element be used?
+    text
+    | # can a data element be used?
+      text
+    | # can a data element be used?
+      text
+  [
+    db:refname [ "fletter" ]
+    ra:documentation [ "Default rule for nonterminal 'fletter'" ]
+  ]
+  fletter = h.fletter
+  [
+    db:refname [ "h.fletter" ]
+    ra:documentation [
+      "Nonterminal 'fletter', not serialized (hidden)"
+    ]
+  ]
+  h.fletter =
+    letter
+    | # can a data element be used?
+      text
+}

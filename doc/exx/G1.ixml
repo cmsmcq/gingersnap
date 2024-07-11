@@ -1,0 +1,13 @@
+{ Grammar G_1 }
+url: scheme, -":", authority, path.
+
+@scheme: letter+.
+
+authority: -"//", host.
+host: sub++".".
+-sub: letter+.
+
+path: ("/", seg)+.
+-seg: fletter*.
+-letter: ["a"-"z"]; ["A"-"Z"]; ["0"-"9"].
+-fletter: letter; ".".  

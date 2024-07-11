@@ -30,6 +30,10 @@
       *-->
 
   <!--* Revisions:
+      * 2024-07-11 : CMSMcQ : place extensions under user control
+      * 2024-07-07 : CMSMcQ : insert discussion of different levels of
+      *                       completeness / fidelity, attempt more explicit
+      *                       statement of pre- and post-conditions
       * 2024-05-30 : CMSMcQ : support prolog in input (ignore for now)
       * 2024-05-01 : CMSMcQ : inject some simple annotation
       * 2022-05-20 : CMSMcQ : make all content models interleave extensions
@@ -37,6 +41,18 @@
       * 2022-03-15 : CMSMcQ : made first draft
       *-->
 
+  <!--****************************************************************
+      * Pre- and post-conditions
+      ****************************************************************
+      *-->
+  <!--* For background see ../doc/ixml-to-rng.org *-->
+  <!--* Pre-condition:  input document is a conforming ixml grammar
+      *-->
+  <!--* Post-condition:  output document is a conforming ixml grammar
+      * with content-model consistency.  (Character-data consistency
+      * is 
+      *-->
+  
   <!--****************************************************************
       * Setup
       ****************************************************************
@@ -50,7 +66,12 @@
   <xsl:strip-space elements="*"/>
   <xsl:output method="xml" indent="yes"/>
 
+  <!--* grammar-name:  what to call the grammar in documentation? *-->
   <xsl:param name="grammar-name" as="xs:string?"/>
+
+  <!--* extensible:  should the schema generated allow foreign elements? *-->  
+  <xsl:param name="extensible" as="xs:string"
+             select="('yes', 'no', '1', '0', 'true', 'false')[1]"/>
   
   <!--****************************************************************
       * Main / starting template
@@ -63,6 +84,8 @@
   <xsl:template match="ixml">
     <rng:grammar datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
                  xmlns:ra="http://relaxng.org/ns/compatibility/annotations/1.0"
+                 ra:desc="Relax NG annotations"
+                 db:desc="DocBook"
                  >
       <ra:documentation>
         <xsl:text>This Relax NG schema was generated from </xsl:text>
@@ -85,7 +108,9 @@
 
       <xsl:apply-templates/>
 
-      <xsl:call-template name="define-extension-patterns"/>      
+      <xsl:if test="$extensible = ('yes', '1', 'true')">
+        <xsl:call-template name="define-extension-patterns"/>
+      </xsl:if>
     </rng:grammar>
   </xsl:template>
 
@@ -139,11 +164,18 @@
           <xsl:text>', serialized as element</xsl:text>
         </ra:documentation>
 	<rng:element name="{$N}">
-	  <rng:ref name="extension-attributes"/>
-	  <rng:interleave>
-	    <rng:ref name="extension-elements"/>
-	    <xsl:call-template name="content-pattern"/>
-	  </rng:interleave>
+          <xsl:choose>
+            <xsl:when test="$extensible = ('yes', '1', 'true')">
+	      <rng:ref name="extension-attributes"/>
+	      <rng:interleave>
+	        <rng:ref name="extension-elements"/>
+	        <xsl:call-template name="content-pattern"/>
+	      </rng:interleave>
+            </xsl:when>
+            <xsl:otherwise>
+	      <xsl:call-template name="content-pattern"/>
+            </xsl:otherwise>
+          </xsl:choose>
 	</rng:element>
       </rng:define>
     </xsl:if>
@@ -297,21 +329,21 @@
 
   <xsl:template match="inclusion">
     <xsl:if test="not(@tmark eq '-')">
-      <xsl:comment> can a data element be used? </xsl:comment>
+      <!-- <xsl:comment> can a data element be used? </xsl:comment> -->
       <rng:text/>
     </xsl:if>
   </xsl:template>
 
   <xsl:template match="exclusion">
     <xsl:if test="not(@tmark eq '-')">
-      <xsl:comment> can a data element be used? </xsl:comment>
+      <!-- <xsl:comment> can a data element be used? </xsl:comment> -->
       <rng:text/>
     </xsl:if>
   </xsl:template>
 
   <xsl:template match="literal">
     <xsl:if test="not(@tmark eq '-')">
-      <xsl:comment> can a data element be used? </xsl:comment>
+      <!-- <xsl:comment> can a data element be used? </xsl:comment> -->
       <rng:text/>
     </xsl:if>
   </xsl:template>
@@ -607,3 +639,4 @@
        prolog/ppragma @pname, pragma-data,
        pragma, @mark ... -->
 </xsl:stylesheet>
+

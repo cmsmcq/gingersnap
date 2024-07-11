@@ -1,0 +1,1367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2024-07-11 Thu 14:36 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Translating ixml grammars into schemas</title>
+<meta name="author" content="CMSMcQ" />
+<meta name="generator" content="Org Mode" />
+<style>
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
+</style>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content" class="content">
+<h1 class="title">Translating ixml grammars into schemas</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgbc615d0">1. Some preliminary definitions and assumptions</a></li>
+<li><a href="#orga039518">2. A running example</a></li>
+<li><a href="#org4e3de55">3. Constraining the element and attribute structure</a>
+<ul>
+<li><a href="#orgb4e9210">3.1. Name consistency (Waterloo schema)</a></li>
+<li><a href="#org1f16795">3.2. Parent/child consistency</a></li>
+<li><a href="#org206aedb">3.3. Content-model consistency</a></li>
+</ul>
+</li>
+<li><a href="#orga260330">4. Constraining text nodes and attribute values</a>
+<ul>
+<li><a href="#org493df40">4.1. L1: directly regular constructs</a></li>
+<li><a href="#org265d15e">4.2. L2: nonrecursive constructs</a></li>
+<li><a href="#org0d8c49e">4.3. L3: regular approximations</a></li>
+<li><a href="#org51fe562">4.4. L4: mixed-content consistency</a></li>
+</ul>
+</li>
+<li><a href="#orga535591">5. Some complications, limitations, and gaps</a>
+<ul>
+<li><a href="#org9652146">5.1. Aliasing for mixed-content elements</a>
+<ul>
+<li><a href="#org4cc3234">5.1.1. The difficulty:  which Schematron constraint to apply?</a></li>
+<li><a href="#orgb3c809c">5.1.2. When this difficulty arises</a></li>
+<li><a href="#orgaa7fd7a">5.1.3. Sketch of a solution</a></li>
+<li><a href="#org5f4715c">5.1.4. Some supporting theorems</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+An Invisible XML grammar <i>G</i> describes both a set of strings and a
+mapping from those strings to XML documents.  Just as not every string
+is a member of the language described by the grammar <i>G</i>, so also not
+every XML document is a member of the set of documents which may be
+emitted by a conforming processor parsing some sentence in that
+language against <i>G</i>.  It is conventional to denote the set of
+sentences accepted by <i>G</i> with the expression <i>L(G)</i>; analogously, we
+can refer to the set of XML documents produced by <i>G</i> with the
+expression <i>X(G)</i>.
+</p>
+
+<p>
+We can decide whether a string <i>s</i> is a member of <i>L(G)</i> or not by
+parsing <i>s</i> against <i>G</i>.  Can we similarly decide whether an XML
+document <i>D</i> is a member of <i>X(G)</i>?  In particular, can we construct a
+schema <i>S</i> that accepts as schema-valid all and only the documents in
+<i>X(G)</i>?  If we can, how can we do so?  This would be convenient in
+cases where we wish to start with some string <i>s</i> which is an
+expression in some notation <i>N</i> for which we can construct an ixml
+grammar <i>G</i>, use an ixml processor to convert <i>s</i> into some XML
+document <i>d</i>, use XML tools to modify <i>d</i> to create some document
+<i>d′</i>, and then re-serialize <i>d′</i> as an expression <i>s′</i> in notation
+<i>N</i>.  Having a schema for the set <i>X(G)</i> would help ensure that
+document <i>d′</i> can be successfully re-serialized in notation <i>N</i>.
+</p>
+
+<p>
+If we cannot construct a schema <i>S</i> that accepts all and only the
+members of <i>X(G)</i>, then can we construct some reasonably satisfactory
+approximation of <i>S</i>, which will correctly distinguish members of
+<i>X(G)</i> from non-members most of the time?
+</p>
+
+<p>
+The short answer is: we cannot always construct a schema that matches
+<i>X(G)</i> perfectly, but we can come close enough to make the schema
+useful, and for some grammars and some schema languages <i>X(G)</i> can be
+recognized.
+</p>
+
+<p>
+This document discusses these questions and shows how to construct
+schemas that approximate language <i>X(G)</i>.  It distinguishes a number
+of different ways to approximate language <i>X(G)</i> in a schema, and
+describes in varying amounts of detail how to construct such schemas.
+</p>
+
+<div id="outline-container-orgbc615d0" class="outline-2">
+<h2 id="orgbc615d0"><span class="section-number-2">1.</span> Some preliminary definitions and assumptions</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Some names are used here with conventional meanings:
+</p>
+
+<ul class="org-ul">
+<li><p>
+<i>G</i> is an ixml grammar which produces well-formed XML output
+for every string generated by the grammar.
+</p>
+
+<p>
+Note that it is possible to construct <i>G</i> in such a way that it
+accepts some strings for which its serialization markings make a
+well-formed serialization impossible.  (One simple way is to use
+nonterminals or aliases which are not legal names in XML; another is
+to require that some element have two attributes with the same
+name.)  Such grammars are excluded from consideration here.
+</p></li>
+
+<li><i>L(G)</i> is the set of input strings accepted by <i>G</i>.</li>
+
+<li><i>X(G)</i> is the set of XML documents produced by a conforming ixml
+processor parsing some string in <i>L(G)</i> against <i>G</i> .</li>
+
+<li><i>S</i> is, unless otherwise specified, a schema constructed to
+approximate <i>X(G)</i>.</li>
+
+<li><i>s</i> is, unless otherwise specified, an input string.</li>
+
+<li><i>d</i> is, unless otherwise specified, an XML document produced by
+parsing <i>s</i> against <i>G</i>.</li>
+</ul>
+
+<p>
+The schema language of primary interest is Relax NG; other schema
+languages may be mentioned in passing.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga039518" class="outline-2">
+<h2 id="orga039518"><span class="section-number-2">2.</span> A running example</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+As a running example, we will use the grammar given in the "How it
+works" section of the ixml specification.  It appears in two forms,
+which we will call <i>G<sub>0</sub></i> and <i>G<sub>1</sub></i>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ixml">{ Grammar G_0 }
+url: scheme, ":", authority, path.
+
+scheme: letter+.
+
+authority: "//", host.
+host: sub++".".
+sub: letter+.
+
+path: ("/", seg)+.
+seg: fletter*.
+-letter: ["a"-"z"]; ["A"-"Z"]; ["0"-"9"].
+-fletter: letter; ".".  
+</pre>
+</div>
+
+<p>
+Grammar <i>G<sub>1</sub></i> uses a wider variety of ixml constructs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ixml">{ Grammar G_1 }
+url: scheme, -":", authority, path.
+
+@scheme: letter+.
+
+authority: -"//", host.
+host: sub++".".
+-sub: letter+.
+
+path: ("/", seg)+.
+-seg: fletter*.
+-letter: ["a"-"z"]; ["A"-"Z"]; ["0"-"9"].
+-fletter: letter; ".".  
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4e3de55" class="outline-2">
+<h2 id="org4e3de55"><span class="section-number-2">3.</span> Constraining the element and attribute structure</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Let us consider first using a schema to capture constraints on
+elements and attributes in <i>d</i>, in particular constraints on their
+names and position, as opposed to their character-data content.
+</p>
+
+<p>
+Several different kinds of consistency between <i>G</i> and <i>S</i> may be
+distinguished.  In most cases, the resulting <i>S</i> will accept a
+superset of <i>X(G)</i>.
+</p>
+</div>
+
+<div id="outline-container-orgb4e9210" class="outline-3">
+<h3 id="orgb4e9210"><span class="section-number-3">3.1.</span> Name consistency (Waterloo schema)</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+<i>S</i> is name-consistent with <i>G</i> if and only if <i>S</i> allows all and only
+the element names and attribute names found in documents in <i>X(G)</i>.
+</p>
+
+<p>
+In the simple case, <i>S</i> imposes no further constraints.
+</p>
+
+<p>
+<i>S</i> is thus analogous to the style of document type definition
+sometimes called a 'Waterloo DTD', in honor of the work of the Center
+for the New Oxford English Dictionary at the University of Waterloo.
+They used no DTDs at all; in their SGML-like notation, any element
+could appear at any place, as could character data.  That is, Waterloo
+used a precursor of what is no called well-formed XML.
+</p>
+
+<p>
+The 'Waterloo DTD' was as close as one could come to describing the
+format using a DTD.  Because in a DTD all elements and attributes must
+be declared, a Waterloo DTD (or more generally, a Waterloo schema)
+declares all element types, and allows them to contain text and any
+other elements.  Attributes are declared as <code>CDATA</code> and all attributes
+are declared on all element types.
+</p>
+
+<p>
+The SGML form of the required declarations for an element <i>e</i> is:
+</p>
+<div class="org-src-container">
+<pre class="src src-sgml">&lt;!ELEMENT e ANY &gt;
+&lt;!ATTLIST e %attributes; &gt;
+</pre>
+</div>
+<p>
+where the parameter entity <i>attributes</i> is assumed to contain
+declarations for all attributes to be allowed.
+</p>
+
+<p>
+In XML DTDs, the keyword <code>ANY</code> is not available, so all the elements
+in the vocabulary must be enumerated in the content model.  For
+grammar <i>G<sub>1</sub></i>, the declarations will be:
+</p>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;!ENTITY % elements "url | authority | path | host" &gt;
+&lt;!ENTITY % attributes "scheme CDATA #IMPLIED" &gt;
+&lt;!ELEMENT url (#PCDATA | %elements;)* &gt;
+&lt;!ATTLIST url %attributes; &gt;
+&lt;!ELEMENT authority (#PCDATA | %elements;)* &gt;
+&lt;!ATTLIST authority %attributes; &gt;
+&lt;!ELEMENT path (#PCDATA | %elements;)* &gt;
+&lt;!ATTLIST path %attributes; &gt;
+&lt;!ELEMENT host (#PCDATA | %elements;)* &gt;
+&lt;!ATTLIST host %attributes; &gt;
+</pre>
+</div>
+
+<p>
+The equivalent constructs in Relax NG and XSD are straightforward,
+although they are not of much interest in any case because the
+validation offered by name consistency is so weak.
+</p>
+
+<p>
+When <i>S</i> is name-consistent with <i>G</i> (and no more), then <i>S</i>
+recognizes a superset of <i>X(G)</i>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1f16795" class="outline-3">
+<h3 id="org1f16795"><span class="section-number-3">3.2.</span> Parent/child consistency</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<i>S</i> is parent/child-consistent with <i>G</i> if and only if:
+</p>
+<ul class="org-ul">
+<li><i>S</i> is name-consistent with <i>G</i>, and</li>
+<li><i>S</i> allows any element <i>C</i> to occur as child of some element <i>P</i> if
+and only if elements named <i>C</i> appears as children of elements named
+<i>P</i> in <i>X(G)</i>, and</li>
+<li><i>S</i> allows text nodes to occur as childredn of some element <i>P</i> if
+and only if elements named <i>P</i> have text-node children in some
+documents of <i>X(G)</i>, and</li>
+<li><i>S</i> allows any attribute <i>A</i> to appear on an element <i>E</i> only if
+attributes with the name <i>A</i> appear on elements with the name <i>E</i>
+in <i>X(G)</i>, and</li>
+<li><i>S</i> allows any element <i>E</i> to appear as the outermost element of a
+document if and only if elements with that name appear as the
+outermost elements of documents in <i>X(G)</i>.</li>
+</ul>
+
+<p>
+(Perhaps this should be called 'vertical' consistency?)
+</p>
+
+<p>
+Parent/child consistency is somewhat stricter than name consistency,
+although again the set of documents accepted by <i>S</i> is a superset of
+<i>X(G)</i>.  In XML DTD notation, the schema for grammar <i>G<sub>1</sub></i> might read:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-xml">&lt;!ELEMENT url (scheme | authority | path)* &gt;
+&lt;!ATTLIST url schema CDATA #IMPLIED &gt;
+&lt;!ELEMENT authority (host)* &gt;
+&lt;!ELEMENT path (#PCDATA)* &gt;
+&lt;!ELEMENT host (#PCDATA)* &gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org206aedb" class="outline-3">
+<h3 id="org206aedb"><span class="section-number-3">3.3.</span> Content-model consistency</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<i>S</i> is content-model-consistent with <i>G</i> if and only if:
+</p>
+<ul class="org-ul">
+<li><i>S</i> is parent/child-consistent with <i>G</i>, and</li>
+<li><i>S</i> allows, for any parent element <i>P</i>, all and only those sequences
+of child elements which occur in <i>X(G)</i>, and allows text nodes only
+in those positions of those sequences where text nodes appear in
+<i>X(G)</i>.</li>
+</ul>
+
+<p>
+[Perhaps call this 'horizontal' consistency?]
+</p>
+
+<p>
+For example, in Relax NG compact syntax, the schema for <i>G<sub>0</sub></i> might be:
+</p>
+<div class="org-src-container">
+<pre class="src src-rnc">start = url
+url =
+  element url {
+    scheme,
+    text,
+    authority,
+    path
+  }
+scheme = element scheme { text }
+authority =
+  element authority {
+    text,
+    host
+  }
+path = element path { string }
+host = element host { string }  
+</pre>
+</div>
+
+<p>
+In these declarations, the <i>text</i> keyword allows text in precisely
+those places where the grammar requires character data: ":" as a child
+of <i>url</i> between <i>scheme</i> and <i>authority</i>, and "<code>//</code>" as the first
+child node of <i>authority</i> before the <i>host</i> child, and as the only
+content of <i>host</i> and <i>path</i>.  Text nodes are not allowed elsewhere.
+But RNG does not allow us to require that the text nodes consist of a
+full stop or a double slash, so the RNC schema just given accepts a
+superset of <i>X(G)</i>.
+</p>
+
+<p>
+Any schema constructed in (XML) DTD or XSD notation will accept a
+larger superset, because those notations do not provide a notation for
+allowing text in some but not all locations in a content model.
+</p>
+
+<p>
+The schema given above for grammar <i>G<sub>0</sub></i> recognizes the correct
+language, but its relation to the grammar is not completely obvious:
+some nonterminals appear in the schema as names of patterns and
+elements or attributes, and others disappear entirely.
+</p>
+
+<p>
+A simple way to arrange a mechanical translation while remaining
+relatively confident that the schema correctly matches the grammar is
+to translate every nonterminal <i>N</i> in <i>G</i> into one ore more patterns
+in <i>S</i>:
+</p>
+
+<ul class="org-ul">
+<li>If <i>N</i> is ever marked hidden or serialized as an element, a pattern
+named <i>h.N</i> is generated.  Its content is a more or less literal
+transcription of <i>N</i>'s right-hand side into RNG syntax: references
+to nonterminals turn into references to appropriately named
+patterns, terminal symbols and insertions turn into the <code>text</code>
+keyword, and repetition operators and the like turn into the
+corresponding RNG constructs, and finally the expression is
+simplified.</li>
+
+<li>If <i>N</i> is ever serialized as an element, a pattern named <i>e.N</i> is
+generated.  It generates an element declaration with an appropriate
+name and defines its content by reference to <i>h.N</i>.  If the
+nonterminal has an alias, the alias becomes the element name;
+otherwise the nonterminal itself becomes the element name.</li>
+
+<li>If <i>N</i> is ever serialized as an attribute, a pattern named <i>a.N</i> is
+generated.  It generates an attribute declaration with the
+appropriate name (alias or nonterminal) and a content declaration of
+<code>text</code>.</li>
+
+<li>If <i>N</i> is ever referred to without an explicit mark, a pattern named
+<i>N</i> is generated, which simply refers to <i>h.N</i>, <i>e.N</i>, or <i>a.N</i> as
+appropriate.</li>
+</ul>
+
+<p>
+Following this pattern, grammar <i>G<sub>1</sub></i> can be turned into an RNG schema
+along the following lines.  
+</p>
+<div class="org-src-container">
+<pre class="src src-rnc">grammar {
+  start = url
+
+  url = e.url
+  e.url = element url { scheme, authority, path }
+
+  scheme = a.scheme
+  a.scheme = attribute scheme {text}
+
+  authority = e.authority
+  e.authority = element authority { host }
+
+  host = e.host
+  e.host =
+    element host {
+      sub,
+      (text, sub)*
+    }
+
+  sub = h.sub
+  h.sub = letter+
+
+  path = e.path
+  e.path =
+    element path {
+      (text, seg)+
+    }
+
+  seg = h.seg
+  h.seg = fletter*
+
+  letter = h.letter
+  h.letter = text | text | text
+
+  fletter = h.fletter
+  h.fletter = letter | text
+}
+</pre>
+</div>
+<p>
+In the schema just given, the expression for <i>h.letter</i> has not been
+simplified, in order to illustrate the kind of simplification that may
+be needed.  In principle, the expression <code>(text | text | text)</code> should
+recognize exactly the same strings as <code>text</code>, but although in other
+cases RNG takes a relaxed attitude towards non-determinism in content
+models, this particular form of non-determinism is flagged as an error.
+</p>
+
+<p>
+If before generating the schema we inline all hidden nonterminals in
+the grammar (and simplify expressions after or during the conversion),
+then the schema becomes a little tidier:
+</p>
+<div class="org-src-container">
+<pre class="src src-ixml">grammar {
+  start = url
+
+  url = e.url
+  e.url = element url { scheme, authority, path }
+
+  scheme = a.scheme
+  a.scheme = attribute scheme {text}
+
+  authority = e.authority
+  e.authority = element authority { host }
+
+  host = e.host
+  e.host =
+    element host {text}
+
+  path = e.path
+  e.path = element path {text}
+}
+
+</pre>
+</div>
+
+<p>
+As noted above, the <code>text</code> keyword is used here to constrain the
+position of textual data, but no attempt is used to make it constrain
+the data.  RNG and XSD (and Schematron using XPath 2.0 or higher) do
+allow the schema to use regular expressions to constrain the string
+values of attributes and elements with character content.  Such
+constraints relate not to the element/attribute structure of the
+document but to its character data and are dealt with below.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga260330" class="outline-2">
+<h2 id="orga260330"><span class="section-number-2">4.</span> Constraining text nodes and attribute values</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+For character data, we can again identify several levels of
+consistency.  In all of the kinds of consistency defined below, the
+schema uses regular expressions to require that some attribute values
+and some textual content match the constraints expressed in the
+grammar.  Different kinds of consistency vary primarily in which
+attribute values and which element content the constraints are applied
+to.
+</p>
+</div>
+
+<div id="outline-container-org493df40" class="outline-3">
+<h3 id="org493df40"><span class="section-number-3">4.1.</span> L1: directly regular constructs</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+For any 'directly regular' element or attribute serializing some
+nonterminal <i>N</i>, <i>S</i> accepts all and only the strings in <i>L(N, G)</i>.
+</p>
+
+<p>
+Here a directly regular element or attribute is the serialization of
+some nonterminal <i>N</i> whose rule in <i>G</i> has no nonterminal symbols on
+its right-hand side.  <i>L(N, G)</i> denotes the set of strings generated
+by <i>N</i> in grammar G.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org265d15e" class="outline-3">
+<h3 id="org265d15e"><span class="section-number-3">4.2.</span> L2: nonrecursive constructs</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+For any element or attribute serializing some non-recursive
+PCDATA-only nonterminal <i>N</i>, <i>S</i> accepts all and only the strings in
+<i>L(N, G)</i>.
+</p>
+
+<p>
+Here a nonterminal <i>N</i> is non-recursive if and only if <i>N</i> is not a
+possible descendant of <i>N</i> (i.e. N is not a member of <i>^pc(N)</i>, where
+<i>pc</i> is the parent/child relation on nonterminals and <i>^pc</i> is its
+positive transitive closure), and the same holds true for all
+descendants of <i>N</i> (that is, they are also non-recursive).  A
+nonterminal <i>N</i> is PCDATA-only if (a) <i>N</i> is serialzied as an
+attribute, or (b) no member of <i>^pc(N)</i> is serialized as an element.
+</p>
+
+<p>
+[Informally: <i>N</i> is PCDATA-only if, when <i>N</i> is serialized as an
+element, the element never has any children.]
+</p>
+
+<p>
+[Note that if <i>N</i> is non-recursive, then <i>L(N, G)</i> is guaranteed
+regular and thus expressible by a regular-expression pattern.  If the
+grammar uses recursive to express iteration, <i>N</i> may be regular
+without being non-recursive.  But if all iteration is expressed in <i>G</i>
+using <i>repeat0</i> and <i>repeat1</i>, I believe <i>L(N, G)</i> will be regular if
+and only if <i>N</i> is non-recursive.]
+</p>
+
+<p>
+[Note that one might also imagine defining a level of functionality
+which would involve the processor detecting recursions which could be
+eliminated by rewriting the grammar using repetitions, doing so, and
+constructing regular expressions from the result.  This document does
+not define such a level of functionality.]
+</p>
+
+<p>
+For example, at level L2, grammar <i>G<sub>1</sub></i> can be approximated by the
+following schema.  It is just as before, except that the values of the
+<i>scheme</i> attribute and the <i>sub</i> and <i>path</i> elements are constrained
+as in the grammar.  The text nodes occurring between <i>sub</i> elements
+within <i>host</i>, on the other hand, are not constrained, so the schema
+does not check to make sure that each such text node consists of a
+single full stop.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-ixml">grammar {
+  start = url
+
+  url = e.url
+  e.url = element url { scheme, authority, path }
+
+  scheme = a.scheme
+  a.scheme =
+    attribute scheme {
+      xsd:string { pattern = "([a-z]|[A-Z]|[0-9])+" }
+    }
+
+  authority = e.authority
+  e.authority = element authority { host }
+
+  host = e.host
+  e.host =
+    element host {
+      xsd:string {
+        pattern = "([a-z]|[A-Z]|[0-9])+(\.([a-z]|[A-Z]|[0-9])+)*"
+      }
+    }
+
+  path = e.path
+  e.path =
+    element path {
+      xsd:string { pattern = "(/([a-z]|[A-Z]|[0-9]|\.)+)+" }
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-org0d8c49e" class="outline-3">
+<h3 id="org0d8c49e"><span class="section-number-3">4.3.</span> L3: regular approximations</h3>
+<div class="outline-text-3" id="text-4-3">
+<p>
+An L3 schema <i>S</i> satisfies these conditions:
+</p>
+<ul class="org-ul">
+<li>It satisfies the conditions of L2.</li>
+<li>For any element or attribute serializing some recursive PCDATA-only
+nonterminal <i>N</i>, <i>S</i> accepts just those strings matching a regular
+approximation of <i>L(N, G)</i>.</li>
+</ul>
+
+<p>
+The precise approximation chosen should be specified by the user.  As
+a default, approximation U3 may be best.  U3 allows up to three
+occurrences of any nonterminal N in a derivation path in the raw parse
+tree.  Informally, it allows brackets up to three deep, then allows no
+further brackets.
+</p>
+
+<p>
+In any grammar intended for the use cases described above, the
+recursive nesting in context-free languages will normally be
+represented in XML by nesting elements; the ability to provide a
+regular approximation of a context-free language is thus unlikely to
+be very often useful in practice.  It's reassuring to know that it's
+feasible in principle, but has relatively low priority.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org51fe562" class="outline-3">
+<h3 id="org51fe562"><span class="section-number-3">4.4.</span> L4: mixed-content consistency</h3>
+<div class="outline-text-3" id="text-4-4">
+<p>
+As for L3, and additionally <i>S</i> includes Schematron rules for all
+elements with mixed content.  The Relax NG rules allow text nodes at
+appropriate locations among the children of such elements, but do not
+constrain their form.  The Schematron rules define a regular
+expression which matches all children, including text nodes.
+</p>
+
+<p>
+Child elements are matched by writing a sole-tag with the appropriate
+name into the string to match against the regular expression; to avoid
+conflicts with user data containing angle brackets, the sole tag is
+written using the 'tag' characters of Unicode, which are a sequence of
+127 characters beginning at U+E00000, originally intended for
+language-tagging in plain text and now used for locale-tagging on
+emoji.  (Other mechanisms can be imagined, and some may be
+preferable.)
+</p>
+
+<p>
+When more than one nonterminal produces elements with the same name,
+and at least one of those nonterminals produces mixed content, then
+special measures are necessary to set the <i>context</i> attribute on
+Schematron rules correctly; see below.
+</p>
+
+<p>
+In grammars designed for the use cases described above, mixed content
+is expected to be vanishingly rare, so level-4 consistency is not
+expected to be needed in practice.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-orga535591" class="outline-2">
+<h2 id="orga535591"><span class="section-number-2">5.</span> Some complications, limitations, and gaps</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+This section lists some known gaps between an ideal schema for
+<i>X(G)</i> and what is practicable using RNG + Schematron.
+</p>
+</div>
+
+<div id="outline-container-org9652146" class="outline-3">
+<h3 id="org9652146"><span class="section-number-3">5.1.</span> Aliasing for mixed-content elements</h3>
+<div class="outline-text-3" id="text-5-1">
+</div>
+<div id="outline-container-org4cc3234" class="outline-4">
+<h4 id="org4cc3234"><span class="section-number-4">5.1.1.</span> The difficulty:  which Schematron constraint to apply?</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+The aliasing feature of ixml grammars allows us to give the same
+element or attribute name to two different nonterminals in the
+grammar.  For example, consider grammar <i>G3</i>:
+</p>
+<div class="org-src-container">
+<pre class="src src-ixml">a = b; c.
+b = '[b|', b-name, '|b]'.
+c = '[c|', c-name, '|c]'.
+b-name &gt; name = 'B', [L]*.
+c-name &gt; name = 'C', [L]*.
+</pre>
+</div>
+<p>
+A <i>name</i> element in <i>X(G3)</i> may be the serialization of a <i>b-name</i> or
+of a <i>c-name</i>, and the pattern it must match depends on that.  But
+just as ixml allows us to distinguish the nonterminal in the grammar
+from the element type name in the output, RNG allows us to specify
+different element declarations with the same element type name.  (XSD
+allows this, too, but its requirement for deterministic content models
+makes that impossible for this case.)
+</p>
+
+<p>
+An RNG schema for grammar <i>G3</i> might read:
+</p>
+<div class="org-src-container">
+<pre class="src src-rnc">namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+start = a
+a = element a { (b | c)* }
+b = element b { text, b-name, text }
+c = element c { text, c-name, text }
+b-name =
+  element name {
+    xsd:string { pattern = "B\p{L}*" }
+  }
+c-name =
+  element name {
+    xsd:string { pattern = "C\p{L}*" }
+  }
+</pre>
+</div>
+<p>
+We can extend this with Schematron rules requiring that <i>b</i> elements
+begin with a text node reading "[b|" and end with a text node
+reading "|b]", and that <i>c</i> elements similarly begin and end with
+"[c| " and "|c]".  The schema <i>S</i> then matches <i>X(G)</i> correctly.
+</p>
+
+<p>
+But now consider <i>G4</i>, in which both <i>b</i> and <i>c</i> are serialized using
+the same element name (<i>d</i>):
+</p>
+<div class="org-src-container">
+<pre class="src src-ixml">a = b+, c+.
+b &gt; d = '[b|', b-name, '|b]'.
+c &gt; d = '[c|', c-name, '|c]'.
+b-name &gt; name = 'B', [L]*.
+c-name &gt; name = 'C', [L]*.
+</pre>
+</div>
+
+<p>
+The only difference in the RNG schemas for <i>G3</i> and <i>G4</i> is in the
+definition of patterns <i>b</i> and <i>c</i>, which now specify a different name
+for the element:
+</p>
+<div class="org-src-container">
+<pre class="src src-rnc">b = element d { text, b-name, text }
+c = element d { text, c-name, text }  
+</pre>
+</div>
+<p>
+If we also show the associated Schematron rules, it will be easier to
+read in the XML form:
+</p>
+<div class="org-src-container">
+<pre class="src src-rng">&lt;define name="b"&gt;
+    &lt;element name="d"&gt;
+        &lt;sch:rule context="d"&gt;
+            &lt;sch:assert test="'[b|&amp;#xE003C;name&amp;#xE002F;&amp;#xE003E;|b]'
+                eq
+                string-join(
+                for $c in ./child::node()
+                return
+                if ($c instance of element())
+                then concat('&amp;#xE003C;', name($c), '&amp;#xE002F;&amp;#xe003E;')
+                else if ($c instance of text())
+                then string($c)
+                else ''
+                )"&gt;&lt;/sch:assert&gt;
+        &lt;/sch:rule&gt;
+        &lt;group&gt;
+            &lt;text/&gt;
+            &lt;ref name="b-name"/&gt;
+            &lt;text/&gt;
+        &lt;/group&gt;
+    &lt;/element&gt;
+
+&lt;/define&gt;
+&lt;define name="c"&gt;
+    &lt;element name="d"&gt;
+        &lt;sch:rule context="d"&gt;
+            &lt;sch:assert test="'[c|&amp;#xE003C;name&amp;#xE002F;&amp;#xE003E;|c]'
+                eq
+                string-join(
+                for $c in ./child::node()
+                return
+                if ($c instance of element())
+                then concat('&amp;#xE003C;', name($c), '&amp;#xE002F;&amp;#xe003E;')
+                else if ($c instance of text())
+                then string($c)
+                else ''
+                )"&gt;&lt;/sch:assert&gt;
+        &lt;/sch:rule&gt;
+        &lt;group&gt;
+            &lt;text/&gt;
+            &lt;ref name="c-name"/&gt;
+            &lt;text/&gt;
+        &lt;/group&gt;
+    &lt;/element&gt;
+&lt;/define&gt;
+</pre>
+</div>
+<p>
+Now consider an XML document to be validated against a schema for <i>X(G4)</i>:
+</p>
+<div class="org-src-container">
+<pre class="src src-xml">&lt;a&gt;
+    &lt;d&gt;&lt;name&gt;Ba&lt;/name&gt;&lt;/d&gt;
+    &lt;d&gt;&lt;name&gt;Bb&lt;/name&gt;&lt;/d&gt;
+    &lt;d&gt;&lt;name&gt;Ca&lt;/name&gt;&lt;/d&gt;
+    &lt;d&gt;&lt;name&gt;Cb&lt;/name&gt;&lt;/d&gt;
+&lt;/a&gt;
+</pre>
+</div>
+<p>
+Grammar G4 requires that all occurrences of <i>b-name</i> precede all occurrence
+of <i>c-name</i>; the RNG schema can enforce this rule, and object if the fourth
+<i>name</i> element in the document has the value "Bc".  If the second <i>name</i> element
+has the value "X", an RNG validator can say that the value must match either
+the regular expression "B\p{L}*" or the expression "C\p{L}".
+</p>
+
+<p>
+But we cannot use Schematron here to enforce the rule that a name
+whose value starts with a "B" must be preceded by "[b|" and followed
+by "|b]", and one starting with "C" must have "[c|" and "|c]".  In an
+RNG schema, Schematron rules may be attached to particular patterns
+and thus to particular element declarations within those patterns but
+the application of the Schematron rule is governed by the XPath match
+pattern given as the value of the <i>context</i> attribute, and not by any
+connection made by a schema validator between a particular pattern in
+the schema and a particular element in the XML document being
+validated.  (I am here following the explanation offered by Eric van
+der Vlist; I have no independent knowledge of the Schematron
+specification.)  The upshot is that in this case, we end up with two
+Schematron rules, one applicable to some elements and the other to
+other elements, with no way for the Schematron validator to know which
+rule goes with which element.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb3c809c" class="outline-4">
+<h4 id="orgb3c809c"><span class="section-number-4">5.1.2.</span> When this difficulty arises</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+This problem arises when the following conditions are met:
+</p>
+
+<ol class="org-ol">
+<li>More than one nonterminal in <i>G</i> is serialized with the same
+element type name.</li>
+
+<li>The grammar rules for these nonterminals differ.</li>
+
+<li>At least one of those nonterminals produces mixed content.</li>
+</ol>
+
+<p>
+Because of 3, we will want to generate a Schematron rule to check the
+mixed content.  Because of 1 and 2, however, any Schematron rule we
+generate will be applicable to some but not all elements with the
+given element type name.  There appears to be no straightforward way
+to apply each Schematron rule we generate to the appropriate elements.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgaa7fd7a" class="outline-4">
+<h4 id="orgaa7fd7a"><span class="section-number-4">5.1.3.</span> Sketch of a solution</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<p>
+In principle, this is a soluble problem.  In practice, the solution
+may require more effort than it is worth, since the problem can be
+avoided by eliminating mixed content in aliased elements.
+</p>
+
+<p>
+Assume that some set of nonterminals <i>N<sub>1</sub></i>, <i>N<sub>2</sub></i>, &#x2026;, <i>N<sub>n</sub></i> all
+produce elements with the same name <i>e</i>.
+</p>
+
+<ul class="org-ul">
+<li>Each nonterminal <i>N</i> generates some set of elements in <i>X(G)</i>.</li>
+
+<li><p>
+It ought in principle to be possible to construct an XPath
+expression that matches all and only those elements in <i>X(G)</i> which
+could (based on their context) be serializations of some instance of
+<i>N</i>.
+</p>
+
+<p>
+For future reference, let us call these the base XPath expressions.
+</p></li>
+
+<li>Some elements with the name <i>e</i> may match the XPath expression for
+exactly one <i>N<sub>i</sub></i>; in that case, the associated Schematron
+constraints should be applied to those elements.</li>
+
+<li><p>
+Some elements may match the XPath expression for more than one
+<i>N<sub>i</sub></i>; in that case, the constraint applied should be the
+disjunction of the constraints for the matching nonterminals.
+</p>
+
+<p>
+For example, if an element matches both <i>N<sub>1</sub></i> and <i>N<sub>2</sub></i>, and the
+Schematron constraints for those nonterminals are <i>t<sub>1</sub></i> and <i>t<sub>2</sub></i>,
+respectively, then the constraint to be applied to the element is
+(<i>t<sub>1</sub></i> ∨ <i>t<sub>2</sub></i>).
+</p>
+
+<p>
+(This is possible because neither ixml nor RNG require grammar rules
+or content models to be deterministic or unambiguous.)
+</p></li>
+
+<li><p>
+In a given Schematron 'pattern' (or group of rules), the first rule
+with a matching <i>context</i> fires, and no other is consulted.
+</p>
+
+<p>
+To associate Schematron rules correctly with element instances,
+therefore, it is necessary to make an XPath expression for each
+<i>N/_/i</i> which matches only serializations of that nonterminal and no
+serializations of any other nonterminal in the set, and an XPath
+expression for each possible combination of nonterminal matched.
+</p>
+
+<p>
+For example, if three nonterminals (<i>N<sub>1</sub></i>, <i>N<sub>2</sub></i>, and <i>N<sub>3</sub></i>)
+are
+serialized as elements with name <i>e</i>, we will need XPath
+expressions which match
+</p>
+<ul class="org-ul">
+<li><i>N<sub>1</sub></i> (and neither of the others)</li>
+<li><i>N<sub>2</sub></i> (and neither of the others)</li>
+<li><i>N<sub>3</sub></i> (and neither of the others)</li>
+<li><i>N<sub>1</sub></i> or <i>N<sub>2</sub></i> (but not <i>N<sub>3</sub></i>)</li>
+<li><i>N<sub>1</sub></i> or <i>N<sub>3</sub></i> (but not <i>N<sub>2</sub></i>)</li>
+<li><i>N<sub>2</sub></i> or <i>N<sub>3</sub></i> (but not <i>N<sub>1</sub></i>)</li>
+<li>any of <i>N<sub>1</sub></i>, <i>N<sub>2</sub></i>, or <i>N<sub>3</sub></i></li>
+</ul>
+
+<p>
+We can construct these by combining the base XPath expressions (call
+them <i>X<sub>1</sub></i>, <i>X<sub>2</sub></i>, and <i>X<sub>3</sub></i>) using XPath set operations:
+</p>
+
+<ul class="org-ul">
+<li><i>N<sub>1</sub></i> (and neither of the others):  <i>X<sub>1</sub></i> except (<i>X<sub>2</sub></i> | <i>X<sub>3</sub></i>)</li>
+<li><i>N<sub>2</sub></i> (and neither of the others):  <i>X<sub>2</sub></i> except (<i>X<sub>1</sub></i> | <i>X<sub>3</sub></i>)</li>
+<li><i>N<sub>3</sub></i> (and neither of the others):  <i>X<sub>3</sub></i> except (<i>X<sub>1</sub></i> | <i>X<sub>2</sub></i>)</li>
+<li><i>N<sub>1</sub></i> or <i>N<sub>2</sub></i> (but not <i>N<sub>3</sub></i>):  (<i>X<sub>1</sub></i> | <i>X<sub>2</sub></i>) except <i>X<sub>3</sub></i></li>
+<li><i>N<sub>1</sub></i> or <i>N<sub>3</sub></i> (but not <i>N<sub>2</sub></i>):  (<i>X<sub>1</sub></i> | <i>X<sub>3</sub></i>) except <i>X<sub>2</sub></i></li>
+<li><i>N<sub>2</sub></i> or <i>N<sub>3</sub></i> (but not <i>N<sub>1</sub></i>):  (<i>X<sub>2</sub></i> | <i>X<sub>3</sub></i>) except <i>X<sub>1</sub></i></li>
+<li><i>N<sub>1</sub></i> or <i>N<sub>2</sub></i> or <i>N<sub>3</sub></i>:  <i>X<sub>1</sub></i> | <i>X<sub>2</sub></i> | <i>X<sub>3</sub></i></li>
+</ul></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5f4715c" class="outline-4">
+<h4 id="org5f4715c"><span class="section-number-4">5.1.4.</span> Some supporting theorems</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<p>
+Is it in fact possible to construct the base XPath expressions needed
+in the solution sketched above?  I think the answer is yes.
+</p>
+
+<p>
+<i>Theorem:</i> For any nonterminal <i>N</i> in <i>G</i> the set of ancestor paths of
+<i>N</i> (i.e. paths from the root of the raw parse tree [not the
+serialized XML] to an instance of <i>N</i>) is a regular language.
+</p>
+
+<p>
+<i>Proof:</i> We can construct a finite state automaton <i>A</i> = (<i>Q</i>, Σ, δ,
+<i>q/<sub>0</sub>, /F</i>), with
+</p>
+<ul class="org-ul">
+<li><i>Q</i> = the set of nonterminals in <i>G</i></li>
+<li>Σ = the set of nonterminals in <i>G</i></li>
+<li>δ = the set of triples (<i>P</i>, <i>C</i>, <i>C</i>) where nonterminal <i>C</i>
+appears in the right-hand side of nonterminal <i>P</i>.</li>
+<li>/q/<sub>0</sub>
+is the start symbol of
+<i>G</i></li>
+<li><i>F</i> = {<i>N</i>}</li>
+</ul>
+
+<p>
+It is evident that the set of strings accepted by this FSA is the set
+of paths in raw parse trees beginning at the start symbol and ending
+at <i>N</i>.
+</p>
+
+<p>
+<i>Corollary:</i> For any nonterminal <i>N</i> in <i>G</i> serialized as an element
+named <i>e</i> or an attribute named <i>a</i>, it is possible to construct an
+XPath expression which matches only those <i>e</i> elements or <i>a</i>
+attributes whose ancestry matches that of elements or attributes in
+<i>X(G)</i> serialized from occurrences of <i>N</i>.
+</p>
+
+<p>
+<i>Proof:</i> In the FSA described above, split the state for each
+nonterminal <i>N</i> into three states, one each for <i>N</i> serialized as
+element, serialized as attribute, and hidden.  Ajust the transitions
+accordingly.  The final state has now been split into three states;
+drop the hidden-nonterminal state from the set <i>F</i>.  Then change every
+transition to a hidden nonterminal to an empty transition, and delete
+every transition out of any nonterminal serialized as an attribute.
+For every nonterminal <i>N</i> serialized using an alias <i>A</i>, change the
+symbol in all incoming arcs to state <i>N</i> to read <i>A</i> instead of <i>N</i>.
+</p>
+
+<p>
+From this modified FSA, we can construct a regular expression matching
+all and only the paths leading to serializations of <i>N</i> as an element,
+and a second one matching all and only the paths leading to
+serializations of <i>N</i> as an attribute, and we can construct an XPath
+expression which constructs a string describing the ancestry of any
+element or attribute.  The XPath expression will match all
+serializations of <i>N</i> as attributes or elements, and also other
+elements named <i>e</i> and attributes named <i>a</i> which share the same
+ancestry but are serializations of some other nontterminal (if there
+are any such).
+</p>
+
+<p>
+For example, the serializations of nonterminal <i>b</i> in grammar <i>G4</i>
+can be matched by the expression
+</p>
+<div class="org-src-container">
+<pre class="src src-xpath">//e['/' || stringjoin(ancestor-or-self::*/name(), '/')
+    eq
+    '/a/d']
+</pre>
+</div>
+
+<p>
+<i>[Better example would be helpful, but the grammars given above are
+all too simple.]</i>
+</p>
+
+<p>
+<i>Theorem:</i> For any occurrence of nonterminal <i>N</i> in a right-hand side
+of <i>G</i>, where <i>N</i> is serialized as an element <i>e</i>, it is possible to
+construct an XPath expression matching all and only elements <i>e</i> whose
+preceding element siblings match the preceding siblings of some
+element <i>e</i> in <i>X(G)</i> serialized from an instance of <i>N</i> with the same
+ancestry.
+</p>
+
+<p>
+<i>Proof:</i> Without loss of generality, assume that there are no hidden
+nonterminals in the right-hand side containing <i>N</i>.  (See below for
+cases where this is not given a priori.)  If all terminal symbols and
+all nonterminals to be serialized as attributes are deleted from the
+expression, what remains is a regular expressoin over non-hidden
+nonterminals.  This regular expression can be transformed into a
+finite state automaton using standard methods.  If in that FSA the set
+of final states is changed to include only the occurrences of <i>N</i>, the
+FSA will accept all and only the left-to-right paths through the
+content model which terminate in <i>N</i>.  A regular expression can be
+constructed from that FSA, and from that regular expression an XPath
+expression, along the lines shown above for the ancestry expression.
+</p>
+
+<p>
+(It may be possible to construct the regular expression more directly,
+but I don't currently see a clean way to do so.)
+</p>
+
+<p>
+If the assumption does not hold, it can be made to hold by inlining
+the definitions of the hidden nonterminals until either (a) there are
+no more hidden nonterminals, or (b) the only remaining hidden
+nonterminals are recursive but lack any descedants serialized as
+elements.  In case (a), the assumption now holds.  In case (b) the
+remaining hidden nonterminals can simply be deleted.  Since they
+generate only character data, and character data is ignored in the
+construction of the XPath expression, they cannot affect the XPath
+expression.
+</p>
+
+<p>
+<i>Corollary:</i> For any nonterminal <i>N</i> serialized as an element, it is
+possible to construct an XPath expression which matches all elements
+serialized from <i>N</i> and no elements which do not have the same upper
+and left context as some of those elements.
+</p>
+
+<p>
+<i>Proof:</i> Follows immediately.  The two XPath expressions described
+above can be combined to select only elements whose ancestry and left
+context are both suitable.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 9 July 2024</p>
+<p class="author">Author: CMSMcQ</p>
+<p class="date">Created: 2024-07-11 Thu 14:36</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

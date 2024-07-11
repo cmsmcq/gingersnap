@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rng:grammar xmlns:db="http://docbook.org/ns/docbook"
+             xmlns:ra="http://relaxng.org/ns/compatibility/annotations/1.0"
+             xmlns:rng="http://relaxng.org/ns/structure/1.0"
+             datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes"
+             ra:desc="Relax NG annotations"
+             db:desc="DocBook">
+   <ra:documentation>This Relax NG schema was generated from an invisible-XML grammar
+ by ixml-to-rng.xsl, on 2024-07-11.</ra:documentation>
+   <rng:start>
+      <rng:ref name="url"/>
+   </rng:start>
+   <rng:define name="url">
+      <db:refname>url</db:refname>
+      <ra:documentation>Default rule for nonterminal 'url'</ra:documentation>
+      <rng:ref name="e.url"/>
+   </rng:define>
+   <rng:define name="e.url">
+      <db:refname>e.url</db:refname>
+      <ra:documentation>Nonterminal 'url', serialized as element</ra:documentation>
+      <rng:element name="url">
+         <rng:group>
+            <rng:ref name="scheme"/>
+            <rng:ref name="authority"/>
+            <rng:ref name="path"/>
+         </rng:group>
+      </rng:element>
+   </rng:define>
+   <rng:define name="scheme">
+      <db:refname>scheme</db:refname>
+      <ra:documentation>Default rule for nonterminal 'scheme'</ra:documentation>
+      <rng:ref name="a.scheme"/>
+   </rng:define>
+   <rng:define name="a.scheme">
+      <db:refname>a.scheme</db:refname>
+      <ra:documentation>Nonterminal 'scheme', serialized as attribute</ra:documentation>
+      <rng:attribute name="scheme"><!-- No annotations found, falling back to 'text'. -->
+         <rng:text/>
+      </rng:attribute>
+   </rng:define>
+   <rng:define name="authority">
+      <db:refname>authority</db:refname>
+      <ra:documentation>Default rule for nonterminal 'authority'</ra:documentation>
+      <rng:ref name="e.authority"/>
+   </rng:define>
+   <rng:define name="e.authority">
+      <db:refname>e.authority</db:refname>
+      <ra:documentation>Nonterminal 'authority', serialized as element</ra:documentation>
+      <rng:element name="authority">
+         <rng:group>
+            <rng:ref name="host"/>
+         </rng:group>
+      </rng:element>
+   </rng:define>
+   <rng:define name="host">
+      <db:refname>host</db:refname>
+      <ra:documentation>Default rule for nonterminal 'host'</ra:documentation>
+      <rng:ref name="e.host"/>
+   </rng:define>
+   <rng:define name="e.host">
+      <db:refname>e.host</db:refname>
+      <ra:documentation>Nonterminal 'host', serialized as element</ra:documentation>
+      <rng:element name="host">
+         <rng:group>
+            <rng:group>
+               <rng:ref name="sub"/>
+               <rng:zeroOrMore><!-- can a data element be used? -->
+                  <rng:text/>
+                  <rng:ref name="sub"/>
+               </rng:zeroOrMore>
+            </rng:group>
+         </rng:group>
+      </rng:element>
+   </rng:define>
+   <rng:define name="sub">
+      <db:refname>sub</db:refname>
+      <ra:documentation>Default rule for nonterminal 'sub'</ra:documentation>
+      <rng:ref name="h.sub"/>
+   </rng:define>
+   <rng:define name="h.sub">
+      <db:refname>h.sub</db:refname>
+      <ra:documentation>Nonterminal 'sub', not serialized (hidden)</ra:documentation>
+      <rng:group>
+         <rng:oneOrMore>
+            <rng:ref name="letter"/>
+         </rng:oneOrMore>
+      </rng:group>
+   </rng:define>
+   <rng:define name="path">
+      <db:refname>path</db:refname>
+      <ra:documentation>Default rule for nonterminal 'path'</ra:documentation>
+      <rng:ref name="e.path"/>
+   </rng:define>
+   <rng:define name="e.path">
+      <db:refname>e.path</db:refname>
+      <ra:documentation>Nonterminal 'path', serialized as element</ra:documentation>
+      <rng:element name="path">
+         <rng:group>
+            <rng:oneOrMore>
+               <rng:group><!-- can a data element be used? -->
+                  <rng:text/>
+                  <rng:ref name="seg"/>
+               </rng:group>
+            </rng:oneOrMore>
+         </rng:group>
+      </rng:element>
+   </rng:define>
+   <rng:define name="seg">
+      <db:refname>seg</db:refname>
+      <ra:documentation>Default rule for nonterminal 'seg'</ra:documentation>
+      <rng:ref name="h.seg"/>
+   </rng:define>
+   <rng:define name="h.seg">
+      <db:refname>h.seg</db:refname>
+      <ra:documentation>Nonterminal 'seg', not serialized (hidden)</ra:documentation>
+      <rng:group>
+         <rng:zeroOrMore>
+            <rng:ref name="fletter"/>
+         </rng:zeroOrMore>
+      </rng:group>
+   </rng:define>
+   <rng:define name="letter">
+      <db:refname>letter</db:refname>
+      <ra:documentation>Default rule for nonterminal 'letter'</ra:documentation>
+      <rng:ref name="h.letter"/>
+   </rng:define>
+   <rng:define name="h.letter">
+      <db:refname>h.letter</db:refname>
+      <ra:documentation>Nonterminal 'letter', not serialized (hidden)</ra:documentation>
+      <rng:choice>
+         <rng:group><!-- can a data element be used? -->
+            <rng:text/>
+         </rng:group>
+         <rng:group><!-- can a data element be used? -->
+            <rng:text/>
+         </rng:group>
+         <rng:group><!-- can a data element be used? -->
+            <rng:text/>
+         </rng:group>
+      </rng:choice>
+   </rng:define>
+   <rng:define name="fletter">
+      <db:refname>fletter</db:refname>
+      <ra:documentation>Default rule for nonterminal 'fletter'</ra:documentation>
+      <rng:ref name="h.fletter"/>
+   </rng:define>
+   <rng:define name="h.fletter">
+      <db:refname>h.fletter</db:refname>
+      <ra:documentation>Nonterminal 'fletter', not serialized (hidden)</ra:documentation>
+      <rng:choice>
+         <rng:group>
+            <rng:ref name="letter"/>
+         </rng:group>
+         <rng:group><!-- can a data element be used? -->
+            <rng:text/>
+         </rng:group>
+      </rng:choice>
+   </rng:define>
+</rng:grammar>
