@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2024-07-11 Thu 14:36 -->
+<!-- 2024-08-09 Fri 09:34 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Translating ixml grammars into schemas</title>
@@ -222,33 +222,35 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orgbc615d0">1. Some preliminary definitions and assumptions</a></li>
-<li><a href="#orga039518">2. A running example</a></li>
-<li><a href="#org4e3de55">3. Constraining the element and attribute structure</a>
+<li><a href="#org04ef66d">1. Some preliminary definitions and assumptions</a></li>
+<li><a href="#org11096d9">2. A running example</a></li>
+<li><a href="#org14e9907">3. Constraining the element and attribute structure</a>
 <ul>
-<li><a href="#orgb4e9210">3.1. Name consistency (Waterloo schema)</a></li>
-<li><a href="#org1f16795">3.2. Parent/child consistency</a></li>
-<li><a href="#org206aedb">3.3. Content-model consistency</a></li>
+<li><a href="#orgbf3c54e">3.1. Name consistency (Waterloo schema)</a></li>
+<li><a href="#org4883da8">3.2. Parent/child consistency</a></li>
+<li><a href="#orge6a3058">3.3. Content-model consistency</a></li>
 </ul>
 </li>
-<li><a href="#orga260330">4. Constraining text nodes and attribute values</a>
+<li><a href="#org4021302">4. Constraining text nodes and attribute values</a>
 <ul>
-<li><a href="#org493df40">4.1. L1: directly regular constructs</a></li>
-<li><a href="#org265d15e">4.2. L2: nonrecursive constructs</a></li>
-<li><a href="#org0d8c49e">4.3. L3: regular approximations</a></li>
-<li><a href="#org51fe562">4.4. L4: mixed-content consistency</a></li>
+<li><a href="#org210ddff">4.1. L1: directly regular constructs</a></li>
+<li><a href="#org7b141df">4.2. L2: nonrecursive constructs</a></li>
+<li><a href="#org1f84efb">4.3. L3: regular approximations</a></li>
+<li><a href="#org63e64e8">4.4. L4: mixed-content consistency</a></li>
 </ul>
 </li>
-<li><a href="#orga535591">5. Some complications, limitations, and gaps</a>
+<li><a href="#org72f494d">5. Some complications, limitations, and gaps</a>
 <ul>
-<li><a href="#org9652146">5.1. Aliasing for mixed-content elements</a>
+<li><a href="#org8a98d64">5.1. Constraints on mixed content</a></li>
+<li><a href="#orgcc83d0a">5.2. Aliasing for mixed-content elements</a>
 <ul>
-<li><a href="#org4cc3234">5.1.1. The difficulty:  which Schematron constraint to apply?</a></li>
-<li><a href="#orgb3c809c">5.1.2. When this difficulty arises</a></li>
-<li><a href="#orgaa7fd7a">5.1.3. Sketch of a solution</a></li>
-<li><a href="#org5f4715c">5.1.4. Some supporting theorems</a></li>
+<li><a href="#orgb5a2149">5.2.1. The difficulty:  which Schematron constraint to apply?</a></li>
+<li><a href="#org2a5160c">5.2.2. When this difficulty arises</a></li>
+<li><a href="#org7559557">5.2.3. Sketch of a solution</a></li>
+<li><a href="#org69a10a4">5.2.4. Some supporting theorems</a></li>
 </ul>
 </li>
+<li><a href="#orgb516cd8">5.3. Minding the gap</a></li>
 </ul>
 </li>
 </ul>
@@ -264,6 +266,13 @@ language against <i>G</i>.  It is conventional to denote the set of
 sentences accepted by <i>G</i> with the expression <i>L(G)</i>; analogously, we
 can refer to the set of XML documents produced by <i>G</i> with the
 expression <i>X(G)</i>.
+</p>
+
+<p>
+For some grammars, <i>X(G)</i> is just the set of XML representations of
+parse trees for sentences, but iXML grammars can modify the XML
+representation by marking terminals to be suppressed and marking
+non-terminals to be serialized as attributes and/or renamed.  
 </p>
 
 <p>
@@ -302,8 +311,8 @@ of different ways to approximate language <i>X(G)</i> in a schema, and
 describes in varying amounts of detail how to construct such schemas.
 </p>
 
-<div id="outline-container-orgbc615d0" class="outline-2">
-<h2 id="orgbc615d0"><span class="section-number-2">1.</span> Some preliminary definitions and assumptions</h2>
+<div id="outline-container-org04ef66d" class="outline-2">
+<h2 id="org04ef66d"><span class="section-number-2">1.</span> Some preliminary definitions and assumptions</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Some names are used here with conventional meanings:
@@ -320,11 +329,16 @@ Note that it is possible to construct <i>G</i> in such a way that it
 accepts some strings for which its serialization markings make a
 well-formed serialization impossible.  (One simple way is to use
 nonterminals or aliases which are not legal names in XML; another is
-to require that some element have two attributes with the same
-name.)  Such grammars are excluded from consideration here.
+to require that some element have two attributes with the same name;
+a third is to accept non-XML characters without suppressing them in
+the output, or to inject non-XML characters into the output.)  Such
+grammars are excluded from consideration here.
 </p></li>
 
 <li><i>L(G)</i> is the set of input strings accepted by <i>G</i>.</li>
+
+<li><i>L(N, G)</i> is the set of strings generated by some nonterminal <i>N</i> in
+grammar G.</li>
 
 <li><i>X(G)</i> is the set of XML documents produced by a conforming ixml
 processor parsing some string in <i>L(G)</i> against <i>G</i> .</li>
@@ -345,8 +359,8 @@ languages may be mentioned in passing.
 </div>
 </div>
 
-<div id="outline-container-orga039518" class="outline-2">
-<h2 id="orga039518"><span class="section-number-2">2.</span> A running example</h2>
+<div id="outline-container-org11096d9" class="outline-2">
+<h2 id="org11096d9"><span class="section-number-2">2.</span> A running example</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 As a running example, we will use the grammar given in the "How it
@@ -394,8 +408,8 @@ path: ("/", seg)+.
 </div>
 </div>
 
-<div id="outline-container-org4e3de55" class="outline-2">
-<h2 id="org4e3de55"><span class="section-number-2">3.</span> Constraining the element and attribute structure</h2>
+<div id="outline-container-org14e9907" class="outline-2">
+<h2 id="org14e9907"><span class="section-number-2">3.</span> Constraining the element and attribute structure</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Let us consider first using a schema to capture constraints on
@@ -410,8 +424,8 @@ superset of <i>X(G)</i>.
 </p>
 </div>
 
-<div id="outline-container-orgb4e9210" class="outline-3">
-<h3 id="orgb4e9210"><span class="section-number-3">3.1.</span> Name consistency (Waterloo schema)</h3>
+<div id="outline-container-orgbf3c54e" class="outline-3">
+<h3 id="orgbf3c54e"><span class="section-number-3">3.1.</span> Name consistency (Waterloo schema)</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 <i>S</i> is name-consistent with <i>G</i> if and only if <i>S</i> allows all and only
@@ -485,8 +499,8 @@ recognizes a superset of <i>X(G)</i>.
 </div>
 </div>
 
-<div id="outline-container-org1f16795" class="outline-3">
-<h3 id="org1f16795"><span class="section-number-3">3.2.</span> Parent/child consistency</h3>
+<div id="outline-container-org4883da8" class="outline-3">
+<h3 id="org4883da8"><span class="section-number-3">3.2.</span> Parent/child consistency</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 <i>S</i> is parent/child-consistent with <i>G</i> if and only if:
@@ -528,8 +542,8 @@ although again the set of documents accepted by <i>S</i> is a superset of
 </div>
 </div>
 
-<div id="outline-container-org206aedb" class="outline-3">
-<h3 id="org206aedb"><span class="section-number-3">3.3.</span> Content-model consistency</h3>
+<div id="outline-container-orge6a3058" class="outline-3">
+<h3 id="orge6a3058"><span class="section-number-3">3.3.</span> Content-model consistency</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 <i>S</i> is content-model-consistent with <i>G</i> if and only if:
@@ -722,8 +736,8 @@ document but to its character data and are dealt with below.
 </div>
 
 
-<div id="outline-container-orga260330" class="outline-2">
-<h2 id="orga260330"><span class="section-number-2">4.</span> Constraining text nodes and attribute values</h2>
+<div id="outline-container-org4021302" class="outline-2">
+<h2 id="org4021302"><span class="section-number-2">4.</span> Constraining text nodes and attribute values</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 For character data, we can again identify several levels of
@@ -736,8 +750,8 @@ to.
 </p>
 </div>
 
-<div id="outline-container-org493df40" class="outline-3">
-<h3 id="org493df40"><span class="section-number-3">4.1.</span> L1: directly regular constructs</h3>
+<div id="outline-container-org210ddff" class="outline-3">
+<h3 id="org210ddff"><span class="section-number-3">4.1.</span> L1: directly regular constructs</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 For any 'directly regular' element or attribute serializing some
@@ -748,13 +762,13 @@ nonterminal <i>N</i>, <i>S</i> accepts all and only the strings in <i>L(N, G)</i
 Here a directly regular element or attribute is the serialization of
 some nonterminal <i>N</i> whose rule in <i>G</i> has no nonterminal symbols on
 its right-hand side.  <i>L(N, G)</i> denotes the set of strings generated
-by <i>N</i> in grammar G.
+by <i>N</i> in grammar <i>G</i>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org265d15e" class="outline-3">
-<h3 id="org265d15e"><span class="section-number-3">4.2.</span> L2: nonrecursive constructs</h3>
+<div id="outline-container-org7b141df" class="outline-3">
+<h3 id="org7b141df"><span class="section-number-3">4.2.</span> L2: nonrecursive constructs</h3>
 <div class="outline-text-3" id="text-4-2">
 <p>
 For any element or attribute serializing some non-recursive
@@ -763,18 +777,23 @@ PCDATA-only nonterminal <i>N</i>, <i>S</i> accepts all and only the strings in
 </p>
 
 <p>
-Here a nonterminal <i>N</i> is non-recursive if and only if <i>N</i> is not a
-possible descendant of <i>N</i> (i.e. N is not a member of <i>^pc(N)</i>, where
-<i>pc</i> is the parent/child relation on nonterminals and <i>^pc</i> is its
-positive transitive closure), and the same holds true for all
+Here a nonterminal <i>N</i> is <i>non-recursive</i> if and only if <i>N</i> is not a
+possible descendant of <i>N</i> (i.e. <i>N</i> is not a member of <i>^pc(N)</i>,
+where <i>pc</i> is the parent/child relation on nonterminals and <i>^pc</i> is
+its positive transitive closure), and the same holds true for all
 descendants of <i>N</i> (that is, they are also non-recursive).  A
-nonterminal <i>N</i> is PCDATA-only if (a) <i>N</i> is serialzied as an
+nonterminal <i>N</i> is <i>PCDATA-only</i> if (a) <i>N</i> is serialized as an
 attribute, or (b) no member of <i>^pc(N)</i> is serialized as an element.
+[Informally: <i>N</i> is PCDATA-only if, when <i>N</i> is serialized as an
+element, the element never has any children.]
 </p>
 
 <p>
-[Informally: <i>N</i> is PCDATA-only if, when <i>N</i> is serialized as an
-element, the element never has any children.]
+[Note that one might also imagine defining a level of functionality
+which would involve the processor detecting recursions which could be
+eliminated by rewriting the grammar using repetitions, doing so, and
+constructing regular expressions from the result.  This document does
+not define such a level of functionality.]
 </p>
 
 <p>
@@ -784,14 +803,6 @@ grammar uses recursive to express iteration, <i>N</i> may be regular
 without being non-recursive.  But if all iteration is expressed in <i>G</i>
 using <i>repeat0</i> and <i>repeat1</i>, I believe <i>L(N, G)</i> will be regular if
 and only if <i>N</i> is non-recursive.]
-</p>
-
-<p>
-[Note that one might also imagine defining a level of functionality
-which would involve the processor detecting recursions which could be
-eliminated by rewriting the grammar using repetitions, doing so, and
-constructing regular expressions from the result.  This document does
-not define such a level of functionality.]
 </p>
 
 <p>
@@ -840,8 +851,8 @@ single full stop.
 </div>
 
 
-<div id="outline-container-org0d8c49e" class="outline-3">
-<h3 id="org0d8c49e"><span class="section-number-3">4.3.</span> L3: regular approximations</h3>
+<div id="outline-container-org1f84efb" class="outline-3">
+<h3 id="org1f84efb"><span class="section-number-3">4.3.</span> L3: regular approximations</h3>
 <div class="outline-text-3" id="text-4-3">
 <p>
 An L3 schema <i>S</i> satisfies these conditions:
@@ -854,26 +865,22 @@ approximation of <i>L(N, G)</i>.</li>
 </ul>
 
 <p>
-The precise approximation chosen should be specified by the user.  As
-a default, approximation U3 may be best.  U3 allows up to three
-occurrences of any nonterminal N in a derivation path in the raw parse
-tree.  Informally, it allows brackets up to three deep, then allows no
-further brackets.
+The precise approximation chosen should be specified by the user.
 </p>
 
 <p>
-In any grammar intended for the use cases described above, the
-recursive nesting in context-free languages will normally be
-represented in XML by nesting elements; the ability to provide a
-regular approximation of a context-free language is thus unlikely to
-be very often useful in practice.  It's reassuring to know that it's
-feasible in principle, but has relatively low priority.
+This level of approximation seems unlikely to be very often useful in
+practice: in any grammar intended for the use cases described above,
+the recursive nesting in context-free languages will normally be
+represented in XML by nesting elements, which renders regular
+approximation unnecessary.  It may be reassuring to know that it's
+feasible in principle, but it has relatively low priority.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org51fe562" class="outline-3">
-<h3 id="org51fe562"><span class="section-number-3">4.4.</span> L4: mixed-content consistency</h3>
+<div id="outline-container-org63e64e8" class="outline-3">
+<h3 id="org63e64e8"><span class="section-number-3">4.4.</span> L4: mixed-content consistency</h3>
 <div class="outline-text-3" id="text-4-4">
 <p>
 As for L3, and additionally <i>S</i> includes Schematron rules for all
@@ -911,26 +918,161 @@ expected to be needed in practice.
 </div>
 
 
-<div id="outline-container-orga535591" class="outline-2">
-<h2 id="orga535591"><span class="section-number-2">5.</span> Some complications, limitations, and gaps</h2>
+<div id="outline-container-org72f494d" class="outline-2">
+<h2 id="org72f494d"><span class="section-number-2">5.</span> Some complications, limitations, and gaps</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 This section lists some known gaps between an ideal schema for
 <i>X(G)</i> and what is practicable using RNG + Schematron.
 </p>
+
+<p>
+It also considers ways to write or alter grammars to avoid
+those gaps.
+</p>
 </div>
 
-<div id="outline-container-org9652146" class="outline-3">
-<h3 id="org9652146"><span class="section-number-3">5.1.</span> Aliasing for mixed-content elements</h3>
+<div id="outline-container-org8a98d64" class="outline-3">
+<h3 id="org8a98d64"><span class="section-number-3">5.1.</span> Constraints on mixed content</h3>
 <div class="outline-text-3" id="text-5-1">
+<p>
+As noted above, iXML grammars can impose grammatical constraints on
+character sequences which will appear as text uninterrupted by markup
+in the corresponding XML documents.
+</p>
+
+<p>
+Such constraints are not usually expressible in DTDs, but when the
+character sequence in question is (1) the value of an attribute or of
+a character-data-only element and (2) clearly drawn from a regular
+language, then it is possible (and relatively straightforward) to
+capture the constraint in an XSD simple datatype or in an RNG
+<i>pattern</i> facet.
+</p>
+
+<p>
+When the constraint applies to character sequences appearing in mixed
+content (that is, a mixture of character data and elements appearing
+as sibling nodes in the XML document), it is not possible to formulate
+it as a <i>pattern</i> facet in RNG, but it is feasible to formulate it as
+a Schematron rule, provided that the nonterminal in question contains
+no untagged recursion.
+</p>
+
+<p>
+For example, consider grammar <i>G<sub>2</sub></i>:
+</p>
+<div class="org-src-container">
+<pre class="src src-ixml">a = b; c.
+b = '[b|', b-name, '|b]'.
+c = '[c|', c-name, '|c]'.
+b-name = 'B', [L]*.
+c-name = 'C', [L]*.
+</pre>
 </div>
-<div id="outline-container-org4cc3234" class="outline-4">
-<h4 id="org4cc3234"><span class="section-number-4">5.1.1.</span> The difficulty:  which Schematron constraint to apply?</h4>
-<div class="outline-text-4" id="text-5-1-1">
+
+<p>
+An RNG schema for grammar <i>G<sub>2</sub></i> might read:
+</p>
+<div class="org-src-container">
+<pre class="src src-rnc">namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+start = a
+a = element a { (b | c)* }
+b = element b { text, b-name, text }
+c = element c { text, c-name, text }
+b-name =
+  element b-name {
+    xsd:string { pattern = "B\p{L}*" }
+  }
+c-name =
+  element c-name {
+    xsd:string { pattern = "C\p{L}*" }
+  }
+</pre>
+</div>
+<p>
+We can extend this with Schematron rules requiring that <i>b</i> elements
+begin with a text node reading "[b|" and end with a text node
+reading "|b]", and that <i>c</i> elements similarly begin and end with
+"[c| " and "|c]".  The schema <i>S</i> then matches <i>X(G)</i> correctly.
+</p>
+
+<p>
+The Schematron rules are easier to read in the XML form of the schema.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-rng">&lt;define name="b"&gt;
+    &lt;element name="b"&gt;
+        &lt;sch:rule context="b"&gt;
+            &lt;sch:assert test="'[b|&amp;#xE003C;b-name&amp;#xE002F;&amp;#xE003E;|b]'
+                eq
+                string-join(
+                for $c in ./child::node()
+                return
+                if ($c instance of element())
+                then concat('&amp;#xE003C;', name($c), '&amp;#xE002F;&amp;#xe003E;')
+                else if ($c instance of text())
+                then string($c)
+                else ''
+                )"&gt;&lt;/sch:assert&gt;
+        &lt;/sch:rule&gt;
+        &lt;group&gt;
+            &lt;text/&gt;
+            &lt;ref name="b-name"/&gt;
+            &lt;text/&gt;
+        &lt;/group&gt;
+    &lt;/element&gt;
+&lt;/define&gt;
+&lt;define name="c"&gt;
+    &lt;element name="c"&gt;
+        &lt;sch:rule context="c"&gt;
+            &lt;sch:assert test="'[c|&amp;#xE003C;c-name&amp;#xE002F;&amp;#xE003E;|c]'
+                eq
+                string-join(
+                for $c in ./child::node()
+                return
+                if ($c instance of element())
+                then concat('&amp;#xE003C;', name($c), '&amp;#xE002F;&amp;#xe003E;')
+                else if ($c instance of text())
+                then string($c)
+                else ''
+                )"&gt;&lt;/sch:assert&gt;
+        &lt;/sch:rule&gt;
+        &lt;group&gt;
+            &lt;text/&gt;
+            &lt;ref name="c-name"/&gt;
+            &lt;text/&gt;
+        &lt;/group&gt;
+    &lt;/element&gt;
+&lt;/define&gt;
+</pre>
+</div>
+
+<p>
+The Schematron rules here simply compare a string constructed from the
+element being validated against a string constructed from the
+right-hand side of the rule for the corresponding nonterminal (<i>b</i> or
+<i>c</i>). In the more general case, the right-hand side will define a more
+complex language, and instead of comparing the rule with the element
+using <code>eq</code>, the Schematron rule will need to use the <i>matches()</i>
+function.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgcc83d0a" class="outline-3">
+<h3 id="orgcc83d0a"><span class="section-number-3">5.2.</span> Aliasing for mixed-content elements</h3>
+<div class="outline-text-3" id="text-5-2">
+</div>
+<div id="outline-container-orgb5a2149" class="outline-4">
+<h4 id="orgb5a2149"><span class="section-number-4">5.2.1.</span> The difficulty:  which Schematron constraint to apply?</h4>
+<div class="outline-text-4" id="text-5-2-1">
 <p>
 The aliasing feature of ixml grammars allows us to give the same
 element or attribute name to two different nonterminals in the
-grammar.  For example, consider grammar <i>G3</i>:
+grammar.  For example, consider grammar <i>G<sub>3</sub></i>:
 </p>
 <div class="org-src-container">
 <pre class="src src-ixml">a = b; c.
@@ -941,17 +1083,21 @@ c-name &gt; name = 'C', [L]*.
 </pre>
 </div>
 <p>
-A <i>name</i> element in <i>X(G3)</i> may be the serialization of a <i>b-name</i> or
-of a <i>c-name</i>, and the pattern it must match depends on that.  But
-just as ixml allows us to distinguish the nonterminal in the grammar
-from the element type name in the output, RNG allows us to specify
-different element declarations with the same element type name.  (XSD
-allows this, too, but its requirement for deterministic content models
-makes that impossible for this case.)
+This grammar is identical to <i>G<sub>2</sub></i> except that the nonterminals
+<i>b-name</i> and <i>c-name</i> are both serialized as <i>name</i>.
 </p>
 
 <p>
-An RNG schema for grammar <i>G3</i> might read:
+A <i>name</i> element in <i>X(G<sub>3</sub>)</i> may thus be the serialization either of a
+<i>b-name</i> or of a <i>c-name</i>, and the pattern it must match depends on
+that.  But just as ixml allows us to distinguish the nonterminal in
+the grammar from the element type name in the output, RNG allows us to
+specify different element declarations with the same element type
+name.
+</p>
+
+<p>
+An RNG schema for grammar <i>G<sub>3</sub></i> might read:
 </p>
 <div class="org-src-container">
 <pre class="src src-rnc">namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
@@ -971,15 +1117,18 @@ c-name =
 </pre>
 </div>
 <p>
-We can extend this with Schematron rules requiring that <i>b</i> elements
-begin with a text node reading "[b|" and end with a text node
-reading "|b]", and that <i>c</i> elements similarly begin and end with
-"[c| " and "|c]".  The schema <i>S</i> then matches <i>X(G)</i> correctly.
+We can extend this with Schematron rules similar to those given for
+grammar <i>G<sub>2</sub></i> above, except that they refer internally to element
+<i>name</i> instead of to elements <i>b-name</i> and <i>c-name</i>.
 </p>
 
 <p>
-But now consider <i>G4</i>, in which both <i>b</i> and <i>c</i> are serialized using
-the same element name (<i>d</i>):
+So far, so good.
+</p>
+
+<p>
+But now consider grammar <i>G<sub>4</sub></i>, in which both <i>b</i> and <i>c</i> are
+serialized using the same element name (<i>d</i>):
 </p>
 <div class="org-src-container">
 <pre class="src src-ixml">a = b+, c+.
@@ -991,7 +1140,7 @@ c-name &gt; name = 'C', [L]*.
 </div>
 
 <p>
-The only difference in the RNG schemas for <i>G3</i> and <i>G4</i> is in the
+The only difference in the RNG schemas for <i>G<sub>3</sub></i> and <i>G<sub>4</sub></i> is in the
 definition of patterns <i>b</i> and <i>c</i>, which now specify a different name
 for the element:
 </p>
@@ -1053,7 +1202,7 @@ read in the XML form:
 </pre>
 </div>
 <p>
-Now consider an XML document to be validated against a schema for <i>X(G4)</i>:
+Now consider an XML document to be validated against a schema for <i>X(G<sub>4</sub>)</i>:
 </p>
 <div class="org-src-container">
 <pre class="src src-xml">&lt;a&gt;
@@ -1065,7 +1214,7 @@ Now consider an XML document to be validated against a schema for <i>X(G4)</i>:
 </pre>
 </div>
 <p>
-Grammar G4 requires that all occurrences of <i>b-name</i> precede all occurrence
+Grammar <i>G<sub>4</sub></i> requires that all occurrences of <i>b-name</i> precede all occurrence
 of <i>c-name</i>; the RNG schema can enforce this rule, and object if the fourth
 <i>name</i> element in the document has the value "Bc".  If the second <i>name</i> element
 has the value "X", an RNG validator can say that the value must match either
@@ -1092,9 +1241,9 @@ rule goes with which element.
 </div>
 </div>
 
-<div id="outline-container-orgb3c809c" class="outline-4">
-<h4 id="orgb3c809c"><span class="section-number-4">5.1.2.</span> When this difficulty arises</h4>
-<div class="outline-text-4" id="text-5-1-2">
+<div id="outline-container-org2a5160c" class="outline-4">
+<h4 id="org2a5160c"><span class="section-number-4">5.2.2.</span> When this difficulty arises</h4>
+<div class="outline-text-4" id="text-5-2-2">
 <p>
 This problem arises when the following conditions are met:
 </p>
@@ -1118,9 +1267,9 @@ to apply each Schematron rule we generate to the appropriate elements.
 </div>
 </div>
 
-<div id="outline-container-orgaa7fd7a" class="outline-4">
-<h4 id="orgaa7fd7a"><span class="section-number-4">5.1.3.</span> Sketch of a solution</h4>
-<div class="outline-text-4" id="text-5-1-3">
+<div id="outline-container-org7559557" class="outline-4">
+<h4 id="org7559557"><span class="section-number-4">5.2.3.</span> Sketch of a solution</h4>
+<div class="outline-text-4" id="text-5-2-3">
 <p>
 In principle, this is a soluble problem.  In practice, the solution
 may require more effort than it is worth, since the problem can be
@@ -1215,9 +1364,9 @@ them <i>X<sub>1</sub></i>, <i>X<sub>2</sub></i>, and <i>X<sub>3</sub></i>) using
 </div>
 </div>
 
-<div id="outline-container-org5f4715c" class="outline-4">
-<h4 id="org5f4715c"><span class="section-number-4">5.1.4.</span> Some supporting theorems</h4>
-<div class="outline-text-4" id="text-5-1-4">
+<div id="outline-container-org69a10a4" class="outline-4">
+<h4 id="org69a10a4"><span class="section-number-4">5.2.4.</span> Some supporting theorems</h4>
+<div class="outline-text-4" id="text-5-2-4">
 <p>
 Is it in fact possible to construct the base XPath expressions needed
 in the solution sketched above?  I think the answer is yes.
@@ -1355,12 +1504,81 @@ context are both suitable.
 </div>
 </div>
 </div>
+
+
+<div id="outline-container-orgb516cd8" class="outline-3">
+<h3 id="orgb516cd8"><span class="section-number-3">5.3.</span> Minding the gap</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+For any iXML grammar <i>G</i> that meets the following criteria, it is not
+difficult to construct a Relax NG schema which recognizes all and only
+the members of <i>X(G)</i>.
+</p>
+
+<ul class="org-ul">
+<li><p>
+No recursive nonterminal is marked hidden.
+</p>
+
+<p>
+From this it follows that every attribute and every PCDATA-only
+element describes a regular language and can be described using a
+Relax NG <i>pattern</i> facet.
+</p></li>
+
+<li><p>
+All character data in mixed content (including injected strings) is
+either unconstrained (any sequence of characters is accepted) or
+hidden.
+</p>
+
+<p>
+From this it follows that it is unnecessary to constrain text nodes
+in mixed content.
+</p></li>
+</ul>
+
+<p>
+If the following criteria are also met, it is possible to construct a
+schema in XSD which recognizes all and only the members of <i>X(G)</i>.
+</p>
+
+<ul class="org-ul">
+<li>No two nonterminals <i>N</i> and <i>N′</i> are aliased to the same name.</li>
+</ul>
+
+<ul class="org-ul">
+<li>The content model constructed for each nonterminal is deterministic
+(as that term is defined in the XML specification &#x2013; a content model
+is deterministic if and only if its Gluschkov automaton is
+deterministic).</li>
+</ul>
+
+<p>
+If the following criterion is also met, it is possible to construct a
+DTD which recognizes all and only the members of <i>X(G)</i>.
+</p>
+
+<ul class="org-ul">
+<li>Every PCDATA-only element and every attribute is either
+unconstrained in its content or constrained to match one of the
+attribute types expressible by XML DTDs.</li>
+</ul>
+
+<p>
+For grammars which do not meet the criteria, it is possible to
+construct superset schemas which recognize all members of <i>X(G)</i> but
+not only members of <i>X(G)</i>; some of the inexpressible constraints but
+not all may be captured in Schematron rules.
+</p>
+</div>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Date: 9 July 2024</p>
+<p class="date">Date: 9 July, 5 August 2024</p>
 <p class="author">Author: CMSMcQ</p>
-<p class="date">Created: 2024-07-11 Thu 14:36</p>
+<p class="date">Created: 2024-08-09 Fri 09:34</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
